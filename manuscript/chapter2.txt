@@ -138,12 +138,12 @@ Then, enter the following HTML code:
 
 The indentations aren’t required, but they make the code easy to read. Save this document, and open it in the browser. You should see the following:
 
-{width=50%}
+{width=75%}
 ![](images/ch_2_hello_nature_screenshot.png)
 
 You’ve just created a simple HTML document, which you can use as a template for the rest of this book. HTML stands for Hypertext Markup Language, and can be interpreted by any browser. In fact, every webpage you’ve ever looked at (many, I’m sure) is written in HTML. 
 
-HTML is a set of tags, like <body> and <title>. If you load an HTML document in a browser, the browser will read the HTML, and render a page according to the HTML specifications (if you’re curious, here is the latest official specification: http://www.w3.org/TR/html401/). We won’t be spending much time talking about HTML, but it’s worthwhile understanding the basics. It is, after all, the markup language that the entire web is based on. 
+HTML is a set of so-called tags, like `<body>` and `<title>`. If you load an HTML document in a browser, the browser will read the HTML, and render a page according to the HTML specifications (if you’re curious, here is the latest official specification: http://www.w3.org/TR/html401/). We won’t be spending much time talking about HTML, but it’s worthwhile understanding the basics. It is, after all, the markup language that the entire web is based on. 
 
 Let’s go quickly through the HTML document above. It starts with a so-called DOCTYPE declaration: <!DOCTYPE html>. This tells the browser “Hey, I’m an HTML document”. Truth be told, the browser could live without it, but it’s good practice. (In fact, the browser is the most forgiving piece of software you’ll ever encounter - it renders even the most broken HTML. Be thankful.). The first tag, the <html> tag contains all the content of the document. Notice how it closes at the end of the document using </html>. This pattern - <tag>content</tag> - is very common in HTML, and the content can be other tags as well, which themselves can contain other tags, and so on. The next tag is the <head> tag. It opens with <head>, contains some content, and later closes with </head>. The head specifies a number of things that are not directly rendered on the screen, such as the title of the document, which itself is surrounded by the <title> tag. Further below, the <body> tag contains the content that should be rendered on the screen. In our case, we just want to  render two lines of text. The line break is forced with the <br> tag, and because the <br> tag does not contain any content, no closing tag is necessary.
 
