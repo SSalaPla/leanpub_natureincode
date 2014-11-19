@@ -4,9 +4,9 @@ Life is change. It is also beautiful. The process responsible for these two outc
 
 Evolution is the grand unifying process underlying all of biology. At its core, evolution is a seemingly simple concept. It is defined as the change of allele frequencies in a population over time. Don’t worry if that sentence doesn’t makes sense to you right now - it will in a few minutes.
 
-Living organisms pass on their genes from generation to generation. Physical bodies don’t survive for long, but the genes the built them do. Genes are the hereditary material of all living organisms. But if all we would ever do is to pass on the same genes, generation after generation, there would be no evolution. For reasons we will talk about later, however, genes don’t just come in one version. For every gene, there are multiple versions, and these versions of a gene are called alleles. For various reasons alleles might be rare in a population, or might be common. They might be common at one time point, and become rarer over time, and vice versa. 
+Living organisms pass on their genes from generation to generation. Physical bodies don’t survive for long, but the genes that built them do. Genes are the hereditary material of all living organisms. But if all we would ever do is to pass on the same genes, generation after generation, there would be no evolution. For reasons we will talk about later, however, genes don’t just come in one version. For every gene, there are multiple versions, and these versions of a gene are called *alleles*. For various reasons, alleles might be rare in a population, or might be common. They might be common at one time point, and become rarer over time, and vice versa. 
 
-A well-known example is Lactose intolerance. Being lactose intolerant means not being able to fully digest lactose, a sugar that is found in milk and dairy products. If you are lactose intolerant,  you don’t produce enough lactase, the molecule responsible for digesting lactose. This is not a disease by any definition - indeed, roughly two thirds of the human population is lactose intolerant as adults. When a child is born, her main source of nutrition is milk, and like other mammals, she produces enough lactase to digest the lactose in the milk. After weaning, typically around 2 to 3 years of age, the child loses the ability to digest lactose and becomes lactose intolerant, a process which is usually complete around age 10. 
+A well-known example is Lactose intolerance. Being lactose intolerant means not being able to fully digest lactose, a sugar that is found in milk and dairy products. If you are lactose intolerant, you don’t produce enough lactase, the molecule responsible for digesting lactose. This is not a disease by any definition - indeed, roughly two thirds of the human population is lactose intolerant as adults. When a child is born, her main source of nutrition is milk, and like other mammals, she produces enough lactase to digest the lactose in the milk. After weaning, typically around 2 to 3 years of age, the child loses the ability to digest lactose and becomes lactose intolerant, a process which is usually complete around age 10. 
 
 Lactase is encoded by a single gene called LCT. This gene exists in many different versions, which means that there are many different alleles of the gene. One allele, LCT*P, allows lactase to persist after the weaning phase, making its bearer able to digest lactose. In some regions of the world, this allele is very common. In northern Europe for example, this allele is the most frequent allele of the LCT gene. In other regions of the world, it is practically absent. 
 
@@ -14,16 +14,18 @@ Now here is the most interesting aspect of this story: there is strong evidence 
 
 This is evolution in action, precisely as we have defined it above: the change of allele frequencies in a population over time. What caused this change? There could be many different explanations, but all of them fall into four basic categories: natural selection, mutation, migration, and random drift. These are the four basic forces of evolution, and we will encounter them time and time again in this book. Of these forces, natural selection may be the most famous of them all. It’s the only force capable of producing adaptations. It’s the one described by Charles Darwin, although he, like any scientist in the mid-18th century, had a very different - and wrong - understanding of genetic heredity than we have today, which makes his insights all the more stunning. But evolution can occur even in the absence of natural selection; as long as allele frequencies change, for whatever reason, that is evolution. 
 
-What happens when nothing happens?
+##What happens when nothing happens?
+
 Consider these two conversations between two friends:
 
 Friend 1: “The other day, I was riding my bike along main street, and three cars passed me by.”
+
 Friend 2: “So?”
 
-Friend 1: “The other day, I was riding my bike along main street, and three cars flew over me.”
-Friend 2: “SAY WHAT???”
 
-http://replygif.net/558
+Friend 1: “The other day, I was riding my bike along main street, and three cars flew over me.”
+
+Friend 2: “SAY WHAT???”
 
 In science, just as in life, a phenomenon is interesting to the extent that it is unexpected. (Coincidentally, this is also the reason why life gets boring as you get older unless you continuously immerse yourself in new experiences, and learn new things.) Thus, for a scientific phenomenon to be called interesting, you need to know what to expect. 
 
@@ -87,7 +89,7 @@ This is an important insight from a biological perspective. From a mathematical 
 
 From these considerations follows an interesting insight, brining us back full circle to our null model: if the genotype frequencies you find in a population are not at Hardy-Weinberg equilibrium, something interesting must be going on. Something must be different. Some of the assumptions that we established above must be violated. 
 
-What does boring look like?
+##What does boring look like?
 
 We have just established that things are boring at Hardy-Weinberg equilibrium. Maybe that was why biologists hadn’t figured this out earlier - nothing in biology is ever boring. They are boring in the sense that genotype frequencies stay the same. But why is that boring? It’s boring because everything you see in the living world around you is an expression of a genotype. It would be a huge mistake to think that that’s all, that everything is just genes, and nothing more. We know very well that the environment and other non-genetic factors play a big role in determining the development, shape, form, and behavior of an organism. But living organisms are ultimately built with the blueprint of a genotype, and different genotypes will generally result in different organisms. (The technical term here is phenotype: a phenotype is the organism that a genotype produces in its given environment.) Thus, the boundless diversity and beauty of nature, with its endless flow of forms, shapes and colors, can only come about if there is genetic diversity. In the Hardy-Weinberg world, nothing ever changes, everything stays predictably constant for eternity. If that doesn’t qualify as boring, I don’t know what would.
 
@@ -105,15 +107,15 @@ p2 + 2pq  + q2 =
 p2 + 2p(1-p)  + (1-p)2 =
 p2 + 2p - 2p2  + (1 - 2p +p2) = 1
 
-Code
+##Code
 
-The title of this book is “Nature, in code”. We just described a natural processes (however artificial), so let’s simulate that process in code. Because this is the first time we do this, this section is a little longer than future code sections. If you don’t understand everything completely on the first read, don’t worry - the material is dense, and if you have never programmed before, many concepts will seem alien. In that case, I recommend re-reading this sections now and again, until it truly clicks. 
+The title of this book is “Nature, in Code”. We just described a natural processes (however artificial), so let’s simulate that process in code. Because this is the first time we do this, this section is a little longer than future code sections. If you don’t understand everything completely on the first read, don’t worry - the material is dense, and if you have never programmed before, many concepts will seem alien. In that case, I recommend re-reading this sections now and again, until it truly clicks. 
 
-We are going to use javascript throughout this book. If you know anything about programming languages at all, you might be surprised at this choice. Javascript is typically associated with dynamics webpages, which it was originally designed for, and it isn’t very popular yet in scientific computing - but that doesn’t really matter. What matters is that it’s a modern, object oriented language, and it’s easy to get started with, which is a substantial benefit. In addition, every browser runs javascript out of the box, and since every personal computer and every smartphone has a browser installed, javascript is ubiquitous. There are an estimate 2 billion personal computers in the world, and about 2 billion smartphones. In short, the code in this book - and javascript in general - runs on about 4 billion devices, today, without anyone needing to install anything. That’s pretty neat.
+We are going to use JavaScript throughout this book. If you know anything about programming languages at all, you might be surprised at this choice. JavaScript is typically associated with dynamics webpages, which it was originally designed for, and it isn’t very popular yet in scientific computing - but that doesn’t really matter. What matters is that it’s a modern, object oriented language, and it’s easy to get started with, which is a substantial benefit. In addition, every browser runs JavaScript out of the box, and since every personal computer and every smartphone has a browser installed, JavaScript is ubiquitous. There are an estimate 2 billion personal computers in the world, and about 2 billion smartphones. In short, the code in this book - and JavaScript in general - runs on about 4 billion devices, today, without anyone needing to install anything. That’s pretty neat.
 
-(If you think about getting serious with scientific computing in the future, you’ll find it very easy to switch from javascript to other languages like Python, C++, or Java).
+(If you think about getting serious with scientific computing in the future, you’ll find it very easy to switch from JavaScript to other languages like Python, C++, or Java).
 
-The first thing you need to create is a document the holds your code. Javascript is typically embedded in an HTML document, and we’ll follow that convention, although it isn’t strictly necessary. An HTML document is simply a plaint text file with the file ending .html or .htm. So go ahead, and create a file called example.html in the text editor of your choice. You can use a plain vanilla text editor such as TextEdit if you’re on a Mac - whatever editor you choose, just be sure it is in plain text mode.
+The first thing you need to create is a document the holds your code. JavaScript is typically embedded in an HTML document, and we’ll follow that convention, although it isn’t strictly necessary. An HTML document is simply a plaint text file with the file ending .html or .htm. So go ahead, and create a file called example.html in the text editor of your choice. You can use a plain vanilla text editor such as TextEdit if you’re on a Mac - whatever editor you choose, just be sure it is in plain text mode.
 
 Then, enter the following HTML code:
 
@@ -139,12 +141,12 @@ HTML is a set of tags, like <body> and <title>. If you load an HTML document in 
 
 Let’s go quickly through the HTML document above. It starts with a so-called DOCTYPE declaration: <!DOCTYPE html>. This tells the browser “Hey, I’m an HTML document”. Truth be told, the browser could live without it, but it’s good practice. (In fact, the browser is the most forgiving piece of software you’ll ever encounter - it renders even the most broken HTML. Be thankful.). The first tag, the <html> tag contains all the content of the document. Notice how it closes at the end of the document using </html>. This pattern - <tag>content</tag> - is very common in HTML, and the content can be other tags as well, which themselves can contain other tags, and so on. The next tag is the <head> tag. It opens with <head>, contains some content, and later closes with </head>. The head specifies a number of things that are not directly rendered on the screen, such as the title of the document, which itself is surrounded by the <title> tag. Further below, the <body> tag contains the content that should be rendered on the screen. In our case, we just want to  render two lines of text. The line break is forced with the <br> tag, and because the <br> tag does not contain any content, no closing tag is necessary.
 
-Now - how does one program in HTML? The simple answer is one doesn’t - HTML is a markup language, not a programming language. The makers of the first commercially successful browser, Netscape, realized that the ability to have a programming language running in a browser could be quite powerful - it would allow for dynamic content, which wasn’t possible with pure HTML. They added javascript, and the rest is history. It’s somewhat ironic that a language that was implemented in a few weeks, with the goal of making webpages a little interactive, is now becoming the most common programming language on the planet. (Note also that javascript has nothing to do with the programming language Java - the name was just a marketing play on the rising popularity of Java at the time).
+Now - how does one program in HTML? The simple answer is one doesn’t - HTML is a markup language, not a programming language. The makers of the first commercially successful browser, Netscape, realized that the ability to have a programming language running in a browser could be quite powerful - it would allow for dynamic content, which wasn’t possible with pure HTML. They added JavaScript, and the rest is history. It’s somewhat ironic that a language that was implemented in a few weeks, with the goal of making webpages a little interactive, is now becoming the most common programming language on the planet. (Note also that JavaScript has nothing to do with the programming language Java - the name was just a marketing play on the rising popularity of Java at the time).
 
-In order to use javascript, you need to put your javascript code within a <script> tag, like so:
+In order to use JavaScript, you need to put your JavaScript code within a <script> tag, like so:
 
 <script type=“text/javascript”>
-    console.log(“My first line of javascript”);
+    console.log(“My first line of JavaScript”);
 </script>
 
 It doesn’t really matter where you add the script tag, but it’s mostly found within the <head> tag. We’ll talk about these lines of code in a second, but first, go ahead and put them in the <head> tag of your document, like so:
@@ -154,7 +156,7 @@ It doesn’t really matter where you add the script tag, but it’s mostly found
     <head>
         <title>Nature, in code</title>
         <script type="text/javascript">
-            console.log("My first line of javascript");
+            console.log("My first line of JavaScript");
         </script>
     </head>
     <body>
@@ -162,22 +164,22 @@ It doesn’t really matter where you add the script tag, but it’s mostly found
     </body>
 </html> 
 
-If you save your document and reload it in the browser, you won’t see any change. In order to see the effect of this single line of javascript, you need to open the console in the browser. In Chrome, select View - Developer - JavaScript Console, and you will see the following: 
+If you save your document and reload it in the browser, you won’t see any change. In order to see the effect of this single line of JavaScript, you need to open the console in the browser. In Chrome, select View - Developer - JavaScript Console, and you will see the following: 
 
 
 Nice! So what just happened?
 
-We added a <script> tag, which is the tag that contains our javascript code. Before we get to that, take a close look at the opening tag, which reads
+We added a <script> tag, which is the tag that contains our JavaScript code. Before we get to that, take a close look at the opening tag, which reads
 
 <script type=“text/javascript">
 
-What we’ve done here is to add a so-called attribute to the tag (type in this case) with a value of “text/javascript”. Generally, HTML tags can have many different attributes, and if you’ve skimmed the HTML documentation above, you’ve noticed that attributes are a major part of the HTML specifications. You could almost go as far as saying that HTML without the attributes is practically useless, since the effect and behavior of most tags depends completely on their attributes and their values. In the present example, the type attribute specifics the type of scripting language. In principle, browsers could be able to interpret multiple scripting languages, but currently javascript is the only one that’s supported by all modern browsers. If you wouldn’t add the type attribute to the script tag, everything would still work - that’s because “text/javascript” is the default value for the type attribute.
+What we’ve done here is to add a so-called attribute to the tag (type in this case) with a value of “text/javascript”. Generally, HTML tags can have many different attributes, and if you’ve skimmed the HTML documentation above, you’ve noticed that attributes are a major part of the HTML specifications. You could almost go as far as saying that HTML without the attributes is practically useless, since the effect and behavior of most tags depends completely on their attributes and their values. In the present example, the type attribute specifics the type of scripting language. In principle, browsers could be able to interpret multiple scripting languages, but currently JavaScript is the only one that’s supported by all modern browsers. If you wouldn’t add the type attribute to the script tag, everything would still work - that’s because “text/javascript” is the default value for the type attribute.
 
-Let’s move on to the actual javascript code, which reads
+Let’s move on to the actual JavaScript code, which reads
 
-console.log("My first line of javascript");
+console.log("My first line of JavaScript");
 
-This simple line already contains a lot of essential features of any programming language, such as objects, methods, and parameters. If none of these things make any sense to you right now, that’s absolutely fine - we’ll be getting there soon. In any case, what this line does is to print the text My first line of javascript in the console. The console is simply a somewhat hidden javascript output in the browser that is very helpful for debugging (i.e. fixing errors or just generally trying to find out what’s going on with the code). 
+This simple line already contains a lot of essential features of any programming language, such as objects, methods, and parameters. If none of these things make any sense to you right now, that’s absolutely fine - we’ll be getting there soon. In any case, what this line does is to print the text My first line of JavaScript in the console. The console is simply a somewhat hidden JavaScript output in the browser that is very helpful for debugging (i.e. fixing errors or just generally trying to find out what’s going on with the code). 
 
 So how would we implement the Hardy-Weinberg principle in code? Let’s start with declaring there variables that will store that genotype frequencies, and initialize them with values that we used in the example above:
 
@@ -196,7 +198,7 @@ var q = 1-p;
 
 The variable p denotes the frequency of A1 alleles, which is simply the frequency of the A1A1 genotype (since they only carry A1 alleles) plus half of the frequency of the A1A2 genotype (since half of their alleles are A1). We then calculate q by simply subtracting p from 1; p and q need to add up to one because there are only two alleles in the population.
 
-I should highlight two subtleties in the first line of code. The first is that I am using parentheses to group the equation. Javascript uses the standard algebraic rules and would first divide a1a2 by 2.0 before the result to a1a1 even without the parentheses, just as algebraic rules dictate. However, I prefer to make these rules explicit with parentheses. Even more than the semicolons, explicit parentheses are just good style that makes your code clearer and prevents subtle errors in the future, when your code becomes more complex (which it most certainly will). The second subtlety is that I divided a1a2 by 2, rather than by 2.0. If you have any experience with other programming languages, that might raise a red flag. That’s because most programming languages have two numeric types, integer and floating point numbers, but javascript doesn’t. All numbers are floating point numbers. 2 is equivalent to 2.0, which avoids many numerical errors that plague other languages. 
+I should highlight two subtleties in the first line of code. The first is that I am using parentheses to group the equation. JavaScript uses the standard algebraic rules and would first divide a1a2 by 2.0 before the result to a1a1 even without the parentheses, just as algebraic rules dictate. However, I prefer to make these rules explicit with parentheses. Even more than the semicolons, explicit parentheses are just good style that makes your code clearer and prevents subtle errors in the future, when your code becomes more complex (which it most certainly will). The second subtlety is that I divided a1a2 by 2, rather than by 2.0. If you have any experience with other programming languages, that might raise a red flag. That’s because most programming languages have two numeric types, integer and floating point numbers, but JavaScript doesn’t. All numbers are floating point numbers. 2 is equivalent to 2.0, which avoids many numerical errors that plague other languages. 
 
 Combine these five lines and copy them into your script tag in your HTML file, like so:
 
@@ -209,32 +211,32 @@ Combine these five lines and copy them into your script tag in your HTML file, l
     var q = 1-p;
 </script>
 
-Save the file, reload the page (be sure to have your console open), and you should see… nothing. That’s because we are not writing anything into the output. Your code is executed all right, but since we didn’t instruct javascript to write anything into the output, it won’t do it. So go ahead and add the following line:
+Save the file, reload the page (be sure to have your console open), and you should see… nothing. That’s because we are not writing anything into the output. Your code is executed all right, but since we didn’t instruct JavaScript to write anything into the output, it won’t do it. So go ahead and add the following line:
 
 console.log("generation 0:\t" + a1a1 + "\t" + a1a2 + "\t" + a2a2);
 
 Using console.log as before, we’re writing text int our output. We’ll talk about this line in a second, but first, make sure that it works and save the file and reload the browser:
-Excellent, worked like a charm. The simple line above wrote our three genotype frequencies at generation 0 into the output. This line can teach us a few new ideas about javascript. The first thing to recognize is that we are calling a method, or a function (the two are not technically equivalent, but for almost all practical purposes, they can be treated as equivalent). A method is invoked, or called, by using its name and by supplying a number of arguments in parentheses, separated by commas. A method can take any number of arguments, including none, in which case your parentheses would be empty. So any of these examples are valid javascript:
+Excellent, worked like a charm. The simple line above wrote our three genotype frequencies at generation 0 into the output. This line can teach us a few new ideas about JavaScript. The first thing to recognize is that we are calling a method, or a function (the two are not technically equivalent, but for almost all practical purposes, they can be treated as equivalent). A method is invoked, or called, by using its name and by supplying a number of arguments in parentheses, separated by commas. A method can take any number of arguments, including none, in which case your parentheses would be empty. So any of these examples are valid JavaScript:
 
 some_method();
 some_method(argument1);
 some_method(argument1, argument2);
 some_method(argument1, argument2, argument3);
 
-Somewhere, a method must be defined before you can call it. Javascript comes with a whole range of predefined methods (like console.log) that you will be able to use, and we’ll learn quite a few throughout this book. Oftentimes, however, you define your own method. In any case, by its definition, the method is usually quite clear about how many arguments it normally expects. 
+Somewhere, a method must be defined before you can call it. JavaScript comes with a whole range of predefined methods (like console.log) that you will be able to use, and we’ll learn quite a few throughout this book. Oftentimes, however, you define your own method. In any case, by its definition, the method is usually quite clear about how many arguments it normally expects. 
 
 Above, we used 
 
-console.log("My first line of javascript");
+console.log("My first line of JavaScript");
 
-We were passing one argument to the method, namely “My first line of javascript”. In javascript, anything wrapped in single or double quotes is a so-called string which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, a1a1 (without any quote) refers to the variable a1a1, while "a1a1" is simply text. Similarly, "100" is simply text, and has no numerical meaning whatsoever, while 100 represents the actual number one hundred (remember why the number 100 isn’t at risk to be confused the variable 100? That’s right, because there is no variable 100 - all variable names must begin with a letter).
+We were passing one argument to the method, namely “My first line of JavaScript”. In JavaScript, anything wrapped in single or double quotes is a so-called string which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, a1a1 (without any quote) refers to the variable a1a1, while "a1a1" is simply text. Similarly, "100" is simply text, and has no numerical meaning whatsoever, while 100 represents the actual number one hundred (remember why the number 100 isn’t at risk to be confused the variable 100? That’s right, because there is no variable 100 - all variable names must begin with a letter).
 In line with the example above, let’s try to pass one string as an argument to console.log. Say we’d like to output 
 
 generation 0:	0.15	0.5	0.35
 
 (values separated by tabs). 
 
-The problem is that some of this information is stored in variables, rather than as text. String concatenation to the rescue! In javascript, you can add string together using the + sign, like so:
+The problem is that some of this information is stored in variables, rather than as text. String concatenation to the rescue! In JavaScript, you can add string together using the + sign, like so:
 
 "hello " + "world"
 
@@ -242,7 +244,7 @@ which would result in the string “hello world” (don’t forget the space cha
 
 "hello " + a1a1
 
-What happens is that you get the string “hello 0.15”. That’s because javascript coerces numeric values to string values if one the operands is a string. This is actually a pretty handy feature that let’s you do things like   
+What happens is that you get the string “hello 0.15”. That’s because JavaScript coerces numeric values to string values if one the operands is a string. This is actually a pretty handy feature that let’s you do things like   
 
 "generation 0:\t" + a1a1 + "\t" + a1a2 + "\t" + a2a2
 
@@ -260,7 +262,7 @@ a1a1 = p * p;
 a1a2 = 2 * p * q;
 a2a2 = q * q;
 
-This follows the logic described a few pages above, and it terms of javascript, there is nothing new here, with the exception perhaps that we are now reusing pervasively defined variables, and overwriting their values. We can now go ahead and output the new genotype frequencies using our line above (slightly modified to take into account that we’re at a new generation):
+This follows the logic described a few pages above, and it terms of JavaScript, there is nothing new here, with the exception perhaps that we are now reusing pervasively defined variables, and overwriting their values. We can now go ahead and output the new genotype frequencies using our line above (slightly modified to take into account that we’re at a new generation):
 
 console.log("generation 1:", a1a1, a1a2, a2a2);
 
@@ -282,7 +284,7 @@ a2a2 = q * q;
 console.log("generation 1:", a1a1, a1a2, a2a2);
 
 and the output is 
-Everything looking great, so let’s move on and… wait, what is this? 0.16000000000000003? This should just be 0.16 - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to javascript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in javascript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies in computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because javascript uses 64 bits to store floating point numbers, the rounding usually occurs at in insignificant place, as it does in 0.16000000000000003. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
+Everything looking great, so let’s move on and… wait, what is this? 0.16000000000000003? This should just be 0.16 - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to JavaScript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in JavaScript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies in computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because JavaScript uses 64 bits to store floating point numbers, the rounding usually occurs at in insignificant place, as it does in 0.16000000000000003. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
 
 Back to our genotypes - we already know what will happen next generation, but just to be sure, let’s code it up. Once again, we will calculate the genotype frequencies using the following code:
 
@@ -336,9 +338,9 @@ console.log("generation 5:", a1a1, a1a2, a2a2);
 and your output will be:
 As expected, your genotype frequencies won’t change - under Hardy-Weinberg conditions, they are predetermined by allele frequencies which don’t change.
 
-What we have just done, however, is considered very bad practice: copying and pasting code. This isn’t an issue of copyright - it is your code, after all. The issue is that you repeat yourself, and the exact same pieces of code are repeated time and time again. This is bad practice, because once you decide that something about this code needs to change, you will need to change it in all the places where you pasted the code, and it’s almost guaranteed that you will forget some places in the code, leading to nasty errors. Your code should follow the DRY principle: Don’t Repeat Yourself. Thankfully, javascript, like all other programming languages, provide a simple but powerful tool that helps you solve this problem: functions.
+What we have just done, however, is considered very bad practice: copying and pasting code. This isn’t an issue of copyright - it is your code, after all. The issue is that you repeat yourself, and the exact same pieces of code are repeated time and time again. This is bad practice, because once you decide that something about this code needs to change, you will need to change it in all the places where you pasted the code, and it’s almost guaranteed that you will forget some places in the code, leading to nasty errors. Your code should follow the DRY principle: Don’t Repeat Yourself. Thankfully, JavaScript, like all other programming languages, provide a simple but powerful tool that helps you solve this problem: functions.
 
-We have already encountered functions, and have talked a little bit about their syntax. But now it’s our turn to write our own functions. In javascript, a function is defined as follows:
+We have already encountered functions, and have talked a little bit about their syntax. But now it’s our turn to write our own functions. In JavaScript, a function is defined as follows:
 
 function name(parameters) {
     body
@@ -346,7 +348,7 @@ function name(parameters) {
 
 The indentation and the line breaks are optional, but it’s good practice and I highly recommend that you use this style. It makes the code more readable and, like so often, avoids subtle yet nasty errors.
 
-The keyword function is predefined by the javascript language. The name is up to you - function names follow the same rules as variable names, and it’s best to name the function according to what it does. The parameters are zero, one, or many variables for which values can be passed to the function when it is invoked (and as we’ve seen before, we will call these values arguments). Thus, a function is defined using parameters, and when it is invoked, it is given arguments. The body is the code that is executed when the function is invoked. Once that code is done executing, your program will continue executing the code where it was before it hit that function:
+The keyword function is predefined by the JavaScript language. The name is up to you - function names follow the same rules as variable names, and it’s best to name the function according to what it does. The parameters are zero, one, or many variables for which values can be passed to the function when it is invoked (and as we’ve seen before, we will call these values arguments). Thus, a function is defined using parameters, and when it is invoked, it is given arguments. The body is the code that is executed when the function is invoked. Once that code is done executing, your program will continue executing the code where it was before it hit that function:
 
 // some code will be executed here before the function
 some_function(); // jump to the function and execute the code in the function
@@ -368,7 +370,7 @@ function create_next_generation() {
     a2a2 = q * q;
 }
 
-This function doesn’t take any parameters at the moment. As you can see, its body makes use of variables that were defined somewhere else before. We’ll talk about this in a moment. You can also see that I used a fairly long name for the function name. The benefit is that anyone who reads your code, including your future self, can instantly guess what the function does from its name alone. There are two widespread styles to name functions that contain multiple words. You can either separate the words by underscore, like I prefer to do, or you can use the so-called camelCase notation, where you don’t use underscores, but rather capitalize each new word like so: createNextGeneration. It’s up to you which style you choose. Javascript programmers have historically often used camelCase, but I simply find the underscore notation more readable, and will stick to it.
+This function doesn’t take any parameters at the moment. As you can see, its body makes use of variables that were defined somewhere else before. We’ll talk about this in a moment. You can also see that I used a fairly long name for the function name. The benefit is that anyone who reads your code, including your future self, can instantly guess what the function does from its name alone. There are two widespread styles to name functions that contain multiple words. You can either separate the words by underscore, like I prefer to do, or you can use the so-called camelCase notation, where you don’t use underscores, but rather capitalize each new word like so: createNextGeneration. It’s up to you which style you choose. JavaScript programmers have historically often used camelCase, but I simply find the underscore notation more readable, and will stick to it.
 
 Having encapsulated this functionality, we can now rewrite the code and simply replace the five occurrences of
 
@@ -505,7 +507,7 @@ function create_next_generation() {
 
 (yes, you can call functions from within other functions). Our code is now a little longer, but clearer about our assumptions. The results will still be the same.
 
-While everything works as it should, the output is still ugly. Let’s clean up these rounding errors. As I mentioned above, javascript in the client comes with a whole package of functionalities encapsulated in methods. One such method is Math.round(x) which returns the value of x rounded to the nearest integer. That’s not what we want, and unfortunately there is no built-in function that takes a number and the number of decimals of precision you’d want it to return, so we will have to write one:
+While everything works as it should, the output is still ugly. Let’s clean up these rounding errors. As I mentioned above, JavaScript in the client comes with a whole package of functionalities encapsulated in methods. One such method is Math.round(x) which returns the value of x rounded to the nearest integer. That’s not what we want, and unfortunately there is no built-in function that takes a number and the number of decimals of precision you’d want it to return, so we will have to write one:
 
 function round_number(value) {
     return Math.round(value *100) / 100;
@@ -618,7 +620,7 @@ What you’ve learned in this chapter:
 The definition of evolution
 The concept of alleles and genotypes
 The Hardy-Weinberg principle
-How to write simple javascript programs using variable, functions, and iterations.
+How to write simple JavaScript programs using variable, functions, and iterations.
 
 // TODO plot possible genotype frequencies, given allele frequencies
 // test for hardy weinberg frequencies using x2 test
