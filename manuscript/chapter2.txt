@@ -45,7 +45,6 @@ Now consider a single gene. If there is only one allele - i.e. only one version 
 
 If you would randomly sample a few individuals from a population, and look at their genotype for the A gene, you could easily calculate allele and genotype frequencies. Say you sampled 100 individuals, and you found that 15 of those individuals have genotype A1/A1, 35 have genotype A2/A2, and the remaining 50 have genotype A1/A2, then you could deduce the following genotype frequencies:
 
-
 A1/A1: 15% (15 out of 100 genotypes)
 A1/A2: 50% (50 out of 100 genotypes)
 A2/A2: 35% (35 out of 100 genotypes)
@@ -118,6 +117,7 @@ The first thing you need to create is a document the holds your code. Javascript
 
 Then, enter the following HTML code:
 
+~~~~~~~~
 <!DOCTYPE html>
 <html>
     <head>
@@ -127,6 +127,7 @@ Then, enter the following HTML code:
         Hello, nature.<br>Nice to be with you.
     </body>
 </html>
+~~~~~~~~
 
 The indentations aren’t required, but they make the code easy to read. Save this document, and open it in the browser. You should see the following:
 
