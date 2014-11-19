@@ -138,7 +138,7 @@ Then, enter the following HTML code:
 
 The indentations aren’t required, but they make the code easy to read. Save this document, and open it in the browser. You should see the following:
 
-
+![](images/ch_2_hello_nature_screenshot.png)
 
 You’ve just created a simple HTML document, which you can use as a template for the rest of this book. HTML stands for Hypertext Markup Language, and can be interpreted by any browser. In fact, every webpage you’ve ever looked at (many, I’m sure) is written in HTML. 
 
