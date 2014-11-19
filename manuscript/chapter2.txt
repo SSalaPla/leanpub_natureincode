@@ -97,15 +97,20 @@ But boring has it’s benefits too - it’s predictable, and easy to quantify, w
 
 We are going to denote the allele frequency of A1 as p, and the allele frequency of A2 as q = 1-p. The expected frequency of the genotypes is then as follows:
 
-A1A1: p * p = p2
-A1A2: p * q + p * q = 2pq
-A1A1: q * q = q2
+|Genotype  |Frequency |
+|----------|------------------------------------------------|
+| A1/A1    |p * p = p^2|
+| A1/A2    |p * q + p * q = 2pq|
+| A2/A2    |q * q = q^2|
+
 
 Since these are all the genotypes there are, these three frequencies need to add up to 1. Let’s verify that by replacing q = 1-p
 
-p2 + 2pq  + q2 =
-p2 + 2p(1-p)  + (1-p)2 =
-p2 + 2p - 2p2  + (1 - 2p +p2) = 1
+{$$} 
+p^2 + 2pq  + q^2 =
+p^2 + 2p(1-p) + (1-p)^2 =
+p^2 + 2p - 2p^2  + (1 - 2p +p^2) = 1
+{/$$} 
 
 ##Code
 
