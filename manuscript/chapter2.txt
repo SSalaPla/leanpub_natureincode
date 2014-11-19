@@ -1,5 +1,623 @@
 # Chapter 2
 
-It was a **bold** and *italic* night!
+Life is change. It is also beautiful. The process responsible for these two outcomes is evolution.
 
-Suddenly, a shot rang out!
+Evolution is the grand unifying process underlying all of biology. At its core, evolution is a seemingly simple concept. It is defined as the change of allele frequencies in a population over time. Don’t worry if that sentence doesn’t makes sense to you right now - it will in a few minutes.
+
+Living organisms pass on their genes from generation to generation. Physical bodies don’t survive for long, but the genes the built them do. Genes are the hereditary material of all living organisms. But if all we would ever do is to pass on the same genes, generation after generation, there would be no evolution. For reasons we will talk about later, however, genes don’t just come in one version. For every gene, there are multiple versions, and these versions of a gene are called alleles. For various reasons alleles might be rare in a population, or might be common. They might be common at one time point, and become rarer over time, and vice versa. 
+
+A well-known example is Lactose intolerance. Being lactose intolerant means not being able to fully digest lactose, a sugar that is found in milk and dairy products. If you are lactose intolerant,  you don’t produce enough lactase, the molecule responsible for digesting lactose. This is not a disease by any definition - indeed, roughly two thirds of the human population is lactose intolerant as adults. When a child is born, her main source of nutrition is milk, and like other mammals, she produces enough lactase to digest the lactose in the milk. After weaning, typically around 2 to 3 years of age, the child loses the ability to digest lactose and becomes lactose intolerant, a process which is usually complete around age 10. 
+
+Lactase is encoded by a single gene called LCT. This gene exists in many different versions, which means that there are many different alleles of the gene. One allele, LCT*P, allows lactase to persist after the weaning phase, making its bearer able to digest lactose. In some regions of the world, this allele is very common. In northern Europe for example, this allele is the most frequent allele of the LCT gene. In other regions of the world, it is practically absent. 
+
+Now here is the most interesting aspect of this story: there is strong evidence that the allele that causes lactase production to taper off after weaning is the original, ancestral allele. In other words, being lactose intolerant was common almost anywhere in the world until about 9,000 years ago, when humans started domesticating livestock and practicing milk-based pastoralism. At some point, a mutant version of the ancestral allele, LCT*P, must have arisen, and it has since then increased in frequency in the human population - from 0% to about 35% - until today. 
+
+This is evolution in action, precisely as we have defined it above: the change of allele frequencies in a population over time. What caused this change? There could be many different explanations, but all of them fall into four basic categories: natural selection, mutation, migration, and random drift. These are the four basic forces of evolution, and we will encounter them time and time again in this book. Of these forces, natural selection may be the most famous of them all. It’s the only force capable of producing adaptations. It’s the one described by Charles Darwin, although he, like any scientist in the mid-18th century, had a very different - and wrong - understanding of genetic heredity than we have today, which makes his insights all the more stunning. But evolution can occur even in the absence of natural selection; as long as allele frequencies change, for whatever reason, that is evolution. 
+
+What happens when nothing happens?
+Consider these two conversations between two friends:
+
+Friend 1: “The other day, I was riding my bike along main street, and three cars passed me by.”
+Friend 2: “So?”
+
+Friend 1: “The other day, I was riding my bike along main street, and three cars flew over me.”
+Friend 2: “SAY WHAT???”
+
+http://replygif.net/558
+
+In science, just as in life, a phenomenon is interesting to the extent that it is unexpected. (Coincidentally, this is also the reason why life gets boring as you get older unless you continuously immerse yourself in new experiences, and learn new things.) Thus, for a scientific phenomenon to be called interesting, you need to know what to expect. 
+
+In science, this idea is conceptualized in the null model. The null model states how a system behaves, given what you know about the system. This is an enormously important concept. Your brain is constantly scanning the world and comparing it to the null models you hold in your head. In fact, you do this subconsciously, which is why you would run away from a Tiger in a supermarket without having to think about it: your observation (“there is a Tiger staring at me from the dairy section”) is very different from your null model (“there should be no animal, and certainly no Tiger, in any section of a supermarket”), raising your mental red flags.
+
+The null model in evolution is called the Hardy-Weinberg principle, named after two mathematicians G.H. Hardy and Wilhelm Weinberg. On it’s surface, it’s quite simple - so simple in fact, that Hardy was a bit embarrassed for biologists that they hadn’t figure this out themselves. In 1908, he wrote: 
+
+“To the Editor of Science: I am reluctant to intrude in a discussion concerning matters of which I have no expert knowledge, and I should have expected the very simple point which I wish to make to have been familiar to biologists. However, some remarks of Mr. Udny Yule, to which Mr. R. C. Punnett has called my attention, suggest that it may still be worth making…”
+
+(The modern equivalent, tweet-sized version would be: I can’t believe you haven’t figured this out yet, so here we go…. ht @udny_yule, via @rc_punnet)
+
+The Hardy-Weinberg principle states that under certain assumptions - which we will get to in a moment - both the frequencies of alleles, as well as the frequencies of genotypes (which are simply combinations of alleles), will remain constant from generation to generation. It then goes on to state what the frequencies are. 
+
+Before we dig into the details, let’s remind ourselves why the Hardy-Weinberg principle is important. It’s important because it is the evolutionary null model against which you can compare your observations. If your observations don’t fit with what Hardy-Weinberg predicts, something interesting could be going on that warrants further investigation. It’s for this very reason that practically every single evolutionary or ecological study compares their finding to what is expected given the Hardy-Weinberg principle.
+
+The normal version of the Hardy-Weinberg principle assumes diploid organisms (most animals, including humans, are diploid). Being diploid means having two copies of each gene, one from the mother and one from the father. You, just like any human being, have about 21,000 genes. Every single cell of your roughly 1,000,000,000,000,000 cells contains two copies of each of these genes - the one set you inherited from your mother’s egg, and the other set you inherited from your father’s sperm cell that managed to inseminate the egg. 
+
+Now consider a single gene. If there is only one allele - i.e. only one version - of that gene in the population, nothing interesting can happen. You, just like everyone else, would have two copies of that allele, and so would your children, and their children, and so on. However, let’s assume there are two alleles in the population, which we denote as A1 and A2. You could have inherited A1 from both parents, in which case you would have two copies of A1. In that case, we would say your genotype (for this particular gene) is A1/A1, and because both of your copies are identical, you’d be homozygous for the A1 allele. You could have inherited A2 from both parents, in which case your genotype is A2/A2, and you’re homozygous for the A2 allele. Or, you could have inherited A1 from one parent, and A2 from the other, in which case your genotype is A1/A2, and you are heterozygous. What I just described is the simplest model of evolutionary genetics - the so-called one locus, two alleles model, where locus just stands in as a fancy term for gene (think of it as the address of the gene in the genome). Given that you have 21,000 genes, and most genes have a lot more than two alleles, things are usually a bit more complicated than this simple model would predict. However, you’ll be surprised just how much one can deduce and learn from this simple one gene, two alleles model.
+
+If you would randomly sample a few individuals from a population, and look at their genotype for the A gene, you could easily calculate allele and genotype frequencies. Say you sampled 100 individuals, and you found that 15 of those individuals have genotype A1/A1, 35 have genotype A2/A2, and the remaining 50 have genotype A1/A2, then you could deduce the following genotype frequencies:
+
+
+A1/A1: 15% (15 out of 100 genotypes)
+A1/A2: 50% (50 out of 100 genotypes)
+A2/A2: 35% (35 out of 100 genotypes)
+
+Because you know each genotype, you can also deduce the following allele frequencies (knowing that there are 200 alleles in 100 diploid individuals):
+
+A1: 40% (80 out of 200 alleles - 30 from the 15 A1/A1 individuals which each have two A1 alleles, and 50 from the 50 A1/A2 individuals which each have one A1 allele).
+A2: 60% (120 out of 200 alleles - 70 from the 35 A2/A2 individuals which each have two A2 alleles, and 50 from the 50 A1/A2 individuals which each have one A2 allele).
+
+Since you know there are only two alleles in this population - A1 and A2, it would have been enough to calculate just the A1 frequency based on the genotypes: the A2 frequency must be 100% - A1 frequency (and vice versa).
+
+To simplify matters, we’ll assume that your sample perfectly captures that make up of the entire population. In fact, let’s just not care about absolute numbers anymore, and simply assume an infinite population size, so we can easily calculate with just the frequencies. 
+
+In fact, what I’ve just done is to establish one of the key assumptions of the Hardy-Weinberg principle - that of infinite population size. We make this assumption not just because it makes the math easier, but also because we’ll see later that finite population sizes can have quite dramatic effects on evolution. 
+
+At this point, you might shake your head and say “that doesn’t make much sense - all populations are finite”, and you would of course be right. But the purpose of the Hardy-Weinberg model - or any model really - is not to perfectly capture reality. It is to capture a few essential features of reality into a simple model in the hope that you can understand why the model behaves the way it behaves. From there on, you can go on and add more realistic features one at a time, in order to understand their effects individually. The best analogy I can offer is that of a map. A good model is like a good map - of course it does not capture all the details, and of course it is a caricature of the real world, but that is the point. A good map captures the essence of your surroundings so that you can easily find your way around. A perfect map would be a 1:1 replica of the real world, and thus not perfect at all (in fact it would be completely useless, as is beautifully illustrated in Lewis Carroll's Sylvie and Bruno Concluded, which features a fictional map that had "the scale of a mile to the mile”).
+
+Let’s continue our population study. In the Hardy-Weinberg world, what would the genetic makeup of the population look like in the next generation? To calculate this, we introduce a few more simplifying assumptions: first, the population has non-overlapping generations, which means that as one generation is born, the old generation dies. There is only ever one generation. Second, reproduction is sexual (i.e. no cloning), but there are no males or females, just hermaphrodites (both sexes). Third, mating is completely random, just like molecules randomly bouncing into each other. Also, no other process (mutation, selection, etc.) is in place.
+
+Arguably, this is very strange world these Hardy-Weinberg creatures live in - a world of infinite nothingness, other than the genotypes (hence the title of this chapter). But once again, this is a map-like model, where we reduce everything to a necessary elements.
+
+The next generation can now be calculated as follows: each of the infinite number of individuals will make infinitely many gametes (eggs or sperms if they were male or female), and since none makes less or more than the other, the frequencies of alleles will remain the same: the A1 allele will be just as frequent as before (40%). The A2 alleles will be just as frequent as before (60%). In short, no evolution will occur, by our simple definition of evolution (the change of allele frequencies in a population over time). But what will happen with the genotype frequencies? Since mating is random, you can imagine the process like picking marbles from a infinitely large jar of black and white marbles, with the colors corresponding to the alleles. This jar contains 40% black marbles, and 60% white marbles. To create a new offspring individual, you have to pick two marbles (because individuals are diploid). The chance that you pick two black marbles in a row is 0.4 * 0.4 = 0.16. Thus, 16 out of every 100 individuals will have the A1/A1 genotype. The chance that you pick two white marbles in a row is 0.6 * 0.6 = 0.36, which means 36 out of every 100 individuals will have the A2/A2 genotype. Because there is only one genotype left - A1/A2, you know that 100 - (16 + 36) = 48 out of every 100 individuals will have the A1/A2 genotype. But you could also have calculated this with probabilities. A black and white marble combination can come about by either picking a black marble first and a white marble second (0.4 * 0.6) or the other way around, i.e. a white marble first and black marble second (0.6 * 0.4). Each of these probabilities is 0.24, and summed up they are 0.48, as expected. 
+
+We’ve just established that the genetic makeup of the next generation is going to be 16% of genotype A1/A1, 48% of genotype A1/A2, and 36% of genotype A2/A2. That’s a bit different from our previous generation, which is interesting. Wonder what will happen in the next generation? Let’s find out! (Spoiler alert: it’s going to be short and interesting).
+
+We said before that the allele frequencies haven’t changed. But yet, we have slightly different frequencies for the genotypes. Is that possible? Let’s double check the allele frequencies which we would executed based on the new genotype frequencies. To make this more intuitive, let’s again assume you collect a perfectly random and representative sample of 100 individuals:
+
+A1: 40% (80 out of 200 alleles - 32 from the 16 A1/A1 individuals which each have two A1 alleles, and 48 from the 48 A1/A2 individuals which each have one A1 allele).
+A2: 60% (120 out of 200 alleles - 72 from the 36 A2/A2 individuals which each have two A2 alleles, and 48 from the 48 A1/A2 individuals which each have one A2 allele).
+
+Check. Ok, so let’s go ahead and calculate the next generation. Let’s use the jar analogy again. Again, the jar contains 40% black marbles, and 60% white marbles. Again, to create a new offspring individual, you have to pick two marbles (because individuals are diploid). Again, the chance that you pick two black marbles in a row is 0.4 * 0.4 = 0.16.
+
+Wait a minute. Didn’t we just do that before? Oh yeah, we did. We calculated genotype frequencies based on allele frequencies. And since the allele frequencies did not change, we will get the exact same numbers for the genotype frequencies as before. Not only for the next generation, and the generation after the next, and the generation after that, but - forever.
+
+Whoa. 
+
+You just reached an equilibrium - the Hardy-Weinberg equilibrium. Here, both allele frequencies and genotype frequencies stay the same, forever. But everything went so fast! It just took one generation to get into this equilibrium. Is that normal? What if we had started out at the same allele frequencies (40% and 60%), but with different genotype frequencies? Say we had started at 20% A1/A1, 40% A1/A2, and 40% A2/A2 genotype frequencies. Well, it does’t matter - since the allele frequencies are the same (40% and 60%), the genotypes we will calculate will follow the same logic as described above with the marble jars. No matter where you start from, you will reach Hardy-Weinberg equilibrium in a single generation.
+
+This is an important insight from a biological perspective. From a mathematical perspective, this was simple (or trivial, as mathematicians like to call everything), which is why Hardy as so high-nosed about the whole affair. The reason why it is important from a biological perspective is because of what it says: that in the absence of evolution (which means no change in allele frequencies), the genotype frequencies must be in Hardy-Weinberg equilibrium. Even if they aren’t at present, they will be in the next generation, which, in the grand scheme of things and over evolutionary timescales, is now. This, then, is what happens when nothing happens.
+
+From these considerations follows an interesting insight, brining us back full circle to our null model: if the genotype frequencies you find in a population are not at Hardy-Weinberg equilibrium, something interesting must be going on. Something must be different. Some of the assumptions that we established above must be violated. 
+
+What does boring look like?
+
+We have just established that things are boring at Hardy-Weinberg equilibrium. Maybe that was why biologists hadn’t figured this out earlier - nothing in biology is ever boring. They are boring in the sense that genotype frequencies stay the same. But why is that boring? It’s boring because everything you see in the living world around you is an expression of a genotype. It would be a huge mistake to think that that’s all, that everything is just genes, and nothing more. We know very well that the environment and other non-genetic factors play a big role in determining the development, shape, form, and behavior of an organism. But living organisms are ultimately built with the blueprint of a genotype, and different genotypes will generally result in different organisms. (The technical term here is phenotype: a phenotype is the organism that a genotype produces in its given environment.) Thus, the boundless diversity and beauty of nature, with its endless flow of forms, shapes and colors, can only come about if there is genetic diversity. In the Hardy-Weinberg world, nothing ever changes, everything stays predictably constant for eternity. If that doesn’t qualify as boring, I don’t know what would.
+
+But boring has it’s benefits too - it’s predictable, and easy to quantify, which is what we will do next. Let’s formalize the Hardy-Weinberg principle in mathematical terms, so that we can develop a short program that helps us visualize what’s going on.
+
+We are going to denote the allele frequency of A1 as p, and the allele frequency of A2 as q = 1-p. The expected frequency of the genotypes is then as follows:
+
+A1A1: p * p = p2
+A1A2: p * q + p * q = 2pq
+A1A1: q * q = q2
+
+Since these are all the genotypes there are, these three frequencies need to add up to 1. Let’s verify that by replacing q = 1-p
+
+p2 + 2pq  + q2 =
+p2 + 2p(1-p)  + (1-p)2 =
+p2 + 2p - 2p2  + (1 - 2p +p2) = 1
+
+Code
+
+The title of this book is “Nature, in code”. We just described a natural processes (however artificial), so let’s simulate that process in code. Because this is the first time we do this, this section is a little longer than future code sections. If you don’t understand everything completely on the first read, don’t worry - the material is dense, and if you have never programmed before, many concepts will seem alien. In that case, I recommend re-reading this sections now and again, until it truly clicks. 
+
+We are going to use javascript throughout this book. If you know anything about programming languages at all, you might be surprised at this choice. Javascript is typically associated with dynamics webpages, which it was originally designed for, and it isn’t very popular yet in scientific computing - but that doesn’t really matter. What matters is that it’s a modern, object oriented language, and it’s easy to get started with, which is a substantial benefit. In addition, every browser runs javascript out of the box, and since every personal computer and every smartphone has a browser installed, javascript is ubiquitous. There are an estimate 2 billion personal computers in the world, and about 2 billion smartphones. In short, the code in this book - and javascript in general - runs on about 4 billion devices, today, without anyone needing to install anything. That’s pretty neat.
+
+(If you think about getting serious with scientific computing in the future, you’ll find it very easy to switch from javascript to other languages like Python, C++, or Java).
+
+The first thing you need to create is a document the holds your code. Javascript is typically embedded in an HTML document, and we’ll follow that convention, although it isn’t strictly necessary. An HTML document is simply a plaint text file with the file ending .html or .htm. So go ahead, and create a file called example.html in the text editor of your choice. You can use a plain vanilla text editor such as TextEdit if you’re on a Mac - whatever editor you choose, just be sure it is in plain text mode.
+
+Then, enter the following HTML code:
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Nature, in code</title>
+    </head>
+    <body>
+        Hello, nature.<br>Nice to be with you.
+    </body>
+</html>
+
+The indentations aren’t required, but they make the code easy to read. Save this document, and open it in the browser. You should see the following:
+
+
+
+You’ve just created a simple HTML document, which you can use as a template for the rest of this book. HTML stands for Hypertext Markup Language, and can be interpreted by any browser. In fact, every webpage you’ve ever looked at (many, I’m sure) is written in HTML. 
+
+HTML is a set of tags, like <body> and <title>. If you load an HTML document in a browser, the browser will read the HTML, and render a page according to the HTML specifications (if you’re curious, here is the latest official specification: http://www.w3.org/TR/html401/). We won’t be spending much time talking about HTML, but it’s worthwhile understanding the basics. It is, after all, the markup language that the entire web is based on. 
+
+Let’s go quickly through the HTML document above. It starts with a so-called DOCTYPE declaration: <!DOCTYPE html>. This tells the browser “Hey, I’m an HTML document”. Truth be told, the browser could live without it, but it’s good practice. (In fact, the browser is the most forgiving piece of software you’ll ever encounter - it renders even the most broken HTML. Be thankful.). The first tag, the <html> tag contains all the content of the document. Notice how it closes at the end of the document using </html>. This pattern - <tag>content</tag> - is very common in HTML, and the content can be other tags as well, which themselves can contain other tags, and so on. The next tag is the <head> tag. It opens with <head>, contains some content, and later closes with </head>. The head specifies a number of things that are not directly rendered on the screen, such as the title of the document, which itself is surrounded by the <title> tag. Further below, the <body> tag contains the content that should be rendered on the screen. In our case, we just want to  render two lines of text. The line break is forced with the <br> tag, and because the <br> tag does not contain any content, no closing tag is necessary.
+
+Now - how does one program in HTML? The simple answer is one doesn’t - HTML is a markup language, not a programming language. The makers of the first commercially successful browser, Netscape, realized that the ability to have a programming language running in a browser could be quite powerful - it would allow for dynamic content, which wasn’t possible with pure HTML. They added javascript, and the rest is history. It’s somewhat ironic that a language that was implemented in a few weeks, with the goal of making webpages a little interactive, is now becoming the most common programming language on the planet. (Note also that javascript has nothing to do with the programming language Java - the name was just a marketing play on the rising popularity of Java at the time).
+
+In order to use javascript, you need to put your javascript code within a <script> tag, like so:
+
+<script type=“text/javascript”>
+    console.log(“My first line of javascript”);
+</script>
+
+It doesn’t really matter where you add the script tag, but it’s mostly found within the <head> tag. We’ll talk about these lines of code in a second, but first, go ahead and put them in the <head> tag of your document, like so:
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Nature, in code</title>
+        <script type="text/javascript">
+            console.log("My first line of javascript");
+        </script>
+    </head>
+    <body>
+        Hello, nature.<br>Nice to be with you.
+    </body>
+</html> 
+
+If you save your document and reload it in the browser, you won’t see any change. In order to see the effect of this single line of javascript, you need to open the console in the browser. In Chrome, select View - Developer - JavaScript Console, and you will see the following: 
+
+
+Nice! So what just happened?
+
+We added a <script> tag, which is the tag that contains our javascript code. Before we get to that, take a close look at the opening tag, which reads
+
+<script type=“text/javascript">
+
+What we’ve done here is to add a so-called attribute to the tag (type in this case) with a value of “text/javascript”. Generally, HTML tags can have many different attributes, and if you’ve skimmed the HTML documentation above, you’ve noticed that attributes are a major part of the HTML specifications. You could almost go as far as saying that HTML without the attributes is practically useless, since the effect and behavior of most tags depends completely on their attributes and their values. In the present example, the type attribute specifics the type of scripting language. In principle, browsers could be able to interpret multiple scripting languages, but currently javascript is the only one that’s supported by all modern browsers. If you wouldn’t add the type attribute to the script tag, everything would still work - that’s because “text/javascript” is the default value for the type attribute.
+
+Let’s move on to the actual javascript code, which reads
+
+console.log("My first line of javascript");
+
+This simple line already contains a lot of essential features of any programming language, such as objects, methods, and parameters. If none of these things make any sense to you right now, that’s absolutely fine - we’ll be getting there soon. In any case, what this line does is to print the text My first line of javascript in the console. The console is simply a somewhat hidden javascript output in the browser that is very helpful for debugging (i.e. fixing errors or just generally trying to find out what’s going on with the code). 
+
+So how would we implement the Hardy-Weinberg principle in code? Let’s start with declaring there variables that will store that genotype frequencies, and initialize them with values that we used in the example above:
+
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 - (a1a1 + a2a2);
+
+Let’s walk through this line by line. On the first line, we define a variable a1a1, and assign it the value 0.15. Variables are declared using the var keyword (keywords are simply words predefined by the language, and since these words have very specific meanings, you shouldn’t use them for anything other than what they were intended for). You variable name can be anything you like, but it needs to start with a letter, and be followed by other letters, numbers, or underscore. You’re not allowed to use any of these keywords for variable names: break, case, class, catch, const, continue, debugger, default, delete, do, else, export, extends, finally, for, function, if, import, in, instanceof, let, new, return, super, switch, this, throw, try, typeof, var, void, while, with, yield. 
+
+The assignment itself is done using the = operator. Finally, the line ends with a semicolon, which terminates the statement. You would be forgiven for not using semicolons, and your code would still execute correctly, but it is dangerous practice that might introduce unexpected errors, so always use them. Line two does the same thing, except we declare another variable, a2a2, and assign it the value 0.35. As you surely have guessed, these two variables denote the genotype frequencies of the two homozygotes A1A1 and A2A2. The genotype frequency for the heterozygotes is stored in the variable a1a2, and rather than assigning its value directly, we assign it by calculating it, using the previously defined variables a1a1 and a2a2. These three lines of code shouldn’t look all that different from regular algebra.
+
+Having just set up the genotype frequencies, let’s calculate the allele frequencies:
+
+var p = a1a1 + (a1a2 / 2);
+var q = 1-p;
+
+The variable p denotes the frequency of A1 alleles, which is simply the frequency of the A1A1 genotype (since they only carry A1 alleles) plus half of the frequency of the A1A2 genotype (since half of their alleles are A1). We then calculate q by simply subtracting p from 1; p and q need to add up to one because there are only two alleles in the population.
+
+I should highlight two subtleties in the first line of code. The first is that I am using parentheses to group the equation. Javascript uses the standard algebraic rules and would first divide a1a2 by 2.0 before the result to a1a1 even without the parentheses, just as algebraic rules dictate. However, I prefer to make these rules explicit with parentheses. Even more than the semicolons, explicit parentheses are just good style that makes your code clearer and prevents subtle errors in the future, when your code becomes more complex (which it most certainly will). The second subtlety is that I divided a1a2 by 2, rather than by 2.0. If you have any experience with other programming languages, that might raise a red flag. That’s because most programming languages have two numeric types, integer and floating point numbers, but javascript doesn’t. All numbers are floating point numbers. 2 is equivalent to 2.0, which avoids many numerical errors that plague other languages. 
+
+Combine these five lines and copy them into your script tag in your HTML file, like so:
+
+<script>
+    var a1a1 = 0.15;
+    var a2a2 = 0.35;
+    var a1a2 = 1 - (a1a1 + a2a2);
+
+    var p = a1a1 + (a1a2 / 2);
+    var q = 1-p;
+</script>
+
+Save the file, reload the page (be sure to have your console open), and you should see… nothing. That’s because we are not writing anything into the output. Your code is executed all right, but since we didn’t instruct javascript to write anything into the output, it won’t do it. So go ahead and add the following line:
+
+console.log("generation 0:\t" + a1a1 + "\t" + a1a2 + "\t" + a2a2);
+
+Using console.log as before, we’re writing text int our output. We’ll talk about this line in a second, but first, make sure that it works and save the file and reload the browser:
+Excellent, worked like a charm. The simple line above wrote our three genotype frequencies at generation 0 into the output. This line can teach us a few new ideas about javascript. The first thing to recognize is that we are calling a method, or a function (the two are not technically equivalent, but for almost all practical purposes, they can be treated as equivalent). A method is invoked, or called, by using its name and by supplying a number of arguments in parentheses, separated by commas. A method can take any number of arguments, including none, in which case your parentheses would be empty. So any of these examples are valid javascript:
+
+some_method();
+some_method(argument1);
+some_method(argument1, argument2);
+some_method(argument1, argument2, argument3);
+
+Somewhere, a method must be defined before you can call it. Javascript comes with a whole range of predefined methods (like console.log) that you will be able to use, and we’ll learn quite a few throughout this book. Oftentimes, however, you define your own method. In any case, by its definition, the method is usually quite clear about how many arguments it normally expects. 
+
+Above, we used 
+
+console.log("My first line of javascript");
+
+We were passing one argument to the method, namely “My first line of javascript”. In javascript, anything wrapped in single or double quotes is a so-called string which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, a1a1 (without any quote) refers to the variable a1a1, while "a1a1" is simply text. Similarly, "100" is simply text, and has no numerical meaning whatsoever, while 100 represents the actual number one hundred (remember why the number 100 isn’t at risk to be confused the variable 100? That’s right, because there is no variable 100 - all variable names must begin with a letter).
+In line with the example above, let’s try to pass one string as an argument to console.log. Say we’d like to output 
+
+generation 0:	0.15	0.5	0.35
+
+(values separated by tabs). 
+
+The problem is that some of this information is stored in variables, rather than as text. String concatenation to the rescue! In javascript, you can add string together using the + sign, like so:
+
+"hello " + "world"
+
+which would result in the string “hello world” (don’t forget the space character). But what happens when you this?:
+
+"hello " + a1a1
+
+What happens is that you get the string “hello 0.15”. That’s because javascript coerces numeric values to string values if one the operands is a string. This is actually a pretty handy feature that let’s you do things like   
+
+"generation 0:\t" + a1a1 + "\t" + a1a2 + "\t" + a2a2
+
+Which creates the string “generation 0:	0.15	0.5	0.35” (note that the string “\t” is interpreted as the tabular character).
+
+I wanted to show this example because we’ll be using string concatenation quite a bit throughout the book. However, it turns out the the method console.log takes any number of arguments, and will simply output their string representations, separated by spaces (rather than tabs), so let’s just replace our console.log line with 
+
+console.log("generation 0:", a1a1, a1a2, a2a2);
+
+and we’ll get the same quantitative output, but with more concise code.
+
+Now, let’s move on to the next generation. Let’s calculate the next generation, using the allele frequencies. They are easy to calculate:
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+This follows the logic described a few pages above, and it terms of javascript, there is nothing new here, with the exception perhaps that we are now reusing pervasively defined variables, and overwriting their values. We can now go ahead and output the new genotype frequencies using our line above (slightly modified to take into account that we’re at a new generation):
+
+console.log("generation 1:", a1a1, a1a2, a2a2);
+
+Your full code should now look like this (for the sake of brevity I will omit the <script> tag from now on):
+
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 - (a1a1 + a2a2);
+
+var p = a1a1 + (a1a2 / 2);
+var q = 1-p;
+
+console.log("generation 0:", a1a1, a1a2, a2a2);
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+console.log("generation 1:", a1a1, a1a2, a2a2);
+
+and the output is 
+Everything looking great, so let’s move on and… wait, what is this? 0.16000000000000003? This should just be 0.16 - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to javascript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in javascript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies in computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because javascript uses 64 bits to store floating point numbers, the rounding usually occurs at in insignificant place, as it does in 0.16000000000000003. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
+
+Back to our genotypes - we already know what will happen next generation, but just to be sure, let’s code it up. Once again, we will calculate the genotype frequencies using the following code:
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+console.log("generation 2:", a1a1, a1a2, a2a2);
+
+Go ahead and copy the lines from generation 1 and paste it four times, changing only the generation count. Your code will then look like this: 
+
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 - (a1a1 + a2a2);
+
+var p = a1a1 + (a1a2 / 2);
+var q = 1-p;
+
+console.log("generation 0:", a1a1, a1a2, a2a2);
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+console.log("generation 1:", a1a1, a1a2, a2a2);
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+console.log("generation 2:", a1a1, a1a2, a2a2);
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+console.log("generation 3:", a1a1, a1a2, a2a2);
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+console.log("generation 4:", a1a1, a1a2, a2a2);
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+console.log("generation 5:", a1a1, a1a2, a2a2);
+
+and your output will be:
+As expected, your genotype frequencies won’t change - under Hardy-Weinberg conditions, they are predetermined by allele frequencies which don’t change.
+
+What we have just done, however, is considered very bad practice: copying and pasting code. This isn’t an issue of copyright - it is your code, after all. The issue is that you repeat yourself, and the exact same pieces of code are repeated time and time again. This is bad practice, because once you decide that something about this code needs to change, you will need to change it in all the places where you pasted the code, and it’s almost guaranteed that you will forget some places in the code, leading to nasty errors. Your code should follow the DRY principle: Don’t Repeat Yourself. Thankfully, javascript, like all other programming languages, provide a simple but powerful tool that helps you solve this problem: functions.
+
+We have already encountered functions, and have talked a little bit about their syntax. But now it’s our turn to write our own functions. In javascript, a function is defined as follows:
+
+function name(parameters) {
+    body
+}
+
+The indentation and the line breaks are optional, but it’s good practice and I highly recommend that you use this style. It makes the code more readable and, like so often, avoids subtle yet nasty errors.
+
+The keyword function is predefined by the javascript language. The name is up to you - function names follow the same rules as variable names, and it’s best to name the function according to what it does. The parameters are zero, one, or many variables for which values can be passed to the function when it is invoked (and as we’ve seen before, we will call these values arguments). Thus, a function is defined using parameters, and when it is invoked, it is given arguments. The body is the code that is executed when the function is invoked. Once that code is done executing, your program will continue executing the code where it was before it hit that function:
+
+// some code will be executed here before the function
+some_function(); // jump to the function and execute the code in the function
+// some code will be executed here after the function
+
+Functions, as their name suggests, encapsulate functionality. Almost all of your code will be functions. Ultimately, programming is nothing more than manipulating data, and functions are the places where the manipulations happen. They are the bread and butter of programming.
+
+In our code, we copy-pasted the code:
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+We should probably encapsulate this code in a function. What does this code do? It creates the next generation using allele frequencies, so let’s call it create_next_generation(): 
+
+function create_next_generation() {
+    a1a1 = p * p;
+    a1a2 = 2 * p * q;
+    a2a2 = q * q;
+}
+
+This function doesn’t take any parameters at the moment. As you can see, its body makes use of variables that were defined somewhere else before. We’ll talk about this in a moment. You can also see that I used a fairly long name for the function name. The benefit is that anyone who reads your code, including your future self, can instantly guess what the function does from its name alone. There are two widespread styles to name functions that contain multiple words. You can either separate the words by underscore, like I prefer to do, or you can use the so-called camelCase notation, where you don’t use underscores, but rather capitalize each new word like so: createNextGeneration. It’s up to you which style you choose. Javascript programmers have historically often used camelCase, but I simply find the underscore notation more readable, and will stick to it.
+
+Having encapsulated this functionality, we can now rewrite the code and simply replace the five occurrences of
+
+a1a1 = p * p;
+a1a2 = 2 * p * q;
+a2a2 = q * q;
+
+with 
+
+function create_next_generation() {
+    a1a1 = p * p;
+    a1a2 = 2 * p * q;
+    a2a2 = q * q;
+}
+
+which will lead to:
+
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 - (a1a1 + a2a2);
+
+var p = a1a1 + (a1a2 / 2);
+var q = 1-p;
+
+function create_next_generation() {
+    a1a1 = p * p;
+    a1a2 = 2 * p * q;
+    a2a2 = q * q;
+}
+
+console.log("generation 0:", a1a1, a1a2, a2a2);
+
+create_next_generation();
+console.log("generation 1:", a1a1, a1a2, a2a2);
+
+create_next_generation();
+console.log("generation 2:", a1a1, a1a2, a2a2);
+
+create_next_generation();
+console.log("generation 3:", a1a1, a1a2, a2a2);
+
+create_next_generation();
+console.log("generation 4:", a1a1, a1a2, a2a2);
+
+create_next_generation();
+console.log("generation 5:", a1a1, a1a2, a2a2);
+
+Much better, but not quite perfect yet. What if we would want to do this a hundred times, rather than just five times? Time for yet another concept (I did warn you this was going to be a dense chapter - but we’re almost done): iterations. Iterations can be used to repeat code a certain number of times, or until certain conditions are met. The most common iterator is the for loop. It’s forma syntax is as follows:
+
+for (initialization; condition; final-expression) {
+    code to be iterated
+}
+
+The initialization is executed once, in the beginning. Then, as long as the condition is met, the code to be iterated is executed. After each iteration, the final-expression is executed. In practice, the for loop often looks like this:
+
+for (var i = 0; i < 10; i=i+1) {
+    code to be iterated
+}
+
+You’ll see this construct over and over again, and after a while, it will become second nature. You will simply look at the for loop, and it a split second will realize that this code will be executed exactly ten times. Why is that?
+
+The initialization is 
+
+var i = 0
+
+Ok, nothing unusual here. Just think of i as a counter. Then, while the condition
+
+i < 10
+
+is true, the code to be iterated will be executed. How often is that? Well, if you wouldn’t touch i at all again, you would be stuck in an infinite loop - i would always be 0, and hence the condition would always be true. (If you ever visit the original Apple campus in Silicon Valley, note the street address: 1 Infinite Loop). However, after every code iteration, the final-expression is executed, which is 
+
+i=i+1
+
+What this means is that i is incremented by 1, and thus, after then tenth iteration, i is 10, at which point the condition i < 10 is not true anymore, and the loop will stop.
+
+Back to our code - taking a close loop, we can see that the code 
+
+create_next_generation();
+console.log("generation 1:", a1a1, a1a2, a2a2);
+
+Is repeated 5 times, with the exception of the generation count. So let’s set up a for loop that executed this code 5 times, like so:
+
+for (var i = 0; i < 5; i=i+1) {
+    create_next_generation();
+    console.log("generation 1:", a1a1, a1a2, a2a2);
+}
+
+This works, but will always print generation 1, which is not what we want. Thankfully, we have access to i in the loop, and using string concatenation, we can write the iteration as follows:
+
+for (var i = 0; i < 5; i=i+1) {
+    create_next_generation();
+    console.log("generation “+(i+1)+”:", a1a1, a1a2, a2a2);
+}
+
+Our full code now reads:
+
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 - (a1a1 + a2a2);
+
+var p = a1a1 + (a1a2 / 2);
+var q = 1-p;
+
+function create_next_generation() {
+    a1a1 = p * p;
+    a1a2 = 2 * p * q;
+    a2a2 = q * q;
+}
+
+console.log("generation 0:", a1a1, a1a2, a2a2);
+
+for (var i = 0; i < 5; i=i+1) {
+    create_next_generation();
+    console.log("generation "+(i+1)+":", a1a1, a1a2, a2a2);
+}
+
+Wow, look at you! Fancy code you’ve got there! Using variables, algebra, functions, string concatenation and iterations to show that Hardy and Weinberg were correct. And here, almost at the end of chapter 1, I want to share a deep truth about science and programming: The deepest understanding of a scientific principle comes from putting it in code. When you express a scientific idea in code, you have to be crystal clear about your assumptions, and how the idea should work exactly. You can’t fool yourself or others with code, and there will never be any misunderstandings. Code provides the ultimate clarity.
+
+You may now say, hang on a second. All you are showing here is that if you the same allele frequencies, you will of course get the same genotype frequencies. Who says that allele frequencies will stay the same? Excellent point, I would answer. Let’s modify our code to take this into account. Let us indeed calculate the allele frequencies too, from genotype frequenices, rather than assuming they are fixed. I’m going to create a function calculate_allele_frequencies as follows: 
+
+function calculate_allele_frequencies() {
+    p = a1a1 + (a1a2 / 2);
+    q = 1-p;
+}
+
+And then I’m going to call that function right before generating the genotype frequencies of the next generation:
+
+function create_next_generation() {
+    calculate_allele_frequencies();
+    a1a1 = p * p;
+    a1a2 = 2 * p * q;
+    a2a2 = q * q;
+}
+
+(yes, you can call functions from within other functions). Our code is now a little longer, but clearer about our assumptions. The results will still be the same.
+
+While everything works as it should, the output is still ugly. Let’s clean up these rounding errors. As I mentioned above, javascript in the client comes with a whole package of functionalities encapsulated in methods. One such method is Math.round(x) which returns the value of x rounded to the nearest integer. That’s not what we want, and unfortunately there is no built-in function that takes a number and the number of decimals of precision you’d want it to return, so we will have to write one:
+
+function round_number(value) {
+    return Math.round(value *100) / 100;
+}
+
+This function takes one argument, value, and returns the number rounded to two decimal places.  Before explaining how it works, we need to talk about a new concept: that of a return value. You’ve certainly noticed the return keyword in the function. What does it do? The keyword return has two effects: first, it does indeed “return” the value that immediately follows it - in this case, Math.round(value *100) / 100. But to whom does it return it? To whomever called the function in the first place. This will make more sense in a moment. Second, it terminates the function. Most of the time, you will find the return statement at the end of the function - but sometimes, you’ll find it much earlier. Whenever and wherever your function hits a return statement, it will return the value following the return statement, and terminate the function’s execution, jumping back to where the function was called. A return statement isn’t always necessary - as you can see, this is the first time I’ve used in this chapter.
+
+Going back to our round_number function, how does this work? It’s a simple idea. Let’s say you have a number, like 3.4567, which you want to round to two decimals. First, multiply it by hundred, shifting the decimal point to the right by two: 345.67. Now, round the number using the built-in Math.round method: 346. Great, you just got rid of the decimals you did not care about. Now, shift the decimal point back to the left by two, which you can do by dividing by 100 again: 3.46. Done. Now, we could stop here and say our function does what it is supposed to do, namely to round a number to 2 decimals. But what if we want to round it to 3 decimals, or to 4, later on, either in this or another project? Let’s go ahead and make the function more flexible, by adding a second parameter that I’m going to name decimals:
+
+function round_number(value, decimals) {
+    var shifter = Math.pow(10,decimals);
+    return Math.round(value * shifter) / shifter;
+}
+
+What I’m doing here is simply to replace 100, which was the number to shift the decimal point two positions to the right and to the left (because 10^2 = 100), with the more generic version 10^decimals. Thus, if you pass in 3 as an argument for decimals, the shifter will be 1000, shifting the decimal point three positions to the right and to the left. There is always a danger to make your method too generic, and to end up with super flexible functions that take a lot of arguments. Don’t be tempted - whenever you think you’ll keep reusing a function, but with slightly different values, making a function more generic is a great idea. But generality often makes your code needlessly complicated, and you’ll need to find a good balance. A general rule of thumb is that when you start copying parts of functions around, you should think about making the function more generic and reusable.
+
+Now, all we need to do is to call this function whenever we want to print a rounded number, which happens in our for loop:
+
+console.log("generation "+(i+1)+":", round_number(a1a1,2), round_number(a1a2,2),
+		round_number(a2a2,2)); 
+
+Our final code of this chapter looks as follows: 
+
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 - (a1a1 + a2a2);
+
+var p = a1a1 + (a1a2 / 2);
+var q = 1-p;
+
+function calculate_allele_frequencies() {
+    p = a1a1 + (a1a2 / 2);
+    q = 1-p;
+}
+
+function create_next_generation() {
+    calculate_allele_frequencies();
+    a1a1 = p * p;
+    a1a2 = 2 * p * q;
+    a2a2 = q * q;
+}
+
+console.log("generation 0:", a1a1, a1a2, a2a2);
+
+for (var i = 0; i < 5; i=i+1) {
+    create_next_generation();
+    console.log("generation "+(i+1)+":", round_number(a1a1,2), round_number(a1a2,2),
+          round_number(a2a2,2));
+}
+
+function round_number(value, decimals) {
+    var shifter = Math.pow(10,decimals);
+    return Math.round(value * shifter) / shifter;
+}
+
+leading to the following result:
+
+
+
+
+
+
+
+
+
+which is exactly what we wanted. (For the record, we could have used the round_number function in the first console.log statement too - I didn’t bother because it was simply printing the values I had defined above in the code).
+
+I want to introduce one more concept before ending this chapter: that of a scope. If you take a look at the calculate_allele_frequencies and create_next_generation functions, you notice that we use the variables that store the genotype frequencies (a1a1, a1a2, and a2a2) and the allele frequencies (p and q). The reason why we can do this is that the variables have been defined in the global scope - we can access them globally, i.e. from anywhere in our program. Any variable that is defined outside a function is in the global scope. This is very convenient - so convenient, that you probably haven’t even noticed it. It just feels natural. However, be warned that as programs get more complex, the global scope is a dangerous concept. Some key variables could be overwritten from anywhere in the code. Since the programs in this book are going to be relatively short, this won’t be a big issue, but I want you to be aware of the danger. 
+
+As you have probably guessed, there is also a local scope. Variables that are defined with the keyword var inside a function are in the local scope of that function. You can use them in the function, but nowhere else. For example, the variable shifter in the round_number function is a local variable. You can’t use it anywhere else, other than it that particular function. However, here’s the danger zone: Variables that are defined without the keyword var inside a function are still in the global scope! 
+
+Consider this short code snippet:
+
+function test1() {
+    foo = 4;
+}
+
+function test2() {
+    console.log(foo);
+}
+
+test1();
+test2();
+
+What happens when you run this code? Because the variable foo has been defined without the keyword, it is in the global scope, which means that you have access to it from the function test2. The program will output 4.
+
+If you add the var keyword when you declare foo, like so:
+
+function test1() {
+  var foo = 4;
+}
+
+function test2() {
+  console.log(foo);
+}
+
+test1();
+test2();
+
+then foo will be in the global scope of the function in which it is declared (i.e. test1), and upon trying to access it anywhere outside that function - e.g. in test2 - you would see this error:
+
+
+
+What does all of this mean for you in practice? It means you should always define your variable with keyword var. Variables declared outside functions are then in the global scope, and variables defined inside functions are in the local scope of that function. Follow this simple rule, and you’ll likely never have to think about scope problems again.
+
+And with that, the chapter is finished. If you feel like your head is spinning a little, don’t worry. I suggest you take a break, and come back and read the chapter again. Both the biological concepts and the code concepts introduced in this chapter are of fundamental importance throughout the rest of the book, so be sure to understand them before moving on.
+
+What you’ve learned in this chapter:
+
+The definition of evolution
+The concept of alleles and genotypes
+The Hardy-Weinberg principle
+How to write simple javascript programs using variable, functions, and iterations.
+
+// TODO plot possible genotype frequencies, given allele frequencies
+// test for hardy weinberg frequencies using x2 test

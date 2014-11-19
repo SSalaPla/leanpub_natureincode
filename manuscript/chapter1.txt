@@ -1,2 +1,10 @@
 # Chapter 1
-Hello, world!
+Introduction
+
+This is a book about biology. It is a also a book about programming. And it’s probably unlike any book you’ve ever read.
+
+I have two goals in mind for the reader of this book. The first goal is that after reading this book, you will know quite a bit more about nature than you did before, and perhaps in unexpected ways. If I succeed, you will understand some of the processes that shape our lives, the lives of everything that has ever lived, and of everything that will ever live on this planet. The second goal is that you learn to use code to re-create these processes in your computer. 
+
+I assume very little about what you should know in order to read this book, but I still want to spell it out to avoid disappointments. You should be able to think critically. You should be able to think logically. You should be willing to be inspired. And you should have a computer. By that, I mean anything that allows you to write emails on. Your smartphone, amazingly, has the computational power to run the programs in this book without running a sweat. But typing on smartphones is usually a hassle, and I would recommend something with a bigger screen and a decent keyboard for best results. An internet connection will be helpful most of the times. I also assume that your computer has a modern browser. 
+
+All set up? Let’s get started.
