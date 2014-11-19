@@ -99,7 +99,7 @@ We are going to denote the allele frequency of A1 as p, and the allele frequency
 
 |Genotype  |Frequency |
 |----------|------------------------------------------------|
-| A1/A1    |p * p = p^2|
+| A1/A1    |p * p = p<sup>2</sup>|
 | A1/A2    |p * q + p * q = 2pq|
 | A2/A2    |q * q = q^2|
 
