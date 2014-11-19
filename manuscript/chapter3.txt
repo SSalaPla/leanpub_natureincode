@@ -1,0 +1,95 @@
+#3. Genetic Drift
+
+In the previous chapter, we have established that under Hardy-Weinberg assumptions - infinite population size, random mating, no mutation or selection, etc. - nothing ever changes. Allele frequencies stay the same forever, and if the genotype frequencies are not currently at Hardy-Weinberg frequencies, they will get there in a single generation, and then remain there forever.
+
+It’s now time to relax some if these assumptions. The first assumption that we are going to relax is that of the infinite population size. We are now going to assume that populations are finite. It turns out that this has enormous effects for evolution. When populations are finite, chance effects will start to play a role. These chance effects are stronger when populations are smaller. It is intuitively easy to understand this. Suppose you toss a coin - you know that on average, it will come up heads half of the time, and tails the other half of the time. However, if you only toss the coin a few times, you can get very non-even distributions of heads and tails. Say you toss in ten times. It may end up tossing 5 heads and 5 tails (5-5), but you will often find yourself tossing 6-4, or 7-3. Sometimes you’ll even get 8-2 or 9-1, and even a 10-0, although very rare, wouldn’t be totally unexpected. If you now increase your coin tossing efforts by one order of magnitude, and toss your coin 100 times, you would notice that it’s very rare to get beyond 30-70, and you would hardly ever hit 20-80 or below. And in fact, getting tails or heads 100 times in a row is less likely than winning the lottery. Increase your coin tossing efforts again by a order of magnitude (1000 tosses), and anything less equal tun 450-550 becomes highly improbable.
+
+You get the idea: The more often you toss the coin, the closer you will get to the perfect equilibrium that you would expect. The implication of this is that small population sizes will be more prone to random chance effects than large populations. However, all finite population sizes are prone to chance effects, and over evolutionary timescales, even large population sizes where random chance effects are weak in the short term will eventually be show signs to these effects. When allele frequencies change over time (i.e. when evolution occurs) due to these random effects, we call this genetic drift.
+
+This is an important chapter. It’s important because it introduces the concept of randomness, a key concept in all of biology. One could even argue that the main difference between the dynamic of living systems (biological systems), and the the dynamics of non-living systems (chemical and physical systems) is randomness. The science of evolutionary biology has been dominated for a long time by the perspective of natural selection. Nowadays, we understand that natural selection is not the only process affecting evolution. Which force is more important for evolution - natural selection or genetic drift - is one of the great debates in contemporary evolutionary biology. But even those favoring natural selection would agree that randomness, and genetic drift, is a major force. In this chapter, we will shed some light on this force, and on its consequences.
+
+
+##Randomness
+
+Randomness is the idea of events occurring at random, by chance. If they happen by chance, it’s impossible to predict them. The more sophisticated term for randomness is stochasticity - random events are said to be stochastic. 
+
+While random events cannot be predicted, we can still say something about their probability of occurring. This is the main idea behind the theory of probability. For example, a fair coin comes up heads half of the time, and tails the other half of the time. While we can’t predict the outcome of a single coin toss, we still know that the chance, or probability, that the coin comes up heads, is exactly 50% (in reality, no coin is exactly fair, and the probability of heads is probably slightly lower or higher than 50%, but in a fair coin, the probability is 50% by definition). Because we know that each coin toss comes up 50% heads and 50% tail, we can calculate the probability that ten coin tosses come up heads 80% of time, and tails 20% of the time, for example. For any ten coin tosses, it is completely impossible to predict exactly how many will come up heads; but because we can calculate the probabilities of any outcome, we can at least get a good sense of what to expect. For example, we can calculate that the probability of 80% heads 20% tails is ((10*9)/2) / 2^10 = 4.39% (don’t worry about how to calculate this, but if you are interested, here is a good explanation: http://gwydir.demon.co.uk/jo/probability/info.htm). An outcome like this isn’t unlikely, but you wouldn’t want to bet the farm on it either.
+
+Before we get to the biology of randomness, I want to jump straight to code. The great thing about having fast computers is that we can simulate randomness over and over again, in a very short amount of time. This allows us to run millions of coin tossing experiments in a computer is a split second.
+
+In javascript, the quintessential method to produce randomness is Math.random(). It takes no arguments, but produces a random number between 0 and 1. Let’s try it out. Create a new html document with a <script> element, and log the output of the method like so:
+
+~~~~~~~~
+console.log(Math.random());
+~~~~~~~~
+
+Save and load the file in the browser, and take a look and the console output. Indeed, a random number between 0 and 1 has been generated. Verify this by reloading the page over and over again. You’ll notice that the number is different, every time you reload the page, as it should be. 
+
+Let’s go ahead and verify the claim I made. I claimed that Math.random() produces a random number between 0 and 1. If that is true, then the average output of Math.random() should be 0.5. To verify that, let’s use a for loop to create many random numbers, and then calculate the average of these numbers:
+
+~~~~~~~~
+var sum = 0;
+var repeats = 100;
+for (var i=0; i<repeats;i=i+1) {
+    sum = sum + Math.random();
+}
+average = sum / repeats;
+console.log("The average is", average);
+~~~~~~~~
+
+If you followed the examples in the previous chapters, this should now look familiar. At first, we are declaring two variables, sum and repeats. Then, we’re using a for loop to add to sum whatever Math.random() returns, summing up the random numbers. We do this exactly as many times as defined in the variable repeats. Then, we simply calculate and print the average.
+
+When I do this, I’m getting the and average of 
+
+~~~~~~~~
+0.533668438885361 
+~~~~~~~~
+
+Upon reload, I’m getting
+
+~~~~~~~~
+0.46173790065106
+~~~~~~~~
+
+Another reload gives me 
+
+~~~~~~~~
+0.4819509003055282 
+~~~~~~~~
+
+and so on. This isn’t very precise, so let’s maybe increase the number of repeats. You should be able to increase repeats to 100,000 without having your browser breaking a sweat. With 100,000 repeats, I’m now getting
+
+~~~~~~~~
+0.5000435156048741
+0.5006688627070328 
+0.4989869923099107 
+~~~~~~~~
+
+Already much closer. Try increasing your repeats by a factor of ten, for as long as your browser can handle it (stop when it takes a few seconds). On my laptop, I can go up to 1 billion repeats before I have to wait a few seconds, and then I’m getting
+
+~~~~~~~~
+0.499998771590113
+0.49996582762364633
+0.5000288064449279 
+~~~~~~~~
+
+As you can see, the more repeats, the closer we get to 0.5. However, keep in mind that floating point numbers have a limited accuracy, as discussed in the previous chapter. Usually, you won’t ever notice this, because the inaccuracy usually occurs at insignificant digits, but if you keep adding numbers, for example, the inaccuracy can potentially add up too. The point of this exercise was not to lead you astray with floating point accuracy, which you will probably never encounter as a problem. The point was to introduce you to Math.random() - and to demonstrate how powerful our computer is. In just a few seconds, it generated a billion numbers and added them up!
+
+Now let’s go back to the previous coin tossing example. I mentioned that if I there a fair coin ten times, the probability of 80% heads 20% tails is 4.39%. How can we verify this? First, let’s implement the coin tossing. Create a new HTML file and have it execute the following script:
+
+~~~~~~~~
+var throws = 10;
+var heads = 0;
+var tails = 0;
+for (var i=0; i<throws; i=i+1) {
+    if (Math.random() <= 0.5) {
+        heads = heads + 1;
+    }
+    else {     
+        tails = tails + 1;   
+    }
+}
+console.log(heads,”heads",tails,"tails");
+~~~~~~~~
+
+This should give you an output like 4 "heads" 6 “tails”, and on reload, the output should change (although not always - by chance you might get the same outcome two times in a row).
