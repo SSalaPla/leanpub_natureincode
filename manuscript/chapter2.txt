@@ -725,7 +725,8 @@ test2();
 
 then `foo` will be in the global scope of the function in which it is declared (i.e. `test1()`), and upon trying to access it anywhere outside that function - e.g. in `test2()` - you would see this error:
 
-
+{width=50%}
+![](images/ch_2_error.png)
 
 What does all of this mean for you in practice? It means you should always define your variable with keyword `var`. Variables declared outside functions are then in the global scope, and variables defined inside functions are in the local scope of that function. Follow this simple rule, and you’ll likely never have to think about scope problems again.
 
