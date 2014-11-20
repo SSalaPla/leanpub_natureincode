@@ -197,7 +197,16 @@ Let’s move on to the actual JavaScript code, which reads
 console.log("My first line of JavaScript");
 ~~~~~~~~
 
-This simple line already contains a lot of essential features of any programming language, such as objects, methods, and parameters. If none of these things make any sense to you right now, that’s absolutely fine - we’ll be getting there soon. In any case, what this line does is to print the text `My first line of JavaScript` in the console. The console is simply a somewhat hidden JavaScript output in the browser that is very helpful for debugging (i.e. fixing errors or just generally trying to find out what’s going on with the code). 
+This simple line already contains a lot of essential features of any programming language, such as objects, methods, and parameters. If none of these things make any sense to you right now, that’s absolutely fine - we’ll be getting there soon. In any case, what this line does is to print the text `My first line of JavaScript` in the console. The console is simply a somewhat hidden JavaScript output in the browser that is very helpful for debugging (i.e. fixing errors or just generally trying to find out what’s going on with the code).
+
+I'd like to add a second line to our code as follows:
+
+~~~~~~~~
+console.log("My first line of JavaScript");
+// this is a comment - it won't be executed
+~~~~~~~~ 
+
+It's sometimes important to leave a clarifying comment in the code - either for yourself, or for someone else who might work on the code later on. In JavaScript, everything after a double slash (`//`) on a line is interpreted as a comment, rather than as executable code.
 
 So how would we implement the Hardy-Weinberg principle in code? Let’s start with declaring there variables that will store the genotype frequencies, and initialize them with values that we used in the example above:
 
@@ -421,40 +430,49 @@ some_function(); // jump to the function and execute the code in the function
 // some code will be executed here after the function
 ~~~~~~~~~~
 
-Functions, as their name suggests, encapsulate functionality. Almost all of your code will be functions. Ultimately, programming is nothing more than manipulating data, and functions are the places where the manipulations happen. They are the bread and butter of programming.
+Functions, as their name suggests, encapsulate functionality. Almost all of your code will be inside of functions. Ultimately, programming is nothing more than manipulating data, and functions are the places where the manipulations happen. They are the bread and butter of programming.
 
 In our code, we copy-pasted the code:
 
+~~~~~~~~
 a1a1 = p * p;
 a1a2 = 2 * p * q;
 a2a2 = q * q;
+~~~~~~~~
 
-We should probably encapsulate this code in a function. What does this code do? It creates the next generation using allele frequencies, so let’s call it create_next_generation(): 
+We should probably encapsulate this code in a function. What does this code do? It creates the next generation using allele frequencies, so let’s call it `create_next_generation()`: 
 
+~~~~~~~~
 function create_next_generation() {
     a1a1 = p * p;
     a1a2 = 2 * p * q;
     a2a2 = q * q;
 }
+~~~~~~~~
 
-This function doesn’t take any parameters at the moment. As you can see, its body makes use of variables that were defined somewhere else before. We’ll talk about this in a moment. You can also see that I used a fairly long name for the function name. The benefit is that anyone who reads your code, including your future self, can instantly guess what the function does from its name alone. There are two widespread styles to name functions that contain multiple words. You can either separate the words by underscore, like I prefer to do, or you can use the so-called camelCase notation, where you don’t use underscores, but rather capitalize each new word like so: createNextGeneration. It’s up to you which style you choose. JavaScript programmers have historically often used camelCase, but I simply find the underscore notation more readable, and will stick to it.
+This function doesn’t take any parameters at the moment. As you can see, its body makes use of variables that were defined somewhere else. We’ll talk about this in a moment. You can also see that I used a fairly long name for the function name. The benefit is that anyone who reads your code, including your future self, can instantly guess what the function does from its name alone. There are two widespread styles to name functions that contain multiple words. You can either separate the words by underscore, like I prefer to do, or you can use the so-called camelCase notation, where you don’t use underscores, but rather capitalize each new word like so: `createNextGeneration`. It’s up to you which style you choose. JavaScript programmers have historically often used camelCase, but I simply find the underscore notation more readable, and will stick to it.
 
 Having encapsulated this functionality, we can now rewrite the code and simply replace the five occurrences of
 
+~~~~~~~~
 a1a1 = p * p;
 a1a2 = 2 * p * q;
 a2a2 = q * q;
+~~~~~~~~
 
 with 
 
+~~~~~~~~
 function create_next_generation() {
     a1a1 = p * p;
     a1a2 = 2 * p * q;
     a2a2 = q * q;
 }
+~~~~~~~~
 
 which will lead to:
 
+~~~~~~~~
 var a1a1 = 0.15;
 var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
@@ -484,56 +502,74 @@ console.log("generation 4:", a1a1, a1a2, a2a2);
 
 create_next_generation();
 console.log("generation 5:", a1a1, a1a2, a2a2);
+~~~~~~~~
 
-Much better, but not quite perfect yet. What if we would want to do this a hundred times, rather than just five times? Time for yet another concept (I did warn you this was going to be a dense chapter - but we’re almost done): iterations. Iterations can be used to repeat code a certain number of times, or until certain conditions are met. The most common iterator is the for loop. It’s forma syntax is as follows:
+Much better, but not quite perfect yet. What if we would want to do this a hundred times, rather than just five times? Time for yet another concept (I did warn you this was going to be a dense chapter - but we’re almost done): *iterations*. Iterations can be used to repeat code a certain number of times, or until certain conditions are met. The most common iterator is the `for` loop. It’s forma syntax is as follows:
 
+~~~~~~~~
 for (initialization; condition; final-expression) {
     code to be iterated
 }
+~~~~~~~~
 
-The initialization is executed once, in the beginning. Then, as long as the condition is met, the code to be iterated is executed. After each iteration, the final-expression is executed. In practice, the for loop often looks like this:
+The initialization is executed once, in the beginning. Then, as long as the condition is met, the code to be iterated is executed. After each iteration, the final-expression is executed. In practice, the `for` loop often looks like this:
 
+~~~~~~~~
 for (var i = 0; i < 10; i=i+1) {
     code to be iterated
 }
+~~~~~~~~
 
-You’ll see this construct over and over again, and after a while, it will become second nature. You will simply look at the for loop, and it a split second will realize that this code will be executed exactly ten times. Why is that?
+You’ll see this construct over and over again, and after a while, it will become second nature. You will simply look at the `for` loop, and in a split second will realize that this code will be executed exactly ten times. Why is that?
 
 The initialization is 
 
+~~~~~~~~
 var i = 0
+~~~~~~~~
 
-Ok, nothing unusual here. Just think of i as a counter. Then, while the condition
+Ok, nothing unusual here. Just think of `i` as a counter. Then, while the condition
 
+~~~~~~~~
 i < 10
+~~~~~~~~
 
-is true, the code to be iterated will be executed. How often is that? Well, if you wouldn’t touch i at all again, you would be stuck in an infinite loop - i would always be 0, and hence the condition would always be true. (If you ever visit the original Apple campus in Silicon Valley, note the street address: 1 Infinite Loop). However, after every code iteration, the final-expression is executed, which is 
+is true, the code to be iterated will be executed. How often is that? Well, if you wouldn’t touch `i` at all again, you would be stuck in an infinite loop - `i` would always be `0`, and hence the condition would always be true. (If you ever visit the original Apple campus in Silicon Valley, note the street address: 1 Infinite Loop). However, after every code iteration, the final-expression is executed, which is 
 
+~~~~~~~~
 i=i+1
+~~~~~~~~
 
-What this means is that i is incremented by 1, and thus, after then tenth iteration, i is 10, at which point the condition i < 10 is not true anymore, and the loop will stop.
+What this means is that `i` is incremented by `1`, and thus, after then tenth iteration, `i` is `10`, at which point the condition `i < 10` is not true anymore, and the loop will stop.
 
-Back to our code - taking a close loop, we can see that the code 
+Back to our code - taking a close look, we can see that the code 
 
+~~~~~~~~
 create_next_generation();
 console.log("generation 1:", a1a1, a1a2, a2a2);
+~~~~~~~~
 
-Is repeated 5 times, with the exception of the generation count. So let’s set up a for loop that executed this code 5 times, like so:
+is repeated 5 times. The only change in each iteration that we need to take care of is the generation count. So let’s first set up a `for` loop that executes this code 5 times, like so:
 
+~~~~~~~~
 for (var i = 0; i < 5; i=i+1) {
     create_next_generation();
     console.log("generation 1:", a1a1, a1a2, a2a2);
 }
+~~~~~~~~
 
-This works, but will always print generation 1, which is not what we want. Thankfully, we have access to i in the loop, and using string concatenation, we can write the iteration as follows:
+This works, but will always print `generation 1`, which is not what we want. Thankfully, we have access to the counter `i` in the loop, and using string concatenation, we can write the iteration as follows:
 
+~~~~~~~~
 for (var i = 0; i < 5; i=i+1) {
     create_next_generation();
     console.log("generation “+(i+1)+”:", a1a1, a1a2, a2a2);
 }
+~~~~~~~~
 
 Our full code now reads:
 
+~~~~~~~~
 var a1a1 = 0.15;
 var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
@@ -553,51 +589,64 @@ for (var i = 0; i < 5; i=i+1) {
     create_next_generation();
     console.log("generation "+(i+1)+":", a1a1, a1a2, a2a2);
 }
+~~~~~~~~
 
 Wow, look at you! Fancy code you’ve got there! Using variables, algebra, functions, string concatenation and iterations to show that Hardy and Weinberg were correct. And here, almost at the end of chapter 1, I want to share a deep truth about science and programming: The deepest understanding of a scientific principle comes from putting it in code. When you express a scientific idea in code, you have to be crystal clear about your assumptions, and how the idea should work exactly. You can’t fool yourself or others with code, and there will never be any misunderstandings. Code provides the ultimate clarity.
 
-You may now say, hang on a second. All you are showing here is that if you the same allele frequencies, you will of course get the same genotype frequencies. Who says that allele frequencies will stay the same? Excellent point, I would answer. Let’s modify our code to take this into account. Let us indeed calculate the allele frequencies too, from genotype frequenices, rather than assuming they are fixed. I’m going to create a function calculate_allele_frequencies as follows: 
+You may now say, hang on a second. All you are showing here is that if your allele frequencies don't change, of course your genotype frequencies won't change either. But who says that allele frequencies won't change? Excellent point, I would answer. Let’s modify our code to take this into account. Let us indeed calculate the allele frequencies too, from genotype frequencies, rather than assuming that they are fixed. I’m going to create a function `calculate_allele_frequencies()` as follows: 
 
+~~~~~~~~
 function calculate_allele_frequencies() {
     p = a1a1 + (a1a2 / 2);
     q = 1-p;
 }
+~~~~~~~~
 
 And then I’m going to call that function right before generating the genotype frequencies of the next generation:
 
+~~~~~~~~
 function create_next_generation() {
     calculate_allele_frequencies();
     a1a1 = p * p;
     a1a2 = 2 * p * q;
     a2a2 = q * q;
 }
+~~~~~~~~
 
-(yes, you can call functions from within other functions). Our code is now a little longer, but clearer about our assumptions. The results will still be the same.
+(yes, you can call functions from within other functions). Our code is now a little longer, but clearer about our assumptions. As you will see in your console, the results will still be the same.
 
-While everything works as it should, the output is still ugly. Let’s clean up these rounding errors. As I mentioned above, JavaScript in the client comes with a whole package of functionalities encapsulated in methods. One such method is Math.round(x) which returns the value of x rounded to the nearest integer. That’s not what we want, and unfortunately there is no built-in function that takes a number and the number of decimals of precision you’d want it to return, so we will have to write one:
+While everything works as it should, the output is still a bit ugly. Let’s clean up these rounding errors, and round the numbers to two decimal places. As I mentioned above, JavaScript in a browser comes with a whole package of functionalities encapsulated in methods. One such method is `Math.round(x)` which returns the value of x rounded to the nearest integer. That’s not what we want, and unfortunately there is no built-in function that takes a number and the number of decimals of precision you’d want it to return, so we will have to write the function ourselves:
 
+~~~~~~~~
 function round_number(value) {
     return Math.round(value *100) / 100;
 }
+~~~~~~~~
 
-This function takes one argument, value, and returns the number rounded to two decimal places.  Before explaining how it works, we need to talk about a new concept: that of a return value. You’ve certainly noticed the return keyword in the function. What does it do? The keyword return has two effects: first, it does indeed “return” the value that immediately follows it - in this case, Math.round(value *100) / 100. But to whom does it return it? To whomever called the function in the first place. This will make more sense in a moment. Second, it terminates the function. Most of the time, you will find the return statement at the end of the function - but sometimes, you’ll find it much earlier. Whenever and wherever your function hits a return statement, it will return the value following the return statement, and terminate the function’s execution, jumping back to where the function was called. A return statement isn’t always necessary - as you can see, this is the first time I’ve used in this chapter.
+This function takes one argument, `value`, and returns the number rounded to two decimal places. Before explaining how it works, we need to talk about a new concept: that of a return value. You’ve certainly noticed the `return` keyword in the function. What does it do? The keyword `return` has two effects: first, it does indeed “return” the value that immediately follows it - in this case, `Math.round(value *100) / 100`. But to whom does it return it? To whomever called the function in the first place. This will make more sense in a moment. Second, `return` terminates the function. Most of the time, you will find the return statement at the end of the function - but sometimes, you’ll find it much earlier. Whenever and wherever your function hits a `return` statement, it will return the value following the `return` statement, and terminate the function’s execution, jumping back to where the function was called. A `return` statement isn’t always necessary - as you can see, this is the first time I’ve used in this chapter.
 
-Going back to our round_number function, how does this work? It’s a simple idea. Let’s say you have a number, like 3.4567, which you want to round to two decimals. First, multiply it by hundred, shifting the decimal point to the right by two: 345.67. Now, round the number using the built-in Math.round method: 346. Great, you just got rid of the decimals you did not care about. Now, shift the decimal point back to the left by two, which you can do by dividing by 100 again: 3.46. Done. Now, we could stop here and say our function does what it is supposed to do, namely to round a number to 2 decimals. But what if we want to round it to 3 decimals, or to 4, later on, either in this or another project? Let’s go ahead and make the function more flexible, by adding a second parameter that I’m going to name decimals:
+Going back to our `round_number(value)` function, how does this work? It’s a simple idea. Let’s say you have a number, like `3.4567`, which you want to round to two decimals. First, multiply it by hundred, shifting the decimal point to the right by two: `345.67`. Now, round the number using the built-in `Math.round` method: `346`. Great, you just got rid of the decimals you did not care about. Now, shift the decimal point back to the left by two, which you can do by dividing by 100 again: `3.46`. Done! Now, we could stop here and say our function does what it is supposed to do, namely to round a number to 2 decimals. But what if we want to round it to 3 decimals, or to 4, later on, either in this or another project? Let’s go ahead and make the function more flexible, by adding a second parameter that I’m going to name `decimals`:
 
+~~~~~~~~
 function round_number(value, decimals) {
     var shifter = Math.pow(10,decimals);
     return Math.round(value * shifter) / shifter;
 }
+~~~~~~~~
 
-What I’m doing here is simply to replace 100, which was the number to shift the decimal point two positions to the right and to the left (because 10^2 = 100), with the more generic version 10^decimals. Thus, if you pass in 3 as an argument for decimals, the shifter will be 1000, shifting the decimal point three positions to the right and to the left. There is always a danger to make your method too generic, and to end up with super flexible functions that take a lot of arguments. Don’t be tempted - whenever you think you’ll keep reusing a function, but with slightly different values, making a function more generic is a great idea. But generality often makes your code needlessly complicated, and you’ll need to find a good balance. A general rule of thumb is that when you start copying parts of functions around, you should think about making the function more generic and reusable.
+What I’m doing here is simply to replace `100`, which was the number to shift the decimal point two positions to the right and to the left (because `10^2` = `100`), with the more generic version `10^decimals`, using the built in method `Math.pow`. The method `Math.pow(base, exponent)` calculates the `base` to the `exponent`th power. Thus, if you pass in `3` as an argument for decimals, the shifter will be `1000`, shifting the decimal point three positions to the right and to the left. 
 
-Now, all we need to do is to call this function whenever we want to print a rounded number, which happens in our for loop:
+There is always a danger to make your method too generic, and to end up with super flexible functions that take a lot of arguments. Don’t be tempted - whenever you think you’ll keep reusing a function, but with slightly different values, making a function more generic is a great idea. But generality often makes your code needlessly complicated, and you’ll need to find a good balance. A general rule of thumb is that when you start copying parts of functions around, you should think about making the function more generic and reusable.
 
-console.log("generation "+(i+1)+":", round_number(a1a1,2), round_number(a1a2,2),
-		round_number(a2a2,2)); 
+Now, all we need to do is to call this function whenever we want to print a rounded number, which happens in our `for` loop:
+
+~~~~~~~~
+console.log("generation "+(i+1)+":", round_number(a1a1,2), round_number(a1a2,2), round_number(a2a2,2)); 
+~~~~~~~~
 
 Our final code of this chapter looks as follows: 
 
+~~~~~~~~
 var a1a1 = 0.15;
 var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
@@ -629,6 +678,8 @@ function round_number(value, decimals) {
     var shifter = Math.pow(10,decimals);
     return Math.round(value * shifter) / shifter;
 }
+
+~~~~~~~~
 
 leading to the following result:
 
