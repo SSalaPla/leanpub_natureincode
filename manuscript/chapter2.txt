@@ -186,7 +186,7 @@ Nice! So what just happened?
 We added a `<script>` tag, which is the tag that contains our JavaScript code. Before we get to that, take a close look at the opening tag, which reads
 
 ~~~~~~~~
-<script type=“text/javascript">
+<script type="text/javascript">
 ~~~~~~~~
 
 What we’ve done here is to add a so-called *attribute* to the tag (type in this case) with a value of `"text/javascript"`. Generally, HTML tags can have many different attributes, and if you’ve glanced over the HTML documentation above, you’ve noticed that attributes are a major part of the HTML specifications. You could almost go as far as saying that HTML without the attributes is practically useless, since the effect and behavior of most tags depends completely on their attributes and their values. In the present example, the `type` attribute specifies the type of scripting language. In principle, browsers could be able to interpret multiple scripting languages, but currently JavaScript is the only one that’s supported by all modern browsers. If you wouldn’t add the `type` attribute to the `script` tag, everything would still work - that’s because `"text/javascript"` is the default value for the `type` attribute.
@@ -209,19 +209,22 @@ var a1a2 = 1 - (a1a1 + a2a2);
 
 Let’s walk through this line by line. On the first line, we define a variable `a1a1`, and assign it the value `0.15`. Variables are declared using the `var` keyword (keywords are simply words predefined by the language, and since these words have very specific meanings, you shouldn’t use them for anything other than what they were intended for). Your variable name can be anything you like, but it needs to start with a letter, and be followed by other letters, numbers, or underscore. You’re not allowed to use any of these keywords for variable names: `break`, `case`, `class`, `catch`, `const`, `continue`, `debugger`, `default`, `delete`, `do`, `else`, `export`, `extends`, `finally`, `for`, `function`, `if`, `import`, `in`, `instanceof`, `let`, `new`, `return`, `super`, `switch`, `this`, `throw`, `try`, `typeof`, `var`, `void`, `while`, `with`, `yield`. 
 
-The assignment itself is done using the = operator. Finally, the line ends with a semicolon, which terminates the statement. You would be forgiven for not using semicolons, and your code would still execute correctly, but it is dangerous practice that might introduce unexpected errors, so always use them. Line two does the same thing, except we declare another variable, a2a2, and assign it the value 0.35. As you surely have guessed, these two variables denote the genotype frequencies of the two homozygotes A1A1 and A2A2. The genotype frequency for the heterozygotes is stored in the variable a1a2, and rather than assigning its value directly, we assign it by calculating it, using the previously defined variables a1a1 and a2a2. These three lines of code shouldn’t look all that different from regular algebra.
+The assignment itself is done using the `=` operator. Finally, the line ends with a semicolon, which terminates the statement. You would be forgiven for not using semicolons, and your code would still execute correctly, but it is dangerous practice that might introduce unexpected errors, so always use them. Line two does the same thing, except we declare another variable, `a2a2`, and assign it the value `0.35`. As you surely have guessed, these two variables denote the genotype frequencies of the two homozygotes A1A1 and A2A2 (I'll use this shortcut notation from now on, instead of writing A1/A1 and A2/A2). The genotype frequency for the heterozygotes is stored in the variable `a1a2`, and rather than assigning its value directly, we assign it by calculating it, using the previously defined variables `a1a1` and `a2a2`. These three lines of code shouldn’t look all that different from regular algebra.
 
 Having just set up the genotype frequencies, let’s calculate the allele frequencies:
 
+~~~~~~~~
 var p = a1a1 + (a1a2 / 2);
 var q = 1-p;
+~~~~~~~~
 
-The variable p denotes the frequency of A1 alleles, which is simply the frequency of the A1A1 genotype (since they only carry A1 alleles) plus half of the frequency of the A1A2 genotype (since half of their alleles are A1). We then calculate q by simply subtracting p from 1; p and q need to add up to one because there are only two alleles in the population.
+The variable `p` denotes the frequency of A1 alleles, which is simply the frequency of the A1A1 genotype (since they only carry A1 alleles) plus half of the frequency of the A1A2 genotype (since half of their alleles are A1). We then calculate `q` by simply subtracting `p` from 1; `p` and `q` need to add up to one because there are only two alleles in the population.
 
-I should highlight two subtleties in the first line of code. The first is that I am using parentheses to group the equation. JavaScript uses the standard algebraic rules and would first divide a1a2 by 2.0 before the result to a1a1 even without the parentheses, just as algebraic rules dictate. However, I prefer to make these rules explicit with parentheses. Even more than the semicolons, explicit parentheses are just good style that makes your code clearer and prevents subtle errors in the future, when your code becomes more complex (which it most certainly will). The second subtlety is that I divided a1a2 by 2, rather than by 2.0. If you have any experience with other programming languages, that might raise a red flag. That’s because most programming languages have two numeric types, integer and floating point numbers, but JavaScript doesn’t. All numbers are floating point numbers. 2 is equivalent to 2.0, which avoids many numerical errors that plague other languages. 
+I should highlight two subtleties in the first line of code. The first is that I am using parentheses to group the equation. JavaScript uses the standard algebraic rules and would first divide `a1a2` by `2` before adding the result to `a1a1`, even without the parentheses - just as algebraic rules dictate. However, I prefer to make these rules explicit with parentheses. Even more than the semicolons, explicit parentheses are just good style that makes your code clearer and prevents subtle errors in the future, when your code becomes more complex (which it most certainly will). The second subtlety is that I divided `a1a2` by `2`, rather than by `2.0`. If you have any experience with other programming languages, that might raise a red flag. That’s because most programming languages have two numeric types, integer and floating point numbers, but JavaScript doesn’t. All numbers are floating point numbers. `2` is equivalent to `2.0`, which avoids many numerical errors that plague other languages. 
 
-Combine these five lines and copy them into your script tag in your HTML file, like so:
+Combine these five lines and copy them into your `script` tag in your HTML file, like so:
 
+~~~~~~~~
 <script>
     var a1a1 = 0.15;
     var a2a2 = 0.35;
@@ -230,12 +233,19 @@ Combine these five lines and copy them into your script tag in your HTML file, l
     var p = a1a1 + (a1a2 / 2);
     var q = 1-p;
 </script>
+~~~~~~~~
 
-Save the file, reload the page (be sure to have your console open), and you should see… nothing. That’s because we are not writing anything into the output. Your code is executed all right, but since we didn’t instruct JavaScript to write anything into the output, it won’t do it. So go ahead and add the following line:
+Save the file, reload the page (be sure to have your console open), and you should see... nothing. That’s because we are not writing anything into the output yet! Your code is executed all right, but since we didn’t instruct JavaScript to write anything into the output, it won’t do it. So go ahead and add the following line:
 
+~~~~~~~~
 console.log("generation 0:\t" + a1a1 + "\t" + a1a2 + "\t" + a2a2);
+~~~~~~~~
 
-Using console.log as before, we’re writing text int our output. We’ll talk about this line in a second, but first, make sure that it works and save the file and reload the browser:
+Using `console.log` as before, we’re writing text into our output. We’ll talk about this line in a second, but first, make sure that it works and save the file and reload the browser:
+
+{width=90%}
+![](images/ch_2_hello_nature_screenshot_genotypes.png)
+
 Excellent, worked like a charm. The simple line above wrote our three genotype frequencies at generation 0 into the output. This line can teach us a few new ideas about JavaScript. The first thing to recognize is that we are calling a method, or a function (the two are not technically equivalent, but for almost all practical purposes, they can be treated as equivalent). A method is invoked, or called, by using its name and by supplying a number of arguments in parentheses, separated by commas. A method can take any number of arguments, including none, in which case your parentheses would be empty. So any of these examples are valid JavaScript:
 
 some_method();
