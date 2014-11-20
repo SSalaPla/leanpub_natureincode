@@ -128,7 +128,7 @@ Then, enter the following HTML code:
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Nature, in code</title>
+        <title>Nature, in Code</title>
     </head>
     <body>
         Hello, nature.<br>Nice to be with you.
@@ -149,20 +149,23 @@ Let’s go quickly through the HTML document above. It starts with a so-called D
 
 The next tag in our example is the `<head>` tag. It opens with `<head>`, contains some content, and later closes with `</head>`. The head specifies a number of things that are not directly rendered on the screen, such as the title of the document, which itself is surrounded by the `<title>` tag. Further below, the `<body>` tag contains the content that should be rendered on the screen. In our case, we just want to render two lines of text. The line break is forced with the `<br>` tag, and because the `<br>` tag does not contain any content, no closing tag is necessary.
 
-Now - how does one program in HTML? The simple answer is one doesn’t - HTML is a markup language, not a programming language. The makers of the first commercially successful browser, Netscape, realized that the ability to have a programming language running in a browser could be quite powerful - it would allow for dynamic content, which wasn’t possible with pure HTML. They added JavaScript, and the rest is history. It’s somewhat ironic that a language that was implemented in a few weeks, with the goal of making webpages a little interactive, is now becoming the most common programming language on the planet. (Note also that JavaScript has nothing to do with the programming language Java - the name was just a marketing play on the rising popularity of Java at the time).
+Now - how does one program in HTML? The simple answer is one doesn’t: HTML is a markup language, not a programming language. The makers of the first commercially successful browser, Netscape, realized that the ability to have a programming language running in a browser could be quite useful - it would allow for dynamic content, which wasn’t possible with pure HTML. They added JavaScript, and the rest is history. It’s somewhat ironic that a language that was implemented in a few weeks, with the goal of making webpages a little interactive, is now becoming the most common programming language on the planet. (Note also that JavaScript has nothing to do with the programming language Java - the name was just a marketing play on the rising popularity of Java at the time).
 
-In order to use JavaScript, you need to put your JavaScript code within a <script> tag, like so:
+In order to use JavaScript, you need to put your JavaScript code within a `<script>` tag, like so:
 
+~~~~~~~~
 <script type=“text/javascript”>
     console.log(“My first line of JavaScript”);
 </script>
+~~~~~~~~
 
-It doesn’t really matter where you add the script tag, but it’s mostly found within the <head> tag. We’ll talk about these lines of code in a second, but first, go ahead and put them in the <head> tag of your document, like so:
+It doesn’t really matter where you add the script tag, but it’s mostly found within the `<head>` tag. We’ll talk about these lines of code in a second, but first, go ahead and put them in the `<head>` tag of your document, like so:
 
+~~~~~~~~
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Nature, in code</title>
+        <title>Nature, in Code</title>
         <script type="text/javascript">
             console.log("My first line of JavaScript");
         </script>
@@ -171,9 +174,12 @@ It doesn’t really matter where you add the script tag, but it’s mostly found
         Hello, nature.<br>Nice to be with you.
     </body>
 </html> 
+~~~~~~~~
 
-If you save your document and reload it in the browser, you won’t see any change. In order to see the effect of this single line of JavaScript, you need to open the console in the browser. In Chrome, select View - Developer - JavaScript Console, and you will see the following: 
+If you save your document and reload it in the browser, you won’t see any change. In order to see the effect of this single line of JavaScript, you need to open the JavaScript console in the browser. In Chrome, select View - Developer - JavaScript Console, and you will see the following (in Firefox, select Tools - Web Developer - Web Console, and in Safari, select Develop - Show Error Console): 
 
+{width=75%}
+![](images/ch_2_hello_nature_screenshot_js.png)
 
 Nice! So what just happened?
 
