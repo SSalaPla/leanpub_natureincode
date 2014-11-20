@@ -339,18 +339,21 @@ and the output is
 {width=50%}
 ![](images/ch_2_one_generation.png)
 
-Everything looking great, so let’s move on and… wait, what is this? 0.16000000000000003? This should just be 0.16 - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to JavaScript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in JavaScript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies in computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because JavaScript uses 64 bits to store floating point numbers, the rounding usually occurs at in insignificant place, as it does in 0.16000000000000003. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
+Everything looking great, so let’s move on and… wait, what is this? 0.16000000000000003? This should just be 0.16 - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to JavaScript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in JavaScript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies when it comes to computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because JavaScript uses 64 bits to store numbers, the rounding usually occurs at an insignificant place, as it does in 0.16000000000000003. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
 
 Back to our genotypes - we already know what will happen next generation, but just to be sure, let’s code it up. Once again, we will calculate the genotype frequencies using the following code:
 
+~~~~~~~~
 a1a1 = p * p;
 a1a2 = 2 * p * q;
 a2a2 = q * q;
 
 console.log("generation 2:", a1a1, a1a2, a2a2);
+~~~~~~~~
 
 Go ahead and copy the lines from generation 1 and paste it four times, changing only the generation count. Your code will then look like this: 
 
+~~~~~~~~
 var a1a1 = 0.15;
 var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
@@ -389,8 +392,13 @@ a1a2 = 2 * p * q;
 a2a2 = q * q;
 
 console.log("generation 5:", a1a1, a1a2, a2a2);
+~~~~~~~~
 
 and your output will be:
+
+{width=50%}
+![](images/ch_2_five_generations.png)
+
 As expected, your genotype frequencies won’t change - under Hardy-Weinberg conditions, they are predetermined by allele frequencies which don’t change.
 
 What we have just done, however, is considered very bad practice: copying and pasting code. This isn’t an issue of copyright - it is your code, after all. The issue is that you repeat yourself, and the exact same pieces of code are repeated time and time again. This is bad practice, because once you decide that something about this code needs to change, you will need to change it in all the places where you pasted the code, and it’s almost guaranteed that you will forget some places in the code, leading to nasty errors. Your code should follow the DRY principle: Don’t Repeat Yourself. Thankfully, JavaScript, like all other programming languages, provide a simple but powerful tool that helps you solve this problem: functions.
