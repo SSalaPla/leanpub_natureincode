@@ -303,11 +303,10 @@ and we’ll get the same quantitative output, but with more concise code.
 
 Now, let’s move on to the next generation. Let’s calculate the next generation, using the allele frequencies. They are easy to calculate:
 
-{$$}
-a1a1 = p * p;
-a1a2 = 2 * p * q;
-a2a2 = q * q;
-{/$$}
+
+{$$}a1a1 = p * p{/$$}
+{$$}a1a2 = 2 * p * q{/$$}
+{$$}a2a2 = q * q{/$$}
 
 This follows the logic described a few pages above, and it terms of JavaScript, there is nothing new here, with the exception perhaps that we are now reusing pervasively defined variables, and overwriting their values. We can now go ahead and output the new genotype frequencies using our line above (slightly modified to take into account that we’re at a new generation):
 
