@@ -263,38 +263,51 @@ Above, we used
 console.log("My first line of JavaScript");
 ~~~~~~~
 
-We were passing one argument to the method, namely “My first line of JavaScript”. In JavaScript, anything wrapped in single or double quotes is a so-called string which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, a1a1 (without any quote) refers to the variable a1a1, while "a1a1" is simply text. Similarly, "100" is simply text, and has no numerical meaning whatsoever, while 100 represents the actual number one hundred (remember why the number 100 isn’t at risk to be confused the variable 100? That’s right, because there is no variable 100 - all variable names must begin with a letter).
-In line with the example above, let’s try to pass one string as an argument to console.log. Say we’d like to output 
+We were passing one argument to the method, namely `"My first line of JavaScript"`. In JavaScript, anything wrapped in single or double quotes is a so-called *string* which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, `a1a1` (without any quote) refers to the variable `a1a1`, while `"a1a1"` is simply text. Similarly, `"100"` is simply text, and has no numerical meaning whatsoever, while `100` represents the actual number one hundred (remember why the number `100` isn’t at risk to be confused the variable `100`? That’s right, because there is no variable `100` - all variable names must begin with a letter).
 
+In line with the example above, let’s try to pass one string as an argument to `console.log`. Say we’d like to output 
+
+~~~~~~~
 generation 0:	0.15	0.5	0.35
+~~~~~~~
 
 (values separated by tabs). 
 
-The problem is that some of this information is stored in variables, rather than as text. String concatenation to the rescue! In JavaScript, you can add string together using the + sign, like so:
+The problem is that some of this information is stored in variables (such as `a1a1`), rather than as text. String concatenation to the rescue! In JavaScript, you can add string together using the `+` operator, like so:
 
+~~~~~~~
 "hello " + "world"
+~~~~~~~
 
-which would result in the string “hello world” (don’t forget the space character). But what happens when you this?:
+which would result in the string `"hello world`" (don’t forget the space character). But what happens when you this?:
 
+~~~~~~~
 "hello " + a1a1
+~~~~~~~
 
-What happens is that you get the string “hello 0.15”. That’s because JavaScript coerces numeric values to string values if one the operands is a string. This is actually a pretty handy feature that let’s you do things like   
+What happens is that you get the string `"hello 0.15"`. That’s because JavaScript coerces numeric values to string values if one the operands is a string. This is actually a pretty handy feature that let’s you do things like   
 
+~~~~~~~
 "generation 0:\t" + a1a1 + "\t" + a1a2 + "\t" + a2a2
+~~~~~~~
 
-Which creates the string “generation 0:	0.15	0.5	0.35” (note that the string “\t” is interpreted as the tabular character).
+Which creates the string `"generation 0:	0.15	0.5	0.35"` (note that the string `"\t"` is interpreted as the tabular character).
 
-I wanted to show this example because we’ll be using string concatenation quite a bit throughout the book. However, it turns out the the method console.log takes any number of arguments, and will simply output their string representations, separated by spaces (rather than tabs), so let’s just replace our console.log line with 
+I wanted to show this example because we’ll be using string concatenation quite a bit throughout the book. However, it turns out that the method `console.log` takes any number of arguments, and will simply output their string representations, separated by spaces (rather than tabs), so let’s just replace our `console.log` line with 
 
+~~~~~~~
 console.log("generation 0:", a1a1, a1a2, a2a2);
+~~~~~~~
 
 and we’ll get the same quantitative output, but with more concise code.
 
 Now, let’s move on to the next generation. Let’s calculate the next generation, using the allele frequencies. They are easy to calculate:
 
+{$$}
 a1a1 = p * p;
 a1a2 = 2 * p * q;
 a2a2 = q * q;
+{/$$}
 
 This follows the logic described a few pages above, and it terms of JavaScript, there is nothing new here, with the exception perhaps that we are now reusing pervasively defined variables, and overwriting their values. We can now go ahead and output the new genotype frequencies using our line above (slightly modified to take into account that we’re at a new generation):
 
