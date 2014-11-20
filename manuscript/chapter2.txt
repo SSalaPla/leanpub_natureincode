@@ -248,16 +248,20 @@ Using `console.log` as before, we’re writing text into our output. We’ll tal
 
 Excellent, worked like a charm. The simple line above wrote our three genotype frequencies at generation 0 into the output. This line can teach us a few new ideas about JavaScript. The first thing to recognize is that we are calling a method, or a function (the two are not technically equivalent, but for almost all practical purposes, they can be treated as equivalent). A method is invoked, or called, by using its name and by supplying a number of arguments in parentheses, separated by commas. A method can take any number of arguments, including none, in which case your parentheses would be empty. So any of these examples are valid JavaScript:
 
+~~~~~~~
 some_method();
 some_method(argument1);
 some_method(argument1, argument2);
 some_method(argument1, argument2, argument3);
+~~~~~~~
 
-Somewhere, a method must be defined before you can call it. JavaScript comes with a whole range of predefined methods (like console.log) that you will be able to use, and we’ll learn quite a few throughout this book. Oftentimes, however, you define your own method. In any case, by its definition, the method is usually quite clear about how many arguments it normally expects. 
+Somewhere, a method must be defined before you can call it. JavaScript comes with a whole range of predefined methods (like `console.log`) that you will be able to use, and we’ll learn quite a few throughout this book. Oftentimes, however, you define your own methods. In any case, by its definition, the method is usually quite clear about how many arguments it normally expects. 
 
 Above, we used 
 
+~~~~~~~
 console.log("My first line of JavaScript");
+~~~~~~~
 
 We were passing one argument to the method, namely “My first line of JavaScript”. In JavaScript, anything wrapped in single or double quotes is a so-called string which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, a1a1 (without any quote) refers to the variable a1a1, while "a1a1" is simply text. Similarly, "100" is simply text, and has no numerical meaning whatsoever, while 100 represents the actual number one hundred (remember why the number 100 isn’t at risk to be confused the variable 100? That’s right, because there is no variable 100 - all variable names must begin with a letter).
 In line with the example above, let’s try to pass one string as an argument to console.log. Say we’d like to output 
