@@ -685,20 +685,15 @@ leading to the following result:
 
 
 
+which is exactly what we wanted. (For the record, we could have used the `round_number(value, decimals)` function in the first `console.log` statement too - I didn’t bother because it was simply printing the values I had defined above in the code).
 
+I want to introduce one more concept before ending this chapter: that of a scope. If you take a look at the `calculate_allele_frequencies()` and `create_next_generation()` functions, you notice that we use the variables that store the genotype frequencies (`a1a1`, `a1a2`, and `a2a2`) and the allele frequencies (`p` and `q`). The reason why we can do this is that the variables have been defined in the global scope - we can access them globally, i.e. from anywhere in our program. Any variable that is defined outside a function is in the global scope. This is very convenient - so convenient, that you probably haven’t even noticed it. It just feels natural. However, be warned that as programs get more complex, the global scope is a dangerous concept. Some key variables could be overwritten from anywhere in the code. Since the programs in this book are going to be relatively short, this won’t be a big issue, but I want you to be aware of the danger. 
 
-
-
-
-
-which is exactly what we wanted. (For the record, we could have used the round_number function in the first console.log statement too - I didn’t bother because it was simply printing the values I had defined above in the code).
-
-I want to introduce one more concept before ending this chapter: that of a scope. If you take a look at the calculate_allele_frequencies and create_next_generation functions, you notice that we use the variables that store the genotype frequencies (a1a1, a1a2, and a2a2) and the allele frequencies (p and q). The reason why we can do this is that the variables have been defined in the global scope - we can access them globally, i.e. from anywhere in our program. Any variable that is defined outside a function is in the global scope. This is very convenient - so convenient, that you probably haven’t even noticed it. It just feels natural. However, be warned that as programs get more complex, the global scope is a dangerous concept. Some key variables could be overwritten from anywhere in the code. Since the programs in this book are going to be relatively short, this won’t be a big issue, but I want you to be aware of the danger. 
-
-As you have probably guessed, there is also a local scope. Variables that are defined with the keyword var inside a function are in the local scope of that function. You can use them in the function, but nowhere else. For example, the variable shifter in the round_number function is a local variable. You can’t use it anywhere else, other than it that particular function. However, here’s the danger zone: Variables that are defined without the keyword var inside a function are still in the global scope! 
+As you have probably guessed, there is also a local scope. Variables that are defined with the keyword `var` inside a function are in the local scope of that function. You can use them in the function, but nowhere else. For example, the variable `shifter` in the `round_number(value, decimals)` function is a local variable. You can’t use it anywhere else, other than in that particular function. However, here’s the danger zone: Variables that are defined *without* the keyword `var` inside a function are still in the global scope! 
 
 Consider this short code snippet:
 
+~~~~~~~~
 function test1() {
     foo = 4;
 }
@@ -709,11 +704,13 @@ function test2() {
 
 test1();
 test2();
+~~~~~~~~
 
-What happens when you run this code? Because the variable foo has been defined without the keyword, it is in the global scope, which means that you have access to it from the function test2. The program will output 4.
+What happens when you run this code? Because the variable `foo` has been defined without the keyword `var`, it is in the global scope, which means that you have access to it from the function `test2()`. The program will output `4`.
 
-If you add the var keyword when you declare foo, like so:
+If you add the `var` keyword when you declare `foo`, like so:
 
+~~~~~~~~
 function test1() {
   var foo = 4;
 }
@@ -724,21 +721,21 @@ function test2() {
 
 test1();
 test2();
+~~~~~~~~
 
-then foo will be in the global scope of the function in which it is declared (i.e. test1), and upon trying to access it anywhere outside that function - e.g. in test2 - you would see this error:
+then `foo` will be in the global scope of the function in which it is declared (i.e. `test1()`), and upon trying to access it anywhere outside that function - e.g. in `test2()` - you would see this error:
 
 
 
-What does all of this mean for you in practice? It means you should always define your variable with keyword var. Variables declared outside functions are then in the global scope, and variables defined inside functions are in the local scope of that function. Follow this simple rule, and you’ll likely never have to think about scope problems again.
+What does all of this mean for you in practice? It means you should always define your variable with keyword `var`. Variables declared outside functions are then in the global scope, and variables defined inside functions are in the local scope of that function. Follow this simple rule, and you’ll likely never have to think about scope problems again.
 
 And with that, the chapter is finished. If you feel like your head is spinning a little, don’t worry. I suggest you take a break, and come back and read the chapter again. Both the biological concepts and the code concepts introduced in this chapter are of fundamental importance throughout the rest of the book, so be sure to understand them before moving on.
 
 What you’ve learned in this chapter:
 
-The definition of evolution
-The concept of alleles and genotypes
-The Hardy-Weinberg principle
-How to write simple JavaScript programs using variable, functions, and iterations.
+* The definition of evolution
+* The concept of alleles and genotypes
+* The Hardy-Weinberg principle
+* How to write simple JavaScript programs using variable, functions, and iterations.
 
-// TODO plot possible genotype frequencies, given allele frequencies
-// test for hardy weinberg frequencies using x2 test
+
