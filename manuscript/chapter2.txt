@@ -401,21 +401,25 @@ and your output will be:
 
 As expected, your genotype frequencies won’t change - under Hardy-Weinberg conditions, they are predetermined by allele frequencies which don’t change.
 
-What we have just done, however, is considered very bad practice: copying and pasting code. This isn’t an issue of copyright - it is your code, after all. The issue is that you repeat yourself, and the exact same pieces of code are repeated time and time again. This is bad practice, because once you decide that something about this code needs to change, you will need to change it in all the places where you pasted the code, and it’s almost guaranteed that you will forget some places in the code, leading to nasty errors. Your code should follow the DRY principle: Don’t Repeat Yourself. Thankfully, JavaScript, like all other programming languages, provide a simple but powerful tool that helps you solve this problem: functions.
+What we have just done, however, is considered very bad practice: copying and pasting code. This isn’t an issue of copyright - it is your code, after all. The issue is that you repeat yourself, and the exact same pieces of code are repeated time and time again. This is bad practice, because once you decide that something about this code needs to change, you will need to change it in all the places where you pasted the code, and it’s almost guaranteed that you will forget some places in the code, leading to nasty errors. Your code should follow the DRY principle: Don’t Repeat Yourself. Thankfully, JavaScript, like all other programming languages, provides a simple but powerful tool that helps you solve this problem: *functions*.
 
 We have already encountered functions, and have talked a little bit about their syntax. But now it’s our turn to write our own functions. In JavaScript, a function is defined as follows:
 
+~~~~~~~~
 function name(parameters) {
     body
 }
+~~~~~~~~
 
 The indentation and the line breaks are optional, but it’s good practice and I highly recommend that you use this style. It makes the code more readable and, like so often, avoids subtle yet nasty errors.
 
-The keyword function is predefined by the JavaScript language. The name is up to you - function names follow the same rules as variable names, and it’s best to name the function according to what it does. The parameters are zero, one, or many variables for which values can be passed to the function when it is invoked (and as we’ve seen before, we will call these values arguments). Thus, a function is defined using parameters, and when it is invoked, it is given arguments. The body is the code that is executed when the function is invoked. Once that code is done executing, your program will continue executing the code where it was before it hit that function:
+The keyword `function` is predefined by the JavaScript language. The name of the function is up to you - function names follow the same rules as variable names, and it’s best to name the function according to what it does. The *parameters* are zero, one, or many variables for which values can be passed to the function when it is invoked (and as we’ve seen before, we will refer to these values as *arguments*). Thus, a function is defined using parameters, and when it is invoked, it is given arguments. The body is the code that is executed when the function is invoked. Once that code is done executing, your program will continue executing the code where it was before it hit that function:
 
+~~~~~~~~~~
 // some code will be executed here before the function
 some_function(); // jump to the function and execute the code in the function
 // some code will be executed here after the function
+~~~~~~~~~~
 
 Functions, as their name suggests, encapsulate functionality. Almost all of your code will be functions. Ultimately, programming is nothing more than manipulating data, and functions are the places where the manipulations happen. They are the bread and butter of programming.
 
