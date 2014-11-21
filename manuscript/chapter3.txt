@@ -217,10 +217,11 @@ function throw_coins() {
 }
 ~~~~~~~~
 
-You’ll recognize the first part of the function - it’s an exact copy of the code that we developed above. But then I’ve removed the console.log statement, since there is no need to print the outcome every time we throw the coin 10 times. However, what we need instead is for the function to somehow tell us what happened. So what I added there at the end simply says if heads comes up 8 times, then return true, otherwise, return false,
+You’ll recognize the first part of the function - it’s an exact copy of the code that we developed above. But then I’ve removed the line with the `console.log` method, since there is no need to print the outcome every time we throw the coin 10 times. However, what we need instead is for the function to somehow tell us what happened. So what I added there at the end simply says if heads comes up 8 times, then return `true`, otherwise, return `false`.
 
-Now I can call this function however many times I want, and then count how many times the function returns true, which indicates that the 10 coin tosses resulted in 8 heads and 2 tails. Here’s how I do this:
+Now I can call this function however many times I want to, and then count how many times the function returns `true`, which indicates that the 10 coin tosses resulted in exactly 8 heads and 2 tails. Here’s how I do this:
 
+~~~~~~~~
 var repeats = 10000000;
 var counter = 0;
 for (var i = 0; i < repeats; i = i + 1) {
@@ -230,13 +231,15 @@ for (var i = 0; i < repeats; i = i + 1) {
     }
 }
 console.log("Getting 8 heads, 2 tails " + (counter / repeats) * 100 + "% of the time”)
+~~~~~~~~
 
-Be sure to set the repeats to a value that allows your computer to execute the code in just a few seconds. It’s best to start with a small value like 1000 and then increase it by an order of magnitude, as we have done before. In my case, the sweet spot seems to be 10 million.
+Be sure to set the `repeats` variable to a value that allows your computer to execute the code in just a few seconds. It’s best to start with a small value like 1000 and then increase it by an order of magnitude, as we have done before. In my case, the sweet spot seems to be 10 million.
 
-The setup here should look familiar - you initials the number of repeats in a variable called repeats, then initialize a variable counter at 0, and then iterate using a for loop. In the loop, I call the function throw_coins, and whatever it returns gets stored in the variable desired_outcome. If that happens to be true - which means that the 10 coin tosses resulted in 8 heads and 2 tails - I am going to increase the counter by 1. Once the loop as run its course, I’m simply printing how often, in percentage, 10 coin tosses resulted in 8 heads and 2 tails.
+The setup here should look familiar - you initialize the number of repeats in a variable called `repeats`, then initialize a variable `counter` at `0`, and then iterate using a `for` loop. In the loop, I call the function `throw_coins()`, and whatever it returns gets stored in the variable `desired_outcome`. If that happens to be `true` - which means that the 10 coin tosses resulted in 8 heads and 2 tails - I am going to increase the `counter` by 1. Once the loop has run its course, I’m simply printing how often, in percentage, 10 coin tosses resulted in 8 heads and 2 tails.
 
 Thus, our full code is as follows:
 
+~~~~~~~~
 function throw_coins() {
     var throws = 10;
     var heads = 0;
@@ -266,33 +269,37 @@ for (var i = 0; i < repeats; i = i + 1) {
     }
 }
 console.log("Getting 8 heads, 2 tails " + (counter / repeats) * 100 + "% of the time")
+~~~~~~~~
 
 When I run this code three times (i.e. reload the page three times) I’m getting the following output:
 
+~~~~~~~~
 Getting 8 heads, 2 tails 4.39729% of the time 
 Getting 8 heads, 2 tails 4.39629% of the time 
-Getting 8 heads, 2 tails 4.38968% of the time 
+Getting 8 heads, 2 tails 4.38968% of the time
+~~~~~~~~ 
 
-So yes - 4.39% is correct.
+Thus, 4.39% is indeed correct.
 
+##The randomness of finite populations
 
-The randomness of finite populations
+So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same circle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (they zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can  struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
 
-So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same circle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (they zygote) to the moment it reproduces, and a new zygote is created. Which genes they pass on will be largely random. When a single cell grows into billions of cells forming and adult that can reproduce, a lot can go wrong due to randomness. They may be struck by a disease, be eaten by a predator, die of hunger and thirst, etc. Life is complicated. But just as we have done in the previous chapter, we can again reduce the complexity into a simple model that captures this essence of these random processes. Once again, the model is named after the two originators, Sewall Wright and Ronald Fisher: the Wright-Fisher model.
+Life is complicated, and if we would set out to simulate life in all its details, we would end up with a very complicated model. But just as we have done in the previous chapter, we can again reduce the complexity into a simple model that captures the essence of these random processes. Once again, the model is named after the two originators, Sewall Wright and Ronald Fisher: it's called the *Wright-Fisher model*.
 
-Before we go on, it’s important to remind ourselves that the only assumption we are relaxing from the Hardy-Weinberg model is that of the infinite population size. We still have random mating, we still have no selection, etc. We are only interested in the effect of a finite population size.
+Before we go on, it’s important to remind ourselves that the only assumption we are relaxing from the Hardy-Weinberg model is that of the infinite population size. We still have random mating, we still have no selection, etc. *We are only interested in the effect of a finite population size.*
 
-The complexity of the scenario described above can be reduced to a simple sampling process. Imagine that we have a finite population of N individuals. Once again, let’s zone in on one gene, with two alleles. If we have N diploid individuals, that means we have 2N copies of the alleles in the population (because every individual has two copies). Once again, we assume that the individuals produce infinitely many gametes from which the next generation is formed. However, this time, we don’t form infinitely many offspring individuals - we stick to our population size of N individuals. 
+The complexity of the scenario described above can be reduced to a simple sampling process. Imagine that we have a finite population of N individuals. Once again, let’s zone in on one gene, with two alleles. If we have N diploid individuals, that means we have 2N copies of the alleles in the population (because every individual has two copies). Once again, we assume that individuals produce infinitely many gametes from which the next generation is formed. However, this time, we don’t form infinitely many offspring individuals - we stick to our population size of N individuals. 
 
-This process can be thought of as having a jar with 2N marbles in it (the marbles being the actual allele copies of the N individuals). To generate the next generation, we sample - we simply pick a marble at random (representing a random gamete, i.e. one particular allele), and then put it back into the jar. This “replacement” steps ensures that we are sampling from an infinitely large pool of gametes. To generate and individual however, we need to repeat this process, because each individual consists of two gene copies. Once we have picked two marbles in that fashion, we have generated one offspring genotype. Great! But in order to produce the next generation, which should have a population size of N, we need to keep repeating this procedure, until we have picked (or sampled) 2N allele copies, representing the next generation.
+This process can be thought of as having a jar with 2N marbles in it (the marbles being the actual allele copies of the N individuals). To generate the next generation, we *sample* - we simply pick a marble at random (representing a random gamete, i.e. one particular allele), and then put it back into the jar. This “replacement” step ensures that we are sampling from an infinitely large pool of gametes. To generate an individual, we need to repeat this process, because each individual consists of two gene copies. Once we have picked two marbles in that fashion, we will have generated one offspring genotype. Great! But in order to produce the next generation, which should have a population size of N, we need to keep repeating this procedure, until we have picked (or sampled) 2N allele copies, representing the next generation.
 
-This random sampling process can have profound consequences. Let’s go through an example, with N = 10. This is arguably a very small population, but it helps us keep the example manageable. Let’s also assume that we start with p = q = 0.5, which means that the allele frequencies of both alleles, A1 and A2, are equally 50%. Starting with this population, what will the next generation look like? Let us remind here what we established in the previous chapter: in an infinite population under the same conditions (i.e. Hardy Weinberg conditions), the allele frequencies would not change - they would stay at 50% for both alleles, for ever. In other words, no evolution would occur. 
+*This random sampling process can have profound consequences.* Let’s go through an example, with N = 10. This is arguably an extremely small population, but it helps us keep the example manageable. Let’s also assume that we start with p = q = 0.5, which means that the allele frequencies of both alleles, A1 and A2, are equally 50%. Starting with this population, what will the next generation look like? Let us remind here what we have established in the previous chapter: in an infinite population under the same conditions (i.e. Hardy Weinberg conditions), the allele frequencies would not change - they would stay at 50%  for ever. In other words, no evolution would occur. 
 
 Starting from 10 individuals, we have 20 allelic copies in the population, half of them are A1, and half of them are A2. We don’t care about the genotype frequencies at the moment - this chapter is all about allele frequencies. In order to generate the next generation of 10 individuals, or 20 allelic copies, we need to randomly sample, with replacement, from the marble jars representing the infinite gamete pool.
 
-Let’s get started. We grab the first allele - it’s an A1! (Recall that the chance is 50/50, given the allele frequencies in the parent generation.) Ok, let’s copy the A1, put it back in the jar, and grab another one. Again and A1! Let’s copy it again, put it back in the jar, and grab another one. An A2! And so on.
+Let’s get started. We grab the first allele - it’s an A1! (Recall that the chance is 50/50, given the allele frequencies in the parent generation.) Ok, let’s copy this A1 allele, put it back in the jar, and grab another one. Again and A1! Let’s copy it again, put it back in the jar, and grab another one. An A2! And so on.
 
-After we do this 20 times, we assess our new allele pool. We have drawn allele A1 12 times, and allele A2 8 times. In other words, p, the frequency of the A1 allele, is now 0.6, and q, the frequency of the A2 allele, is now 0.4. 
+After we do this 20 times, we assess our new allele pool. Let's say we have drawn allele A1 12 times, and allele A2 8 times. In other words, p, the frequency of the A1 allele, is now 0.6, and q, the frequency of the A2 allele, is now 0.4. 
 
 Let me repeat this. p is now 0.6, and q is now 0.4.
 
@@ -302,8 +309,9 @@ Mind blown? It should be.
 
 Let’s consider what just happened. In a single generation, we went from p = q = 0.5 to p = 0.6 and q = 0.4. That is, in absolute terms, a dramatic change of allele frequencies, in a single generation. And since you now know that a change of allele frequencies is pretty much the definition of evolution, another way of saying this is that we have just observed a dramatic evolutionary change in one single generation. “Fair enough”, I hear you say, “but we are talking about a very small population of 10 animals. Certainly these effects are much weaker in larger populations.” That is true - but the effect is still there. And keep in mind, we have observed only a single generation. What happens over evolutionary timescales? Thousands, hundreds of thousands, millions of generations? Even small changes in allele frequencies could add up.
 
-And here is where we go back to code. We can, in fact, simulate the dynamics of larger populations over many generations. We will be using the exact same approach that we’ve taken above. Our goal is to simulate the allele frequencies over time, starting from p = q = 0.5, in a population of 1000 individuals. Here is the code: 
+And here is where we go back to code. We can, in fact, simulate the dynamics of larger populations over many generations. We will be using the exact same approach that we’ve taken above in the coin tossing example. Our goal is to simulate the allele frequencies over time, starting from p = q = 0.5, in a population of 1000 individuals. Here is the code: 
 
+~~~~~~~~
 var p = 0.5;
 var N = 1000;
 var generations = 1000;
@@ -327,31 +335,41 @@ for (var i = 0; i < generations; i = i + 1) {
     next_generation();
     console.log("generation "+i+":\tp = " + round_number(p,3) + "\tq = " + round_number(1-p,3));
 }
+~~~~~~~~
 
-(Note that I’m omitting the round_number method for brevity - you can just copy it from the previous chapter).
+(Note that I’m omitting the `round_number()` method for brevity - you can just copy it from the previous chapter).
 
-The function next_generation is almost identical to the function throw_coins from above, with a small but important difference. Instead of saying 
+The function `next_generation()` is almost identical to the function `throw_coins()1 from above, with a small but important difference. Instead of saying 
 
+~~~~~~~~
 if (Math.random() <= 0.5)
+~~~~~~~~
 
 we are using
 
+~~~~~~~~
 if (Math.random() <= p)
+~~~~~~~~
 
-The first line is appropriate if you want to do something 50% of the time. However, when the frequency of allele A1 is p, then the second line is appropriate. Imagine for example that the frequency of allele A1 is 0.8. This means that when you randomly sample from the gametic pool, you will pick an A1 allele 80% of the time. Because p will be 0.8, the line 
+The first line is correct if you want to do something 50% of the time. However, when the frequency of allele A1 is p, then the second line is correct. Imagine for example that the frequency of allele A1 is `0.8`. This means that when you randomly sample from the gametic pool, you will pick an A1 allele 80% of the time. Because p will be `0.8`, the line 
 
+~~~~~~~~
 if (Math.random() <= p)
+~~~~~~~~
 
 is equivalent to 
 
+~~~~~~~~
 if (Math.random() <= 0.8)
+~~~~~~~~
 
-which is saying “80% of the time” (because indeed, 80% of the time, Math.random() will return a number smaller than or equal to 0.8).
+which is saying “80% of the time” (because indeed, 80% of the time, `Math.random()` will return a number smaller than or equal to `0.8`).
 
 This is an important line, make sure you understand it. It’s your key to programming stochastic events. 
 
 With the code saved in a new HTML document, reload that document and look at the output in the JavaScript console. It will output one thousand lines, representing the allele frequencies over 1000 generations (i.e. evolution). When I run this a couple of times, I’m getting the following frequencies at generation 999:
 
+~~~~~~~~
 generation 999:	p = 0.886	q = 0.114 
 
 generation 999:	p = 0.585	q = 0.415 
@@ -361,13 +379,14 @@ generation 999:	p = 0	q = 1
 generation 999:	p = 0.953	q = 0.047 
 
 generation 999:	p = 0.124	q = 0.876 
+~~~~~~~~
 
 and so on. If you scroll through the generations, you can see that the allele frequencies are changing wildly. In other words, there is a lot of evolution going, despite the complete lack of natural selection. This is genetic drift - evolution due to chance.
 
 The third simulation from my examples above has a pretty remarkable outcome: the allele A1 has completely disappeared from the population, and all alleles are A2. In fact, when I scroll back through time in this simulation, I find the following:
 
-.
-.
+~~~~~~~~
+...
 generation 771:	p = 0.003	q = 0.997
 generation 772:	p = 0.002	q = 0.998
 generation 773:	p = 0.001	q = 0.999
@@ -379,39 +398,46 @@ generation 778:	p = 0	q = 1
 generation 779:	p = 0	q = 1
 generation 780:	p = 0	q = 1
 generation 781:	p = 0	q = 1
-.
-.
+...
+~~~~~~~~
 
-At generation 774, the allele A1 is completely lost, and after that, it will never come back into population again (because our assumptions say we have no mutation and no migration). This is what loss of genetic diversity looks like in mathematical terms. 
+At generation 774, the allele A1 is completely lost from the population, and after that, it will never come back into the population again (because our assumptions say we have no mutation and no migration). This is what loss of genetic diversity looks like in mathematical terms. 
 
 Now go ahead and change your code to say that the simulation should run for ten thousand generations, not just for a thousand generations. That is, change this line 
 
+~~~~~~~~
 var generations = 1000;
+~~~~~~~~
 
 to
 
+~~~~~~~~
 var generations = 10000;
+~~~~~~~~
 
 and run the simulation again. Because we increased the number of generations by an order of magnitude, the simulation will now take longer, but did you notice the pattern in the results? I’m sure you did, because it’s really hard to miss: in (almost) all cases, one of the two alleles will disappear entirely from the population. There might be the rare simulation where you still have both alleles after 10,000 generations, but in my 50 runs or so, one of the alleles had always disappeared by the end of the simulation.
 
-This is a remarkable result, and it is perhaps one of the key insights about genetic drift, which is this: genetic drift reduces genetic variation. This may sound a little counterintuitive at first, because we’re accustomed to think that randomness, or stochasticity, leads to more variation, not less. But you can observe the pattern very clearly in the results of your simulations. Why is that?
+This is a remarkable result, and it is perhaps one of the key insights about genetic drift, which is this: *genetic drift reduces genetic variation*. This may sound a little counterintuitive at first, because we’re accustomed to think that randomness, or stochasticity, leads to more variation, not less. But you can observe the pattern very clearly in the results of your simulations. Why is that?
 
 Fundamentally, genetic drift cannot add more variation - it is simply a random sampling process, unable to generate variation on its own. At the same time, because it is a random sampling process, alleles can eventually be removed, thus reducing variation. 
 
-As we established in the beginning of this chapter, stochastic effects are strongest when population sizes are smaller. Extreme results, like throwing only heads, are much more likely when you are throwing the coin only a few times. In the same vein, when the population size is small, loss of an allele is much more likely, and will thus occur much sooner, than when the population size is big. Recall from above that at population size N=1000, only rarely was an allele lost within 1000 generations, typically. Go ahead and change your population size to 100 (also be sure to set the simulation to run for 1000 generations only), and you will see that in practically all cases, one of the alleles will be lost.
+As we established in the beginning of this chapter, stochastic effects are strongest when population sizes are smaller. Extreme results, like throwing only heads, are much more likely when you are throwing the coin only a few times. In the same vein, when the population size is small, loss of an allele is much more likely, and will thus occur much sooner, than when the population size is big. Recall from above that at population size `N=1000`, only rarely was an allele lost within `1000` generations, typically. Go ahead and change your population size to `100` (also be sure to set the simulation to run for `1000` generations only), and you will see that in practically all cases, one of the alleles will be lost.
 
 These simulations are a great tool to examine the dynamics of genetic drift, but it’s bit cumbersome to scroll though hundreds or thousands of lines of allele frequencies. Wouldn’t it be nice if we had a way to visualize the allele dynamics? Let’s start visualizing things to get a better overview on what’s going on here.
 
-Before we get to it, a word of warning: Data plotting in the browser isn’t trivial. What I’m going to do at the stage is to give you some plotting code that I’m simply asking you to copy and paste into your documents. The code that we will continue to write simply generates the data, and we then hand the data over to a plotting function. There’s no need for you at this stage to understand how plotting works, and it would be a significant distraction at this point. Feel free to examine the plotting code, of course, but I won’t explain it, nor do I expect you to understand it.
+Before we get to it, a word of warning: Data plotting in the browser isn’t trivial. What I’m going to do here is to give you some plotting code that I’m simply asking you to copy and paste into your documents. The code that we will continue to write simply generates the data, and we then hand the data over to a plotting function. There’s no need for you at this stage to understand how plotting works, and it would be a significant distraction at the moment. Feel free to examine the plotting code, of course, but I won’t explain it, nor do I expect you to understand it.
 
-First, add this line to your code, at the beginning of your <head> element:
+First, add this line to your code, at the beginning of your `<head>` element:
 
+~~~~~~~~
 <script src=“http://d3js.org/d3.v3.js"></script>
+~~~~~~~~
 
-This line loads and external JavaScript library called D3.js, which is the most advanced data plotting library available for the browser to date. Note that you need to be connected to the internet for this library to be loaded!
+This line loads and external JavaScript library called `D3.js`, which is the most advanced data plotting library available for the browser to date. Note that you need to be connected to the internet for this library to be loaded!
 
-Next, in your already existing <script> tag, put the following plotting code at the top: 
+Next, in your already existing `<script>` tag, put the following plotting code at the top: 
 
+~~~~~~~~
  function draw_line_chart(data,N,generations) {
       var margin = {top: 20, right: 20, bottom: 50, left: 50},
               width = 700 - margin.left - margin.right,
@@ -496,13 +522,14 @@ Next, in your already existing <script> tag, put the following plotting code at 
               .attr("class", "line")
               .attr("d", line);
     }
+~~~~~~~~
 
 
+Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with three parameters: `data`, `N` and `generations`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `N` and `generations` simply correspond to the population size, and the number of generations that we want the simulations to run. The function then takes those arguments, and plots the dynamics of our simulation in the browser.
 
-Like I said, let’s not bother to understand this code. What it does is to define a function called draw_line_chart with three parameters: data, N and generations. The data corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele, p, over time. N and generations simply correspond to the population size, and the number of generations that we want the simulations to run. The function then takes those arguments, and plots the dynamics of our simulation in the browser.
+In order for the plots to look pretty, copy this code into your somewhere within your `<head>` element:  
 
-In order for the plots to look pretty, copy this code into your somewhere within your <head> element:  
-
+~~~~~~~~
 <style>
 
   body {
@@ -539,14 +566,15 @@ In order for the plots to look pretty, copy this code into your somewhere within
   }
 
 </style>
+~~~~~~~~
 
-
-This is not JavaScript code; it is CSS, which stands for cascading style sheets, and it is a very common “language” to stylize data, i.e. to define colors, font sizes, line thickness, etc. Once again, because it is only used to help us visualize the data, I won’t go into the details here. 
+This is not JavaScript code; it is *CSS*, which stands for cascading style sheets, and it is a very common “language” to stylize data, i.e. to define colors, font sizes, line thickness, etc. Once again, because it is only used to help us visualize the data, I won’t go into the details here. 
 
 With these things in place, we are now ready to plot our simulation results. 
 
 Let’s take our simulation code form above, and modify it slightly:
 
+~~~~~~~~
 var p = 0.5;
 var N = 500;
 var generations = 1000;
@@ -572,26 +600,33 @@ for (var i = 0; i < generations; i = i + 1) {
     next_generation();
 }
 draw_line_chart(data,N,generations);
+~~~~~~~~
 
-I’ve made a few changes, which I’m going to explain next. First, after I’ve played around with various values for N and generations above, I’ve set them to 500 and 1000, respectively.
+I’ve made a few changes, which I’m going to explain next. First, after I’ve played around with various values for `N` and `generations` above, I’ve set them to `500` and `1000`, respectively.
 
-Next, I initialized an empty array called data. with the following line:
+Next, I initialized an empty *array* called `data`. with the following line:
 
+~~~~~~~~
 var data = [];
+~~~~~~~~
 
-Arrays are an important data structure in JavaScript, and I’ll talk more about it below. For now, simply note that you can store multiple values (e.g. multiple numbers) in an array. We’ll use it to store the values of p over time.
+Arrays are the most important data structures in JavaScript, and I’ll talk more about arrays below. For now, simply note that you can store multiple values (e.g. multiple numbers) in an array. We’ll use it to store the values of p over time.
 
-In the function next_generation, I’ve added this line at the end: 
+In the function `next_generation()`, I’ve added this line at the end: 
 
+~~~~~~~~
 data.push(p)
+~~~~~~~~
 
-which simply adds p to the data array. Next, I’ve removed the line the prints the values of p and q to the JavaScript console, but you can leave it in there if you want to. Finally, I’ve added this line:
+which simply adds `p` to the `data` array. Next, I’ve removed the line the prints the values of `p` and `q` to the JavaScript console, but you can leave it in there if you want to. Finally, I’ve added this line:
 
+~~~~~~~~
 draw_line_chart(data,N,generations);
+~~~~~~~~
 
-This is the line that calls the function draw_line_chart with the parameters data, N and generations. Note that I’m calling the function at the end of the code - at that moment, the array data is not empty anymore, but in fact contains all p values over the 1000 generations. It’s that set of values that we hand over to the function, and the function then plots the data visually.
+This is the line that calls the function `draw_line_chart()` with the parameters `data`, `N` and `generations`. Note that I’m calling the function at the end of the code - at that point, the array `data` is not empty anymore, but in fact contains all `p` values over the `1000` generations. It’s that set of values that we hand over to the function, and the function then plots the data visually.
 
-Save the document and reload the browser. You should see a nice line chart showing the change of p over time:
+Save the document and reload the browser. You should see a nice line chart showing the change of `p` over time:
  
 In this particular simulation run, the allele A1 went to fixation around generation 850, which is another way of saying that its frequency reached 100%. This also means that the allele A2 was lost at the same time (whenever an allele goes to fixation, that means that all other alleles are lost). Reload the page and watch different evolutionary dynamics unravel. As you can observe, the dynamics are completely random, as we expected. Sometimes, one of the allele goes relatively straight to fixation. Other times, the frequencies fluctuate widely, with one allele almost driven to extinction, only to make a dramatic comeback, and then still being lost 200 generations later.
 
