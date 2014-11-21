@@ -15,54 +15,73 @@ Randomness is the idea of events occurring at random, by chance. If they happen 
 
 While random events cannot be predicted, we can still say something about their probability of occurring. This is the main idea behind the theory of probability. For example, a fair coin comes up heads half of the time, and tails the other half of the time. While we can’t predict the outcome of a single coin toss, we still know that the chance, or probability, that the coin comes up heads, is exactly 50% (in reality, no coin is exactly fair, and the probability of heads is probably slightly lower or higher than 50%, but in a fair coin, the probability is 50% by definition). Because we know that each coin toss comes up 50% heads and 50% tails, we can calculate the probability that ten coin tosses come up heads 80% of time, and tails 20% of the time, for example. For any ten coin tosses, it is completely impossible to predict exactly how many will come up heads; but because we can calculate the probability of any outcome, we can at least get a good sense of what to expect. For example, we can calculate that the probability of 80% heads 20% tails is ((10*9)/2) / 2^10 = 4.39% (don’t worry about how to calculate this, but if you are interested, here is a good explanation: [http://gwydir.demon.co.uk/jo/probability/info.htm](http://gwydir.demon.co.uk/jo/probability/info.htm)). An outcome like this isn’t unlikely, but you wouldn’t want to bet the farm on it either.
 
-Before we get to the biology of randomness, I want to jump straight to code. The great thing about having fast computers is that we can simulate randomness over and over again, in a very short amount of time. This allows us to run millions of coin tossing experiments in a computer is a split second.
+Before we get to the biology of randomness, I want to jump straight to code. The great thing about having fast computers is that we can simulate randomness over and over again, in a very short amount of time. This allows us to run millions of coin tossing experiments in a computer in a split second.
 
-In JavaScript, the quintessential method to produce randomness is Math.random(). It takes no arguments, but produces a random number between 0 and 1. Let’s try it out. Create a new html document with a <script> element, and log the output of the method like so:
+In JavaScript, the quintessential method to produce randomness is `Math.random()`. It takes no arguments, but produces a random number between 0 and 1. Let’s try it out. Create a new html document with a `<script>` element, and log the output of the method like so:
 
+~~~~~~~~
 console.log(Math.random());
+~~~~~~~~
 
-Save and load the file in the browser, and take a look and the console output. Indeed, a random number between 0 and 1 has been generated. Verify this by reloading the page over and over again. You’ll notice that the number is different, every time you reload the page, as it should be. 
+Save and load the file in the browser, and take a look at the console output. Indeed, a random number between 0 and 1 has been generated. Verify this by reloading the page over and over again. You’ll notice that the number is different, every time you reload the page, as it should be. 
 
-Let’s go ahead and verify the claim I made. I claimed that Math.random() produces a random number between 0 and 1. If that is true, then the average output of Math.random() should be 0.5. To verify that, let’s use a for loop to create many random numbers, and then calculate the average of these numbers:
+Let’s go ahead and verify the claim I made. I claimed that `Math.random()` produces a random number between 0 and 1. I'm going to clarify this further by saying not only will it generate a random number between 0 and 1, but that each number is equally likely to be generated. If that is true, then the average output of `Math.random()` should be 0.5. To verify that, let’s use a `for` loop to create many random numbers, and then calculate the average of these numbers:
 
+~~~~~~~~
 var sum = 0;
 var repeats = 100;
-for (var i=0; i<repeats;i=i+1) {
+for (var i=0; i<repeats; i=i+1) {
     sum = sum + Math.random();
 }
 average = sum / repeats;
 console.log("The average is", average);
+~~~~~~~~
 
-If you followed the examples in the previous chapters, this should now look familiar. At first, we are declaring two variables, sum and repeats. Then, we’re using a for loop to add to sum whatever Math.random() returns, summing up the random numbers. We do this exactly as many times as defined in the variable repeats. Then, we simply calculate and print the average.
+If you followed the examples in the previous chapters, this should now look familiar. At first, we are declaring two variables, `sum` and `repeats`. Then, we’re using a `for` loop to add to `sum` whatever `Math.random()` returns, summing up the random numbers. We do this exactly as many times as defined by the variable `repeats`. Then, we simply calculate and print the average.
 
 When I do this, I’m getting the and average of 
 
-0.533668438885361 
+~~~~~~~~
+0.533668438885361
+~~~~~~~~
 
 Upon reload, I’m getting
 
+~~~~~~~~
 0.46173790065106
+~~~~~~~~
 
 Another reload gives me 
 
+~~~~~~~~
 0.4819509003055282 
+~~~~~~~~
 
 and so on. This isn’t very precise, so let’s maybe increase the number of repeats. You should be able to increase repeats to 100,000 without having your browser breaking a sweat. With 100,000 repeats, I’m now getting
 
+~~~~~~~~
 0.5000435156048741
 0.5006688627070328 
 0.4989869923099107 
+~~~~~~~~
 
-Already much closer. Try increasing your repeats by a factor of ten, for as long as your browser can handle it (stop when it takes a few seconds). On my laptop, I can go up to 1 billion repeats before I have to wait a few seconds, and then I’m getting
+when I reload the document three times.Already much closer! 
 
+Try increasing your repeats by a factor of ten, for as long as your browser can handle it (stop when it takes a few seconds). On my laptop, I can go up to 1 billion repeats before I have to wait a few seconds, and then I’m getting
+
+~~~~~~~~
 0.499998771590113
 0.49996582762364633
 0.5000288064449279 
+~~~~~~~~
 
-As you can see, the more repeats, the closer we get to 0.5. However, keep in mind that floating point numbers have a limited accuracy, as discussed in the previous chapter. Usually, you won’t ever notice this, because the inaccuracy usually occurs at insignificant digits, but if you keep adding numbers, for example, the inaccuracy can potentially add up too. The point of this exercise was not to lead you astray with floating point accuracy, which you will probably never encounter as a problem. The point was to introduce you to Math.random() - and to demonstrate how powerful our computer is. In just a few seconds, it generated a billion numbers and added them up!
+As you can see, the more repeats, the closer we get to 0.5. However, keep in mind that floating point numbers have a limited accuracy, as discussed in the previous chapter. Usually, you won’t ever notice this, because the inaccuracy occurs at insignificant digits, but if you keep adding numbers, for example, the inaccuracy can potentially add up too. The point of this exercise was not to lead you astray with floating point accuracy, which you will probably never encounter as a problem. The point was to introduce you to `Math.random()` - and to demonstrate how powerful our computers are nowadays. In just a few seconds, my laptop computer generated a billion numbers and added them up!
 
-Now let’s go back to the previous coin tossing example. I mentioned that if I there a fair coin ten times, the probability of 80% heads 20% tails is 4.39%. How can we verify this? First, let’s implement the coin tossing. Create a new HTML file and have it execute the following script:
+Now let’s go back to the previous coin tossing example. I mentioned that if I tossed a fair coin ten times, the probability of 80% heads and 20% tails is 4.39%. How can we verify this in JavaScript? By actually running the coin-tossing experiment in the computer! This is a so-called *simulation*, where you simulate a process from the real world in the virtual world of a computer. 
 
+First, let’s implement the coin tossing. Create a new HTML file and have it execute the following script:
+
+~~~~~~~~
 var throws = 10;
 var heads = 0;
 var tails = 0;
@@ -74,29 +93,35 @@ for (var i=0; i<throws; i=i+1) {
         tails = tails + 1;   
     }
 }
-console.log(heads,”heads",tails,"tails");
+console.log(heads,"heads",tails,"tails");
+~~~~~~~~
 
-This should give you an output like 4 "heads" 6 “tails”, and on reload, the output should change (although not always - by chance you might get the same outcome two times in a row).
+This should give you an output like 4 "heads" 6 "tails", and on reload, the output should change (although not always - by chance you might get the same outcome two times in a row).
 
-Let’s go through this code in detail, because it introduces a new concept we haven’t met yet: that of control flow. The code setup is straightforward - you initiate three variables, and then implement a for loop throwing the coins using Math.random(). The variables heads and tails should act as counters, so that whenever the coin comes up heads (i.e. when Math.random() returns a value that is smaller or equal to 0.5), we increase the heads counter by one, and whenever the coin comes up tails (i.e. when Math.random() returns a value that is greater than 0.5), we increase the tails counter by one.
+Let’s go through this code in detail, because it introduces a new concept we haven’t met yet: that of control flow. The code setup is straightforward - you initiate three variables, and then implement a `for` loop throwing the coins using `Math.random()`. The variables `heads` and `tails` should act as counters, so that whenever the coin comes up heads (i.e. when `Math.random()` returns a value that is smaller or equal to `0.5`), we increase the `heads` counter by one, and whenever the coin comes up tails (i.e. when `Math.random()` returns a value that is greater than `0.5`), we increase the `tails` counter by one.
 
-In other words, the execution of some of the code (e.g. increase heads counter by one) is conditional - the code should only be executed if a given condition is met. As you can imagine, this is a key concept in programming. The way this concept can be implemented in JavaScript is as follows:
+In other words, the execution of some of the code (e.g. increase `heads` counter by one) is *conditional* - the code should only be executed if a given condition is met. As you can imagine, this is a key concept in programming. The way this concept can be implemented in JavaScript is as follows:
 
+~~~~~~~~
 if (condition) {
     statement1
 }
 else {
     statement2
 }
+~~~~~~~~
 
-This is easy to read: if the condition is true, then execute statement1, otherwise execute statement2. Sometimes, the otherwise statement is simply to do nothing, in which case you can omit the else altogether and simply write:
+This is easy to read: if the `condition` is true, then execute `statement1`, otherwise execute `statement2`. Sometimes, the otherwise statement is simply to do nothing, in which case you can omit the `else` altogether and simply write:
 
+~~~~~~~~
 if (condition) {
     statement
 }
+~~~~~~~~
 
-Finally, there is also an else if, in case you have multiple conditions:
+Finally, there is also an `else if`, in case you have multiple conditions:
 
+~~~~~~~~
 if (condition1) {
     statement1
 }
@@ -106,54 +131,63 @@ else if (condition2) {
 else {
     statement3
 }
+~~~~~~~~
 
-If condition1 is true, then only statement1 is executed. If condition1 is false, but condition2 is true, then statement2 is executed. If both conditions are false, then statement3 is executed.
+If `condition1` is true, then only `statement1` is executed. If `condition1` is false, but `condition2` is true, then `statement2` is executed. If both conditions are false, then `statement3` is executed.
 
 Sometimes, you see this type of code:
 
+~~~~~~~~
 if (condition) 
     statement1;
+~~~~~~~~
 
-This is technically correct - if the statement is only one line of code, you can theoretically omit the curly brackets. Don’t ever do this - it will almost certainly introduce nasty errors down the line. You may for example want to add a second statement later on, and may end up doing something like this:
+This is technically correct - if the statement is only one line of code, you can theoretically omit the curly brackets. *Don’t ever do this* - it will almost certainly introduce nasty errors down the line. You may for example want to add a second statement later on, and may end up doing something like this:
 
+~~~~~~~~
 if (condition) 
     statement1;
     statement2;
+~~~~~~~~
 
-You might think statement2 will be executed only if condition is true, but that would be wrong. The code above is equivalent to:
+You might think that `statement2` will be executed only if `condition` is true, but that would be wrong. The code above is equivalent to:
 
+~~~~~~~~
 if (condition) { 
     statement1;
 }
 statement2;
+~~~~~~~~
 
-This means that statement2 will always be executed, which is not at all what you wanted. There’s a simple rule to avoid this danger: always use curly braces when you use if and else statements.
+This means that `statement2` will always be executed, which is not at all what you wanted. There’s a simple rule to avoid this danger: *always use curly braces when you use if and else statements*.
 
-We need to understand one more thing about control flow - that of the condition itself. A condition must always evaluate to be either true or false. Like all programming languages, JavaScript provides a special type called boolean, which can either be true or false (the other two types you have encountered so far were numbers and strings). You can use this type in normal variables, like so:
+We need to understand one more thing about control flow - that of the condition itself. A condition must always evaluate to be either true or false. Like all programming languages, JavaScript provides a special type called *boolean*, which can either be true or false (the other two types you have encountered so far were numbers and strings). You can use this type in normal variables, like so:
 
+~~~~~~~~
 var is_ready = false;
+~~~~~~~~
 
 A condition, on the other hand, is not a variable that you set yourself - it’s an expression that is either true or false. I’m going to show you a few examples of expressions that evaluate to true or false, and while there are many more, these are the ones you need when dealing with numbers.
 
 Smaller than:
-3 < 4 evaluates to true
-4 < 3 evaluates to false
+`3 < 4` evaluates to true
+`4 < 3` evaluates to false
 
 Smaller or equal than:
-4 <= 4 evaluates to true
-5 <= 4 evaluates to false
+`4 <= 4` evaluates to true
+`5 <= 4` evaluates to false
 
 Greater than:
-4 > 3 evaluates to true
-3 > 4 evaluates to false
+`4 > 3` evaluates to true
+`3 > 4` evaluates to false
 
 Greater or equal than:
-4 >= 4 evaluates to true
-4 >= 5 evaluates to false
+`4 >= 4` evaluates to true
+`4 >= 5` evaluates to false
 
 Equals:
-4 == 4 evaluates to true
-4 == 5 evaluates to false
+`4 == 4` evaluates to true
+`4 == 5` evaluates to false
 
 This last expression is the source of most beginner’s mistakes. To compare two values and test their equality, you use the == operator. This operator is deceptively similar to the assignment operator = that we have used many times before, when assigning a value to a variable.
 
