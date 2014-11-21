@@ -169,7 +169,7 @@ var is_ready = false;
 
 A condition, on the other hand, is not a variable that you set yourself - it’s an expression that is either true or false. I’m going to show you a few examples of expressions that evaluate to true or false, and while there are many more, these are the ones you need when dealing with numbers.
 
-Smaller than:<br/>
+Smaller than: <br/>
 `3 < 4` evaluates to true<br/>
 `4 < 3` evaluates to false
 
