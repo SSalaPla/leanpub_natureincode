@@ -170,6 +170,7 @@ var is_ready = false;
 A condition, on the other hand, is not a variable that you set yourself - it’s an expression that is either true or false. I’m going to show you a few examples of expressions that evaluate to true or false, and while there are many more, these are the ones you need when dealing with numbers.
 
 Smaller than:
+{linebreak}
 `3 < 4` evaluates to true
 `4 < 3` evaluates to false
 
@@ -189,12 +190,13 @@ Equals:
 `4 == 4` evaluates to true
 `4 == 5` evaluates to false
 
-This last expression is the source of most beginner’s mistakes. To compare two values and test their equality, you use the == operator. This operator is deceptively similar to the assignment operator = that we have used many times before, when assigning a value to a variable.
+This last expression is the source of most beginner’s mistakes. To compare two values and test their equality, you use the `==` operator. This operator is deceptively similar to the assignment operator `=` that we have used many times before, when assigning a value to a variable.
 
-Now back to our coin tossing example - the code should be easy to understand now. It basically says that if Math.random() returns a number that is smaller than or equal to 0.5, the counter for heads will increase by 1. Otherwise, the counter for tails will increase by 1.
+Now back to our coin tossing example - the code should be easy to understand now. It basically says that if `Math.random()` returns a number that is smaller than or equal to `0.5`, the counter for `heads` will increase by `1`. Otherwise, the counter for `tails` will increase by `1`.
 
-At the moment, our code simply tosses a coin ten times and then prints how often it came up heads or tails. What we want to do, however, is to figure out whether my original claim - that the probability of 80% heads 20% tails is 4.39% - is correct. What we need to do, then, is to repeat our code thousands of times, and count how often we get exactly 8 heads and 2 tails. So the first thing I’m going to do is to wrap the coin tossing functionality into a function that I’m going to name throw_coins:
+At the moment, our code simply tosses a coin ten times and then prints how often it came up heads or tails. What we want to do, however, is to figure out whether my original claim - that the probability of 80% heads 20% tails is 4.39% - is correct. What we need to do, then, is to repeat our code thousands of times, and count how often we get exactly 8 heads and 2 tails. So the first thing I’m going to do is to wrap the coin tossing functionality into a function that I’m going to name `throw_coins()`:
 
+~~~~~~~~
 function throw_coins() {
     var throws = 10;
     var heads = 0;
@@ -214,6 +216,7 @@ function throw_coins() {
         return false;
     }
 }
+~~~~~~~~
 
 You’ll recognize the first part of the function - it’s an exact copy of the code that we developed above. But then I’ve removed the console.log statement, since there is no need to print the outcome every time we throw the coin 10 times. However, what we need instead is for the function to somehow tell us what happened. So what I added there at the end simply says if heads comes up 8 times, then return true, otherwise, return false,
 
