@@ -169,24 +169,24 @@ var is_ready = false;
 
 A condition, on the other hand, is not a variable that you set yourself - it’s an expression that is either true or false. I’m going to show you a few examples of expressions that evaluate to true or false, and while there are many more, these are the ones you need when dealing with numbers.
 
-Smaller than:__
-`3 < 4` evaluates to true__
+Smaller than:  
+`3 < 4` evaluates to true  
 `4 < 3` evaluates to false
 
-Smaller or equal than:__
-`4 <= 4` evaluates to true__
+Smaller or equal than:  
+`4 <= 4` evaluates to true  
 `5 <= 4` evaluates to false
 
-Greater than:__
-`4 > 3` evaluates to true__
+Greater than:  
+`4 > 3` evaluates to true  
 `3 > 4` evaluates to false
 
-Greater or equal than:__
-`4 >= 4` evaluates to true__
+Greater or equal than:  
+`4 >= 4` evaluates to true  
 `4 >= 5` evaluates to false
 
-Equals:__
-`4 == 4` evaluates to true__
+Equals:  
+`4 == 4` evaluates to true  
 `4 == 5` evaluates to false
 
 This last expression is the source of most beginner’s mistakes. To compare two values and test their equality, you use the `==` operator. This operator is deceptively similar to the assignment operator `=` that we have used many times before, when assigning a value to a variable.
