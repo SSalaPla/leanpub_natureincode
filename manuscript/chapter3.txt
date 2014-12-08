@@ -903,7 +903,7 @@ Having established the two (mutually exclusive) ways by which two randomly picke
 
 {$$} 
 1/2N + (1-1/2N)G
-{$$} 
+{/$$} 
 
 which corresponds to *G’* in the next generation.
 
