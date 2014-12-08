@@ -907,23 +907,29 @@ Having established the two (mutually exclusive) ways by which two randomly picke
 
 which corresponds to *G’* in the next generation.
 
-What we have just done is started from the probability that two randomly picked alleles in this generation are the same with probability G, and then established that in the next generation, G’ will be 1/2N + (1-1/2N)G. This is the most important part of the story - everything that follows now is just algebraic reformulation.
+What we have just done is started from the probability that two randomly picked alleles in this generation are the same with probability *G*, and then established that in the next generation, *G’* will be *1/2N + (1-1/2N)G*. This is the most important part of the story - everything that follows now is just algebraic reformulation.
 
-Let’s start by defining H as H = 1-G. Thus, H is the probability that two alleles picked randomly from the population of 2N alleles are different (because G was the probability that they are the same). This is a good measure for genetic variance. If you have high genetic variation, then the chance that two randomly picked alleles are different is high. Conversely, if you have low genetic variation, then the chance that two randomly picked alleles are different is low. In the worst case, you have no genetic variation (H = 0) - all alleles are the same type, and the chance that two randomly picked alleles are different is 0.
+Let’s start by defining *H* as *H = 1-G*. Thus, *H* is the probability that two alleles picked randomly from the population of *2N* alleles are different (because *G* was the probability that they are the same). This is a good measure for genetic variance. If you have high genetic variation, then the chance that two randomly picked alleles are different is high. Conversely, if you have low genetic variation, then the chance that two randomly picked alleles are different is low. In the worst case, you have no genetic variation (*H = 0*) - all alleles are the same type, and the chance that two randomly picked alleles are different is zero.
 
-Because H = 1 - G, the same must also be true in the next generation, i.e.
+Because *H = 1 - G*, the same must also be true in the next generation, i.e.
 
+{$$} 
 H’ = 1 - G’
+{/$$} 
 
 since we know that 
 
+{$$} 
 G’ = 1/2N + (1-1/2N)G
+{/$$} 
 
 we can replace this term in the equation above and write 
 
+{$$} 
 H’ = 1 - (1/2N + (1-1/2N)G)
+{/$$} 
 
-Because H = 1 - G , it’s also true that G = 1-H, and we can thus replace the G in the previous equation as well, and write
+Because *H=1-G*, it’s also true that *G=1-H*, and we can thus replace the *G* in the previous equation as well, and write
 
 H’ = 1 - (1/2N + (1-1/2N)(1-H))
 
