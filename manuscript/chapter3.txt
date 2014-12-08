@@ -1128,14 +1128,17 @@ The important message here is obvious: because the effective population size is 
 
 Let’s take a look at this claim with code. 
 
-First, we need to make a small adjustment in our drawing code. In the function `draw_line_chart()` that I previously asked you to copy and paste, find the string "Population Size:" (towards the end in the code) and replace it with “Eff. Population Size:”.
+First, we need to make a small adjustment in our drawing code. In the function `draw_line_chart()` that I previously asked you to copy and paste, find the string `"Population Size:"` (towards the end in the code) and replace it with `"Eff. Population Size:"`.
 
 Next, if we want to display the effective population size, we need to calculate it. In order to do this, we need to keep track of the population sizes over time. To do this, I first define a new variable which will hold the population sizes over the course of a simulation:
 
+~~~~~~~~
 var population_sizes = [];
+~~~~~~~~
 
 This variable holds an empty array into which I’m going to add the population sizes. In order to do that, I will change my simulation function to
 
+~~~~~~~~
 function simulation(simulation_counter) {
     p = 0.5;
     for (var i = 0; i < generations; i = i + 1) {
@@ -1143,15 +1146,19 @@ function simulation(simulation_counter) {
       	next_generation(data[simulation_counter]);
     }
 }
+~~~~~~~~
 
 All I’m changing here is the line 
 
+~~~~~~~~
 population_sizes.push(N);
+~~~~~~~~
 
-which will add the population size N into the array. But wait, I here you say, since N currently remains constant, we are always pushing the same value into the array. That’s right, and we’ll change that a in a little bit. For now I just want to make sure we have all the pieces set up.
+which will add the population size `N` into the array. "But wait", I hear you say, "since `N` currently remains constant, we are always pushing the same value into the array!" That’s right, and we’ll change that in a little bit. For now I just want to make sure we have all the pieces set up.
 
-Now that we have our array with all the population sizes over the course of a simulation, we need to write a function that can actually calculate the effective population size based on the array. Here’s how we can do this:
+Now that we have our array with all the population sizes over the course of a simulation, we need to write a function that can actually calculate the effective population size based on the values in the array. Here’s how we can do this:
 
+~~~~~~~~
 function effective_population_size(population_sizes) {
     var denominator = 0;
     for (var i = 0; i < population_sizes.length; i = i + 1) {
@@ -1159,47 +1166,55 @@ function effective_population_size(population_sizes) {
     }
     return Math.round(population_sizes.length / denominator);
 }
+~~~~~~~~
 
-This function takes an array as an argument, iterates through its elements, and calculates the harmonic mean of its values. In order to avoid rounding issues, we simply return the number rounded to the closest integer by using the method Math.round.
+This function takes an array as an argument, iterates through its elements, and calculates the harmonic mean of its values. In order to avoid rounding issues, we simply return the number rounded to the closest integer by using the method `Math.round()`.
 
 Add the function somewhere in your code, and call it like so (after you’ve run the simulations):
 
+~~~~~~~~
 Ne = effective_population_size(population_sizes);
+~~~~~~~~
 
-Then, when calling the draw_line_chart function, simply pass along Ne, instead of N:
+Then, when calling the `draw_line_chart()` function, simply pass in `Ne`, instead of `N`:
 
+~~~~~~~~
 draw_line_chart(data,Ne,generations);
+~~~~~~~~
 
-Set the population size N to 1000, and the number of generations to 100:
+Set the population size `N` to `1000`, and the number of generations to `100`:
 
+~~~~~~~~
 var N = 1000;
 var generations = 100;
+~~~~~~~~
 
 Save the document and load it in the browser. You should see something like this: 
 
 
 
 
-Which is exactly what we expected. Since N remains constant throughout the 100 generations, the effective population size will be 1000.
+Which is exactly what we expected. Since `N` remains constant throughout the `100` generations, the effective population size will be `1000`.
 
-Now let’s adapt the code further to allow for a change in population size. We are going to add a slight modification that allows us to introduce a bottleneck of N=10 every 10 generations.
+Now let’s adapt the code further to allow for a change in population size. We are going to add a slight modification that allows us to introduce a bottleneck of `N = 10` every `10` generations.
 
-First, let’s briefly do the math. If we did not now about the harmonic mean, we might have thought that the average population size would be a good predictor of the dynamics. The average population size of 90 generations at N=1000 and 10 generations at N = 10 is 901. If we run ten simulations, using our current code with N=901, we get the following outcome: 
+First, let’s briefly do the math. If we did not know about the harmonic mean, we might have thought that the average population size would be a good predictor of the dynamics. The average population size of `90` generations at `N = 1000` and `10` generations at `N = 10` is `901`. If we run ten simulations, using our current code with `N = 901`, we get the following outcome: 
  
 As expected, because of the reduced population size, the allele fluctuations are a bit more pronounced, but by and large the effect is small. 
 
-On the other hand, I have just claimed above that the population will behave much more like a Wright-Fisher population of a size that corresponds to the effective population size, which in this case would be 92. How does a Wright-Fisher population of size 92 behave? Let’s find out by setting N to 92, and here is what we get: 
+On the other hand, I have just claimed above that the population will behave much more like a Wright-Fisher population of a size that corresponds to the effective population size, which in this case would be `92`. How does a Wright-Fisher population of size 92 behave? Let’s find out by setting `N` to `92`, and here is what we get: 
 
-Obvisouly quite different - a substantial reduction in genetic variation, with some populations having lost all variation by generation 100 already.
+Obvisouly quite different - a substantial reduction in genetic variation, with some populations having lost all variation by generation `100` already.
 
-Let me repeat this - if the claim about effective population size and harmonic mean has been correct, then the dynamics of a population with N = 1000 that goes to N = 10 bottlenecks every 10th generation should be much more like a population that has consistently N = 92, rather than N = 901 (and as the two previous images have shown, these dynamics are quite different).
+Let me repeat this - if the claim about effective population size and harmonic mean is indeed correct, then the dynamics of a population with `N = 1000` that goes through `N = 10` bottlenecks every 10^th generation should be much more like a population that has a constant population size of `N = 92`, rather than `N = 901` (and as the two previous images have shown, the dynamics would be quite different).
 
 Only one way to find out! Let’s go to the code and implement the actual bottlenecks.
 
-First, just to be sure, set N back to 1000.
+First, just to be sure, set `N` back to `1000`.
 
-Then, since we want each generation to be able to have a different population size, we will pass the population size as a parameter to the next_generation function. To do that, we need to change the function slightly to read
+Then, since we want each generation to be able to have a different population size, we will pass the population size as a parameter to the `next_generation()` function. To do that, we need to change the function slightly to read
 
+~~~~~~~~
 function next_generation(simulation_data, N) {
     var draws = 2 * N;
     var A1 = 0;
@@ -1215,11 +1230,13 @@ function next_generation(simulation_data, N) {
     p = A1/draws;
     simulation_data.push(p);
 }
+~~~~~~~~
 
-All that has changed is the number of arguments - the function body has remained identical. How can this be? Before, when the function did not expect the argument N for the population size, N in the function body referred to the global variable N. Now that the function has an argument called N, N will be available in the function body as a local variable. Importantly, therefore, N will not refer to the global variable, but rather to the local variable that contains the value that was passed to the function as a parameter.
+All that has changed is the number of arguments - the function body has remained identical. How can this be? Before, when the function did not expect the argument `N` for the population size, `N` in the function body referred to the global variable `N`. Now that the function has an argument called `N`, `N` will be available in the function body as a local variable. Importantly, therefore, `N` will not refer to the global variable, but rather to the local variable that contains the value that was passed to the function as a parameter.
 
 Now let’s implement the occasional bottleneck. Here’s how we will do it:
 
+~~~~~~~~
 function simulation(simulation_counter) {
     p = 0.5;
     var population_size;
@@ -1231,38 +1248,41 @@ function simulation(simulation_counter) {
             population_size = N;
         }
         population_sizes.push(population_size);
-        next_generation(data[simulation_counter],population_size);
+next_generation(data[simulation_counter],population_size);
     }
 }
+~~~~~~~~
 
-Here’s what has changed. First, we define a local variable called population_size. We don’t assign it any value yet - that’s about to happen in the for loop. In the loop, I’ve added the following lines of code:
+Here’s what has changed. First, we define a local variable called `population_size`. We don’t assign it any value yet - that’s about to happen in the `for` loop. In the loop, I’ve added the following lines of code:
 
+~~~~~~~~
 if (i%10 == 9) {
     population_size = 10;
 }
 else {
     population_size = N;
 }
+~~~~~~~~
 
-What is this i%10 == 9 business? The % operator is called the modulus operator. It returns the integer remainder of a divisions.
+But wait - what is this `i%10 == 9` business? The `%` operator is called the *modulus* operator. It returns the integer remainder of a division.
 
 Thus, 
 
-0 % 10  equals 0
-1 % 10  equals 1
-2 % 10  equals 2
-3 % 10  equals 3
-4 % 10  equals 4
-5 % 10  equals 5
-6 % 10  equals 6
-7 % 10  equals 7
-8 % 10  equals 8
-9 % 10  equals 9
-10 % 10  equals 0
-11 % 10  equals 1
+`0 % 10`  equals `0`
+`1 % 10`  equals `1`
+`2 % 10`  equals `2`
+`3 % 10`  equals `3`
+`4 % 10`  equals `4`
+`5 % 10`  equals `5`
+`6 % 10`  equals `6`
+`7 % 10`  equals `7`
+`8 % 10`  equals `8`
+`9 % 10`  equals `9`
+`10 % 10`  equals `0`
+`11 % 10`  equals `1`
 etc.
 
-In other words, with i starting at 0, when i%10 equals 9, we are in the 10th, 20th, 30th etc. generation. And whenever that is the case, we set the population size to 10, otherwise we set it to N.
+In other words, with `i` starting at `0`, when `i%10` equals `9`, we are in the 10^th, 20^th, 30^th etc. generation. And whenever that is the case, we set the population size to `10`, otherwise we set it to `N`.
 
 In the following two lines,
 
