@@ -1021,7 +1021,7 @@ Now all we have to do is solve this equation for *t*. First, divide by *H_0_* on
 
 {$$}
 1/2 = (1 - 1/2N)^t
-{$$}
+{/$$}
 
 Now, using the natural logarithm, we can get *t* down from the exponent:
 
@@ -1086,7 +1086,7 @@ I hope to have shown you that both approaches - that of the computational simula
 
 ##Effective population size
 
-In the reminder of this chapter, I want to introduce an important concept that should always be on your radar when talking about drift: that of effective population size. We have until now assume a finite population size of N. We have also assumed that population size is N at every generation. Both the simulations and the mathematical equation were based on this assumption. In reality, the size of a population can fluctuate over generations, sometimes strongly so.
+In the remainder of this chapter, I want to introduce an important concept that should always be on your radar when talking about drift: that of effective population size. We have until now assume a finite population size of N. We have also assumed that population size is N at every generation. Both the simulations and the mathematical equation were based on this assumption. In reality, the size of a population can fluctuate over generations, sometimes strongly so.
 
 Another assumption we’ve made so far is that we did not differentiate between sexes, and simply assumed that individuals for hermaphroditic, i.e. they are both male and female at the same time. That assumption is most certainly violated in many populations, although hermaphroditism is widespread among plants, and certain groups of animals such as snails and slugs.
 
