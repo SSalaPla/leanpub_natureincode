@@ -655,7 +655,7 @@ The `data` array that we used above contained zero elements - it is an empty arr
 Why are arrays important? The variable types that we encountered so far - numbers, strings, and booleans - can only ever hold one single value, like `123`, `"hello there"`, or `true`. But whenever you are dealing with data, you have many values, and you need a way to store them somehow in code. That’s where arrays come in. The array `arr` in the example above holds 5 values, which happen to be numbers. An array can store any other type, and even mix them, so you could have an array like this:
 
 ~~~~~~~~
-var b = [4,"hello there”,6,true,false];
+var b = [4,"hello there",6,true,false];
 ~~~~~~~~
 
 Now that you know what an array is, how to do you manage it? How do you add data to it, and how to retrieve it later?
@@ -674,25 +674,29 @@ You can retrieve elements by using the concept of an *index*. If you want the n^
 arr[n]
 ~~~~~~~~
 
-However, there is one major gotcha: like in almost any data structure in almost any programming languages, JavaScript arrays are zero-index. This means that the first element has index 0, not index 1. If you are new to programming, this is going to be a major source of bugs, and probably hours of desperation. Sorry to be so blunt, but it is quite true. Perhaps this dramatic warning will at least remind you what to look for when your code behaves strangely.
+However, there is one major gotcha: like in almost any data structure in almost any programming languages, JavaScript arrays are zero-indexed. This means that the first element has index 0, not index 1. If you are new to programming, this is going to be a major source of bugs, and probably hours of desperation. Sorry to be so blunt, but it is quite true. Perhaps this dramatic warning will at least remind you what to look for when your code behaves strangely.
 
-Thus, in order to retrieve the first element in the array arr, you would use arr[0]; to retrieve the second element, you would use arr[1]; and so on.
+Thus, in order to retrieve the first element in the array `arr`, you would use `arr[0]`; in order to retrieve the second element, you would use `arr[1]`; and so on.
 
-Here where it gets interesting: I mentioned above that you can store any type of variable in an array. What that means is that you can also store other arrays, allowing you to create multi-dimensional arrays. Imagine you want to store three sets of five numbers in an array. You could do it as follows:
+Here where it gets interesting: I mentioned above that you can store any type of variable in an array. What that means is that you can also store *other arrays*, allowing you to create *multi-dimensional arrays*. Imagine you want to store three sets of five numbers in an array. You could do it as follows:
 
+~~~~~~~~
 var set1 = [1,2,3,4,5];
 var set2 = [10,11,12,13,14];
 var set3 = [33,44,55,66,77];
 
 var data = [set1, set2, set3];
+~~~~~~~~
 
 Alternatively, you could initialize the data array directly, like so:
 
+~~~~~~~~
 var data = [[1,2,3,4,5], [10,11,12,13,14], [33,44,55,66,77]];
+~~~~~~~~
 
-If you need access the subsets, you would then do it as before: data[0] accesses the first element in the array, which is [1,2,3,4,5]. 
+If you need access the subsets, you would then do it as before: `data[0]` accesses the first element in the array, which is `[1,2,3,4,5]`. 
 
-If you want to access a number in one of the arrays, you would first have to access the corresponding array, and then access the element that you want from that array. For example, in order to get the number 33 from the data array, you would have to write data[2][0].
+If you want to access a number in one of the arrays, you would first have to access the corresponding array, and then access the element that you want from that array. For example, in order to get the number 33 from the data array, you would have to write `data[2][0]`.
 
 Multidimensional arrays sound complicated, but they are very simple, as you just learned. They are also very handy when you deal with more complex datasets. For example, when we want to store the dynamics of multiple simulation runs, rather than just one, we can simply use a multidimensional array. The main array would then contain all the arrays for each simulation run, and those in turn would contain the allele frequencies for each generation.
 
