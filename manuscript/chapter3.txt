@@ -967,7 +967,7 @@ Let’s denote the genetic variance and generation 0 with *H_0_*, and thus
 
 {$$}
 H_1 = (1 - 1/2N) H_0
-{$$}
+{/$$}
 
 For the next generation, we have
 
