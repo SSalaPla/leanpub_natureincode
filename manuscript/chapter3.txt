@@ -929,33 +929,45 @@ we can replace this term in the equation above and write
 H’ = 1 - (1/2N + (1-1/2N)G)
 {/$$} 
 
-Because *H=1-G*, it’s also true that *G=1-H*, and we can thus replace the *G* in the previous equation as well, and write
+Because *H = 1-G*, it’s also true that *G = 1-H*, and we can thus replace the *G* in the previous equation as well, and write
 
+{$$} 
 H’ = 1 - (1/2N + (1-1/2N)(1-H))
+{/$$} 
 
 If we expand the terms in the equation, we get
 
+{$$} 
 H’ = 1 - (1/2N + 1 - H - 1/2N + H/2N)
+{/$$} 
 
 removing the parentheses yields
 
+{$$} 
 H’ = 1 - 1/2N - 1 + H + 1/2N - H/2N
+{/$$} 
 
 which makes various terms fall out of the equation, leaving only
 
+{$$} 
 H’ = H - H/2N
+{/$$} 
 
-Let’s factor out H:
+Let’s factor out *H*:
 
+{$$} 
 H’ = (1 - 1/2N)H
+{/$$} 
 
-which is an equation that looks unassuming - but is indeed one of the most profound equations of evolutionary biology, immediately revealing two major aspects about genetic drift. First, it tells us that no matter what H is in this generation, in the next generation it is going to be smaller. That’s because (1 - 1/2N) will always be smaller than 1, and in order to get H’ , we need to multiply H by something that is smaller than 1, which means that H’ < H. Boom -  right there, we’ve shown mathematically that the effect of genetic drift is to reduce genetic variation. But this formula is not done yet! It reveals another truth, which is that the smaller the population size N, the stronger the reduction in genetic variation per generation. Why? Well, we just said that in order to get H’ , we need to multiply H by something that is smaller than 1 - but how much smaller? As you can easily see, the term (1 - 1/2N) will be smaller if N is small. And it will be closer to 1 if N is large. 
+which is an equation that looks unassuming - but is indeed one of the most profound equations of evolutionary biology, immediately revealing two major aspects about genetic drift. First, it tells us that no matter what *H* is in this generation, in the next generation it is going to be smaller. That’s because *(1 - 1/2N)* will always be smaller than 1, and in order to get *H’*, we need to multiply *H* by something that is smaller than 1, which means that *H’ < H*. Boom -  right there, we’ve shown mathematically that the effect of genetic drift is to reduce genetic variation. But this formula is not done yet! It reveals another truth, which is that the smaller the population size *N*, the stronger the reduction in genetic variation per generation. Why? Well, we just said that in order to get *H’*, we need to multiply *H* by something that is smaller than 1 - but how much smaller? As you can easily see, the term *(1 - 1/2N)* will be smaller if *N* is small. And it will be closer to 1 if *N* is large. 
 
-Two major insights based on a simple equation, that we were able to derive from simple principles, with simple algebra. Not to shabby! But wait, there’s more!
+Two major insights based on a simple equation, that we were able to derive from simple principles, with simple algebra. Not too shabby! But wait, there’s more!
 
-Let’s denote the genetic variance and generation 0 with H0, and thus
+Let’s denote the genetic variance and generation 0 with *H_0_*, and thus
 
-H1 = (1 - 1/2N) H0
+{$$}
+H_1 = (1 - 1/2N) H_0
+{$$}
 
 For the next generation, we have
 
