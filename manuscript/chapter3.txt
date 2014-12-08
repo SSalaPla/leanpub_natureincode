@@ -698,11 +698,13 @@ If you need access the subsets, you would then do it as before: `data[0]` access
 
 If you want to access a number in one of the arrays, you would first have to access the corresponding array, and then access the element that you want from that array. For example, in order to get the number 33 from the data array, you would have to write `data[2][0]`.
 
-Multidimensional arrays sound complicated, but they are very simple, as you just learned. They are also very handy when you deal with more complex datasets. For example, when we want to store the dynamics of multiple simulation runs, rather than just one, we can simply use a multidimensional array. The main array would then contain all the arrays for each simulation run, and those in turn would contain the allele frequencies for each generation.
+Multidimensional arrays sound complicated, but they are very simple, as you've just learned. They are also very handy when you deal with more complex datasets. For example, when we want to store the dynamics of multiple simulation runs, rather than just one, we can simply use a multidimensional array. The main array would then contain all the arrays for each simulation run, and those in turn would contain the allele frequencies for each generation.
 
 There’s one more thing I want to mention about arrays. If you want to know how many elements and array currently holds, you can just use the following syntax:
 
+~~~~~~~~
 data.length
+~~~~~~~~
 
 This often comes in handy when you need to set up a loop to iterate over an array, and you need to know how many elements you have in the array.
 
@@ -710,6 +712,7 @@ Going back to our code, let’s go ahead and change our simulation slightly to a
 
 Here is the new code:
 
+~~~~~~~~
 var p;
 var N = 20;
 var generations = 200;
@@ -746,20 +749,21 @@ for (var i = 0; i < simulations; i = i + 1) {
 }
 
 draw_line_chart(data,N,generations);
+~~~~~~~~
 
+Let’s go through the changes here. First, I define the global variable `p`, but don’t assign it a value any more. That’s because every simulation should start again with a new value, so it’ll be part of the simulation code to set `p` to `0.5` every time a new simulation begins. I’m also introducing a new variable `simulations` that defines how many simulations we’re going to run.
 
-Let’s go through the changes here. First, I define the global variable p, but don’t assign it a value any more. That’s because every simulation should start again with a new value, so it’ll be part of the simulation code to set p to 0.5 every time a new simulation begins. I’m also introducing a new variable simulations that defines how many simulations we’re going to run.
+The function `next_generation()` has one subtle but important change. It now has an argument called `simulation_data`, and in the last line, the allele frequency `p` is added to `simulation_data`. (i.e. `simulation_data` is expected to be an array). I’ll get back to that in a second.
 
-The function next_generation has one subtle but important change. It now has an argument called simulation_data, and in the last line, the allele frequency p is added to simulation_data. (i.e. simulation_data is expected to be an array). I’ll get back to that in a second.
+The loop where we call the `next_generation()` function is now encapsulated in a function called `simulation()`. This function is also where we make sure to (re)set the value of `p` to `0.5` every time we start a new simulation. It also has one argument, `simulation_counter`, which we use as an index for the data array. 
 
-The loop where we call the next_generation function is now encapsulated in a function called simulation. This function is also where we make sure to (re)set the value of p to 0.5 every time we start a new simulation. It also has one argument, simulation_counter, which we use as an index for the data array. 
+All of this should become clear on the next few lines, where we have a loop that iterates as many times as we have simulations. In each iteration, we add an empty array to the `data` array. This empty array is the array that will contain all the A1 allele frequency values for one simulation run. Then, we call the function simulation, with the value `i` as an argument, which is our current counter for the simulations (starting at `0`). So when the function `simulation()` is called, `simulation_counter` will be set to whatever `i` was, and `data[simulation_counter]` thus corresponds to the array for a given simulation. It’s that array that we pass as an argument to the function `next_generation()`.
 
-All of this should become clear on the next few lines, where we have a loop that iterates as many times as we have simulations. In each iteration, we add an empty array to the data array. This empty array is the array that will contain all the A1 allele frequency values for one simulation run. Then, we call the function simulation, with the value i as an argument, which is our current counter for the simulations (starting at 0). So when the function simulation is called, simulation_counter will be set to whatever i was, and data[simulation_counter] thus corresponds to the array for a given simulation. It’s that array that we pass as an argument to the function next_generation.
+At the end, we call the `draw_line_chart()` function as before - but importantly, this time we will be passing it a multidimensional array (unlike in the example before, where we passed it a one-dimensional array containing only the results of a single simulation run).
 
-At the end, we call the draw_line_chart function as before - but importantly, this time we will be passing it a multidimensional array (unlike in the example before, where we passed it a one-dimensional array containing only the results of a single simulation run).
+Our drawing code - which I previously asked you to cut and paste - needs to be updated as well to handle multiple simulations. So once again, I’m going to ask you to cut and past the following, updated drawing code, replacing the function `draw_line_chart`:
 
-Our drawing code - which I previously asked you to cut and paste - needs to be updated as well to handle multiple simulations. So once again, I’m going to ask you to cut and past the following, updated drawing code, replacing the function draw_line_chart:
-
+~~~~~~~~
 function draw_line_chart(data,N,generations) {
     var margin = {top: 20, right: 20, bottom: 50, left: 50},
     width = 700 - margin.left - margin.right,
@@ -853,11 +857,11 @@ function draw_line_chart(data,N,generations) {
               .style("stroke", function(d,i) { return color(i); });
 
     }
-
+~~~~~~~~
 
 With this new function in place, save your HTML file and reload the page. You will see 10 simulation runs at the same time. 
 
-With that in place, let us run this code three times for 200 generations, with three different population sizes: N = 20, N = 200, and N = 2000.
+With that in place, let us run this code three times for 200 generations, with three different population sizes: `N = 20`, `N = 200`, and `N = 2000`.
 
 Here is what these three sets of simulation will look like:
 
@@ -877,29 +881,31 @@ N=2000:
 
 
 
-These figures are telling. The show that the smaller the population, to more pronounced the random evolutionary swings each generation. Because of that, alleles will go to fixation in smaller populations much faster.
+These figures are telling. They show that the smaller the population, to more pronounced the random evolutionary swings in each generation. Because of that, alleles will go to fixation in smaller populations much faster.
 
 Now that we have a good intuition from the simulations, let’s see if we can develop a mathematical model that captures this process. Don’t worry, the math is going to be easy, and I will be explaining every step in great detail.
 
-
-A mathematical formulation of genetic drift
+##A mathematical formulation of genetic drift
 
 We have just established, through stochastic simulations, that the main effect of genetic drift is the reduction of genetic variance. We are now looking to find a way to capture this process mathematically.
-Let’s go back to our marble jar example. Recall that we had all the allele copies of the population in a jar, and in order to generate the next generation, we would pick a random marble, copy it, and put it back into the jar. We would do this 2N times in total. 
 
-Let’s define G as the probability that two alleles picked randomly from the population of 2N alleles are identical by state (in our example, that would mean they are both A1s, or both A2s). Thus G is the probability that if you pick any two marbles from the jar, at the same time, they would both be A1s, or both be A2s.
+Let’s go back to our marble jar example. Recall that we had all the allele copies of the population in a jar, and in order to generate the next generation, we would pick a random marble, copy it, and put it back into the jar. We would do this *2N* times in total. 
 
-We are now in a position to ask ourselves, if the current generation has a certain value of G, what is G going to be in the next generation? We’re going to denote G in the next generation simply as G’, to avoid confusion with G in this generation.
+Let’s define *G* as the probability that two alleles picked randomly from the population of *2N* alleles are identical by state (in our example, that would mean they are both A1s, or both A2s). Thus *G* is the probability that if you pick any two marbles from the jar, at the same time, they would both be A1s, or both be A2s.
 
-There are two ways by which two randomly picked marbles are identical by state. It could be that they had the same ancestor marble that was simply picked twice. The probability of this is 1/2N. Why? Because once you pick a certain marble from a jar out of 2N marbles, and put it back again, the possibility that you pick that exact same marble again next time is 1/2N (since there are 2N marbles you can pick from).
+We are now in a position to ask ourselves, if the current generation has a certain value of *G*, what is *G* going to be in the next generation? We’re going to denote *G* in the next generation simply as *G’*, to avoid confusion with *G* in this generation.
 
-The second way by which two randomly picked marbles are identical by state is that they were did not have the same ancestor marble, but their ancestors just happened to be the same type (i.e. either both ancestors were A1 or both were A2). The probability of that is (1-1/2N)G, and here’s why. First, the probability that two marbles did not have the same ancestor is 1-1/2N. We know this because we have just established above that the probability that they do have the same ancestor is 1/2N, so the probability that they don’t have the same ancestor is 1 minus that, i.e. 1-1/2N. But that’s not the end of the story - the two alleles also need to be identical in state, which is G. Thus the total probability is the product of these two probabilities, i.e. (1-1/2N)G.
+There are two ways by which two randomly picked marbles are identical by state. It could be that they had the same ancestor marble that was simply picked twice. The probability of this is *1/2N*. Why? Because once you pick a certain marble from a jar out of *2N* marbles, and put it back again, the possibility that you pick that exact same marble again next time is *1/2N* (since there are *2N* marbles you can pick from).
 
-Having established the two (mutually exclusive) ways by which two randomly picked marbles can be identical, considering what G is in this generation, we simply need to add them up to get the total probability, which is 
+The second way by which two randomly picked marbles are identical by state is that they were did not have the same ancestor marble, but their ancestors just happened to be the same type (i.e. either both ancestors were A1 or both were A2). The probability of that is *(1-1/2N)G*, and here’s why. First, the probability that two marbles did not have the same ancestor is *1-1/2N*. We know this because we have just established above that the probability that they do have the same ancestor is *1/2N*, so the probability that they *don’t* have the same ancestor is 1 minus that, i.e. *1-1/2N*. But that’s not the end of the story - the two alleles also need to be identical in state, which is *G*. Thus the total probability is the product of these two probabilities, i.e. *(1-1/2N)G*.
 
+Having established the two (mutually exclusive) ways by which two randomly picked marbles can be identical, considering what *G* is in this generation, we simply need to add them up to get the total probability, which is 
+
+{$$} 
 1/2N + (1-1/2N)G
+{$$} 
 
-which corresponds to G’ in the next generation.
+which corresponds to *G’* in the next generation.
 
 What we have just done is started from the probability that two randomly picked alleles in this generation are the same with probability G, and then established that in the next generation, G’ will be 1/2N + (1-1/2N)G. This is the most important part of the story - everything that follows now is just algebraic reformulation.
 
