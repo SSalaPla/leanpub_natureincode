@@ -628,40 +628,51 @@ This is the line that calls the function `draw_line_chart()` with the parameters
 
 Save the document and reload the browser. You should see a nice line chart showing the change of `p` over time:
  
-In this particular simulation run, the allele A1 went to fixation around generation 850, which is another way of saying that its frequency reached 100%. This also means that the allele A2 was lost at the same time (whenever an allele goes to fixation, that means that all other alleles are lost). Reload the page and watch different evolutionary dynamics unravel. As you can observe, the dynamics are completely random, as we expected. Sometimes, one of the allele goes relatively straight to fixation. Other times, the frequencies fluctuate widely, with one allele almost driven to extinction, only to make a dramatic comeback, and then still being lost 200 generations later.
+In this particular simulation run, the allele A1 went to fixation around generation 850, which is another way of saying that its frequency reached 100%. This also means that the allele A2 was lost at the same time (whenever an allele goes to fixation, all other alleles are lost). Reload the page and watch different evolutionary dynamics unravel. As you can observe, the dynamics are completely random, as we expected. Sometimes, one of the allele goes relatively straight to fixation. Other times, the frequencies fluctuate widely, with one allele almost driven to extinction, only to make a dramatic comeback, and then still being lost 200 generations later.
 
 With this code in place, let’s focus on the effect of population size. Change the population size to 10, and reload the page. You should see something like this:
  
 
 
-Again, yours will look different anytime your reload, but you’ll not that one of the alleles will go to fixation very rapidly, sometimes within just a few generations. Now increase the population size to 50, and you’ll get a result like this: 
-With N = 50, the time to loss / fixation is a little longer, but it’s still shorter than with N = 500. If you play around with different numbers, you’ll notice the general pattern that we already observed earlier: that the random effects are much stronger when the population is smaller, and as a consequence, allele loss / fixation happens faster.
+Again, yours will look different each time you reload the page, but you’ll note that one of the alleles will go to fixation very rapidly, sometimes within just a few generations. Now increase the population size to 50, and you’ll get a result like this: 
+
+With `N = 50`, the time to loss / fixation is a little longer, but it’s still shorter than with `N = 500`. If you play around with different numbers, you’ll notice the general pattern that we already observed earlier: that the random effects are much stronger when the population is smaller, and as a consequence, allele loss / fixation happens faster.
 
 Rather than reloading the page and seeing a single simulation run its course, I want to modify the code so that we can run a number of simulations and plot them all at once. In order to do this though, I first need to explain in more detail the concept of an array. I mentioned above that we are using a JavaScript array that we name data, and the we initialize to be an empty array, like so:
 
+~~~~~~~~
 var data = [];
+~~~~~~~~
 
-So what is an array? An array is simply a list-like object that contains any number of so-called elements. For example, this is an array with five elements:
+So what is an array? An array is simply a list-like object that contains any number of so-called *elements*. For example, this is an array with five elements:
 
+~~~~~~~~
 var arr = [4,2,6,8,3];
+~~~~~~~~
 
-The data array that we used above contained zero elements - it is an empty array. Arrays use brackets, i.e. [ and ], to wrap the elements which are themselves separated by commas.
+The `data` array that we used above contained zero elements - it is an empty array. Arrays use brackets, i.e. `[` and `]`, to wrap the elements which are themselves separated by commas.
 
-Why are arrays important? The variable types that we encountered so far - numbers, strings, and booleans - can only ever hold one single value, like 123, “hello there”, and true. But whenever you are dealing with data, you have many values, and you need a way to store them somehow in code. That’s where arrays come in. The array arr in the example above holds 5 values, which happen to be numbers. An array can store any other type, and even mix them, so you could have an array like this:
+Why are arrays important? The variable types that we encountered so far - numbers, strings, and booleans - can only ever hold one single value, like `123`, `"hello there"`, or `true`. But whenever you are dealing with data, you have many values, and you need a way to store them somehow in code. That’s where arrays come in. The array `arr` in the example above holds 5 values, which happen to be numbers. An array can store any other type, and even mix them, so you could have an array like this:
 
+~~~~~~~~
 var b = [4,"hello there”,6,true,false];
+~~~~~~~~
 
-Now that you know what an array is, how to do you manage it? How do you add data to it, and how to retrieve it?
+Now that you know what an array is, how to do you manage it? How do you add data to it, and how to retrieve it later?
 
-There are two ways in which you can add data to an array. The first way is to do it when you initialize the array, as we’ve done with array arr above. The second way is to push data into an existing array, as we’ve done in the genetic drift code example above, like so:
+There are two ways by which you can add data to an array. The first way is to do it when you initialize the array, as we’ve done with array `arr` above. The second way is to *push* data into an existing array, as we’ve done in the genetic drift code example above, like so:
 
+~~~~~~~~
 arr.push(5);
+~~~~~~~~
 
-This line adds the number five to the list of numbers in the array. Importantly, it will be added at the end of the list, so that the new array will contain the values 4, 3, 6, 8, 3 and 5, in that order.
+This line adds the number five to the list of numbers in the array. Importantly, it will be added *at the end* of the list, so that the new array will contain the values 4, 3, 6, 8, 3 and 5, in that order.
 
-You can retrieve elements by using the concept of an index. If you want the nth element of an array arr, you retrieve like so:
+You can retrieve elements by using the concept of an *index*. If you want the n^th^ element of an array `arr`, you retrieve like so:
 
+~~~~~~~~
 arr[n]
+~~~~~~~~
 
 However, there is one major gotcha: like in almost any data structure in almost any programming languages, JavaScript arrays are zero-index. This means that the first element has index 0, not index 1. If you are new to programming, this is going to be a major source of bugs, and probably hours of desperation. Sorry to be so blunt, but it is quite true. Perhaps this dramatic warning will at least remind you what to look for when your code behaves strangely.
 
