@@ -1108,7 +1108,7 @@ The first reason for a substantially reduced effective population size are *popu
 
 Let’s look at a simple numerical example. Let’s assume that the size of a population is usually 1,000 individuals, However, for reasons unknown, the population size collapses to 100 in one generation, before going back up to 1,000 again in the following generation.
 
-If we look at just three generations in a row, where the population sizes were 1,000, 100, and 1,000 individuals, respectively, we could be forgiven for thinking that the effective population size in these three generations would be the average, which is 700. It turns out that the effective population size is the *harmonic mean* of the population sizes, which is 250. This is quite remarkable - this single generation bottleneck has slashed the effective population size to a number that’s almost three times smaller than what you would have expected by simply calculating the average. To make an even more extreme sample, let’s say the population sizes in these three generations are 1,000, 10, and 1,000. The average population size over the three generations is 670, but the effective population size is 29.4!
+If we look at just three generations in a row, where the population sizes were 1000, 100, and 1000 individuals, respectively, we could be forgiven for thinking that the effective population size in these three generations would be the average, which is 700. It turns out that the effective population size is the *harmonic mean* of the population sizes, which is 250. This is quite remarkable - this single generation bottleneck has slashed the effective population size to a number that’s almost three times smaller than what you would have expected by simply calculating the average. To make an even more extreme sample, let’s say the population sizes in these three generations are 1000, 10, and 1000. The average population size over the three generations is 670, but the effective population size is 29.4!
 
 Let’s have a quick look at the definition of the harmonic mean - for any set of numbers {$$}x_1{/$$}, {$$}x_2{/$$}, {$$}x_3{/$$} … {$$}x_n{/$$}, the harmonic mean is
 
@@ -1118,15 +1118,17 @@ Let’s have a quick look at the definition of the harmonic mean - for any set o
 
 Because this term is a reciprocal of a sum of reciprocal, small numbers will have very strong effects on the mean. For the numbers 1000, 10, and 1000, the mean is 
 
-3 / (1/1000 + 1/10 + 1/1000) = 3 / 0.102
+{$$}
+\frac{3}{\frac{1}{1000} + \frac{1}{10} + \frac{1}{1000}} = \frac{3}{0.102}
+{/$$}
 
-The reason why the mean is so low (29.4) is because the denominator is rather large, and it itself is almost fully determined by the value 1/10. Even if you had population sizes of 1,000,000 before and after the bottleneck, the formula shows that they wouldn’t have mattered the slightest bit, because then the mean would simply be equal to 3 / 0.100002, which is still about 30. The other important thing that the formula shows is that even when you have longer time periods of large, stable population sizes, the one generation with population size 10 can still dominate the outcome, and the effective population size would still be much smaller than expected .
+The reason why the harmonic mean is so low (29.4) is because the denominator is rather large, and it itself is almost fully determined by the value {$$}\frac{1}{10}{/$$}. Even if you had population sizes of 1,000,000 before and after the bottleneck, the formula shows that they wouldn’t have mattered the slightest bit, because then the mean would simply be equal to {$$}\frac{3}{0.100002}{/$$}, which is still about 30. The other important thing that the formula shows is that even when you have longer time periods of large, stable population sizes, the one generation with population size 10 can still dominate the outcome, and the effective population size would still be much smaller than expected.
 
 The important message here is obvious: because the effective population size is given by the harmonic mean, population bottlenecks, even if over very short periods of time, will dramatically reduce the effective population size.
 
-Let’s take a look at this claim with our code. 
+Let’s take a look at this claim with code. 
 
-First, we need to make a small adjustment in our drawing code. In the function draw_line_chart that I previously asked you to copy and paste, find the string "Population Size:" (towards the end in the code) and replace it with “Eff. Population Size:”.
+First, we need to make a small adjustment in our drawing code. In the function `draw_line_chart()` that I previously asked you to copy and paste, find the string "Population Size:" (towards the end in the code) and replace it with “Eff. Population Size:”.
 
 Next, if we want to display the effective population size, we need to calculate it. In order to do this, we need to keep track of the population sizes over time. To do this, I first define a new variable which will hold the population sizes over the course of a simulation:
 
