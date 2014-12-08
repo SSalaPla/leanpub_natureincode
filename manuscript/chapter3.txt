@@ -963,7 +963,7 @@ which is an equation that looks unassuming - but is indeed one of the most profo
 
 Two major insights based on a simple equation, that we were able to derive from simple principles, with simple algebra. Not too shabby! But wait, there’s more!
 
-Let’s denote the genetic variance and generation 0 with *H_0_*, and thus
+Let’s denote the genetic variance and generation 0 with {$$}H_0{/$$}, and thus
 
 {$$}
 H_1 = (1 - 1/2N) H_0
