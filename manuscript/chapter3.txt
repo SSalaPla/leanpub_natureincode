@@ -1307,7 +1307,7 @@ To sum up: changing census population sizes can have a strong effect on the effe
 
 The second reason for a substantially reduced effective population size is an *unbalanced sex ratio*. Recall that the Wright-Fisher model assumes hermaphroditic individuals. Because many species are not hermaphroditic, but rather have individuals with distinct sexes, the sex ratio can have a big impact on the effective population size. Imagine a population of 100 individuals, where 99 are female, and only one is male. The next generation will all have genes from the one male, and it is intuitively clear that this offspring generation will have a much lower genetic variance than it would have had, if the parent generation had had a more balanced sex ratio.
 
-As it turns out, there is a simple formula to calculate the effective population size if we know the number of females, {$$}N_f{/$$}, and the number of males, {$$}N_n{/$$}, in a population ({$$}N = N_f + N_m{/$$}). The formula is 
+As it turns out, there is a simple formula to calculate the effective population size if we know the number of females, {$$}N_f{/$$}, and the number of males, {$$}N_m{/$$}, in a population ({$$}N = N_f + N_m{/$$}). The formula is 
 
 {$$}
 N_e = \frac{4N_mN_f}{N}
@@ -1347,7 +1347,7 @@ N_e = \frac{4 * 90 * 10}{100} = 36
 
 Thus, the effective population size is only slightly more than a third of the actual census population size. 
 
-We can get a good feeling for how strong this effect is going to be by plotting the ration {$$}\frac{N_e}{N}{/$$} against the sex ratio. {$$}\frac{N_e}{N}{/$$} tells us how large the effective population size is, relative to the census population size. In the example above, the ratio would be {$$}\frac{36}{100} = 0.36{/$$}, which is quite low. On the other hand, our sex ratio was very distorted. Let’s plot the two quantities against each other.
+We can get a good feeling for how strong this effect is going to be by plotting the ratio {$$}\frac{N_e}{N}{/$$} against the sex ratio. {$$}\frac{N_e}{N}{/$$} tells us how large the effective population size is, relative to the census population size. In the example above, the ratio would be {$$}\frac{36}{100} = 0.36{/$$}, which is quite low. On the other hand, our sex ratio was very distorted. Let’s plot the two quantities against each other.
 
 First, we need a little math. I would like {$$}\frac{N_e}{N}{/$$} plotted as a function of the sex ratio. I will chose the ratio of {$$}\frac{N_m}{N}{/$$} as my sex ratio. So how can I transform this equation
 
@@ -1361,13 +1361,13 @@ into one that expresses {$$}\frac{N_e}{N}{/$$} as a function of {$$}\frac{N_m}{N
 \frac{N_e}{N} = \frac{4N_mN_f}{N^2}
 {/$$}
 
-Then, divide both {$$}N_m{/$$} and {$$}N_f{/$$} by *N* - however, by doing this, you are effectively dividing the numerator of the fraction on the right side of the equation by N^2^! Thus, in order to make sure the quantity on the right side of the equation remains unchanged, you need to divide the denominator by N^2^ also:
+We can rewrite this as
 
 {$$}
 \frac{N_e}{N} = 4\frac{N_m}{N}\frac{N_f}{N}
 {/$$}
 
-and since {$$}\frac{N_f}{N} = 1 - frac{N_m}{N}{/$$}, we can write
+and since {$$}\frac{N_f}{N} = 1 - \frac{N_m}{N}{/$$}, we can write
 
 {$$}
 \frac{N_e}{N} = 4(\frac{N_m}{N})(1-\frac{N_m}{N})
