@@ -13,7 +13,7 @@ This is an important chapter. It’s important because it introduces the concept
 
 Randomness is the idea of events occurring at random, by chance. If they happen by chance, it’s impossible to predict them. The more sophisticated term for randomness is stochasticity - random events are said to be *stochastic*. 
 
-While random events cannot be predicted, we can still say something about their probability of occurring. This is the main idea behind the theory of probability. For example, a fair coin comes up heads half of the time, and tails the other half of the time. While we can’t predict the outcome of a single coin toss, we still know that the chance, or probability, that the coin comes up heads, is exactly 50% (in reality, no coin is exactly fair, and the probability of heads is probably slightly lower or higher than 50%, but in a fair coin, the probability is 50% by definition). Because we know that each coin toss comes up 50% heads and 50% tails, we can calculate the probability that ten coin tosses come up heads 80% of time, and tails 20% of the time, for example. For any ten coin tosses, it is completely impossible to predict exactly how many will come up heads; but because we can calculate the probability of any outcome, we can at least get a good sense of what to expect. For example, we can calculate that the probability of 80% heads 20% tails is ((10*9)/2) / 2^10 = 4.39% (don’t worry about how to calculate this, but if you are interested, here is a good explanation: [http://gwydir.demon.co.uk/jo/probability/info.htm](http://gwydir.demon.co.uk/jo/probability/info.htm)). An outcome like this isn’t unlikely, but you wouldn’t want to bet the farm on it either.
+While random events cannot be predicted, we can still say something about their probability of occurring. This is the main idea behind the theory of probability. For example, a fair coin comes up heads half of the time, and tails the other half of the time. While we can’t predict the outcome of a single coin toss, we still know that the chance, or probability, that the coin comes up heads, is exactly 50% (in reality, no coin is exactly fair, and the probability of heads is probably slightly lower or higher than 50%, but in a fair coin, the probability is 50% by definition). Because we know that each coin toss comes up 50% heads and 50% tails, we can calculate the probability that ten coin tosses come up heads 80% of time, and tails 20% of the time, for example. For any ten coin tosses, it is completely impossible to predict exactly how many will come up heads; but because we can calculate the probability of any outcome, we can at least get a good sense of what to expect. For example, we can calculate that the probability of 80% heads 20% tails is {$$}((10*9)/2) / 2^10 = 4.39%{/$$} (don’t worry about how to calculate this, but if you are interested, here is a good explanation: [http://gwydir.demon.co.uk/jo/probability/info.htm](http://gwydir.demon.co.uk/jo/probability/info.htm)). An outcome like this isn’t unlikely, but you wouldn’t want to bet the farm on it either.
 
 Before we get to the biology of randomness, I want to jump straight to code. The great thing about having fast computers is that we can simulate randomness over and over again, in a very short amount of time. This allows us to run millions of coin tossing experiments in a computer in a split second.
 
@@ -1206,7 +1206,7 @@ On the other hand, I have just claimed above that the population will behave muc
 
 Obvisouly quite different - a substantial reduction in genetic variation, with some populations having lost all variation by generation `100` already.
 
-Let me repeat this - if the claim about effective population size and harmonic mean is indeed correct, then the dynamics of a population with `N = 1000` that goes through `N = 10` bottlenecks every 10^th generation should be much more like a population that has a constant population size of `N = 92`, rather than `N = 901` (and as the two previous images have shown, the dynamics would be quite different).
+Let me repeat this - if the claim about effective population size and harmonic mean is indeed correct, then the dynamics of a population with `N = 1000` that goes through `N = 10` bottlenecks every 10^th^ generation should be much more like a population that has a constant population size of `N = 92`, rather than `N = 901` (and as the two previous images have shown, the dynamics would be quite different).
 
 Only one way to find out! Let’s go to the code and implement the actual bottlenecks.
 
@@ -1282,7 +1282,7 @@ Thus,
 `11 % 10`  equals `1`
 etc.
 
-In other words, with `i` starting at `0`, when `i%10` equals `9`, we are in the 10^th, 20^th, 30^th etc. generation. And whenever that is the case, we set the population size to `10`, otherwise we set it to `N`.
+In other words, with `i` starting at `0`, when `i%10` equals `9`, we are in the 10^th^, 20^th^, 30^th^ etc. generation. And whenever that is the case, we set the population size to `10`, otherwise we set it to `N`.
 
 In the following two lines,
 
@@ -1361,7 +1361,7 @@ into one that expresses {$$}\frac{N_e}{N}{/$$} as a function of {$$}\frac{N_m}{N
 \frac{N_e}{N} = \frac{4N_mN_f}{N^2}
 {/$$}
 
-Then, divide both {$$}N_m{/$$} and {$$}N_f{/$$} by *N* - however, by doing this, you are effectively dividing the numerator of the fraction on the right side of the equation by *N^2*! Thus, in order to make sure the quantity on the right side of the equation remains unchanged, you need to divide the denominator by *N^2* also:
+Then, divide both {$$}N_m{/$$} and {$$}N_f{/$$} by *N* - however, by doing this, you are effectively dividing the numerator of the fraction on the right side of the equation by N^2^! Thus, in order to make sure the quantity on the right side of the equation remains unchanged, you need to divide the denominator by N^2^ also:
 
 {$$}
 \frac{N_e}{N} = 4\frac{N_m}{N}\frac{N_f}{N}
