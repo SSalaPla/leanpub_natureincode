@@ -1286,73 +1286,96 @@ In other words, with `i` starting at `0`, when `i%10` equals `9`, we are in the 
 
 In the following two lines,
 
+~~~~~~~~
 population_sizes.push(population_size);
 next_generation(data[simulation_counter],population_size);
+~~~~~~~~
 
-I simply changed N to population_size, because it is the variable population_size that holds the value of the population size in the current generation.
+I simply changed `N` to `population_size`, because it is the variable `population_size` that holds the value of the population size in the current generation.
 
 That’s it! Save the document and load it in a browser, and here’s what you’ll get:
  
 
-Wow - that does look much more like the Wright-Fisher population at a constant N = 92! The effective population size is indeed 92 - substantially lower than the average in the census population size, which is 901. You can clearly see when the population goes through the bottlenecks, but if you flatten out those jumps visually in your mind, you can see that the population behaves pretty much like a Wright-Fisher population at N = 92, rather than at N = 901.
+Wow - that does look much more like the Wright-Fisher population at a constant `N = 92`! The effective population size is indeed `92` - substantially lower than the average in the census population size, which is `901`. You can clearly see when the population goes through the bottlenecks, but if you flatten out those jumps visually in your mind, you can see that the population behaves pretty much like a Wright-Fisher population at `N = 92`, rather than at `N = 901`.
 
-To make an even more extreme case, set N = 100,000, but keep the bottlenecks in the code. Your simulations will now of course run a bit slower (they take a few seconds on my laptop computer), but here’s what you will see when the they are done:
+To make an even more extreme case, set `N = 100000`, but keep the bottlenecks in the code. Your simulations will now of course run a bit slower (they take a few seconds on my laptop computer), but here’s what you will see when the they are done:
  
 
-As you can see, the effective population size is still very small (100), despite the fact that this population has a size of 100,000 during 90% of the time! You can also see that the dynamics are completely driven by the bottlenecks.
+As you can see, the effective population size is still very small (`100`), despite the fact that this population has a size of `100000` during 90% of the time! You can also see that the dynamics are completely driven by the bottlenecks.
 
 To sum up: changing census population sizes can have a strong effect on the effective population size, especially when the population goes though severe bottlenecks. The effect of bottlenecks is to reduce the effective population size, which will result in a much faster reduction in genetic variation.
 
-The second reason for a substantially reduced effective population size is an unbalanced sex ratio. Recall the Wright-Fisher model assumes hermaphroditic individuals. Because many species are not hermaphroditic, but rather have two sexes, the sex ratio can have a big impact on the effective population size. Imagine a population of 100 individuals, where 99 are female, and only one is male. The next generation will all have genes from the one male, and it is intuitively clear that this offspring generation will have a much lower genetic variance than it would have had, if the parent generation had had a more balanced sex ratio.
+The second reason for a substantially reduced effective population size is an *unbalanced sex ratio*. Recall that the Wright-Fisher model assumes hermaphroditic individuals. Because many species are not hermaphroditic, but rather have individuals with distinct sexes, the sex ratio can have a big impact on the effective population size. Imagine a population of 100 individuals, where 99 are female, and only one is male. The next generation will all have genes from the one male, and it is intuitively clear that this offspring generation will have a much lower genetic variance than it would have had, if the parent generation had had a more balanced sex ratio.
 
-As it turns out, there is a simple formula to calculate the effective population size if we know the number of females, Nf, and the number of males, Nm, in a population (N = Nf + Nm). The formula is 
+As it turns out, there is a simple formula to calculate the effective population size if we know the number of females, {$$}N_f{/$$}, and the number of males, {$$}N_n{/$$}, in a population ({$$}N = N_f + N_m{/$$}). The formula is 
 
-Ne = 4NmNf / N
+{$$}
+N_e = \frac{4N_mN_f}{N}
+{/$$}
 
-If the sex ratio is balanced such that Nm = Nf, then it’s easy to see that the census population size and the effective population size are equal. Because Nm = Nf, it follows that Nm = Nf = N/2, and so 
+If the sex ratio is balanced such that {$$}N_m = N_f{/$$}, then it’s easy to see that the census population size and the effective population size are equal: because {$$}N_m = N_f{/$$}, it follows that {$$}N_m = N_f = \frac{N}{2}{/$$}, and so 
 
-4NmNf / N
+{$$}
+\frac{4N_mN_f}{N}
+{/$$}
 
 becomes
 
-(4 N/2 N/2) / N
+{$$}
+\frac{4\frac{N}{2}\frac{N}{2}}{N}
+{/$$}
 
 which is
 
-(4 * N2 / 4) / N
+{$$}
+\frac{4\frac{N^2}{4}}{N}
+{/$$}
 
 which is 
 
-N2 / N
+{$$}
+\frac{N^2}{N}
+{/$$}
 
-which is N, and thus Ne = N in that case.
+which is *N*, and thus {$$}N_e = N{/$$} in that case.
 
-However, let’s look at an example where the ratio is very unequal. Unequal sex ratio may be due to sexual selection (where females prefer certain males over others, and vice versa), or due to artificial breeding (where a farmer has just a few males but many females), or due to other reasons. Let’s look at the case where we have a population of 10 male bulls and 90 female cows. Thus, Nf = 90, and Nm = 10. If you plug these numbers into the equation above, you get
+However, let’s look at an example where the ratio is very unequal. Unequal sex ratio may be due to sexual selection (where females prefer certain males over others, and vice versa), or due to artificial breeding (where a farmer has just a few males but many females), or due to other reasons. Let’s look at the case where we have a population of 10 male bulls and 90 female cows. Thus, {$$}N_f = 90{/$$}, and {$$}N_m = 10{/$$}. If you plug these numbers into the equation above, you get
 
-Ne = 4 * 90 * 10 / 100 = 36.
+{$$}
+N_e = \frac{4 * 90 * 10}{100} = 36
+{/$$}
 
 Thus, the effective population size is only slightly more than a third of the actual census population size. 
 
-We can get a good feeling for how strong this effect is going to be by plotting the ration Ne / N against the sex ratio. Ne / N gives tells us how large the effective population size is, relative to census population size. In the example above, the ratio would be 36 / 100 = 0.36, which is quite low. On the other hand, our sex ration was very distorted. Let’s plot the two quantities against each other.
+We can get a good feeling for how strong this effect is going to be by plotting the ration {$$}\frac{N_e}{N}{/$$} against the sex ratio. {$$}\frac{N_e}{N}{/$$} tells us how large the effective population size is, relative to the census population size. In the example above, the ratio would be {$$}\frac{36}{100} = 0.36{/$$}, which is quite low. On the other hand, our sex ratio was very distorted. Let’s plot the two quantities against each other.
 
-First, we need a little math. I would like Ne / N plotted as a function of the sex ratio. I will chose the ratio of Nm / N as my sex ratio. So how can I transform this equation
+First, we need a little math. I would like {$$}\frac{N_e}{N}{/$$} plotted as a function of the sex ratio. I will chose the ratio of {$$}\frac{N_m}{N}{/$$} as my sex ratio. So how can I transform this equation
 
-Ne = 4NmNf / N
+{$$}
+N_e = \frac{4N_mN_f}{N}
+{/$$}
 
-into on that expresses Ne / N as a function of Nm / N? A few easy steps! First, divide both sides by N:
+into one that expresses {$$}\frac{N_e}{N}{/$$} as a function of {$$}\frac{N_m}{N}{/$$}? A few easy steps! First, divide both sides by *N*:
 
-Ne / N = 4NmNf / N2
+{$$}
+\frac{N_e}{N} = \frac{4N_mN_f}{N^2}
+{/$$}
 
-Then, divide both Nm and Nf by N - in order to make sure the quantity on the right hand side of the equation remains the same, you need to divide the denominator by N2 also:
+Then, divide both {$$}N_m{/$$} and {$$}N_f{/$$} by *N* - however, by doing this, you are effectively dividing the numerator of the fraction on the right side of the equation by *N^2*! Thus, in order to make sure the quantity on the right side of the equation remains unchanged, you need to divide the denominator by *N^2* also:
 
-Ne / N = 4 (Nm / N) (Nf / N)
+{$$}
+\frac{N_e}{N} = 4\frac{N_m}{N}\frac{N_f}{N}
+{/$$}
 
-and since Nf / N = 1 - Nm / N, we can write
+and since {$$}\frac{N_f}{N} = 1 - frac{N_m}{N}{/$$}, we can write
 
-Ne / N = 4 (Nm / N) (1 - Nm / N)
+{$$}
+\frac{N_e}{N} = 4(\frac{N_m}{N})(1-\frac{N_m}{N})
+{/$$}
 
-That was easy. Now, let’s write the JavaScript code that calculates Ne / N for values of the male proportion ranging from 0 to 1, in increments of 0.01:
+That's it: {$$}\frac{N_e}{N}{/$$} is now expressed as a function of {$$}\frac{N_m}{N}{/$$}. Now, let’s write the JavaScript code that calculates {$$}\frac{N_e}{N}{/$$} for values of the male proportion ranging from 0 to 1, in increments of 0.01:
 
+~~~~~~~~
 var data=[];
 var x_max = 1;
 
@@ -1363,19 +1386,25 @@ for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
 }
 
 draw_line_chart(data,x_max,"Proportion Males","Ne / N");
+~~~~~~~~
 
-as you can see, I’m implementing exactly the equation above, and push the result into an array that we’ll hand over to the plotting function (which I will give you in a second). First, there are two subtleties in the for loop that I want to mention. First, I’m using the smaller than or equal operator, because I want to include the last value, x_max (which I’m setting to 1). Second, I’m not actually writing 
+As you can see, I’m implementing the equation above, and push the result into an array that we’ll hand over to the plotting function (which I will show you in a second). First, there are two subtleties in the `for` loop that I want to mention. First, I’m using the smaller than or equal operator, because I want to include the last value, `x_max` (which I’m setting to `1`). Second, I’m not actually writing 
 
+~~~~~~~~
 i <= x_max;
+~~~~~~~~
 
 but rather
 
+~~~~~~~~
 i <= x_max + 0.005;
+~~~~~~~~
 
-why is that? It’s because the rounding error would kick in again otherwise. Feel free to output the value of i to the console - you would see that after you’ve added the value 0.1 a hundred times to 0, your value will be 1.0000000000000007, rather than 1. To be sure that the for loop doesn’t end prematurely, I’m adding a small amount of error to 1 when making the comparison.
+why is that? It’s because the rounding error would kick in again otherwise. Feel free to output the value of `i` to the console - you would see that after you’ve added the value `0.1` a hundred times to `0`, your final value will be `1.0000000000000007`, rather than `1`. To be sure that the for loop doesn’t end prematurely, I’m adding a small amount as an error margin to `1` when making the comparison.
 
 Here’s the drawing function which you can again just copy and paste:
 
+~~~~~~~~
 function draw_line_chart(data, x_max, x_label, y_label) {
     var margin = {top: 20, right: 20, bottom: 50, left: 50},
             width = 700 - margin.left - margin.right,
@@ -1466,8 +1495,9 @@ function draw_line_chart(data, x_max, x_label, y_label) {
             .attr("d", line);
 
   }
+~~~~~~~~
 
-Here is the outcome: 
+And here is the outcome: 
 
 As you can see, the effect is very strong when the sex ratio is strongly skewed. A quick check at a proportion of males at 10% shows that the graph correctly predicts that the effective population size will be 36% of the census population size, as our farm example above has shown.
 
@@ -1475,13 +1505,13 @@ Overall, the message here is that unless the sex ratio is severely skewed (less 
 
 Boy, what a chapter! We’re done! Congratulations for following me all the way through here. Let’s briefly wrap up what we learned in this chapter.
 
-	•	Finite population size introduces randomness into evolutionary dynamics (genetic drift).
-	•	Genetic drift acts to reduce genetic variation.
-	•	The effect of drift is proportional to the population size: the smaller the population, the larger the effect of drift.
-	•	Unless other forces counter it, genetic drift will reduce all genetic variation in every population.
-	•	Drift is a slow process - it takes about 1.4N generation to reduce the genetic variation of a population by half.
-	•	The effective population size is a key concept - it is the size of an ideal (Wright-Fisher) population that shows the same decay of genetic variation as the actual population of interest.
-	•	The effective population size is often smaller than the actual population size, due to various reasons such as population size bottlenecks, or unequal sex ratios.
-	•	We’ve also covered some key programming concepts such as arrays and conditional flows.
+* Finite population size introduces randomness into evolutionary dynamics (genetic drift).
+* Genetic drift acts to reduce genetic variation.
+* The effect of drift is proportional to the population size: the smaller the population, the larger the effect of drift.
+* Unless other forces counter it, genetic drift will reduce all genetic variation in every population.
+* Drift is a slow process - it takes about *1.4N* generation to reduce the genetic variation of a population by half.
+* The effective population size is a key concept - it is the size of an ideal (Wright-Fisher) population that shows the same decay of genetic variation as the actual population of interest.
+* The effective population size is often smaller than the actual population size, due to various reasons such as population size bottlenecks, or unequal sex ratios.
+* We’ve also covered some key programming concepts such as arrays and conditional flows.
 
 I hope you feel empowered to move on to the next chapter. You should be - you’ve mastered a lot of ground already. Think about where we started - at the very beginning, and yet at this point, you are already running stochastic simulations and plotting them in your browser, all the while learning key ideas about evolution.
