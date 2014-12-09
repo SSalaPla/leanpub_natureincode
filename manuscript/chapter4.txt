@@ -18,7 +18,7 @@ var sequence_length = 20;
 var number_of_generations = 100;
 var mutation_rate = 0.0001; // per base and generation
 
-var BASES = [‘A','G','C','T'];
+var BASES = ['A','G','C','T'];
 ~~~~~~~~
 
 We’ll be storing a number of sequences in the array `sequences` - each sequence will itself be an array of the characters `'A'`, `'G'`, `'C'` and `'T'`. We’ll store the original sequence in the array `original_sequence`. We would like to have `100` sequences in total (defined by `number_of_sequences`), and each sequence should consist of `20` base pairs (defined by `sequence_length`). Starting from an originally uniform population (i.e. no genetic variation - all sequences will be exact copies of the `original_sequence` initially), we’ll run `100` generations (defined by `number_of_generations`) during which we will have mutations occur with a probability of `0.0001` per base and generation (defined by `mutation_rate`). That is, in each generation, each base pair of each sequence has a `1` in `10,000` chance of “switching” to another base pair.
@@ -133,21 +133,23 @@ run_generations();
 print_sequences("After 100 generations");
 ~~~~~~~~
 
-Granted, the function `run_generations()` looks a little intimidating. But we’ll walk through it line by line. Notice that there is no new concept here - just loops and arrays. The only unusual thing is that we have three loops at once, and they are *nested*. The first loop iterates over the `generation` counter. The second loop iterates over all sequences. Because the two loops are nested, we can say that in every generation, we loop over all sequences. But it doesn’t stop there - we have a third loop which iterates over all bases. In other words: in every generation (first loop), we go through each sequence (second loop) and iterate over each base (third loop).
+Granted, the function `run_generations()` looks a little intimidating. But we’ll walk through it line by line. Notice that there is no new concept here - just loops and arrays. The only unusual thing is that we have three loops at once, and they are *nested*. The first loop iterates over the generation counter. The second loop iterates over all sequences. Because the two loops are nested, we can say that in every generation, we loop over all sequences. But it doesn’t stop there - we have a third loop which iterates over all bases. In other words: in every generation (first loop), we go through each sequence (second loop) and iterate over each base (third loop).
 
-Notice that each loop has a different counter variable. I use i, ii, iii etc. Others use i, j, k, etc. I prefer my style because it instantly tells me which nesting level I’m at, but feel free to use whichever variable names you prefer.
+Notice that each loop has a different counter variable. I use `i`, `ii`, `iii` etc. Other people use `i`, `j`, `k`, etc. I prefer my style because it instantly tells me which nesting level I’m at, but feel free to use whichever variable names you prefer.
 
-Once we are in the third loop that iterates over each single base pair in a sequence, we can trigger a mutation even with probability 0.0001. As before, we are implementing this stochastic event by using the built-in random number generator Math.random. Let’s take a look at how we do this:
+Once we are in the third loop that iterates over each single base pair in a sequence, we can trigger a mutation even with probability `0.0001`. As before, we are implementing this stochastic event by using the built-in random number generator `Math.random()`. Let’s take a look at how we do this:
 
+~~~~~~~~
 if (Math.random() < mutation_rate) {
     sequences[ii][iii] = random_base(sequences[ii][iii]);
 }
+~~~~~~~~
 
-The expression sequences[ii][iii] is accessing an element from a two-dimensional array. If this doesn’t ring a bell, be sure to re-read the discussion about arrays in the previous chapter. The array sequences contains all sequences, which are themselves arrays of base pairs. Thus, sequences[ii] is itself an array (an array of bases), and the expression sequences[ii][iii] means the iiith element (the base pair) in the iith sequence, where iii and ii are the counters of the two innermost for loops. 
+The expression `sequences[ii][iii]` is accessing an element from a two-dimensional array. If this doesn’t ring a bell, be sure to re-read the discussion about arrays in the previous chapter. The array `sequences` contains all sequences, which are themselves arrays of base pairs. Thus, `sequences[ii]` is itself an array (an array of bases), and the expression `sequences[ii][iii]` means the `iii`^th^ element (the base pair) in the `ii`^th^ sequence, where `iii` and `ii` are the counters of the two innermost `for` loops. 
 
 Now, the complete code is as follows:
 
-
+~~~~~~~~
 var sequences = [];
 var original_sequence = [];
 var number_of_sequences = 100;
@@ -211,28 +213,30 @@ generate_first_generation();
 print_sequences("Generation 0");
 run_generations();
 print_sequences("After 100 generations");
-
+~~~~~~~~
 
 If you save the file and load in the computer, you’ll see something like this:
  
 
 In the interest of space, I’m only showing a fraction of what you’ll see, but the point is as follows: mutation has introduced a substantial amount of genetic variation. In an example run on my machine, there are now 34 unique genetic sequences, and the population is dominate by 4 sequences that each occur more than 10 times. Of course, this will be different every time you re-run the simulation, but it’s nevertheless remarkable. We are often tempted to think that mutations rates as low as 1 in 10,000 don’t have a strong effect, simply because 1 in 10,000 is an unlikely event. Nevertheless, if you have lots of base pairs in lots of individuals over many generations, even much lower mutation rates will produce a substantial amount of genetic variation. 
 
-Feel free to play around with the value of the mutation rate. If you increase by a factor of ten, to 0.001, you’ll notice that you get even more variation: almost all sequences will be unique. Conversely, if you decrease the mutation rate by a factor of ten, to 0.00001, you’ll notice that you get very little variation, and sometimes even none at all in a single simulation run.
+Feel free to play around with the value of the mutation rate. If you increase by a factor of ten, to `0.001`, you’ll notice that you get even more variation: almost all sequences will be unique. Conversely, if you decrease the mutation rate by a factor of ten, to `0.00001`, you’ll notice that you get very little variation, and sometimes even none at all in a single simulation run.
 
-Mutation rates in nature are quite variable. In humans, the estimates are somewhere around 10-10 per base pair and replication, and 10-8 per base pair and generation - that is, around 1 in 10 billion per base pair and replication, and 1 in 100 million per base pair and generation (human germ cells go through many replications per single human generation). At the lower end, some viruses have mutation rates as low as 1 in 1,000 per base pair and replication. It’s important to be careful about what exactly the mutation rate denotes. Mutation rates are always per some unit, and per some time interval. They can be per base pair, per gene / allele, or per genome (the totality of all base pairs). They can be per replication or per generation. 
+Mutation rates in nature are quite variable. In humans, the estimates are somewhere around 10^-10^ per base pair and replication, and 10^-8^ per base pair and generation - that is, around 1 in 10 billion per base pair and replication, and 1 in 100 million per base pair and generation (human germ cells go through many replications per single human generation). At the lower end, some viruses have mutation rates as low as 1 in 1,000 per base pair and replication. It’s important to be careful about what exactly the mutation rate denotes. Mutation rates are always per some unit, and per some time interval. They can be per base pair, per gene / allele, or per genome (the totality of all base pairs). They can be per replication or per generation. 
 
 Having established that mutations can generate genetic variation, we should notice something very interesting: that the consequences of mutation are the exact opposite of the consequences of drift. This is the central idea in this chapter, and one of the central ideas in evolution in general. Mutation creates genetic variation; drift eliminates it. 
 
-We’ll have plenty to code later, but in this chapter I would first like to establish the mathematical foundations of this battle of forces, mutation vs. drift. We’ll use the same type of math, and I’ll be again very careful to walk you slowly through each step.
+We’ll have plenty to code later, but in this chapter I would first like to establish the mathematical foundations of this battle of forces, mutation vs. drift. We’ll use the same type of math that we used in the previous chapters, and I’ll be again very careful to walk you slowly through each step.
 
 Let’s start again at the beginning. Last time, when were just looking at drift, we started with the observation that
 
-G’ = 1/2N + (1-1/2N)G
+{$$}
+G’ = \frac{1}{2N} + (1-\frac{1}{2N})G
+{/$$}
 
-Let’s recall what that equation means. It simply means that the probability that two randomly picked alleles in the next generation will be the same (G’) depends on that very probability in the current generation (G) and the population size N. From this equation, we derived all the other insights about genetic drift. Let us just revisit very briefly how we obtained this initial equation.
+Let’s recall what that equation means. It simply means that the probability that two randomly picked alleles in the next generation will be the same (*G’*) depends on that very probability in the current generation (*G*) and the population size *N*. From this equation, we derived all the other insights about genetic drift in the previous chapter. Let us just revisit very briefly how we obtained this initial equation.
 
-How can two randomly picked alleles be the same type of allele? There are two possibilities. Either, they happen to be descendants of the same parental allele, which occurs with probability 1/2N. Or, they are not descendants of the same parental allele (which happens with probability 1-1/2N), but their parental alleles for nonetheless of the same type (which is the definition of G). Notice what is missing here? Mutation! We have not considered the effect of mutation yet. The two alleles could in fact be different, simply because of a mutation that occurred during the copying process. So in order for the two alleles to be identical, it must be that no mutation occurred - otherwise they would be different (we’re ignoring here the astronomical small chance that they both mutated to the same new type). What is the probability that no mutation occurs in either of the tow alleles?
+How can two randomly picked alleles be the same type of allele? There are two possibilities. Either, they happen to be descendants of the same parental allele, which occurs with probability {$$}\frac{1}{2N}{/$$}. Or, they are not descendants of the same parental allele (which happens with probability {$$}1-\frac{1}{2N}{/$$}), but their parental alleles are nonetheless of the same type (which is the definition of *G*). Notice what is missing here? Mutation! We have not considered the effect of mutation yet. The two alleles could in fact be different, simply because of a mutation that occurred during the copying process. So in order for the two alleles to be identical, it must be that no mutation occurred - otherwise they would be different (we’re ignoring here the astronomically small chance that they both mutated to the same new type). What is the probability that no mutation occurs in either of the tow alleles?
 
 If we define the mutation rate per allele per generation as μ, then the probability that no mutation occurs in either of the two alleles is (1-μ)2. Why is that? The probability the no mutation occurs in the first allele is 1-μ. Equally, the probability the no mutation occurs in the second allele is 1-μ. Both of these non-events need to occur, and therefore we need to multiply their probabilities. You can verify this by thinking about throwing dices. The probability that you throw a 6 with one dice is 1/6. The probability that you don’t throw a 6 is 1 - 1/6 = 5/6. Now if you throw two dice at the same time, what would be the probability that none of them would show a 6? The first dice must not show a 6 (probability 5/6) and the second dice must not show a 6 (probability 5/6), and therefore the total probability of not throwing a 6 with two dice is 5/6 time 5/6 = 25/36 which is roughly 70%.
 
