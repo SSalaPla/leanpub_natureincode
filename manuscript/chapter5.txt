@@ -179,10 +179,11 @@ Ok, let’s go ahead an start implementing the two functions that we’re callin
 We’ll be using the neighborhood model that I described above. In formal terms, given the maximum distance *d*, the neighborhood of an individual at position *i, ii* is *j, jj**, such that 
 
 {$$}
-j ≧ i - d
+j \leq i - d
 {/$$}
+
 {$$}
-j ≧ i + d
+j \leq i + d
 {/$$}
 
 and equally
