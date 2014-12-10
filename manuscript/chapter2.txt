@@ -18,11 +18,11 @@ This is evolution in action, precisely as we have defined it above: the change o
 
 Consider these two conversations between two friends:
 
-Friend 1: “The other day, I was riding my bike along main street, and three cars passed me by.”
-Friend 2: “So?”
+Friend 1: “The other day, I was riding my bike along main street, and three cars passed me by.”  
+Friend 2: “And?”
 
 
-Friend 1: “The other day, I was riding my bike along main street, and three cars flew over me.”
+Friend 1: “The other day, I was riding my bike along main street, and three cars flew over me.”  
 Friend 2: “SAY WHAT???”
 
 In science, just as in life, a phenomenon is interesting to the extent that it is unexpected. (Coincidentally, this is also the reason why life gets boring as you get older unless you continuously immerse yourself in new experiences, and learn new things.) Thus, for a scientific phenomenon to be called interesting, you need to know what to expect. 
@@ -45,8 +45,8 @@ Now consider a single gene. If there is only one allele - i.e. only one version 
 
 If you would randomly sample a few individuals from a population, and look at their genotype for the A gene, you could easily calculate allele and genotype frequencies. Say you sampled 100 individuals, and you found that 15 of those individuals have genotype A1/A1, 35 have genotype A2/A2, and the remaining 50 have genotype A1/A2, then you could deduce the following genotype frequencies:
 
-A1/A1: 15% (15 out of 100 genotypes)
-A1/A2: 50% (50 out of 100 genotypes)
+A1/A1: 15% (15 out of 100 genotypes)  
+A1/A2: 50% (50 out of 100 genotypes)  
 A2/A2: 35% (35 out of 100 genotypes)
 
 Because you know each genotype, you can also deduce the following allele frequencies (knowing that there are 200 alleles in 100 diploid individuals):
@@ -95,7 +95,7 @@ We have just established that things are boring at Hardy-Weinberg equilibrium. M
 
 But boring has it’s benefits too - it’s predictable, and easy to quantify, which is what we will do next. Let’s formalize the Hardy-Weinberg principle in mathematical terms, so that we can develop a short program that helps us visualize what’s going on.
 
-We are going to denote the allele frequency of A1 as p, and the allele frequency of A2 as q = 1-p. The expected frequency of the genotypes is then as follows:
+We are going to denote the allele frequency of A1 as *p*, and the allele frequency of A2 as *q = 1-p*. The expected frequency of the genotypes is then as follows:
 
 |Genotype  |Frequency |
 |----------|------------------------------------------------|
@@ -104,12 +104,12 @@ We are going to denote the allele frequency of A1 as p, and the allele frequency
 | A2/A2    |{$$}q * q = q^2{/$$}|
 
 
-Since these are all the genotypes there are, these three frequencies need to add up to 1. Let’s verify that by replacing q = 1-p
+Since these are all the genotypes there are, these three frequencies need to add up to 1. Let’s verify that by replacing *q = 1-p*
 
 {$$} 
-p^2 + 2pq  + q^2 =
-p^2 + 2p(1-p) + (1-p)^2 =
-p^2 + 2p - 2p^2  + (1 - 2p +p^2) = 1
+p^2 + 2pq  + q^2 ={/$$} 
+{$$} p^2 + 2p(1-p) + (1-p)^2 ={/$$} 
+{$$} p^2 + 2p - 2p^2  + (1 - 2p +p^2) = 1
 {/$$} 
 
 ##Code
