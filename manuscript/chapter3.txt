@@ -1032,43 +1032,43 @@ ln(\frac{1}{2}) = ln(1 - \frac{1}{2N}) t
 That’s as far as we would get with regular algebra - but we can use an approximation to simplify this equation even more. The approximation is the following:
 
 {$$}
-ln (1+x) ≅ x
+ln (1+x) \approx x
 {/$$}
 
 and it works only when *x* is small. So in our case, we can say that 
 
 {$$}
-ln(1 - \frac{1}{2N}) ≅ \frac{-1}{2N}
+ln(1 - \frac{1}{2N}) \approx \frac{-1}{2N}
 {/$$}
 
 which simplifies our equation above to 
 
 {$$}
-ln(\frac{1}{2}) ≅ \frac{-1}{2N} t
+ln(\frac{1}{2}) \approx \frac{-1}{2N} t
 {/$$}
 
 Let’s multiply both sides by *-2N*, and we’ll get
 
 {$$}
--2N ln(\frac{1}{2}) ≅ t
+-2N ln(\frac{1}{2}) \approx t
 {/$$}
 
 You may remember that {$$}ln(\frac{1}{x}) = -ln(x){/$$}. We’ll make use of this and replace {$$}ln(\frac{1}{2}){/$$} with *-ln(2)*:
 
 {$$}
--2N(-ln(2)) ≅ t
+-2N(-ln(2)) \approx t
 {/$$}
 
 which simplifies to 
 
 {$$}
-t ≅ 2N ln(2)
+t \approx 2N ln(2)
 {/$$}
 
 Since *ln(2)* is roughly 0.7, the equation finally is
 
 {$$}
-t ≅ 1.4N
+t \approx 1.4N
 {/$$}
 
 That’s a pretty simple result. What it says is that the time it takes to half the genetic variance in a population by drift is roughly *1.4N* generations. So for a population of size 100, it takes about 140 generations, for a population of size 10,000, it takes about 14,000 generations, and so on. As expected, drift reduces genetic variation faster in small populations. We already established this in the equation above. The new insight we gained here is how long this process takes, and the answer is, a rather long time. Recall from the previous chapter how fast genotype frequencies go into Hardy-Weinberg equilibrium: it just takes a single generation. In contrast, drift takes thousands of generations to just half the genetic variance in even relatively small populations. Drift, it seems, is a rather slow process.
