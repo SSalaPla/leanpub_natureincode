@@ -1008,7 +1008,7 @@ As with any process of decay, the best way to address this problem is by asking 
 We can turn this question into a mathematical equation as follows:
 
 {$$}
-H_0/2 = H_t
+\frac{H_0}{2} = H_t
 {/$$}
 
 which is to say that we want to know at which point the current genetic variation, {$$}H_t{/$$}, is exactly half of that of the one we had initially, {$$}H_0{/$$}. Because we have established above the equation for {$$}H_t{/$$}, we can simply replace it and write

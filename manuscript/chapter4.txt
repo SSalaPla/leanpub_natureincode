@@ -238,59 +238,85 @@ Let’s recall what that equation means. It simply means that the probability th
 
 How can two randomly picked alleles be the same type of allele? There are two possibilities. Either, they happen to be descendants of the same parental allele, which occurs with probability {$$}\frac{1}{2N}{/$$}. Or, they are not descendants of the same parental allele (which happens with probability {$$}1-\frac{1}{2N}{/$$}), but their parental alleles are nonetheless of the same type (which is the definition of *G*). Notice what is missing here? Mutation! We have not considered the effect of mutation yet. The two alleles could in fact be different, simply because of a mutation that occurred during the copying process. So in order for the two alleles to be identical, it must be that no mutation occurred - otherwise they would be different (we’re ignoring here the astronomically small chance that they both mutated to the same new type). What is the probability that no mutation occurs in either of the two alleles?
 
-If we define the mutation rate per allele per generation as *μ*, then the probability that no mutation occurs in either of the two alleles is *(1-μ)^2^*. Why is that? The probability the no mutation occurs in the first allele is *1-μ*. Equally, the probability that no mutation occurs in the second allele is also *1-μ*. Both of these non-events need to occur, and therefore we need to multiply their probabilities. You can verify this by thinking about throwing dices. The probability that you throw a 6 with one dice is {$$}^1/_6{/$$}. The probability that you don’t throw a 6 is *1* - {$$}^1/_6{/$$} = {$$}^5/_6{/$$}. Now if you throw two dice at the same time, what would be the probability that none of them would show a 6? The first dice must not show a 6 (probability {$$}^5/_6{/$$}) and the second dice must not show a 6 (probability {$$}^5/_6{/$$}), and therefore the total probability of not throwing a 6 with two dice is {$$}^5/_6 * ^5/_6 = ^{25}/_{36}{/$$} which is roughly 70%.
+If we define the mutation rate per allele per generation as *μ*, then the probability that no mutation occurs in either of the two alleles is *(1-μ)^2^*. Why is that? The probability the no mutation occurs in the first allele is *1-μ*. Equally, the probability that no mutation occurs in the second allele is also *1-μ*. Both of these non-events need to occur, and therefore we need to multiply their probabilities. You can verify this by thinking about throwing dices. The probability that you throw a 6 with one dice is {$$}\frac{1}/{6}{/$$}. The probability that you don’t throw a 6 is {$$}1 -\frac{1}/{6} = \frac{5}/{6}{/$$}. Now if you throw two dice at the same time, what would be the probability that none of them would show a 6? The first dice must not show a 6 (probability {$$}\frac{5}{6}{/$$}) and the second dice must not show a 6 (probability {$$}\frac{5}{6}{/$$}), and therefore the total probability of not throwing a 6 with two dice is {$$}\frac{5}{6} * \frac{5}{6} = \frac{25}{36}{/$$} which is roughly 70%.
 
 Going back to alleles, we can adjust our equation to take into account that no mutation happened in either two alleles, by writing
 
- G’ = (1-μ)2 (1/2N + (1-1/2N)G)
+{$$}
+G’ = (1-μ)^2 (\frac{1}{2N} + (1-\frac{1}{2N})G)
+{/$$}
 
-We simply multiple the entire term by the probability that no mutation occurs in any of the two alleles, which is (1-μ)2. Let’s expand the mutation term, and we get 
+We simply multiple the entire term by the probability that no mutation occurs in any of the two alleles, which is *(1-μ)^2^*. Let’s expand the mutation term, and we get 
 
-G’ = (1 - 2μ + μ2) (1/2N + (1-1/2N)G)
+{$$}
+G’ = (1 - 2μ + μ^2) (\frac{1}{2N} + (1-\frac{1}{2N})G)
+{/$$}
 
-This can be simplified if we make the reasonable assumption that the mutation rate μ is small, and therefore, the square mutation rates will be extremely small to the point where we can ignore it in an addition. That is, we apply the approximation 
+This can be simplified if we make the reasonable assumption that the mutation rate *μ* is small, and therefore, the square mutation rates will be extremely small to the point where we can ignore it in an addition. That is, we apply the approximation 
 
-(1-μ)2  ≅ 1 - 2μ + μ2
+{$$}
+(1-μ)^2  ≅ 1 - 2μ + μ^2
+{/$$}
 
-when μ is small, giving us 
+when *μ* is small, giving us 
 
-G’ ≅ (1 - 2μ) (1/2N + (1-1/2N)G)
+{$$}
+G’ ≅ (1 - 2μ) (\frac{1}{2N} + (1-\frac{1}{2N})G)
+{/$$}
 
 Let’s expand this further to
 
-G’ ≅ 1/2N + (1-1/2N)G - 2μ/2N - 2μ(1-1/2N)G
+{$$}
+G’ ≅ \frac{1}{2N} + (1-\frac{1}{2N})G - \frac{2μ}{2N} - 2μ(1-\frac{1}{2N})G
+{/$$}
 
 The last term can be expanded a little further:
 
-G’ ≅ 1/2N + (1-1/2N)G - 2μ/2N - 2μG + 2μG/2N
+{$$}
+G’ ≅ \frac{1}{2N} + (1-\frac{1}{2N})G - \frac{2μ}{2N} - 2μG + \frac{2μG}{2N}
+{/$$}
 
-The next simplifying approximation is similar to the previous one. As you can see, the right hand side is now an addition of terms, and some of the terms are so small, relatively to the others, that we can effectively ignore them. Which terms are those? It’s the terms that have both μ in the numerator, and N in the denominator. These terms are small because μ is small, and is made even smaller by the division by N. If we ignore these very small terms, we’ll get
+The next simplifying approximation is similar to the previous one. As you can see, the right hand side is now an addition of terms, and some of the terms are so small, relatively to the others, that we can effectively ignore them. Which terms are those? It’s the terms that have both *μ* in the numerator, and *N* in the denominator. These terms are small because *μ* is small, and is made even smaller by the division by *N*. If we ignore these very small terms, we’ll get
 
-G’ ≅ 1/2N + (1-1/2N)G - 2μG
+{$$}
+G’ ≅ \frac{1}{2N} + (1-\frac{1}{2N})G - 2μG
+{/$$}
 
-Before we move on, let’s bring H back into the scene. Recall that H is simply the opposite of G, and thus 1-G, and thus G = 1-H. Starting from 
+Before we move on, let’s bring *H* back into the scene. Recall that *H* is simply the opposite of *G*, and thus *1-G*, and thus *G = 1-H*. Starting from 
 
+{$$}
 H’ = 1-G’
+{/$$}
 
 we can now insert the previous equation 
 
-H’ ≅ 1-(1/2N + (1-1/2N)G - 2μG)
+{$$}
+H’ ≅ 1-(\frac{1}{2N} + (1-\frac{1}{2N})G - 2μG)
+{/$$}
 
-and replace all occurrences of G with 1-H to get
+and replace all occurrences of *G* with *1-H* to get
 
-H’ ≅ 1- 1/2N - (1-1/2N)(1-H) + 2μ(1-H)
+{$$}
+H’ ≅ 1- \frac{1}{2N} - (1-\frac{1}{2N})(1-H) + 2μ(1-H)
+{/$$}
 
 If we full expand this equation, we’ll get
 
-H’ ≅ 1 - 1/2N - 1 + 1/2N + H - H/2N + 2μ - 2μH
+{$$}
+H’ ≅ 1 - \frac{1}{2N} - 1 + \frac{1}{2N} + H - \frac{H}{2N} + 2μ - 2μH
+{/$$}
 
-Since the first for terms of the rights side of the equation cancel each other, we get 
+Since the first four terms of the rights side of the equation cancel each other, we get 
 
-H’ ≅ H - H/2N + 2μ - 2μH
+{$$}
+H’ ≅ H - \frac{H}{2N} + 2μ - 2μH
+{/$$}
 
-Let’s pause here for a moment. Let’s recall what we are trying to do there. We’ve established above that mutation and drift are two opposing forces - one increases genetic variation, the other decreases it. Since we have now established a value for H’, we can take a look at the difference in H in each generation, which we denote by ΔH:
+Let’s pause here for a moment. Let’s recall what we are trying to do there. We’ve established above that mutation and drift are two opposing forces - one increases genetic variation, the other decreases it. Since we have now established a value for *H’*, we can take a look at the difference in *H* in each generation, which we denote by *ΔH*:
 
+{$$}
 ΔH = H’ - H
+{/$$}
 
 Thus ΔH is simply the change in genetic variation per generation. By replacing the above established value for H’, we get 
 
