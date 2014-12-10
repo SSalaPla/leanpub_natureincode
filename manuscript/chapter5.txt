@@ -1,8 +1,8 @@
 # Chapter 5
 
-In this chapter, we’ll be addressing an assumption that we introduced early on when we talked about the Hardy-Weinberg principle. The assumption was that mating is completely random. In fact, in our code, we went one step further and didn’t even assume that there were any individuals - we just simulated a gene pool, with alleles floating around almost like molecules in a gas. In addition to not having a concept of individuality, with also had no concept of space, and location. 
+In this chapter, we’ll be addressing an assumption that we introduced early on when we first introduced the Hardy-Weinberg principle. The assumption was that mating is completely random. In fact, in our code, we went one step further and didn’t even assume that there were any individuals - we just simulated a gene pool, with alleles floating around almost like molecules in a gas. In addition to not having a concept of individuality, with also had no concept of space, and location. 
 
-Such a world obviously does not exist. Nevertheless, it has made it possible for us to develop a few key insights, using some very simple math. Once again, it would be easy to question those insights: if they were developed using assumptions that are clearly not met in the real world, then how could they possibly be relevant in the real world? It’s intellectually healthy to keep asking this question. However, it’s equally healthy to keep in mind the map metaphor that we developed earlier in the book. Just as we develop our models by making very strong simplifying assumptions, a map is a model of the world that makes very strong simplifying assumptions. The best map is not the one that is the most detailed - indeed, as we have seen, this would be a completely useless map. The best map is the one that simplifies the world as much as possible while still being a helpful guide. As Albert Einstein supposedly said, everything should be made as simple as possible, but no simpler. (If you are as wary about quote attributions as I am, you can read more on the origin of the quote here: http://quoteinvestigator.com/2011/05/13/einstein-simple/)
+Such a world obviously does not exist. Nevertheless, it has made it possible for us to develop a few key insights, using some very simple math. Once again, it would be easy to question those insights: if they were developed using assumptions that are clearly not met in the real world, then how could they possibly be relevant in the real world? It’s intellectually healthy to keep asking this question. However, it’s equally healthy to keep in mind the map metaphor that we developed earlier in the book. Just as we develop our models by making very strong simplifying assumptions, a map is a model of the world that makes very strong simplifying assumptions. The best map is not the one that is the most detailed - indeed, as we have seen, this would be a completely useless map. The best map is the one that simplifies the world as much as possible while still being a helpful guide. As Albert Einstein supposedly said, everything should be made as simple as possible, but no simpler. (If you are as wary about quote attributions as I am, you can read more on the origin of the quote here: [http://quoteinvestigator.com/2011/05/13/einstein-simple/](http://quoteinvestigator.com/2011/05/13/einstein-simple/) )
 
 When mathematical models start to take space and location into account, they tend to get extremely complex - so complex that you often need very advanced math to even get started. On the other hand, expressing a spatial model in code is not that complicated. You already possess all the tools to do that, and this chapter will show you how to use these tools - and expand on them - to build spatial models. We’ll be developing quite a bit of code - don’t be intimated by it. The result is absolutely worth it.
 
@@ -10,13 +10,13 @@ As we recalled above, our assumption so far has been that mating is completely r
 
 Animals can only travel so far. Plants are sessile. Most organisms, in one way or another, are limited in their dispersal. Because of that, individuals tend to mate with other individuals nearby. It’s easy to see that this must have enormous genetic consequences. The individuals who are nearby must themselves also have parents who have lived nearby, and thus even their grandparents used to be nearby. That is, there is fairly high chance that the individuals nearby a given individual are genetically much closer than any random individual anywhere in the population.
 
-This phenomenon is called inbreeding. Inbreeding is mating between genetic relatives. The direct consequence of inbreeding is an increase in homozygosity, relative to what would be expected if matin were random. 
+This phenomenon is called inbreeding. Inbreeding is mating between genetic relatives. The direct consequence of inbreeding is an increase in homozygosity, relative to what would be expected if mating were random. 
 
-In what follows, we will develop a rather sophisticated simulation of individuals mating with individuals nearby. In order to have a concept of “nearby”, our simulation will need to incorporate the concept of space. If a simulation incorporates the concept of space, it is called a spatial simulation (or a spatial model). In addition, we are going to explicitly model individuals in our simulation. Of course, our individuals will be extremely simple, represented by just a genotype with one locus (and two alleles). Nevertheless, we are going to represent each genotype individually, giving rise to a so-called individual-based simulation (or agent-based simulation). This is contrast to frequency-based simulations like the ones we’ve developed above. In frequency-based simulations, we don’t care about the fate of individuals, but rather about the overall frequency of a trait of interest (e.g. allele frequency).
+In what follows, we will develop a rather sophisticated simulation of individuals mating with individuals nearby. In order to have a concept of “nearby”, our simulation will need to incorporate the concept of space. If a simulation incorporates the concept of space, it is called a spatial simulation (or a spatial model). In addition, we are going to explicitly model individuals in our simulation. Of course, our individuals will be extremely simple, represented by just a genotype with one locus (and two alleles). Nevertheless, we are going to represent each genotype individually, giving rise to a so-called *individual-based* simulation (or *agent-based* simulation). This is in contrast to frequency-based simulations like the ones we’ve developed above. In frequency-based simulations, we don’t care about the fate of individuals, but rather about the overall frequency of a trait of interest (e.g. allele frequency).
 
-So what we’re developing is a spatial, individual-based model. This is going to be a fairly complex model, but I think it is the best way to demonstrate the effect of limited dispersal, and of inbreeding. So let’s get started. 
+So what we’re developing is a spatial, individual-based model. This is going to be a fairly complex model, but I think it is the best way to demonstrate the effect of limited dispersal, and of inbreeding. Let’s get started. 
 
-Because the model is more complex, I will build it up step by step, rather than showing you the full code in advance and walk you through it. The first thing we have to think about is how we should model space. In the real world, you spatial position is given by coordinates. For example, as I’m writing this, my exact geographic coordinates are 37° 25' 48.1'' N,122° 10' 18.2’' W. We could use exact coordinates like this, but that would seem like too much detail for a simple model (remember we always want to find the simplest way to model something). In fact, since this is just a conceptual model, not a real-world model, we should probably abandon the idea of geography all together. We could for example say that our individuals live on an abstract sphere, and they have a x and y coordinate that places them on the sphere. This is better, but still quite complicated. How about we just flatten the sphere into a square, and just assume it’s a grid? Let’s do that. Indeed, this grid-based structure is very common in spatial models. 
+Because the model is more complex, I will build it up step by step, rather than showing you the full code in advance and walk you through it. The first thing we have to think about is how we should model space. In the real world, your spatial position is given by coordinates. For example, as I’m writing this, my exact geographic coordinates are 37° 25' 48.1'' N,122° 10' 18.2'' W. We could use exact coordinates like this, but that would seem like too much detail for a simple model (remember we always want to find the simplest way to model something). In fact, since this is just a conceptual model, not a real-world model, we should probably abandon the idea of actual geography altogether. We could for example say that our individuals live on an abstract sphere, and they have an x and y coordinate that places them on the sphere. This is better, but still quite complicated. How about we just flatten the sphere into a square, and just assume it’s a grid? Let’s do that. Indeed, this grid-based structure is very common in spatial models. 
 
 We could assume that our grid contains e.g. 10 times 10 cells, and each of the cells is inhabited by one individual, which would give us a population size of 100 individuals. Our world would thus look like this:
 
@@ -35,24 +35,25 @@ it would find itself at the following position at time step t=2:
 
 The great thing about this spatial structure is that we will be able to implement it with a data structure that we already know: a two-dimensional array.
 
-We can now define a concept of neighborhood, or of “nearby”. We don’t need to simulate the individuals as moving entities - but their choice of mating should be restricted by their neighborhood. For example, we could define a distance measure, d, that defines the range of mates (i.e. the mating neighborhood). Concretely, d means that an individual can choose with any other individual that is maximally d cells away from its cell. Thus, for d =1, the neighborhood of the red individual would be given by the red square:
+We can now define a concept of neighborhood, or of “nearby”. We don’t need to simulate the individuals as moving entities - but their choice of mating should be restricted by their neighborhood. For example, we could define a distance measure, *d*, that defines the range of mates (i.e. the mating neighborhood). Concretely, *d* means that an individual can choose to mate with any other individual that is maximally *d* cells away from its own cell. Thus, for *d=1*, the neighborhood of the red individual would be given by the red square:
  
 
 Note that we could exclude the current cell of the individual, if we wanted to. To keep things simple, we won’t do this in our simulation, and simply assume that individuals can in principle mate with themselves.
 
-If d=2, the mating neighborhood would be as follows: 
+If *d=2*, the mating neighborhood would be as follows: 
 
 
 Note that it is up to you how you define the neighborhood. You could for example say that you won’t include the uttermost diagonal cells in the example above, so that the neighborhood would look more like a circle: 
 
 
-In our code, we will stick to the simpler case of considering the entire rectangle. Finally, what would happen if d were half of the grid length, i.e. d = 5? The neighborhood would now look like this:
+In our code, we will stick to the simpler case of considering the entire rectangle. Finally, what would happen if *d* were half of the grid length, i.e. *d=5*? The neighborhood would now look like this:
  
 
-This means that the neighborhood corresponds the entire population, which, in the absence of sexual selection, is the equivalent of random mating (because any individual in the entire population could be randomly picked as a mate). Thus, by setting d to at least half of the grid length, we can simulate the case of completely random mating that doesn’t care about spatial considerations. The model would still be spatial, but space would have no effect. Of course, if random mating was all you cared about, you wouldn’t implement a spatial model in the first place! But when we do implement a spatial model, we can easily compare the case of highly localized processes such as local mating - which is what we’re really interested in - to the case of fully random mating simply by setting a parameter value, rather than having to implement a second, separate (non-spatial) model.
+This means that the neighborhood corresponds to the entire population, which, in the absence of sexual selection, is the equivalent of random mating (because any individual in the entire population could be randomly picked as a mate). Thus, by setting *d* to at least half of the grid length, we can simulate the case of completely random mating that doesn’t care about spatial considerations. The model would still be spatial, but space would have no effect. Of course, if random mating was all you cared about, you wouldn’t implement a spatial model in the first place! But when we do implement a spatial model, we can easily compare the case of highly localized processes such as local mating - which is what we’re really interested in - to the case of fully random mating simply by setting a parameter value, rather than having to implement a second, separate (non-spatial) model.
 
 Ok, let’s go ahead and start implementing the grid, and the population. We’ll start by setting up a few variables:
 
+~~~~~~~~
 var grid_length = 100;
 var p = 0.5;
 var grid = [];
@@ -61,11 +62,13 @@ var A1A1 = 0;
 var A1A2 = 0;
 var A2A2 = 0;
 var generation_counter = 0;
+~~~~~~~~
 
-The grid_length variable defines the length of the grid, and since we’ll assume a rectangular grid, the population size N will be the squared value of grid_length. As usual, we’ll start with a given allele frequency (assuming once again A1 and A2 alleles) of p = 0.5. The grid array will be the data structure in which we store the individual genotypes. The variable max_mating_distance corresponds to the maximum mating distance that we discussed above (where we referred to it as d). Next, the variables A1A1, A1A2, and A2A2 are simple genotype counters that allow us to keep track of the exact genotype numbers. Finally, generation_counter allows us to keep track of the generations.
+The `grid_length` variable defines the length of the grid, and since we’ll assume a rectangular grid, the population size `N` will be the squared value of `grid_length`. As usual, we’ll start with a given allele frequency (assuming once again A1 and A2 alleles) of `p = 0.5`. The `grid` array will be the data structure in which we store the individual genotypes. The variable `max_mating_distance` corresponds to the maximum mating distance that we discussed above (where we referred to it as *d*). Next, the variables `A1A1`, `A1A2`, and `A2A2` are simple genotype counters that allow us to keep track of the exact genotype numbers. Finally, `generation_counter` allows us to keep track of the generations.
 
 Let’s first populate the grid. To do, we define the following function, and then call it immediately:
 
+~~~~~~~~
 function init_grid() {
     for (var i = 0; i < grid_length; i = i + 1) {
         grid[i] = [];
@@ -89,35 +92,31 @@ function init_grid() {
 }
 
 init_grid();
+~~~~~~~~
 
-What we’re doing here is to iterate over the grid array, and add new empty arrays as elements - that is, each grid[i] will be a new empty array, and grid will thus be a two-dimensional array representing our spatial world. Then, we start another for loop that sets up the elements for each cell. We said we’ll have exactly one individual per cell, and the only thing we care about those individuals are their genotypes, which we represent by the strings "A1A1", "A1A2", and “A2A2". Since we know the desired p, the frequency of the A1 allele, we can easily calculate the desired initial Hardy-Weinberg genotype frequencies of A1A1, A1A2, and A2A2, which are p2, 2p(1-p), and (1-p)2. We can randomly assign these genotype to cells by first drawing a random number between 0 and 1, using our old friend Math.random(). How do we do this? Think of the values from 0 to 1 as a horizontal line. Math.random() will randomly pick a point on that line. When the value is smaller than p2, then we’re assigning the cell the A1A1 genotype. If the value happens to be larger than 1-(1-p)2, then we’re assigning the cell the A2A2 genotype. Otherwise, we’re assigning the cell the A1A2 genotype.  You can visual this using the line as follows:
-
-    
-    
-          
-          
-
-
+What we’re doing here is to iterate over the grid array, and add new empty arrays as elements - that is, each `grid[i]` will be a new empty array, and `grid` will thus be a two-dimensional array representing our spatial world. Then, we start another `for` loop that sets up the elements for each cell. We said we’ll have exactly one individual per cell, and the only individual trait we care about is their genotype, which we represent by the strings `"A1A1"`, `"A1A2"`, and `"A2A2"`. Since we know the desired initial `p`, the frequency of the A1 allele, we can easily calculate the desired initial Hardy-Weinberg genotype frequencies of A1A1, A1A2, and A2A2, which are *p^2^*, *2p(1-p)*, and *(1-p)^2^*. We can randomly assign these genotypes to cells by first drawing a random number between 0 and 1, using our old friend `Math.random()`. How do we do this? Think of the values from 0 to 1 as a horizontal line. `Math.random()` will randomly pick a point on that line. When the value is smaller than *p^2^*, then we’re assigning the cell the A1A1 genotype. If the value happens to be larger than *1-(1-p)^2^*, then we’re assigning the cell the A2A2 genotype. Otherwise, we’re assigning the cell the A1A2 genotype. You can visual this using the line as follows:
 
 Finally, we also keep count of how many A1A1, A1A2, and A2A2 genotypes we’re getting - at this point this is simply a sanity check, to make sure our code does what we want it to do.
 
-Since we have a quadratic grid of length 100, our population size is N = 10,000. With p = 0.5, we should get about 2,500 A1A1 genotypes, 5,000 A1A2 genotypes, and 2,500 A2A2 genotypes. Note that since we’re creating the genotypes stochastically, we do not expect these numbers to be matched exactly. But the finally tally should be close enough. If you run this code, you should see something like:
+Since we have a quadratic grid of length 100, our population size is *N = 10,000*. With `p = 0.5`, we should get about 2,500 A1A1 genotypes, 5,000 A1A2 genotypes, and 2,500 A2A2 genotypes. Note that since we’re creating the genotypes stochastically, we do not expect these numbers to be matched exactly. But the final tally should be close enough. If you now run this code, you should see something like:
  
 The numbers are close enough, so it looks like our code is working. The population is initialized on a grid, with 10,000 individuals at Hardy-Weinberg equilibrium. 
 
-After having initialized the the population, let’s run the generation. Right after the call to init_grid, we’ll add the following code to run 100 generations:
+After having initialized the the population, let’s run the generations. Right after the call to `init_grid()`, we’ll add the following code to run 100 generations:
 
+~~~~~~~~
 for (var i = 0; i < 100; i = i + 1) {
     run_generation();
 }
+~~~~~~~~
 
-And then we need to go ahead and implement the function run_generation.
+Next, we need to go ahead and implement the function `run_generation()`.
 
-Before we get to the code, let’s think about what should happen during each generation. Basically, for each individual, we’ll want to pick a random mating partner in the local neighborhood, and then create an offspring genotype based on the genotypes of the two parental individuals. The new offspring genotype should then simply replace the focal individual.
+Before we get to the code, let’s think about what should happen during each generation. Basically, for each individual, we’ll want to pick a random mating partner in the local neighborhood, and then create an offspring genotype based on the genotypes of the two parental individuals. The new offspring genotype should then simply replace the old focal individual.
 
-There is a potential pitfall in these spatial, individual-based models that would be easy to fall into if you implemented this by yourself for the first time. In principle, we want the individuals to reproduce - and the offspring individuals to replace the parental individuals - at the exact same time, in parallel. However, as you know by now, in programming things don’t generally happen at the exact same time - everything happens in sequence, one after the other. However, what happens in one individual will depend on the individuals nearby, and if we update individuals sequentially, we would run into strange dynamical issues. Let me explain this with an example.
+There is a potential pitfall in these spatial, individual-based models that would be easy to fall into if you implemented this by yourself for the first time. In principle, we want the individuals to reproduce - and the offspring individuals to replace the parental individuals - at the exact same time, in parallel. However, as you know by now, in programming things don’t generally happen at the exact same time - everything happens in sequence, and one statement will be executed after the other. However, what happens in one individual will depend on the individuals nearby, and if we update individuals sequentially, we would run into strange dynamical issues. Let me explain this with an example.
 
-Let’s say we’re iterating through all the individuals one at a time. Let’s assume we’re now at the individual that’s colored in red (each cell on the grid has an individual - there not shown here). 
+Let’s say we’re iterating through all the individuals one at a time. Let’s assume we’re now at the individual that’s colored in red (each cell on the grid has an individual - they're not shown here). 
               
 
 After this individual has picked a random mate in his local neighborhood, we generate an offspring genotype and replace the red individual. 
@@ -129,15 +128,16 @@ Let’s say, just for the sake of the argument, that the offspring individual is
 
 
 
-This seems fine at first sight, but consider what happens next. Our iterator will move on to next individual, the individual on the right of the blue individual (colored in black):
+This seems fine at first sight, but consider what happens next. Our iterator will move on to the next individual, the individual on the right of the blue individual (colored in black):
     
 
 As you can see, the local neighborhood of the black individual now contains a blue individual. However, if we had replaced all individuals in parallel at the same time, that individual left of the black individual would still have been the original red, as we’ve seen above.
 
 This may seem like a small detail, but it could have pretty dramatic effects. We should aim to replace all individuals at once, not in a sequential fashion, because the sequential fashion could introduce strange dynamics.
 
-Thus, the almost correct, but dangerous way to implement the run_generation method would be as follows:
+Thus, the almost correct, but dangerous way to implement the `run_generation()` method would be as follows:
 
+~~~~~~~~
 function run_generation() {
     for (var i = 0; i < grid_length; i = i + 1) {
         for (var ii = 0; ii < grid_length; ii = ii + 1) {
@@ -147,11 +147,13 @@ function run_generation() {
     }
     generation_counter = generation_counter + 1;
 }
+~~~~~~~~
 
-What we are doing here is iterate over the two-dimensional array, using two (nested) for loops. Inside of the second for loop, the variables i and ii are the coordinates on the grid. Then, we’re picking a mating partner and produce an offspring (note that we haven’t implemented the functions pick_mating_partner and get_offspring yet). Then, we place the new offspring individual on the cell at the current location. Finally, we update the generation counter.
+What we are doing here is iterate over the two-dimensional array, using two (nested) `for` loops. Inside of the second `for` loop, the variables `i` and `ii` are the coordinates on the grid. Then, we’re picking a mating partner and produce an offspring (note that we haven’t implemented the functions `pick_mating_partner()` and `get_offspring yet()`). Then, we place the new offspring individual on the cell at the current location. Finally, we update the generation counter.
 
-It’s the replacement step (i.e. immediately replacing the current individual with the new offspring individual) that is problematic, for the reasons outlined above. But how can we solve this problem? It turns out that there is a simple solution. The answer is the place the offspring at the correct cells in a temporary grid, rather than on the real grid. Thus, a correct implementation of the function would look like this:
+It’s the replacement step (i.e. immediately replacing the current individual with the new offspring individual) that is problematic, for the reasons outlined above. But how can we solve this problem? It turns out that there is a simple solution. The answer is to place the offspring at the correct cells in a *temporary* grid, rather than on the real grid. Thus, a correct implementation of the function would look like this:
 
+~~~~~~~~
 function run_generation() {
     var temp_grid = [];
     for (var i = 0; i < grid_length; i = i + 1) {
@@ -168,15 +170,20 @@ function run_generation() {
     }
     generation_counter = generation_counter + 1;
 }
+~~~~~~~~
 
-There are a few changes that we’ve made. First, we set up a temporary grid, using the local array temp_grid. Then, we’re placing the new offspring on the corresponding cell on the temporary grid. Once the temp_grid is full, we iterate over the grid array once more, and copy all offspring individuals from temp_grid into grid. 
+There are a few changes that we’ve made. First, we set up a temporary grid, using the local array `temp_grid`. Then, we’re placing the new offspring on the corresponding cell on the temporary grid. Once the `temp_grid` is full, we iterate over the `grid` array once more, and copy all offspring individuals from `temp_grid` into `grid`. 
 
-Ok, let’s go ahead an start implementing the two functions that we’re calling from within run_generation: pick_mating_partner, and get_offspring. Let’s start with pick_mating_partner.
+Ok, let’s go ahead an start implementing the two functions that we’re calling from within `run_generation()`: `pick_mating_partner()`, and `get_offspring()`. Let’s start with `pick_mating_partner()`.
 
-We’ll be using the neighborhood model that I described above. In formal terms, given the maximum distance d, the neighborhood of an individual at position i / ii is j / jj, such that 
+We’ll be using the neighborhood model that I described above. In formal terms, given the maximum distance *d*, the neighborhood of an individual at position *i, ii* is *j, jj**, such that 
 
+{$$}
 j ≧ i - d
+{/$$}
+{$$}
 j ≧ i + d
+{/$$}
 
 and equally
 
