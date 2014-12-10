@@ -243,43 +243,43 @@ If we define the mutation rate per allele per generation as *μ*, then the proba
 Going back to alleles, we can adjust our equation to take into account that no mutation happened in either two alleles, by writing
 
 {$$}
-G’ = (1-μ)^2 (\frac{1}{2N} + (1-\frac{1}{2N})G)
+G’ = (1-\mu )^2 (\frac{1}{2N} + (1-\frac{1}{2N})G)
 {/$$}
 
 We simply multiple the entire term by the probability that no mutation occurs in any of the two alleles, which is *(1-μ)^2^*. Let’s expand the mutation term, and we get 
 
 {$$}
-G’ = (1 - 2μ + μ^2) (\frac{1}{2N} + (1-\frac{1}{2N})G)
+G’ = (1 - 2\mu  + \mu ^2) (\frac{1}{2N} + (1-\frac{1}{2N})G)
 {/$$}
 
 This can be simplified if we make the reasonable assumption that the mutation rate *μ* is small, and therefore, the square mutation rates will be extremely small to the point where we can ignore it in an addition. That is, we apply the approximation 
 
 {$$}
-(1-μ)^2 \approx 1 - 2μ + μ^2
+(1-\mu )^2 \approx 1 - 2\mu  + \mu ^2
 {/$$}
 
 when *μ* is small, giving us 
 
 {$$}
-G’ \approx (1 - 2μ) (\frac{1}{2N} + (1-\frac{1}{2N})G)
+G’ \approx (1 - 2\mu ) (\frac{1}{2N} + (1-\frac{1}{2N})G)
 {/$$}
 
 Let’s expand this further to
 
 {$$}
-G’ \approx \frac{1}{2N} + (1-\frac{1}{2N})G - \frac{2μ}{2N} - 2μ(1-\frac{1}{2N})G
+G’ \approx \frac{1}{2N} + (1-\frac{1}{2N})G - \frac{2\mu }{2N} - 2\mu (1-\frac{1}{2N})G
 {/$$}
 
 The last term can be expanded a little further:
 
 {$$}
-G’ \approx \frac{1}{2N} + (1-\frac{1}{2N})G - \frac{2μ}{2N} - 2μG + \frac{2μG}{2N}
+G’ \approx \frac{1}{2N} + (1-\frac{1}{2N})G - \frac{2\mu }{2N} - 2\mu G + \frac{2\mu G}{2N}
 {/$$}
 
 The next simplifying approximation is similar to the previous one. As you can see, the right hand side is now an addition of terms, and some of the terms are so small, relatively to the others, that we can effectively ignore them. Which terms are those? It’s the terms that have both *μ* in the numerator, and *N* in the denominator. These terms are small because *μ* is small, and is made even smaller by the division by *N*. If we ignore these very small terms, we’ll get
 
 {$$}
-G’ \approx \frac{1}{2N} + (1-\frac{1}{2N})G - 2μG
+G’ \approx \frac{1}{2N} + (1-\frac{1}{2N})G - 2\mu G
 {/$$}
 
 Before we move on, let’s bring *H* back into the scene. Recall that *H* is simply the opposite of *G*, and thus *1-G*, and thus *G = 1-H*. Starting from 
@@ -291,25 +291,25 @@ H’ = 1-G’
 we can now insert the previous equation 
 
 {$$}
-H’ \approx 1-(\frac{1}{2N} + (1-\frac{1}{2N})G - 2μG)
+H’ \approx 1-(\frac{1}{2N} + (1-\frac{1}{2N})G - 2\mu G)
 {/$$}
 
 and replace all occurrences of *G* with *1-H* to get
 
 {$$}
-H’ \approx 1- \frac{1}{2N} - (1-\frac{1}{2N})(1-H) + 2μ(1-H)
+H’ \approx 1- \frac{1}{2N} - (1-\frac{1}{2N})(1-H) + 2\mu (1-H)
 {/$$}
 
 If we full expand this equation, we’ll get
 
 {$$}
-H’ \approx 1 - \frac{1}{2N} - 1 + \frac{1}{2N} + H - \frac{H}{2N} + 2μ - 2μH
+H’ \approx 1 - \frac{1}{2N} - 1 + \frac{1}{2N} + H - \frac{H}{2N} + 2\mu  - 2\mu H
 {/$$}
 
 Since the first four terms of the rights side of the equation cancel each other, we get 
 
 {$$}
-H’ \approx H - \frac{H}{2N} + 2μ - 2μH
+H’ \approx H - \frac{H}{2N} + 2\mu  - 2\mu H
 {/$$}
 
 Let’s pause here for a moment. Let’s recall what we are trying to do there. We’ve established above that mutation and drift are two opposing forces - one increases genetic variation, the other decreases it. Since we have now established a value for *H’*, we can take a look at the difference in *H* in each generation, which we denote by *ΔH*:
@@ -321,19 +321,19 @@ Let’s pause here for a moment. Let’s recall what we are trying to do there. 
 Thus *ΔH* is simply the change in genetic variation per generation. By replacing the above established value for *H’*, we get 
 
 {$$}
-\Delta H = H - \frac{H}{2N} + 2μ - 2μH - H
+\Delta H = H - \frac{H}{2N} + 2\mu  - 2\mu H - H
 {/$$}
 
 Because the *H* is canceling itself, we can simply this to
 
 {$$}
-\Delta H = -\frac{H}{2N} + 2μ - 2μH
+\Delta H = -\frac{H}{2N} + 2\mu  - 2\mu H
 {/$$}
 
 which can be rewritten as 
 
 {$$}
-\Delta H = -(\frac{1}{2N})H + 2μ(1-H)
+\Delta H = -(\frac{1}{2N})H + 2\mu (1-H)
 {/$$}
 
 Note that this equation is a sum of a negative term and a positive term. Indeed, this is quite a beautiful equation: the negative term, {$$}-(\frac{1}{2N})H{/$$}, denotes the loss of genetic variation due to drift, while the positive term, *2μ(1-H)*, denotes the gain of genetic variation due to mutation.
@@ -345,49 +345,49 @@ Now, there is going to be a point where in each generation, the increase through
 We’ve just established that
 
 {$$}
-\Delta H = -(\frac{1}{2N})H + 2μ(1-H)
+\Delta H = -(\frac{1}{2N})H + 2\mu (1-H)
 {/$$}
 
 The equilibrium will be reach when *ΔH* is zero, i.e.
 
 {$$}
--(\frac{1}{2N})H + 2μ(1-H) = 0
+-(\frac{1}{2N})H + 2\mu (1-H) = 0
 {/$$}
 
 If we bring the first term on the right hand side of the equation, we get
 
 {$$}
-2μ(1-H) = (\frac{1}{2N})H
+2\mu (1-H) = (\frac{1}{2N})H
 {/$$}
 
 Let’s expand the left side of the equation:
 
 {$$}
-2μ - 2μH = (\frac{1}{2N})H
+2\mu  - 2\mu H = (\frac{1}{2N})H
 {/$$}
 
 If we add *2μH* to both sides, we’ll get
 
 {$$}
-2μ = (\frac{1}{2N})H + 2μH
+2\mu  = (\frac{1}{2N})H + 2\mu H
 {/$$}
 
 Factoring out *H* will yield
 
 {$$}
-2μ = H(\frac{1}{2N} + 2μ)
+2\mu  = H(\frac{1}{2N} + 2\mu )
 {/$$}
 
-Dividing both sides by {$$}(\frac{1}{2N} + 2μ){/$$} gives us *H*
+Dividing both sides by {$$}(\frac{1}{2N} + 2\mu ){/$$} gives us *H*
 
 {$$}
-\frac{2μ}{(\frac{1}{2N} + 2μ)} = H
+\frac{2\mu }{(\frac{1}{2N} + 2\mu )} = H
 {/$$}
 
 This looks a little unwieldy with a double fraction. Let’s simply this by multiplying the term by {$$}\frac{2N}{2N}{/$$}, and we’ll get 
 
 {$$}
-H = \frac{4Nμ}{(1 + 4Nμ)}
+H = \frac{4N\mu }{(1 + 4N\mu )}
 {/$$}
 
 This is much nicer indeed. It is also a rather profound result. It tells us how much genetic variation we should expect in a population subject to drift and mutation. 
@@ -538,7 +538,7 @@ Let’s think about what this means. Let’s assume *μ* is 0.0001. Thus, each g
 
 But have you noticed what happened here? The replacement rate corresponds exactly to the mutation rate *μ*! But where has the population size, *N*, gone? It turns out that the replacement rate is independent of the population size. Recall where we “lost” *N*: we said the replacement rate is the number of mutations per generation (which is *2Nμ*), times the probability of fixation of each of this mutations (which is {$$}\frac{1}{2N}{/$$}):
 
-{$$}\text{replacement rate} = 2Nμ * \frac{1}{2N} = μ{/$$}
+{$$}\text{replacement rate} = 2N\mu  * \frac{1}{2N} = \mu {/$$}
 
 This a remarkable result. Most of us would have guessed that population size must play a role. You may have though that in large populations, there would be more replacement than in small populations, because there are simply more mutations. On the other hand, your intuition may have told you - correctly - that it’s harder for mutations to go to fixation in larger populations, which may have led you to believe that the replacement rate would be lower. But as it turns out, the two effects - more mutations, but it’s harder for them to make it all the way to fixation - are both dependent on *N* in such a way that *N* falls out of the equation.
 
