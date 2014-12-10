@@ -309,13 +309,13 @@ H’ ≅ 1 - \frac{1}{2N} - 1 + \frac{1}{2N} + H - \frac{H}{2N} + 2μ - 2μH
 Since the first four terms of the rights side of the equation cancel each other, we get 
 
 {$$}
-H’ ≅ H - \frac{H}{2N} + 2μ - 2μH
+H’ \approx H - \frac{H}{2N} + 2μ - 2μH
 {/$$}
 
 Let’s pause here for a moment. Let’s recall what we are trying to do there. We’ve established above that mutation and drift are two opposing forces - one increases genetic variation, the other decreases it. Since we have now established a value for *H’*, we can take a look at the difference in *H* in each generation, which we denote by *ΔH*:
 
 {$$}
-ΔH = H’ - H
+\DeltaH = H’ - H
 {/$$}
 
 Thus ΔH is simply the change in genetic variation per generation. By replacing the above established value for H’, we get 
