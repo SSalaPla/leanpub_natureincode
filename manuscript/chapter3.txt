@@ -1268,18 +1268,18 @@ But wait - what is this `i%10 == 9` business? The `%` operator is called the *mo
 
 Thus, 
 
-`0 % 10`  equals `0`
-`1 % 10`  equals `1`
-`2 % 10`  equals `2`
-`3 % 10`  equals `3`
-`4 % 10`  equals `4`
-`5 % 10`  equals `5`
-`6 % 10`  equals `6`
-`7 % 10`  equals `7`
-`8 % 10`  equals `8`
-`9 % 10`  equals `9`
-`10 % 10`  equals `0`
-`11 % 10`  equals `1`
+`0 % 10`  equals `0`  
+`1 % 10`  equals `1`  
+`2 % 10`  equals `2`  
+`3 % 10`  equals `3`  
+`4 % 10`  equals `4`  
+`5 % 10`  equals `5`  
+`6 % 10`  equals `6`  
+`7 % 10`  equals `7`  
+`8 % 10`  equals `8`  
+`9 % 10`  equals `9`  
+`10 % 10`  equals `0`  
+`11 % 10`  equals `1`  
 etc.
 
 In other words, with `i` starting at `0`, when `i%10` equals `9`, we are in the 10^th^, 20^th^, 30^th^ etc. generation. And whenever that is the case, we set the population size to `10`, otherwise we set it to `N`.
