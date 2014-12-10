@@ -107,9 +107,13 @@ We are going to denote the allele frequency of A1 as *p*, and the allele frequen
 Since these are all the genotypes there are, these three frequencies need to add up to 1. Let’s verify that by replacing *q = 1-p*
 
 {$$} 
-p^2 + 2pq  + q^2 ={/$$} 
-{$$} p^2 + 2p(1-p) + (1-p)^2 ={/$$} 
-{$$} p^2 + 2p - 2p^2  + (1 - 2p +p^2) = 1
+p^2 + 2pq  + q^2 =
+{/$$} 
+{$$} 
+p^2 + 2p(1-p) + (1-p)^2 =
+{/$$} 
+{$$} 
+p^2 + 2p - 2p^2  + (1 - 2p +p^2) = 1
 {/$$} 
 
 ##Code
