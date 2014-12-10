@@ -179,35 +179,44 @@ Ok, let’s go ahead an start implementing the two functions that we’re callin
 We’ll be using the neighborhood model that I described above. In formal terms, given the maximum distance *d*, the neighborhood of an individual at position *i, ii* is *j, jj**, such that 
 
 {$$}
-j \leq i - d
+j \geq i - d
 {/$$}
-
 {$$}
 j \leq i + d
 {/$$}
 
 and equally
 
-jj ≧ ii - d
-jj ≧ ii + d
+{$$}
+jj \geq ii - d
+{/$$}
 
-For d = 1, the local neighborhood of a cell are thus the 8 cells surrounding the cell, and the cell itself.
+{$$}
+jj \leq ii + d
+{/$$}
 
-Because we need to pick a random cell of the neighborhood, we will simple pick a random j and a random jj in the allowable range. For example, if d = 1, i = 5 and j = 10, then the allowable range for j would be 4 to 6 (both inclusive), and the allowable range for jj would be 9 to 11.
 
-The only out-of-the box method for random numbers in javascript is Math.random, which returns a floating point number between 0 and 1 (recall that all numbers are floating point numbers in javascript). What we need is a method that returns a random integer in a given range. Here’s how we do that:
+For *d = 1*, the local neighborhood of a cell are thus the 8 cells surrounding the cell, and also the cell itself.
 
+Because we need to pick a random cell of the neighborhood, we will simple pick a random `j` and a random `jj` in the allowable range. For example, if *d = 1*, *i = 5* and *j = 10*, then the allowable range for `j` would be 4 to 6 (both inclusive), and the allowable range for `jj` would be 9 to 11.
+
+The only out-of-the box method for random numbers in JavaScript is `Math.random()`, which returns a floating point number between 0 and 1 (recall that all numbers are floating point numbers in JavaScript). What we need is a method that returns a random integer in a given range. Here’s how we do that:
+
+~~~~~~~~
 function get_random_int(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+~~~~~~~~
 
-How does this work? First, we generate a random number between 0 and 1. However, the range of our desired values is not 1 (from 0 to 1), but something else. For example, if we want a random integer number between 7 (min) and 13 (max), the range would be 13 - 7 = 6. In order to increase the range of our random number generator, we must therefore multiply the result of Math.random by 6. However, since we only want integer values, we will round the numbers down using Math.floor. Because of this rounding, we would loose the largest value of the range (no value will ever be 6), which is why we will need to add 1 to the range. Finally, our range does not start at 0, as Math.random’s range, but at min, so we need to add min to move the range to its correct location on the number line.
+How does this work? First, we generate a random number between 0 and 1. However, the range of our desired values is not 1 (from 0 to 1), but something else. For example, if we want a random integer number between 7 (`min`) and 13 (`max`), the range would be 13 - 7 = 6. In order to increase the range of our random number generator, we must therefore multiply the result of `Math.random()` by 6. However, since we only want integer values, we will round the numbers down using `Math.floor()`. Because of this rounding, we would loose the largest value of the range (no value will ever be 6), which is why we will need to add 1 to the range. Finally, our range does not start at 0, as does `Math.random()`’s range, but at `min`, so we need to add `min` in order to move the range to its correct location on the number line.
 
-Now, with this function in place, we can get a new coordinate j, given i and d, like so:
+Now, with this function in place, we can get a new coordinate `j`, given `i` and `d`, like so:
 
+~~~~~~~~
 var j = get_random_int(i-d, i+d);
+~~~~~~~~
 
-So far so good. But you may have noticed an issue. What happens if our cell is near the border of the grid? We don’t want our spatial model to have any borders (if you exit on the right, you immediately re-enter on the left), but our array does not know about this idea yet. Its elements begin at index 0 and end at index length-1. Imagine that you are currently looking at the cell with an i coordinate of 0. What if the random number that you draw is -1? In javascript, when you try to access an array element at index -1, you would get an error. Similarly, if you have 10 elements in an array, and you would try to access the element at index 10 (or higher), you would get an error too. This is an issue that we need to deal with.
+So far so good. But you may have noticed an issue. What happens if our cell is near the border of the grid? We don’t want our spatial model to have any borders (if you exit on the right, you immediately re-enter on the left), but our array does not know about this idea yet. Its elements begin at index 0 and end at index length-1. Imagine that you are currently looking at the cell with an i coordinate of 0. What if the random number that you draw is -1? In JavaScript, when you try to access an array element at index -1, you would get an error. Similarly, if you have 10 elements in an array, and you would try to access the element at index 10 (or higher), you would get an error too. This is an issue that we need to deal with.
 
 Let’s think about how we would implement this in a regular, one dimensional array. Let’s say we have an array with ten elements. We could visualize the array as follows:
   
@@ -347,9 +356,9 @@ As always with stochastic simulations, your numbers will looks slightly differen
 
 Like before, I am going to hand you the corresponding code to visualize the spatial dynamics for you to copy and paste. There is no point at this stage for us to dig into the rather complex visualization code. But it will be helpful to understand the basic principle behind it. What we would like to do is to take our two-dimensional array, and color-code the cells according to the genotype that lives on the cell. At each generation, we would like to update the visualization in order to reflect to new state of the population.
 
-As it turn out, visualization is much more computation-intensive than our simulation. Thus, the limiting factor will be the visualization. In order to have some control over the timing, I will introduce a new method in javascript.
+As it turn out, visualization is much more computation-intensive than our simulation. Thus, the limiting factor will be the visualization. In order to have some control over the timing, I will introduce a new method in JavaScript.
 
-First, copy and paste this code at the top, right after you open your javascript tag:
+First, copy and paste this code at the top, right after you open your JavaScript tag:
 
 var width = 600;
 var height = 600;
@@ -399,11 +408,11 @@ function update_population(data,grid_length ){
 
 In addition to some visual setup, this code contains two drawing functions: draw_population, and update_population.
 
-Since the drawing code uses D3.js, as before, be sure to include the corresponding tag that loads the library before the script tag that contains all the other javascript code that we just developed:
+Since the drawing code uses D3.js, as before, be sure to include the corresponding tag that loads the library before the script tag that contains all the other JavaScript code that we just developed:
 
 <script src=“http://d3js.org/d3.v3.js"></script>
 
-We’re almost done. We need some more visualization code that is not in javascript, but in CSS. Go ahead and copy the following tag before the D3.js-loading script tag:
+We’re almost done. We need some more visualization code that is not in JavaScript, but in CSS. Go ahead and copy the following tag before the D3.js-loading script tag:
 
 <style>
   .genotypeA1A1 {
@@ -447,7 +456,7 @@ function simulate_and_visualize() {
 }
 setInterval(simulate_and_visualize, 100);
 
-Go ahead and remove the old for loop running the generations, and place the code above right after your call to draw_population. The method setInterval is provided by javascript and allows to execute any function, specified by the the first parameter, at an interval of some number of milliseconds, defined by the second parameter. Thus,
+Go ahead and remove the old for loop running the generations, and place the code above right after your call to draw_population. The method setInterval is provided by JavaScript and allows to execute any function, specified by the the first parameter, at an interval of some number of milliseconds, defined by the second parameter. Thus,
 
 setInterval(simulate_and_visualize, 100);
 
