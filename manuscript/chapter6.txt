@@ -66,13 +66,15 @@ Now let’s take a look at the outcome with this minor change in the code:
 
 Quite a different outcome! What is happening here? Natural selection, that’s what’s happening!
 
-By increasing the probability of picking allele A1 to make it into the next generation from p to 1.01*p, we are giving the allele a slight selective benefit over allele A2. In other words, allele A1 has a slightly higher fitness than allele A2.
+By increasing the probability of picking allele A1 to make it into the next generation from `p` to `1.01*p`, we are giving the allele a slight selective benefit over allele A2. In other words, allele A1 has a slightly higher fitness than allele A2.
 
-This example has hopefully brought home the main point about fitness, natural selection, and its consequences. Because the example was borrowed from chapter 3, it used a finite population size, and thus the effects of drift were still acting. In this case, they were simply overwhelmed by the force of natural selection. In real populations, both drift and natural selection are generally acting at the same time, and depending on the situation, one force can be much stronger than the other. We will get into that later, but first, we are going to investigate the effects of natural selection in isolation - that is, in populations of infinite size, where drift does not come into play at all.
+This example has hopefully brought home the main point about fitness, natural selection, and its consequences. Because the example is borrowed from chapter 3, it uses a finite population size, and thus the effects of drift are still acting. In this case, they are simply overwhelmed by the force of natural selection. In real populations, both drift and natural selection are generally acting at the same time, and depending on the situation, one force can be much stronger than the other. In this chapter, however, we are going to investigate the effects of natural selection in isolation - that is, in populations of infinite size, where drift does not come into play at all.
 
 We are going to start by formalizing the concept of fitness. We have mentioned above that an allele, or a genotype, has a fitness. Mathematically, we can capture the genotypic fitness as follows. We can simply assign the following fitness values to the three possible genotypes:
 
-
+|  |A1A1 |A1A2 |A2A2|
+|-----------|--------------|--------------|---------------|
+| Fitness:  |{$$}w_11{/$$} |{$$}w_12{/$$} | {$$}w_22{/$$} |
 
 Let us assume, for simplicity, that the genotypes are at Hardy Weinberg equilibrium. That is, their frequencies are:
 
