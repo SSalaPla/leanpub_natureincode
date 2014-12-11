@@ -196,7 +196,7 @@ p’ = \frac{p^{2}w_{11}}{\bar{w}} + \frac{pqw_{12}}{\bar{w}}
 which can be rewritten as
 
 {$$}
-p’ = \frac{p^{2}w_{11} + 2pqw_{12}}{\bar{w}}
+p’ = \frac{p^{2}w_{11} + pqw_{12}}{\bar{w}}
 {/$$}
 
 The difference per generation is simply what we have at generation *t+1*, minus what we had at generation *t*:
@@ -205,17 +205,21 @@ The difference per generation is simply what we have at generation *t+1*, minus 
 \Delta p = p’ - p
 {/$$}
 
-Having just established the equation for p’, we can rewrite this to get
+Having just established the equation for *p’*, we can rewrite this to get
 
-Δp = ((w11 p2 + w12 pq) / w̅) - p
+{$$}
+\Delta p = \frac{p^{2}w_{11} + pqw_{12}}{\bar{w}} - p
+{/$$}
 
-If we replace w̅ with (w11 p2) + (w12 2pq) + (w22 q2), we will get quite a beast of an equation, which can be simplified to this equation: 
+If we replace {$$}\bar{w}{/$$} with {$$}p^{2}w_{11} + 2pqw_{12} + q^{2}w_{22}{/$$}, we will get quite a beast of an equation, which can be simplified to this equation: 
 
-Δp = (pq ( p (w11-w12) + q (w12-w22))) / ((w11 p2) + (w12 2pq) + (w22 q2))
+{$$}
+\Delta p = \frac{pq ( p (w_{11}-w_{12}) + q (w_{12}-w_{22}))} {p^{2}w_{11} + 2pqw_{12} + q^{2}w_{22}}
+{/$$}
 
 Now, I am the first to grant you that this is not a very memorable equation. However, it is the fundamental equation of evolution by natural selection. What it describes is the change in allele frequency, given the current allele frequencies, and the three fitness values. As we will see soon, this equation can explain a whole range of interesting phenomena.
 
-If Δp is positive, the allele will increase in frequency. If Δp is negative, the allele will decrease in frequency. Note that in this world of an infinite population size, there is no randomness anymore - everything is determined. That’s why these models are called deterministic models (as opposed to the stochastic models that we worked with in in some of the chapters above, where randomness played a big role).
+If {$$}\Delta p{/$$} is positive, the allele will increase in frequency. If {$$}\Delta p{/$$} is negative, the allele will decrease in frequency. Note that in this world of an infinite population size, there is no randomness anymore - everything is determined. That’s why these models are called *deterministic* models (as opposed to the stochastic models that we worked with in in some of the chapters above, where randomness played a big role).
 
 Now you may think "fine - if an allele has a high fitness, it will increase in frequency; if it has a low fitness, it will decrease in frequency. So far so good. But is that all there is? Because it sounds almost too simple".
 
