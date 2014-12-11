@@ -94,53 +94,90 @@ Given these fitness values, and the frequencies in the current generation t, wha
 | Frequency at generation t:  |{$$}p^2{/$$}|{$$}2pq{/$$}|{$$}q^2{/$$}|
 | Frequency at generation t+1:  |{$$}\frac{w_{11}p^2}{\bar{w}}{/$$}|{$$}\frac{w_{12}2pq}{\bar{w}}{/$$}|{$$}\frac{w_{22}q^2}{\bar{w}}{/$$}|
 
-where w* is the average fitness in the population, which can be calculated as 
+where {$$}\bar{w}{/$$} is the average fitness in the population, which can be calculated as 
 
-w̅ = (w11 p2) + (w12 2pq) + (w22 q2)
+{$$}
+\bar{w} = w_{11}p^2 + w_{12}2pq + w_{22}q^2
+{/$$} 
 
 These few formulas form the basis for a lot that we will be doing in this chapter, so I want to make sure that we understand them well. Let’s go through an example with actual numbers.
 
-Assume the genotype frequencies are 20%, 50% and 30% for genotypes A1A1, A1A2, A2A2, respectively. In other words, p2 = 0.2, 2pq = 0.5, and q = 0.3. Let’s also assume that the fitness of the three genotypes are w11 = 1, w12 = 1.2, and w22 = 1.5. That is, A2A2 has the highest fitness, A1A2 has the second highest fitness, and A1A1 has the lowest fitness.
+Assume the genotype frequencies are 20%, 50% and 30% for genotypes A1A1, A1A2, A2A2, respectively. In other words, *p^2^ = 0.2*, *2pq = 0.5*, and *q^2^ = 0.3*. Let’s also assume that the fitness of the three genotypes are {$$}w_{11} = 1{/$$}, {$$}w_{12} = 1.2{/$$}, and {$$}w_{22} = 1.5{/$$}. That is, A2A2 has the highest fitness, A1A2 has the second highest fitness, and A1A1 has the lowest fitness.
 
 Now, if we would simply multiply the fitness values with the frequencies, we would get the following frequencies:
 
-(w11 p2) = 1 * 0.2 = 0.2
-(w12 2pq) = 1.12 * 0.5 = 0.6
-(w22 q2) = 1.5 * 0.3 = 0.45
+{$$}
+(w_{11} p^2) = 1 * 0.2 = 0.2
+{/$$}
 
-The problem is that these new genotype frequencies (0.2, 0.6, and 0.45) don’t add up to one, but of course they have to. So what we need to do is to normalize these values, so that they do indeed add up to one again. Normalizing here means to reduce each of the values by the same factor in such a way that the numbers add up to one. It’s very easy to do that: simply add the three numbers up (0.2 + 0.6 + 0.45 = 1.25), and then divide each of the three numbers by that sum. We call the sum of the three numbers the average fitness in the population, w̅, and we get the normalized frequencies by dividing by it:
+{$$}
+(w_{12} 2pq) = 1.12 * 0.5 = 0.6
+{/$$}
 
-(w11 p2) / w̅  = 0.2 / 1.25 = 0.16
-(w12 2pq) / w̅ = 0.6 / 1.25 = 0.48
-(w22 q2) / w̅ = 0.45 / 1.25 = 0.36
+{$$}
+(w_{22} q^2) = 1.5 * 0.3 = 0.45
+{/$$}
+
+The problem is that these new genotype frequencies (0.2, 0.6, and 0.45) don’t add up to 1, but of course they have to. So what we need to do is to normalize these values, so that they do indeed add up to 1 again. Normalizing here means to reduce each of the values by the same factor in such a way that the numbers add up to 1. It’s very easy to do that: simply add the three numbers up (0.2 + 0.6 + 0.45 = 1.25), and then divide each of the three numbers by that sum. We call the sum of the three numbers the average fitness in the population, {$$}\bar{w}{\$$}, and we get the normalized frequencies by dividing by it:
+
+{$$}
+\frac{(w_{11} p^2)}{\bar{w}} = 0.2 / 1.25 = 0.16
+{/$$}
+
+{$$}
+\frac{(w_{12} 2pq)}{\bar{w}} = 0.6 / 1.25 = 0.48
+{/$$}
+
+{$$}
+\frac{(w_{22} q^2)}{\bar{w}} = 0.45 / 1.25 = 0.36
+{/$$}
 
 These numbers were rounded a bit - but I hope you get the idea. So overall, here is our example, in numbers:
 
+{width="wide"}
+|  |A1A1 |A1A2 |A2A2|
+|----------:|:------------:|:------------:|:-------------:|
+| Fitness:  |1|1.2|1.5|
+| Frequency at generation t:  |0.2|0.5|0.3|
+| Frequency at generation t+1:  |0.16|0.48|0.36|
 
-
-This is quite interesting. As you can see, the frequency of the A1A1 genotype has gone down. That happened because it had the lowest fitness, relative to the others. However, the frequency of genotype A1A2 has also gone down. The only genotype that has not gone down in frequency is genotype A2A2 - indeed, it’s frequency has gone up.
+This is quite interesting. As you can see, the frequency of the A1A1 genotype has gone down. That happened because it had the lowest fitness, relative to the others. However, the frequency of genotype A1A2 has also gone down. The only genotype that has not gone down in frequency is genotype A2A2 - indeed, its frequency has gone up.
 
 It’s important to note that the absolute fitness values don’t matter. Instead of 1, 1.2 and 1.5, we could have chosen 10, 12, and 15, and we would have obtained the exact same results. What matters is only how the fitness values compare to each other - that is, their relative value.
 
 What would happen if all three fitness values were exactly the same? (Think about this before reading on.) Recall that the average fitness is 
 
-w̅ = (w11 p2) + (w12 2pq) + (w22 q2) 
+{$$}
+\bar{w} = w_{11}p^2 + w_{12}2pq + w_{22}q^2
+{/$$} 
 
-If w11 = w12 = w22 then
+If {$$}w_{11} = w_{12} = w_{22}{/$$} then
 
-w̅ = (w11 p2) + (w11 2pq) + (w11 q2)
+{$$}
+\bar{w} = w_{11}p^2 + w_{11}2pq + w_{21}q^2
+{/$$} 
 
 from which we can factor out w11 and obtain
 
-w̅ = w11 (p2 + 2pq + q2)
+{$$}
+\bar{w} = w_{11}(p^2 + 2pq + q^2)
+{/$$} 
 
-Since p2 + 2pq + q2 = 1, we get
+Since {$$}p^2 + 2pq + q^2 = 1{/$$}, we get
 
-w̅ = w11
+{$$}
+\bar{w} = w_{11}
+{/$$} 
+
 
 Thus, our next generation table will be:
 
-
+{width="wide"}
+|  |A1A1 |A1A2 |A2A2|
+|----------:|:------------:|:------------:|:-------------:|
+| Fitness:  |{$$}w_{11}{/$$}|{$$}w_{11}{/$$}|{$$}w_{11}{/$$}|
+| Frequency at generation t:  |{$$}p^2{/$$}|{$$}2pq{/$$}|{$$}q^2{/$$}|
+| Frequency at generation t+1:  |{$$}\frac{w_{11}p^2}{w_{11}}=p^2{/$$}|{$$}\frac{w_{11}2pq}{w_{11}}=2pq{/$$}|{$$}\frac{w_{11}q^2}{w_{11}}=q^2{/$$}|
 
 Our frequencies don’t change at all! Since all genotypes have the same fitness, there is no natural selection - and we are back in the Hardy-Weinberg world. This is an important insight - in order to have evolution by natural selection, there needs to be something for natural selection to act on. That something is a difference in fitness, or variance in fitness.
 
