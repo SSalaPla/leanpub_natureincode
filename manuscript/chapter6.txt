@@ -76,13 +76,20 @@ We are going to start by formalizing the concept of fitness. We have mentioned a
 |----------:|:------------:|:------------:|:-------------:|
 | Fitness:  |{$$}w_{11}{/$$}|{$$}w_{12}{/$$}|{$$}w_{22}{/$$}|
 
-Let us assume, for simplicity, that the genotypes are at Hardy Weinberg equilibrium. That is, their frequencies are:
+Let us assume, for simplicity, that the genotypes are at Hardy-Weinberg equilibrium. That is, their frequencies are:
 
-
+|  |A1A1 |A1A2 |A2A2|
+|----------:|:------------:|:------------:|:-------------:|
+| Fitness:  |{$$}w_{11}{/$$}|{$$}w_{12}{/$$}|{$$}w_{22}{/$$}|
+| Frequency at generation t:  |{$$}p^2{/$$}|{$$}2pq{/$$}|{$$}q^2{/$$}|
 
 Given these fitness values, and the frequencies in the current generation t, what are the genotype frequencies in the next generation t+1? Here they are:
 
-
+|  |A1A1 |A1A2 |A2A2|
+|----------:|:------------:|:------------:|:-------------:|
+| Fitness:  |{$$}w_{11}{/$$}|{$$}w_{12}{/$$}|{$$}w_{22}{/$$}|
+| Frequency at generation t:  |{$$}p^2{/$$}|{$$}2pq{/$$}|{$$}q^2{/$$}|
+| Frequency at generation t+1:  |{$$}\frac{w_{11}p^2}{w}{/$$}|{$$}\frac{w_{12}2pq}{w}{/$$}|{$$}\frac{w_{22}q^2}{w}{/$$}|
 
 where w* is the average fitness in the population, which can be calculated as 
 
