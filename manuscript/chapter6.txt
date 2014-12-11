@@ -1,0 +1,647 @@
+# Natural Selection
+
+Natural selection is often equated with evolution. But as you now know, evolution is simply the change in allele frequencies. Natural selection is just one of the forces affecting these allele frequencies. Thus, natural selection is not evolution - rather, natural selection is a cause of evolution.
+
+What sets natural selection apart from the other forces that shape evolution (drift, mutation, and migration) is that it is the only force capable of producing adaptive traits. An adaptive trait is a trait of an individual - such as the color of a flower, the shape of a hand, the efficiency of a lung - that makes the individual well adapted to the environment it lives in. But what does “well adapted“ mean? It simply means that all else being equal, the individual is more likely to survive and produce offspring than it would without that specific trait.
+
+Some of the most visually stunning examples of adaptation are those of animal mimicry. Mimicry is the imitation of another species. If you have a hard time seeing the caterpillar in the image below, it’s because of the spectacular visual imitation of the plant leave that it sits on. If it wasn’t for the bright blue background, you would probably have missed it entirely - just like most birds and other predators, who would love nothing more than to eat the caterpillar for lunch. 
+
+http://en.wikipedia.org/wiki/Euthalia_aconthea#mediaviewer/File:Euthalia_aconthea_cat_mango.jpg - CC BY 2.5
+
+Darwin’s insight was the following. Those individuals who are better adapted to survive and produce many offspring individuals will contribute more offspring individuals to the next generation than those who are less well adapted. However, as better adapted individuals leave more offspring, the resources that these individuals require to survive will become a limiting factor - simply because resources are limited. Thus, a struggle for survival and reproduction will begin, and the individuals with traits that contributed to a better outcome in this struggle will thrive, and become more common.
+
+We have so far in this booked avoided the issue of the struggle for survival and reproduction. In all of our models so far, we have assumed that in terms of the probabilities of making it to the next generation, all alleles, and all genotypes, are equal. *Natural selection occurs when that assumption is not true anymore.*
+
+Another way of saying that all alleles and genotypes are equal with respect to making it into the next generation is to say that they have the same *evolutionary (or darwinian) fitness*. This is a key concept in evolutionary biology. Evolutionary fitness is the ability to survive and reproduce. Notice that fitness is not an absolute value, but rather a relative one. If a certain allele has a higher fitness than other alleles, that means that it is more likely than the other alleles to survive and make copies of itself (of course, alleles don’t survive themselves, but the individuals carrying the alleles do). As a consequence of this, the allele is expected to increase in frequency in the population. This is evolution by natural selection. It is evolution because the allele frequencies change; it is by natural selection because the allele frequencies change as a consequence of a higher fitness.
+
+What we have assumed so far throughout the book is that all alleles and genotypes have the same fitness - without actually invoking the concept of fitness. Because all alleles or genotypes had the same fitness, they were *selectively neutral*. As we have now seen many times, just because alleles are selectively neutral does *not* mean that we don’t get evolution as an outcome! Finite population size, mutations, and migration alone will lead to evolution, even if all alleles have the same fitness and are thus selectively neutral. The only difference when alleles do have differential fitness (i.e. not all of them have the exact same fitness) is that evolution becomes predictable in one regard: the alleles with higher fitness will become more common, and the ones with lower fitness will become less common. That’s very different from the situation when alleles are selectively neutral - which alleles will go to fixation, and which ones will be lost, is completely due to chance, and thus impossible to predict.
+
+I want to give you a visual example straight away. Remember in chapter 3, when we ran multiple simulations of genetic drift? We had our simple one locus, two alleles model, and we initiated the population at `p = 0.5`, which is to say half of the alleles were A1 and the other half A2, and then we observed the change of allele frequencies over time.
+
+For a population of size `N = 2,000`, the typical graph for ten simulations looked something like this:
+
+
+
+In some simulations, the frequency of A1 would go up, in others, it would go down, and we learned that in about half of simulations, A1 would eventually go to fixation, and in the other half, A2 would eventually go to fixation.
+
+The crucial function in the code underlying this graph was the following:
+
+~~~~~~~~
+function next_generation(simulation_data) {
+    var draws = 2 * N;
+    var A1 = 0;
+    var A2 = 0;
+    for (var i = 0; i < draws; i = i + 1) {
+      if (Math.random() <= p) {
+        A1 = A1 + 1;
+      }
+      else {
+        A2 = A2 + 1;
+      }
+    }
+    p = A1/draws;
+    simulation_data.push(p);
+  }
+~~~~~~~~
+
+As you may recall, we are picking alleles randomly to produce the next generation, and we do this simply in accordance to their frequencies - allele A1 is picked with probability `p` (i.e. the  frequency of A1), and allele A2 is picked with probability `1-p` (i.e. the frequency of A2).
+
+Now let’s introduce a seemingly minor change. Let’s the change this line in the function:
+
+~~~~~~~~
+if (Math.random() <= p) {
+~~~~~~~~
+
+to this 
+
+~~~~~~~~
+if (Math.random() <= p*1.01) {
+~~~~~~~~
+
+What this means is that we’re not picking allele A1 with a probability that corresponds to its frequency anymore. Rather, we are picking it with a probability that is a mere 1% higher than its frequency. Consequently, A2 is picked with a probability that is slightly less than its frequency.
+
+Now let’s take a look at the outcome with this minor change in the code:
+
+
+
+Quite a different outcome! What is happening here? Natural selection, that’s what’s happening!
+
+By increasing the probability of picking allele A1 to make it into the next generation from p to 1.01*p, we are giving the allele a slight selective benefit over allele A2. In other words, allele A1 has a slightly higher fitness than allele A2.
+
+This example has hopefully brought home the main point about fitness, natural selection, and its consequences. Because the example was borrowed from chapter 3, it used a finite population size, and thus the effects of drift were still acting. In this case, they were simply overwhelmed by the force of natural selection. In real populations, both drift and natural selection are generally acting at the same time, and depending on the situation, one force can be much stronger than the other. We will get into that later, but first, we are going to investigate the effects of natural selection in isolation - that is, in populations of infinite size, where drift does not come into play at all.
+
+We are going to start by formalizing the concept of fitness. We have mentioned above that an allele, or a genotype, has a fitness. Mathematically, we can capture the genotypic fitness as follows. We can simply assign the following fitness values to the three possible genotypes:
+
+
+
+Let us assume, for simplicity, that the genotypes are at Hardy Weinberg equilibrium. That is, their frequencies are:
+
+
+
+Given these fitness values, and the frequencies in the current generation t, what are the genotype frequencies in the next generation t+1? Here they are:
+
+
+
+where w* is the average fitness in the population, which can be calculated as 
+
+w̅ = (w11 p2) + (w12 2pq) + (w22 q2)
+
+These few formulas form the basis for a lot that we will be doing in this chapter, so I want to make sure that we understand them well. Let’s go through an example with actual numbers.
+
+Assume the genotype frequencies are 20%, 50% and 30% for genotypes A1A1, A1A2, A2A2, respectively. In other words, p2 = 0.2, 2pq = 0.5, and q = 0.3. Let’s also assume that the fitness of the three genotypes are w11 = 1, w12 = 1.2, and w22 = 1.5. That is, A2A2 has the highest fitness, A1A2 has the second highest fitness, and A1A1 has the lowest fitness.
+
+Now, if we would simply multiply the fitness values with the frequencies, we would get the following frequencies:
+
+(w11 p2) = 1 * 0.2 = 0.2
+(w12 2pq) = 1.12 * 0.5 = 0.6
+(w22 q2) = 1.5 * 0.3 = 0.45
+
+The problem is that these new genotype frequencies (0.2, 0.6, and 0.45) don’t add up to one, but of course they have to. So what we need to do is to normalize these values, so that they do indeed add up to one again. Normalizing here means to reduce each of the values by the same factor in such a way that the numbers add up to one. It’s very easy to do that: simply add the three numbers up (0.2 + 0.6 + 0.45 = 1.25), and then divide each of the three numbers by that sum. We call the sum of the three numbers the average fitness in the population, w̅, and we get the normalized frequencies by dividing by it:
+
+(w11 p2) / w̅  = 0.2 / 1.25 = 0.16
+(w12 2pq) / w̅ = 0.6 / 1.25 = 0.48
+(w22 q2) / w̅ = 0.45 / 1.25 = 0.36
+
+These numbers were rounded a bit - but I hope you get the idea. So overall, here is our example, in numbers:
+
+
+
+This is quite interesting. As you can see, the frequency of the A1A1 genotype has gone down. That happened because it had the lowest fitness, relative to the others. However, the frequency of genotype A1A2 has also gone down. The only genotype that has not gone down in frequency is genotype A2A2 - indeed, it’s frequency has gone up.
+
+It’s important to note that the absolute fitness values don’t matter. Instead of 1, 1.2 and 1.5, we could have chosen 10, 12, and 15, and we would have obtained the exact same results. What matters is only how the fitness values compare to each other - that is, their relative value.
+
+What would happen if all three fitness values were exactly the same? (Think about this before reading on.) Recall that the average fitness is 
+
+w̅ = (w11 p2) + (w12 2pq) + (w22 q2) 
+
+If w11 = w12 = w22 then
+
+w̅ = (w11 p2) + (w11 2pq) + (w11 q2)
+
+from which we can factor out w11 and obtain
+
+w̅ = w11 (p2 + 2pq + q2)
+
+Since p2 + 2pq + q2 = 1, we get
+
+w̅ = w11
+
+Thus, our next generation table will be:
+
+
+
+Our frequencies don’t change at all! Since all genotypes have the same fitness, there is no natural selection - and we are back in the Hardy-Weinberg world. This is an important insight - in order to have evolution by natural selection, there needs to be something for natural selection to act on. That something is a difference in fitness, or variance in fitness.
+
+Given the three fitness values w11, w12, and w22, under what circumstances will an allele increase or decrease in frequencies? Because we know what genotype frequencies are at generation t+1, we can easily calculate the frequency of allele A1 at that generation:
+
+p’ = (w11 p2) / w̅ + (w12 2pq) / 2w̅
+
+which is simply adding the frequency of genotype A1A1 to half of the genotype frequency of A1A2. We can simplify this a tad bit by removing the 2's on the right hand side of the equation
+
+p’ = (w11 p2) / w̅ + (w12 pq) / w̅
+
+which can be rewritten as
+
+p’ = (w11 p2 + w12 pq) / w̅
+
+The difference per generation is simply what we have at generation t+1, minus what we had at generation t:
+
+Δp = p’ - p
+
+Having just established the equation for p’, we can rewrite this to get
+
+Δp = ((w11 p2 + w12 pq) / w̅) - p
+
+If we replace w̅ with (w11 p2) + (w12 2pq) + (w22 q2), we will get quite a beast of an equation, which can be simplified to this equation: 
+
+Δp = (pq ( p (w11-w12) + q (w12-w22))) / ((w11 p2) + (w12 2pq) + (w22 q2))
+
+Now, I am the first to grant you that this is not a very memorable equation. However, it is the fundamental equation of evolution by natural selection. What it describes is the change in allele frequency, given the current allele frequencies, and the three fitness values. As we will see soon, this equation can explain a whole range of interesting phenomena.
+
+If Δp is positive, the allele will increase in frequency. If Δp is negative, the allele will decrease in frequency. Note that in this world of an infinite population size, there is no randomness anymore - everything is determined. That’s why these models are called deterministic models (as opposed to the stochastic models that we worked with in in some of the chapters above, where randomness played a big role).
+
+Now you may think "fine - if an allele has a high fitness, it will increase in frequency; if it has a low fitness, it will decrease in frequency. So far so good. But is that all there is? Because it sounds almost too simple".
+
+Half of the answer is yes - natural selection really is quite simple. An allele can confer an advantage or a disadvantage to the individuals carrying the allele. If it is an advantage, then on average, these individuals will survive better, and reproduce more, than the individuals without that allele. Because of genetic inheritance (offspring have the genes of their parents), that allele will become more frequent in the population, eventually being the only allele in the population. This is evolution by natural selection.
+
+The other half of the answer is no - there is one aspect that is incredibly important when thinking about natural selection. That aspect is that fitness must be assigned to a genotype, not to an allele. Each diploid individual has two alleles, and in the case where we have two different alleles, there are three different genotypes: A1A1, A1A2, and A2A2. The different genotypes may have different fitness values. Sometimes, the two ways of assigning fitness (either to the allele or to the genotype) are equivalent. For example, if A1A1 has the highest fitness, A1A2 has an higher fitness than A1A1, and A2A2 has the highest fitness of them all, then you might as well say that the allele A2 confers a fitness benefit: the more A2s you have, the fitter you are:
+
+w11 < w12 < w22 
+
+In that case, natural selection is very easy to predict. A2 will spread in the population. However, there are two cases where things are more interesting. The first case is when the fitness of the A1A2 genotype is higher than the other two fitnesses. The second case is when the fitness of the A1A2 genotype is lower than the other two fitnesses.
+
+Let us find a good way to formalize these three cases. First, we start by arbitrarily setting the fitness value of A1A1 to 1. As we have seen before, the absolute values of fitness don’t matter - what matters is the relative fitness values, i.e. how they compare to each other. Thus, we can reduce the complexity of the system by simply setting one of them to a fixed value. The question is now, how to the other to fitness values compare to 1?
+
+Let’s simply further and say that no matter what, we assume that the A2A2 fitness is lower than 1, i.e. the genotype A2A2 is always less fit than the genotype A1A1. We could of course also assume that it is always higher, but you might as well just replace A1 with A2, and you would get the same system. It really doesn’t matter in this simple model: we are simply saying one of the other homozygotes has fitness 1, the other has a fitness that is lower than 1. It’s up to you to decide which of the homozygotes is the one with fitness 1. For the purpose of our discussion here, I’m setting A1A1 to be the genotype with fitness value 1, and A2A2 to be genotype with the lower fitness.
+
+Lower by how much? For this, let’s introduced a new, important parameter: the selection coefficient s. This coefficient defines by how much the fitness of A2A2 is reduced, compared to the fitness of A1A1. In mathematical terms, w22 = 1-s.
+
+What about the fitness of the heterozygote, A1A2? That is where things get interesting. To capture the fitness for A1A2, we introduced another new parameter: the heterozygous effect. We simply define the fitness of A1A2 to be w22 = 1-hs. Depending on the value of h, we can get all three different types of selection. Let me visualize this so that it becomes easier to understand.
+
+First, our new fitness table is as follows:
+
+
+As you can see, we now need to work with only two values (h and s), rather than with three (w11, w12 and w22). The first effect of that reduction in parameters is that it makes our equation for Δp a little simpler:
+
+Δp = (pqs ( ph + q (1-h))) / (1- 2pqhs -q2s)
+
+If we would plot the genotypes fitnesses visually, we would get one of the following graphs:
+
+
+
+
+Any line in the green area, where h is some value between 0 and 1 (including 0 and 1), represents the case where the fitness of the heterozygote is an intermediate value between the fitness of the two homozygotes, or equal to one of them (think fitness slope). This type of selection is called directional selection.
+
+The blue line, or really any line you can think of above the green area, represents the case where the fitness of the heterozygote is higher than the fitness of both homozygotes (think fitness peak). This type of selection is called balancing selection.
+
+The red line, or really any line you can think of below the green area, represents the case where the fitness of the heterozygote is lower than the fitness of both homozygotes (think fitness valley). This type of selection is called disruptive selection.
+
+As we’ll see below, these three types of fitness “landscapes” have very different dynamics. 
+
+
+Directional Selection
+
+Let’s start with directional selection. Let’s go ahead and plot Δp, the change in the frequency of allele A1, as a function of p. We’ve used a very similar code before - all I’m changing is the actual equation:
+
+var s = 0.1;
+var h = 0.2;
+
+var data=[];
+var x_max = 1;
+
+for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
+    var p = i;
+    var q = 1-p;
+    var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*2*s);
+    data.push(delta_p);
+}
+
+draw_line_chart(data,x_max,"p","\u0394 p”,true);
+
+You may have noticed that I have passed a fifth parameter to the function draw_line_chart. There are two things I want to mention about that. First, the function has actually been able to deal with five parameters from the moment we start using it. We simply didn’t supply that fifth parameter, which meant the corresponding local variable in the function was undefined.
+
+But perhaps more importantly, I’d like to say what the parameter is doing. The argument name for the parameter in the function is called y_max_flexible - if it is not true, then the the y axis will span from 0 to 1 (check some of the earlier figures that we generated with this function to verify that this is indeed the case). On the other hand, if it is true, the y axis will span from 0 to a little bit more than the maximum value in the data set - making sure that the entire vertical space in the figure is utilized.
+
+Setting the values s and h to 0.1 and 0.2, respectively, we get the following plot:
+
+
+
+Let’s examine this plot. The first, and most important thing to notice is that Δp is always positive. This means that no matter what the value of p is, it will be higher in the next generation. In other words, the frequency of the A1 always increase. This is why this type of selection is called directional selection - it always goes only on one direction. The A1 allele will go to fixation.
+
+The second thing to to notice is that Δp is largest around p = 0.35. In other words, when the frequency of the allele A1 is around one third, the per generation increase will be maximal. To understand this a little better, let’s go ahead an run a (deterministic) simulation, starting a p = 0.01.
+
+I’m going to be using the following code:
+
+var s = 0.1;
+var h = 0.2;
+var p = 0.01;
+
+var data=[];
+var generations = 400;
+
+for (var i = 0; i < generations; i = i + 1) {
+    var q = 1-p;
+    var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*2*s);
+    p = p + delta_p;
+    data.push(p);
+}
+
+draw_line_chart(data,generations,”Generation","p");
+
+This code is very similar to the one we used above. Given s, h, and p, we simply run a number of generations where we calculate Δp, and then add that to the previous value of p in order to get the new value of p.
+
+What we will see is the following plot:
+
+
+
+As you can see, p starts increasing right from the start, even if a little slow. Then, around generation 25, when p is roughly 0.1, the increase starts accelerating noticeably. We know from the plot above that the per generation increase is maximal at around p = 0.35, after which the increase starts slowing down again, leading to the classical observed S-shaped curve.
+
+If you play around with the s and h values (making sure that they remain between 0 and 1), you will notice that the shapes of the curves will change a bit. Depending on the value of s, the fixation of the allele will slower or faster. Depending on the value of h, the allele will increase rapidly in the beginning, and then slow down as it approaches fixation, or it will increase slowly in the beginning, and the rapidly goes to fixation at the end. Nevertheless, the ultimate outcome is always the same - fixation. This is the consequence of directional selection.
+
+
+Balancing Selection
+
+Let us now move on to the next type of selection: balancing selection. Recall that balancing selection means that the fitness of the heterozygote is higher than that of both homozygotes (resulting in the fitness peak in the figure above). In order to achieve that, we need to set the heterozygote effect, h, to a negative value.
+
+We can reuse the code from above, and plot Δp as a function of p with the values s=0.1 and h=-0.5. If we do that, we get the following plot:
+
+
+
+
+Interesting! As you can see, Δp is mostly positive, but for values of p higher than 0.75, it starts to become negative. What does that mean for the evolutionary dynamics?
+
+Let’s start again at a low p value, and use this plot to understand what happens. Let’s say we start at a low p value, where Δp is positive. A positive Δp means that p is going to be even higher in the next generation. We’ll keep on moving to the right on the x axis, to higher values of p, until we get to the point where Δp is zero (at p=0.75). What happens then? Nothing, really - the allele frequency has arrived at an equilibrium.
+
+Imagine now for a moment that some event will bump p up to 0.9. At this value, Δp is negative, which means that p will be lower in the next generation. If we follow the same procedure, we’ll keep on moving to the left on the x axis, to lower values of p, until we get once again to the point where Δp is zero.
+
+In other words, p = 0.75 is a stable equilibrium. If the p value is somehow reduced, it will go right back up to 0.75. If it is somehow increased, it will go right back down to 0.75.
+
+This is an intriguing finding. It means that the allele A1 will not go to fixation, even though the genotypes A1A1 and A1A2 have higher fitness values than A2A2. What is going on here? Well, it is true that the fitness of A1A1 is higher than the fitness of A2A2. However, the heterozygote A1A2 has the highest fitness. This will keep the A2 allele around, and is the reason why A1 won’t go to fixation.
+
+Another way to think about this is to imagine that your entire population is A1A1. Now, imagine that you introduce an A1A2 genotype. Because this heterozygote has a higher fitness than the other A1A1 genotypes, it will increase in frequency, and thus the A2 allele will increase in frequency too (and the A1 frequency will go down). However, this process can’t go on forever, because A1A2 genotypes will produce both A1A1 and A2A2 offspring genotypes, which have the lower fitness.
+
+Let’s see if our reasoning is correct, and plot the result of a deterministic simulation, using a slightly adapted version of our previous code, with s = 0.1 and h = -0.5. This time, however, we run multiple simulations, starting at p = 0.01 all the way up to p = 0.99, in 0.01 increments. We can adapt the code like so:
+
+var s = 0.1;
+var h = -0.5;
+var initial_p = 0.01;
+var p_values = [];
+
+var data=[];
+var generations = 300;
+
+while (initial_p < 1) {
+    p_values.push(initial_p);
+    initial_p = initial_p + 0.01;
+}
+
+for (var i = 0; i < p_values.length; i = i + 1) {
+    run_simulation(p_values[i]);
+}
+
+function run_simulation(p) {
+    var results = [];
+    for (var i = 0; i < generations; i = i + 1) {
+        var q = 1-p;
+        var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*2*s);
+        p = p + delta_p;
+        results.push(p);
+    }
+    data.push(results);
+}
+
+draw_line_chart(data,generations,"Generation","p");
+
+This code makes use of the same concepts that we used in chapter 3, where we plotted multiple simulation runs at the same time. Since it’s been while since that chapter, let’s revisit what’s going here. The key idea is that rather than storing the result values of a single simulation run in one array, we now have to store multiple such arrays in another array (i.e. a two-dimensional array). I’ve encapsulated the actual simulation code in a function run_simulation, to which I’m passing an initial value for p. For each simulation, I’m creating a new results array, in which I will store the results of this particular simulation run. Once the simulation has run its course, I store the results array in the data array. It is this two-dimensional data array that I’m passing on to the plotting function.
+
+Because I have numerous initial values of p, I will store all of them in an array called p_values. I’ve already set the first initial value of p, initial_p, to 0.01. Starting from that, I then create all the other initial values for p and store them in array with this snippet of code:
+
+while (initial_p < 1) {
+    p_values.push(initial_p);
+    initial_p = initial_p + 0.01;
+}
+
+This is a new loop construct that we haven’t met before. We’ve met the for loop, and the do while loop. The while loop is a simplified version of the do while loop. The do while loop, as you may recall, executes some code at least once, and then repeats executing it while a given condition is true. The while loop simply executes some code while a given condition is true. It may be that the condition is false already from the get go, and the code would never be executed. 
+
+For our purpose, the while loop is sufficient. It fills up the p_values array with values starting at 0.01, up to 0.99, in 0.01 increments. Once the array with initial values for p is set up, we simply loop over it and call the run_simulation function, passing along the corresponding initial value of p.
+
+This produces the following plot:
+
+
+
+As this plot clearly shows, all simulation will go the equilibrium allele frequency of p=0.75, independent of the initial value of p. Thus, our reasoning was correct.
+
+You probably understand now why this type of selection is called balancing selection. It balances the allele frequencies at an equilibrium value, because both homozygotes are less fit than the heterozygote. Balancing selection is important because it maintains genetic variation. As we’ve seen above, that’s not true with directional selection, which will get rid of genetic variation.
+
+There’s one more thing about balancing selection that I want to mention. It turns out to you can very easily calculate the equilibrium frequency under balancing selection. It is simply
+
+p* = (h-1) / (2h-1)
+
+In our code above, we used h = -0.5. And as you can see, (-0.5 -1) / (2*-0.5 - 1) = 0.75. It’s also interesting to note that the equilibrium value does not depend on the selection coefficient, s. A higher selection coefficient will lead to faster dynamics, i.e. the population will reach the equilibrium value of p faster - but it will still be the same value. You can experiment with the value of s in your code to verify this.
+
+
+Disruptive Selection
+
+Last, but certainly not least, let’s take a look at disruptive selection. Disruptive selection occurs when the fitness value of the heterozygote genotype A1A2 is lower than that of both homozygotes (resulting in the fitness valley in the figure above). Disruptive selection occurs when the value of the heterozygote effect, h, is larger than 1.
+
+As before, let’s go ahead and plot the value Δp as a function of p, but this time with the values s=0.1 and h=1.5. This gives us the following plot:
+
+
+
+This plot looks rather similar to the plot that we saw in the case of balancing selection. For most of p, Δp is positive, but sometimes, it is negative. The only difference here is that the negative values of Δp are found of the left side of the graph, where p is small.
+
+Let’s follow our method again and start with a low value of p, and see where this takes us. With a low value of p, Δp is negative, which means that p will be even lower in the next generation. Because Δp will again be negative (and remain there until p = 0), p will go down to 0, and the A1 allele will be lost.
+
+No let’s start with a higher value, for example p = 0.5. At that value, Δp is positive, which means that p will be higher in the next generation. Because Δp will again be positive (and remain there until p = 1), p will go all the way up to 1, and the A1 allele will be fixed.
+
+This is another astounding finding. It turns out that in the case of disruptive selection, evolutionary dynamics can go either way - the A1 allele can either go to fixation, or it can be lost altogether. It all depends on the initial conditions - i.e. the initial value of p. This is quite remarkable, and somehow violates our intuition. Shouldn’t a deterministic system always go to the same equilibrium value?
+
+As it turns out, no. Some system have multiple equilibria. The system of disruptive selection, it turns out, has three such equilibria. Why three? Let’s go ahead an run a few simulations, plotting the evolutionary dynamics of disruptive selection. We can reuse the code from above, and simply set the heterozygous effect, h, to 1.5. Here’s what we’ll find:
+
+
+
+As predicted, depending on the initial conditions, p will either go to 0 or to 1. These are two of there three equilibria. However, there seems to be another equilibria at p = 0.25. What’s up with that?
+
+If we revisit the plot above, we can see that when p=0.25, Δp is 0. That is why p = 0.25 is an equilibrium; the value of p won’t change. However, there is something special about this equilibrium. Let’s say your population is at p=0.25. Now assume that for some reason, the value of p is pushed slightly upward. Now, Δp > 0, and the allele will go to fixation. On the other hand, if you assume that the value of p is pushed slight downward, to a value that is less than 0.25, you’ll find that Δp < 0, and the allele will start its downward path until it is lost from the population. In other words, p=0.25 is not a stable equilibrium. Quite the opposite - it is a so-called unstable equilibrium. An unstable equilibrium is an equilibrium where, if even just slightly pushed away from the equilibrium value, the system will go to another equilibrium value (0 or 1 in this case).
+
+Thus, the unstable equilibrium is not important with respect to the population remaining there - it won’t. Even if it happens to be there for a moment, the slightest deviation from that value will make the system go to one of the other two states. We can demonstrate this using our code, simply by changing this line in the while loop:
+
+initial_p = initial_p + 0.01;
+
+to this
+
+initial_p = initial_p + 0.01; + (Math.random() * 0.000001);
+
+What we are doing here is add a tiny value (between 0 and a millionth) to the initial value of p. If you now rerun the code, you will see the following:
+
+
+
+As you can see, the purple line will not remain at its initial value anymore (something just slightly larger than 0.25). It will, as predicted, increase in frequency and go to fixation. Initially, the values of Δp are very, very small in the vicinity of p = 0.25, which is why it takes quite some time for line to noticeably go on its upward trajectory.
+
+It is nevertheless important to know this equilibrium value, because of its importance in predicting the dynamics of the system. Once again, it turns out that it’s very easy to calculate this value. Indeed, it is the exact same value as in the case of balancing selection:
+
+p* = (h-1) / (2h-1)
+
+The crucial difference is that in the case of balancing selection, the system will converge to p*, while in the case of disruptive selection, the system will go away from p*, to either 0 or 1. And once again, the value of the selection coefficient, s, has no effect on this value. It will simply determine at what speed the system will find its stable equilibrium.
+
+To sum up - evolution by natural selection, even in a simple model world of one gene with two alleles, can result in very different dynamics, depending on the fitness landscape. In the case of directional selection, the same allele will always go to fixation. In the case of balancing selection, both alleles will always remain in the population at an equilibrium. In the case of disruptive selection, one of the alleles will go to fixation, but which one will depend on the initial conditions.
+
+
+Coevolution
+
+You now understand how evolution by natural selection works. Genotypes with higher fitness have a higher probability of surviving and reproducing, and thus a higher chance of passing on their alleles to the next generation. Over the generations, those alleles and genotypes become more frequent.
+
+We’ve haven’t talked much about fitness until now. We simply mentioned earlier is that fitness is the ability to survive and reproduce. But why are certain genotypes better able to survive and reproduce? Let’s think about some examples. An animal may survive better because it is harder to spot by a predator. Another animal may survive better because it has better senses to locate prey. Another animal may survive better because it can deal with harsher climates. What all of these examples have in common is that the animals are simply better adapted to their environment. It is the environment that is doing the selecting - hence the term natural selection (as opposed to artificial selection in animal and plant breeding, for example).
+
+We have seen above that interesting dynamics can result from this simple logic. But things get even more interesting when the environment is not just the abiotic (non-living) environment (such as the climate), but rather the biotic environment - in particular when the environment consists of other species who are subject to natural selection too. When the fitness of one species depends on the fitness of another species, co-evolution is often a direct consequence.
+
+A good example of co-evolution is the interaction between hosts and parasites. A parasite has a high fitness if it can infect a host, evade the host’s immune responses (i.e. survive), and create many offspring parasites. The problem is that the host’s fitness will be reduced by the success of the parasite: many parasitic infections make a host sick, reducing its ability to survive and reproduce. Thus, hosts that can avoid or kill off parasites without getting sick have a higher fitness than those who can’t. In other words, natural selection will favor those hosts that can avoid getting infected. In turn, the parasites that can’t infect a host will have a very low fitness, and natural selection will favor other parasites, the ones that find new ways to infect the hosts. Thus, an endless coevolutionary arms race begins, where the host tries to build defense systems against parasite infection, and the parasites try to find ways around the defense systems. Both species are playing catch up all the time, which can lead to very interesting evolutionary dynamics.
+
+In this section, we will build a simple coevolutionary arms race between a host and a parasite species. We will do this by implementing a simple conceptual model of genetic interactions between hosts and parasites. We are going to assume that the host has one gene with two alleles (A1 and A2) that represent a simple immune system. Equally, we are going to assume that the parasite has a gene with two alleles, A1 and A2. To keep things simple, we will assume haploid hosts and parasites - that is, each hosts and parasites have only one allele, not two. Thus, there are only two possible genotypes, A1 and A2, and we can use the term allele and genotype interchangeably.
+
+You can think of the genetic host parasite interaction system as a key lock mechanism: in order to get into the host, the parasite allele (they key) needs to match the host’s allele (the lock).
+
+In reality, the genetics of parasites and hosts are much more complicated, but this simple system captures a key idea. That key idea is negative frequency-dependent selection. This sounds like a mouthful, but is actually rather easy to grasp. Frequency-dependent selection simply means that an individual’s fitness value does not only depend on its genotype, but also on the frequency of its genotypes in a population. This can work in two ways:
+
+1. A genotype could be more fit when it is more common (this is called positive frequency-dependent selection).
+
+2. A genotype could be less fit when it is more common (this is called negative frequency-dependent selection).
+
+Negative frequency dependent selection is much more common in nature than positive frequency dependent selection. Almost all antagonistic species interactions such as host-parasite or predator-pray interactions result in negative frequency-dependent selection. The key-lock model above is a great example. Imagine that almost every host has the lock A1. Because only parasites with the key A1 can infect those hosts, there is a huge selective benefits for A1 parasites, and they will increase rapidly in frequency. However, that means that there are increasingly fewer parasites with the A2 keys. This in turn means that the hosts with the A2 locks are becoming less infected. In this case, the A2 host genotype benefited from being rare, because the parasite population adapted to attacked the frequent A1 host genotype.
+
+However, this blissful safety that the A2 hosts enjoy is only of limited duration. Because A2 hosts get less often infected, they are at a selective advantage, and will thus increase in frequency. As they increase in frequency, the parasite population will catch up on them, driven by natural selection. As you can guess, this leads to a never ending cycling of genotypes, where the hosts try to escape the parasites (genetically speaking), and the parasites try to catch up with the hosts. This type of dynamic is often called “Red Queen” dynamic, inspired by the fictitious character of the Red Queen in Lewis Carroll's famous book ‘Through the Looking-Glass’, who at on point in the story explains: “Now, here, you see, it takes all the running you can do, to keep in the same place!”.
+
+Let’s go ahead and implement this simple host-parasite model, and see if we really get those cyclical dynamics!
+
+The first thing we’re going to do is set up a few key variables:
+
+var data=[];
+var generations = 400;
+
+var host_frequencies = [0,0];
+var parasite_frequencies = [0,0];
+
+var sh = 0.2;
+var sp = 0.5;
+
+The data array, as always, will store the data that we want to plot, i.e. the host and parasite genotype frequencies. The generations variable defines the duration of the simulation, expressed as the number of generations. The two arrays host_frequencies and parasite_frequencies will keep track of the frequencies of the two genotypes in each species throughout the simulation. We initialize the values at 0, but we’ll change that in a minute. Note that both arrays have two elements, since there are only two possible genotypes in each of the haploid species (A1 and A2). 
+
+Finally, the last two variables, sh and sp, define the fitness reduction (selection coefficient s) if the host gets infected by a a parasite, or if the parasite cannot infect a host, respectively. 
+
+There are four combinations of possible interactions between the two host and parasite genotypes, with the following outcomes:
+
+
+
+
+We will implement this fitness model in a minute. The important thing to note is that if the genotypes don’t match, the parasite won’t be able to infect the host. That’s great for the host, who will have the maximal fitness value 1. It’s bad for the parasite though, as parasites generally need a host to reproduce. The parasite’s fitness value is reduced by the parasite-specific selection coefficient sp, to 1-sp. On the other hand, if the genotypes match, the parasite will be able to infect the host. In this case, the parasite’s fitness is maximal (i.e. 1), and the host’s fitness is reduced by the host-specific selection coefficient sh, to 1-sh, due to the infection.
+
+To start the simulation, let’s initiate the genotype frequencies and push to the data array accordingly:
+
+function initialize_frequencies() {
+    host_frequencies[0] = Math.random();
+    data.push([host_frequencies[0]]);
+    host_frequencies[1] = 1 - host_frequencies[0];
+    data.push([host_frequencies[1]]);
+    parasite_frequencies[0] = Math.random();
+    data.push([parasite_frequencies[0]]);
+    parasite_frequencies[1] = 1 - parasite_frequencies[0];
+    data.push([parasite_frequencies[1]]);
+}
+
+initialize_frequencies();
+
+The first line in this method sets the first element of the host_frequencies array (which holds the frequency of host genotype A1) to a random number between 0 and 1. The second line adds an array to the the data array, initialized with a single value - that of the host genotype A1 frequency which we have just set. 
+
+Keep in mind that our data array will end up being a two-dimensional array, which holds the the four arrays storing the four genotype frequencies over the generations. Because the data array is initially empty, the line 
+
+data.push([]);
+
+would simply add an empty array [] to the array, making it an empty two-dimensional array. Instead of pushing an empty array, we can push an array that has values in it already. For example, we could write
+
+data.push([1,4,7]);
+
+In this case, we would now have a two-dimensional array where the first element of data (i.e. data[0]), would contain the array [1,4,7]. Our actual code reads
+
+data.push([host_frequencies[0]]);
+
+which means that the first element in data is now an array with one value, namely the host genotype A1 frequency, host_frequencies[0].
+
+The next two lines are similar:
+
+host_frequencies[1] = 1 - host_frequencies[0];
+data.push([host_frequencies[1]]);
+
+In the first line, we simply set the frequency of host genotype A2, which is 1 minus the frequency of host genotype A1 (as the must both add up to 1). The second line pushes another, new array into data, this time with the initial frequency of the host genotype A2.
+
+The following four lines are more or less identical, simply setting the parasite frequencies in the exact same manner. After this function has finished executing, we have all initial four genotype frequencies set to random values, and our data array is initialized with the four arrays keeping track of the four genotype frequencies over time, and the first value in each array is already set. We’re good to move on!
+
+After calling the function initialize_frequencies(), we we will run the following code:
+
+for (var i = 0; i < generations; i = i + 1) {
+    host_selection();
+    parasite_selection();
+    data[0].push(host_frequencies[0]);
+    data[1].push(host_frequencies[1]);
+    data[2].push(parasite_frequencies[0]);
+    data[3].push(parasite_frequencies[1]);
+}
+
+This loop runs over a given number of generations, and in each generation, calls the two methods host_selection() and parasite_selection().  These methods will calculate the new genotype frequencies, based on the genotype frequencies and the fitness values. We’ll implement them right away. Once they have finished executing, we will store the new genotype frequencies in the corresponding array in data.
+
+Let’s now turn to the key methods in our simulation, host_selection() and parasite_selection(). Before we develop the code, let’s think through how they should work. 
+
+At the beginning of this chapter, we calculated frequencies of alleles over time, given certain fitness values of genotypes. These fitness values were assumed to be constant. Then, we simply developed the following logic for a given genotype: The frequency of a genotype at time t+1, ft+1, equals its frequency at t, ft, times its fitness value, w, normalized by total population fitness, w̅. In mathematical terms, we had
+
+ft+1 = ft w / w̅
+
+The same logic applies in frequency dependent selection, with one important difference: the fitness value w is not a constant anymore, but rather a function of other genotype frequencies. In our case, the fitness of a given host genotype depends on the parasite frequencies. For example, the fitness of host genotype A1 depends on the parasite frequencies.
+
+As a concrete example, 
+
+wH1 = fP1 * wH1P1 + fP2 * wH1P2
+
+Think about it as follows. As a host with genotype A1, you can either meet a parasite with genotype A1 (which will happen with probability fP1, the frequency of parasite genotype A1), or you can meet a parasite with genotype A1 (which will happen with probability fP2, the frequency of parasite genotype A2). In the first case, the fitness of the host A1 when meeting parasite A1, wH1P1, will be 1-sh. In the second case, the fitness of the host A1 when meeting parasite A2, wH1P1, will be 1. The total fitness is simply the sum of these two possible cases. The exact same logic applies for all the other genotypes.
+
+Note the there is no normalizing happening at this stage, since we aren’t calculating frequencies yet. Now, if we want to know that frequency of host genotype A1 in the next generation, we will do the exact same thing as we have before: multiple its fitness, wH1, by its frequency. Then, we do the same thing for host genotype A2. Once we have these two frequencies, we need to normalize them by their sum, since they might add up to a value other than 1.
+
+In code, this looks as follows:
+
+function host_selection() {
+    var sum_host_frequencies = 0;
+    for (var i = 0; i < host_frequencies.length; i = i + 1) {
+        var current_host_fitness = 0;
+        for (var ii = 0; ii < parasite_frequencies.length; ii = ii + 1) {
+            current_host_fitness = current_host_fitness + get_host_fitness(i, ii);
+        }
+        host_frequencies[i] = host_frequencies[i] * current_host_fitness;
+        sum_host_frequencies = sum_host_frequencies + host_frequencies[i];
+    }
+    for (i = 0; i < host_frequencies.length; i = i + 1) {
+        host_frequencies[i] = host_frequencies[i] / sum_host_frequencies;
+    }
+}
+
+function get_host_fitness(i,ii){
+    return (i == ii ? 1-sh : 1) * parasite_frequencies[ii]
+}
+
+Let’s walk through this line by line. At first, we initialized the variable sum_host_frequencies at 0. This variable will be necessary for the normalizing at the end. Then, in the first loop, we go through all host frequencies, and calculate their new frequencies, using the forumla above.
+
+Notice how the first four lines in that loop,
+
+var current_host_fitness = 0;
+for (var ii = 0; ii < parasite_frequencies.length; ii = ii + 1) {
+    current_host_fitness = current_host_fitness + get_host_fitness(i, ii);
+}
+
+are the programmed equivalent of 
+
+wH1 = fP1 * wH1P1 + fP2 * wH1P2
+
+The function get_host_fitness(i, ii) simply returns the product of the frequency and the fitness:
+
+function get_host_fitness(i,ii){
+    return (i == ii ? 1-sh : 1) * parasite_frequencies[ii]
+}
+
+There is something interesting in the function that we haven’t seen before, which is this expression:
+
+i == ii ? 1-sh : 1
+
+This is the so-called ternary operator ?: which is a short cut for an if else expression. It works as follows. The following if else expression
+
+if (condition) {
+   code1
+}
+else {
+   code2
+}
+
+Can be simplified with the ternary operator ?: as follows:
+
+condition ? code1 : code2
+
+Note that these two pieces of code do the exact same thing - they’re just different versions of expressing an idea. This is very common - there are endless many ways to achieve the same thing in code. Don’t worry if you would implement an idea differently than I have here throughout the book. As long as your code does the same thing, it’s perfectly fine. As you become more comfortable with programming, you will learn that some ways can be better than others to express the same idea - either because they’re easier to read, easier to extend, or for other reasons. At this stage in your path to learning programming, you don’t need to worry about this too much. Shorter code is not automatically better code. What is most important at the moment is that you understand what you’re doing, and that you will find it easy to read your code when you go back to it in the future.
+
+Back to our function, where the next two lines read
+
+host_frequencies[i] = host_frequencies[i] * current_host_fitness;
+sum_host_frequencies = sum_host_frequencies + host_frequencies[i];
+
+Now that we’ve calculated the current host fitness (given the parasite frequencies), we can multiple it with the current host frequency in order to get the new host frequency. Then, we add this value to sum_host_frequencies for later normalization.
+
+After the loop has gone through all hosts genotypes, and calculated the new frequencies, we need to normalize them so that they add up to 1 gain. The last three lines in the function take care of this:
+
+for (i = 0; i < host_frequencies.length; i = i + 1) {
+    host_frequencies[i] = host_frequencies[i] / sum_host_frequencies;
+}
+
+And that’s it. The function parasite_selection follows the exact same logic, except that we now do everything from the perspective of the parasite:
+
+function parasite_selection() {
+    var sum_parasite_frequencies = 0;
+    for (var i = 0; i < parasite_frequencies.length; i = i + 1) {
+        var current_parasite_fitness = 0;
+        for (var ii = 0; ii < host_frequencies.length; ii = ii + 1) {
+            current_parasite_fitness = current_parasite_fitness + get_parasite_fitness(i, ii);
+        }
+        parasite_frequencies[i] = parasite_frequencies[i] * current_parasite_fitness;
+        sum_parasite_frequencies = sum_parasite_frequencies + parasite_frequencies[i];
+    }
+    for (i = 0; i < parasite_frequencies.length; i = i + 1) {
+        parasite_frequencies[i] = parasite_frequencies[i] / sum_parasite_frequencies;
+    }
+}
+
+function get_parasite_fitness(i,ii) {
+    return (i == ii ? 1 : 1-sp) * host_frequencies[ii]
+}
+
+And that’s it! Now that have put everything together, we can run the code and look at the output. Here’s what I see, the first time I run this code:
+
+
+
+Wow - cyclical dynamics indeed! This is the Red Queen, in action.
+
+Go ahead and reload the page a number of times. You will see that the dynamics are very much dependent on initial conditions. In addition, try changing the values of the selection coefficients sh and sp, and see how that changes the dynamics.
+
+Before we conclude, I’d like to make one very small modification to the code. In your function host_selection(), go ahead and at this line
+
+host_frequencies[i] = host_frequencies[i] + Math.random() * 0.01;
+
+right after this one
+
+host_frequencies[i] = host_frequencies[i] * current_host_fitness;
+
+What the new line does is to add a very small value - a random number between 0 and 0.01 - to the new host frequencies. At this stage, the host frequencies are not yet normalized, so the net effect of this addition is that the normalized host frequencies will just be slightly disturbed.
+
+Before you reload the page, set the number of generations to 2,000 - you’ll see why in a second:
+
+var generations = 2000;
+
+Now reload the page. Here’s what I see the first time:
+
+
+
+Wow - that’s a very different system from what we just observed. What is going on here?
+
+It turns out the the very strong and regular cyclical dynamics are an artifact of a purely deterministic system. In our original code, everything was deterministic - there was no randomness to anything. As this small code change demonstrates, adding a little bit of randomness - or noise, if you will - to the host frequencies dramatically changes the dynamics of the system. In other words, the dynamics that we observed are not robust. When slightly perturbed, they turn out very different. 
+
+Why does this matter from a biological perspective? By adding a little bit of noise to the host genotype frequencies, we’ve essentially introduced the effects of random genetic drift. It’s very reasonable to assume that host populations are not always extremely large, and that drift will therefore affect genotype frequencies. What this shows is that even a little bit of genetic drift will change the evolutionary dynamics considerably. We still get cycling dynamics, but they are much less pronounced than in the purely deterministic system. In addition, the dynamics seem to be more complex, with larger changes occurring over hundreds of generations (this is why I asked you to increase the number of generations to 2,000).
+
+And with that, we conclude the chapter about natural selection. Natural selection is an enormously potent force, being responsible for all adaptations that we see in nature. As you can imagine, we have only scratched the surface here. But we have learned some key insights on how natural selection works, and how it can affect evolution.
+
+Let’s briefly wrap up what we learned in this chapter.
+
+	•	Genotypes and alleles that give individuals a higher average chance to survive and reproduce will over time increase in frequency - this process is called evolution by natural selection.
+	•	Fitness is a measure of the ability to survive and reproduce.
+	•	In diploid individuals, there are three possible types of natural selection: directional selection, balancing selection, and disruptive selection.
+	•	Directional selection will drive alleles to fixation.
+	•	Balancing selection will maintain genetic diversity in a population.
+	•	Disruptive selection will drive alleles to fixation, but which ones depends on initial conditions.
+	•	Negative frequency dependent selection (coevolution) leads to cyclical evolutionary dynamics (red queen dynamics).
+	•	Red queen dynamics can be strongly affected by genetic drift.
+	•	We’ve also introduced the ternary operator in JavaScript.
+
+We’ve now covered all four forces affecting evolution: drift, mutation, migration, and natural selection. You’ve come a long way. Not only do you now have an overview on the major forces affecting the living world, but you also have the ability to implement these ideas in code. This is a wonderful achievement - congratulations. In the next chapters, we’ll be looking at some other, highly interesting dynamic systems in biology: we’ll look at how infectious disease spread, and how cooperation evolves.
+
