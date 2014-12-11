@@ -297,12 +297,13 @@ Setting the values `s` and `h` to `0.1` and `0.2`, respectively, we get the foll
 
 
 
-Let’s examine this plot. The first, and most important thing to notice is that Δp is always positive. This means that no matter what the value of p is, it will be higher in the next generation. In other words, the frequency of the A1 always increase. This is why this type of selection is called directional selection - it always goes only on one direction. The A1 allele will go to fixation.
+Let’s examine this plot. The first, and most important thing to notice is that {$$}\Delta p{/$$} is always positive. This means that no matter what the value of `p` is, it will be higher in the next generation. In other words, the frequency of the A1 always increases. This is why this type of selection is called directional selection - it always goes only in one direction. The A1 allele will go to fixation.
 
-The second thing to to notice is that Δp is largest around p = 0.35. In other words, when the frequency of the allele A1 is around one third, the per generation increase will be maximal. To understand this a little better, let’s go ahead an run a (deterministic) simulation, starting a p = 0.01.
+The second thing to notice is that {$$}\Delta p{/$$} is largest around *p = 0.35*. In other words, when the frequency of the allele A1 is around one third, the per generation increase will be maximal. To understand this a little better, let’s go ahead an run a (deterministic) simulation, starting a `p = 0.01`.
 
 I’m going to be using the following code:
 
+~~~~~~~~
 var s = 0.1;
 var h = 0.2;
 var p = 0.01;
@@ -318,41 +319,43 @@ for (var i = 0; i < generations; i = i + 1) {
 }
 
 draw_line_chart(data,generations,”Generation","p");
+~~~~~~~~
 
-This code is very similar to the one we used above. Given s, h, and p, we simply run a number of generations where we calculate Δp, and then add that to the previous value of p in order to get the new value of p.
+This code is very similar to the one we used above. Given `s`, `h`, and `p`, we simply run a number of generations where we calculate {$$}\Delta p{/$$}, and then add that to the previous value of `p` in order to get the new value of `p`.
 
 What we will see is the following plot:
 
 
 
-As you can see, p starts increasing right from the start, even if a little slow. Then, around generation 25, when p is roughly 0.1, the increase starts accelerating noticeably. We know from the plot above that the per generation increase is maximal at around p = 0.35, after which the increase starts slowing down again, leading to the classical observed S-shaped curve.
+As you can see, *p* starts increasing right from the start, even if a little slow. Then, around generation 25, when *p* is roughly 0.1, the increase starts accelerating noticeably. We know from the plot above that the per generation increase is maximal at around *p = 0.35*, after which the increase starts slowing down again, leading to the classical observed S-shaped curve.
 
-If you play around with the s and h values (making sure that they remain between 0 and 1), you will notice that the shapes of the curves will change a bit. Depending on the value of s, the fixation of the allele will slower or faster. Depending on the value of h, the allele will increase rapidly in the beginning, and then slow down as it approaches fixation, or it will increase slowly in the beginning, and the rapidly goes to fixation at the end. Nevertheless, the ultimate outcome is always the same - fixation. This is the consequence of directional selection.
-
-
-Balancing Selection
-
-Let us now move on to the next type of selection: balancing selection. Recall that balancing selection means that the fitness of the heterozygote is higher than that of both homozygotes (resulting in the fitness peak in the figure above). In order to achieve that, we need to set the heterozygote effect, h, to a negative value.
-
-We can reuse the code from above, and plot Δp as a function of p with the values s=0.1 and h=-0.5. If we do that, we get the following plot:
+If you play around with the `s` and `h` values (making sure that they remain between 0 and 1), you will notice that the shapes of the curves will change a bit. Depending on the value of `s`, the fixation of the allele will be slower or faster. Depending on the value of `h`, the allele will increase rapidly in the beginning, and then slow down as it approaches fixation, or it will increase slowly in the beginning, and the rapidly go to fixation at the end. Nevertheless, the ultimate outcome is always the same - fixation. This is the consequence of directional selection.
 
 
+##Balancing Selection
+
+Let us now move on to the next type of selection: balancing selection. Recall that balancing selection means that the fitness of the heterozygote is higher than that of both homozygotes (resulting in the fitness peak in the figure above). In order to achieve that, we need to set the heterozygote effect, *h*, to a negative value.
+
+We can reuse the code from above, and plot {$$}\Delta p{/$$} as a function of *p* with the values `s = 0.1` and `h = -0.5`. If we do that, we get the following plot:
 
 
-Interesting! As you can see, Δp is mostly positive, but for values of p higher than 0.75, it starts to become negative. What does that mean for the evolutionary dynamics?
 
-Let’s start again at a low p value, and use this plot to understand what happens. Let’s say we start at a low p value, where Δp is positive. A positive Δp means that p is going to be even higher in the next generation. We’ll keep on moving to the right on the x axis, to higher values of p, until we get to the point where Δp is zero (at p=0.75). What happens then? Nothing, really - the allele frequency has arrived at an equilibrium.
 
-Imagine now for a moment that some event will bump p up to 0.9. At this value, Δp is negative, which means that p will be lower in the next generation. If we follow the same procedure, we’ll keep on moving to the left on the x axis, to lower values of p, until we get once again to the point where Δp is zero.
+Interesting! As you can see, {$$}\Delta p{/$$} is mostly positive, but for values of *p* higher than 0.75, it starts to become negative. What does that mean for the evolutionary dynamics?
 
-In other words, p = 0.75 is a stable equilibrium. If the p value is somehow reduced, it will go right back up to 0.75. If it is somehow increased, it will go right back down to 0.75.
+Let’s start again at a low *p* value, and use this plot to understand what happens. Let’s say we start at a low *p* value, where {$$}\Delta p{/$$} is positive. A positive {$$}\Delta p{/$$} means that *p* is going to be even higher in the next generation. We’ll keep on moving to the right on the x axis, to higher values of *p*, until we get to the point where {$$}\Delta p{/$$} is zero (at *p = 0.75*). What happens then? Nothing, really - the allele frequency has arrived at an equilibrium.
 
-This is an intriguing finding. It means that the allele A1 will not go to fixation, even though the genotypes A1A1 and A1A2 have higher fitness values than A2A2. What is going on here? Well, it is true that the fitness of A1A1 is higher than the fitness of A2A2. However, the heterozygote A1A2 has the highest fitness. This will keep the A2 allele around, and is the reason why A1 won’t go to fixation.
+Imagine now for a moment that some event will bump *p* up to 0.9. At this value, {$$}\Delta p{/$$} is negative, which means that *p* will be lower in the next generation. If we follow the same procedure, we’ll keep on moving to the left on the x axis, to lower values of *p*, until we once again get to the point where {$$}\Delta p{/$$} is zero.
 
-Another way to think about this is to imagine that your entire population is A1A1. Now, imagine that you introduce an A1A2 genotype. Because this heterozygote has a higher fitness than the other A1A1 genotypes, it will increase in frequency, and thus the A2 allele will increase in frequency too (and the A1 frequency will go down). However, this process can’t go on forever, because A1A2 genotypes will produce both A1A1 and A2A2 offspring genotypes, which have the lower fitness.
+In other words, *p = 0.75* is a stable equilibrium. If the *p* value is somehow reduced, it will go right back up to 0.75. If it is somehow increased, it will go right back down to 0.75.
 
-Let’s see if our reasoning is correct, and plot the result of a deterministic simulation, using a slightly adapted version of our previous code, with s = 0.1 and h = -0.5. This time, however, we run multiple simulations, starting at p = 0.01 all the way up to p = 0.99, in 0.01 increments. We can adapt the code like so:
+This is an intriguing finding. It means that the allele A1 will *not* go to fixation, even though the genotypes A1A1 and A1A2 have higher fitness values than A2A2. What is going on here? Well, it is true that the fitness of A1A1 is higher than the fitness of A2A2. However, the heterozygote A1A2 has the highest fitness. This will keep the A2 allele around, and is the reason why A1 won’t go to fixation.
 
+Another way to think about this is to imagine that your entire population is A1A1. Now, imagine that you introduce an A1A2 genotype. Because this heterozygote has a higher fitness than the other A1A1 genotypes, it will increase in frequency, and thus the A2 allele will increase in frequency too (and the A1 frequency will decrease). However, this process can’t go on forever, because A1A2 genotypes will produce both A1A1 and A2A2 offspring genotypes, which have lower fitness values.
+
+Let’s see if our reasoning is correct, and plot the result of a deterministic simulation, using a slightly adapted version of our previous code, with `s = 0.1` and `h = -0.5`. This time, however, we run multiple simulations, starting at `p = 0.01` all the way up to `p = 0.99`, in `0.01` increments. We can adapt the code like so:
+
+~~~~~~~~
 var s = 0.1;
 var h = -0.5;
 var initial_p = 0.01;
@@ -382,33 +385,38 @@ function run_simulation(p) {
 }
 
 draw_line_chart(data,generations,"Generation","p");
+~~~~~~~~
 
-This code makes use of the same concepts that we used in chapter 3, where we plotted multiple simulation runs at the same time. Since it’s been while since that chapter, let’s revisit what’s going here. The key idea is that rather than storing the result values of a single simulation run in one array, we now have to store multiple such arrays in another array (i.e. a two-dimensional array). I’ve encapsulated the actual simulation code in a function run_simulation, to which I’m passing an initial value for p. For each simulation, I’m creating a new results array, in which I will store the results of this particular simulation run. Once the simulation has run its course, I store the results array in the data array. It is this two-dimensional data array that I’m passing on to the plotting function.
+This code makes use of the same concepts that we used in chapter 3, where we plotted multiple simulation runs at the same time. Since it’s been a while since that chapter, let’s revisit what’s going here. The key idea is that rather than storing the resulting values of a single simulation run in one array, we now have to store multiple such arrays in another array (i.e. a two-dimensional array). I’ve encapsulated the actual simulation code in a function `run_simulation()`, to which I’m passing an initial value for `p`. For each simulation, I’m creating a new `results` array, in which I will store the results of this particular simulation run. Once the simulation has run its course, I store the `results` array in the `data` array. It is this two-dimensional `data` array that I’m passing on to the plotting function.
 
-Because I have numerous initial values of p, I will store all of them in an array called p_values. I’ve already set the first initial value of p, initial_p, to 0.01. Starting from that, I then create all the other initial values for p and store them in array with this snippet of code:
+Because I have numerous initial values of `p`, I will store all of them in an array called `p_values`. I’ve already set the first initial value of `p`, `initial_p`, to `0.01`. Starting from that, I then create all the other initial values for `p` and store them in the array with this snippet of code:
 
+~~~~~~~~
 while (initial_p < 1) {
     p_values.push(initial_p);
     initial_p = initial_p + 0.01;
 }
+~~~~~~~~
 
-This is a new loop construct that we haven’t met before. We’ve met the for loop, and the do while loop. The while loop is a simplified version of the do while loop. The do while loop, as you may recall, executes some code at least once, and then repeats executing it while a given condition is true. The while loop simply executes some code while a given condition is true. It may be that the condition is false already from the get go, and the code would never be executed. 
+This is a new loop construct that we haven’t met before. We’ve met the `for` loop, and the `do while` loop. The `while` loop is a simplified version of the `do while` loop. The `do while` loop, as you may recall, executes some code at least once, and then repeats executing it while a given condition is true. The `while` loop simply executes some code while a given condition is true. It may be that the condition is false already from the get go, and the code would never be executed. 
 
-For our purpose, the while loop is sufficient. It fills up the p_values array with values starting at 0.01, up to 0.99, in 0.01 increments. Once the array with initial values for p is set up, we simply loop over it and call the run_simulation function, passing along the corresponding initial value of p.
+For our purpose here, the `while` loop is sufficient. It fills up the `p_values` array with values starting at `0.01`, up to `0.99`, in `0.01` increments. Once the array with initial values for `p` is set up, we simply iterate over it and call the `run_simulation()` function, passing along the corresponding initial value of `p`.
 
 This produces the following plot:
 
 
 
-As this plot clearly shows, all simulation will go the equilibrium allele frequency of p=0.75, independent of the initial value of p. Thus, our reasoning was correct.
+As this plot clearly shows, all simulation will go the equilibrium allele frequency of *p = 0.75*, independent of the initial value of p. Thus, our reasoning was correct.
 
 You probably understand now why this type of selection is called balancing selection. It balances the allele frequencies at an equilibrium value, because both homozygotes are less fit than the heterozygote. Balancing selection is important because it maintains genetic variation. As we’ve seen above, that’s not true with directional selection, which will get rid of genetic variation.
 
 There’s one more thing about balancing selection that I want to mention. It turns out to you can very easily calculate the equilibrium frequency under balancing selection. It is simply
 
-p* = (h-1) / (2h-1)
+{$$}
+p* = \frac{h-1}{2h-1}
+{/$$}
 
-In our code above, we used h = -0.5. And as you can see, (-0.5 -1) / (2*-0.5 - 1) = 0.75. It’s also interesting to note that the equilibrium value does not depend on the selection coefficient, s. A higher selection coefficient will lead to faster dynamics, i.e. the population will reach the equilibrium value of p faster - but it will still be the same value. You can experiment with the value of s in your code to verify this.
+In our code above, we used `h = -0.5`. And as you can see, {$$}\frac{-0.5-1}{2*-0.5-1} = 0.75{/$$}. It’s also interesting to note that the equilibrium value does not depend on the selection coefficient, *s*. A higher selection coefficient will lead to faster dynamics, i.e. the population will reach the equilibrium value of *p* faster - but it will still be the same value. You can experiment with the value of `s` in your code to verify this.
 
 
 Disruptive Selection
