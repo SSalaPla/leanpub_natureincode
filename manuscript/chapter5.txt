@@ -181,6 +181,7 @@ We’ll be using the neighborhood model that I described above. In formal terms,
 {$$}
 j \geq i - d
 {/$$}
+
 {$$}
 j \leq i + d
 {/$$}
@@ -216,20 +217,21 @@ Now, with this function in place, we can get a new coordinate `j`, given `i` and
 var j = get_random_int(i-d, i+d);
 ~~~~~~~~
 
-So far so good. But you may have noticed an issue. What happens if our cell is near the border of the grid? We don’t want our spatial model to have any borders (if you exit on the right, you immediately re-enter on the left), but our array does not know about this idea yet. Its elements begin at index 0 and end at index length-1. Imagine that you are currently looking at the cell with an i coordinate of 0. What if the random number that you draw is -1? In JavaScript, when you try to access an array element at index -1, you would get an error. Similarly, if you have 10 elements in an array, and you would try to access the element at index 10 (or higher), you would get an error too. This is an issue that we need to deal with.
+So far so good. But you may have noticed an issue. What happens if our cell is near the border of the grid? We don’t want our spatial model to have any borders (if you exit on the right, you immediately re-enter on the left), but our array does not know about this idea yet. Its elements begin at index `0` and end at index `length-1`. Imagine that you are currently looking at the cell with an `i` coordinate of `0`. What if the random number that you draw is `-1`? In JavaScript, when you try to access an array element at index `-1`, you would get an error. Similarly, if you have 10 elements in an array, and you would try to access the element at index `10` (or higher), you would get an error too. This is an issue that we need to deal with.
 
-Let’s think about how we would implement this in a regular, one dimensional array. Let’s say we have an array with ten elements. We could visualize the array as follows:
+Let’s think about how we would implement this in a regular, one-dimensional array. Let’s say we have an array with ten elements. We could visualize the array as follows:
   
 	
-Since the array has length 10, the indexes start at 0 and end at 9. Now imagine you are at 9, and you would like to move one to the right. The index 10 does not exist, but since we want to re-enter the array from the left, we can just imagine placing a copy of the array on the right hand side of the array, and the index 10 would simply correspond to the actual index 0, 11 would correspond to index 1, 12 to index 2, and so on. In the same spirit, if we are at index 0 and would like to move one to the left, we would be at index -1, which doesn’t exist. Once again, we can simply imagine placing a copy of the array on the left side of the array, and index -1 would then correspond to the actual index 9, -2 would correspond to index 8, -3 to index 7, and so on. 
+Since the array has length 10, the indexes start at `0` and end at `9`. Now imagine you are at `9`, and you would like to move one to the right. The index `10` does not exist, but since we want to re-enter the array from the left, we can just imagine placing a copy of the array on the right hand side of the array, and the index `10` would simply correspond to the actual index `0`, `11` would correspond to index `1`, `12` to index `2`, and so on. In the same spirit, if we are at index `0` and would like to move one to the left, we would be at index `-1`, which doesn’t exist. Once again, we can simply imagine placing a copy of the array on the left side of the array, and index `-1` would then correspond to the actual index `9`, `-2` would correspond to index `8`, `-3` to index `7`, and so on. 
         
 
 
 
-As you can see, the trick is simply to transform incorrect indexes. When the index is incorrect because it is negative, all you need to do is add the length of the array (10 in our exampe), so that -1 becomes 9, -2 becomes 8, and so on. When the index is in correct because it is larger than the maximum index, 9 (which is length -1), all you need to do is to subtract the length of the array, so that 10 becomes 0, 11 becomes 1, and so on. 
+As you can see, the trick is simply to transform incorrect indexes. When the index is incorrect because it is *negative*, all you need to do is add the length of the array (`10` in our example), so that `-1` becomes `9`, `-2` becomes `8`, and so on. When the index is incorrect because it is *larger* than the maximum index, `9` (which is `length-1`), all you need to do is to subtract the length of the array, so that `10` becomes `0`, `11` becomes `1`, and so on. 
 
-It’s probably a good idea to implement a method for this. Let's call the method get_bounded_index - it takes an index and returns the transformed index (if a transformation is necessary at al all):
+It’s probably a good idea to implement a method for this. Let's call the method `get_bounded_index()` - it takes an index and returns the transformed index (if a transformation is necessary at all):
 
+~~~~~~~~
 function get_bounded_index(index) {
     var bounded_index = index;
     if (index < 0) {
@@ -240,11 +242,13 @@ function get_bounded_index(index) {
     }
     return bounded_index;
 }
+~~~~~~~~
 
-Note that this solution is not very generic - it would fail if our indexes are either very negative (e.g. -15) or very large (e.g. 25). But the indexes we’ll be passing to this function will be in the range where the function works well, and we won’t bother with more extreme cases for now.
+Note that this solution is not very generic - it would fail if our indexes are either very negative (e.g. `-15`) or very large (e.g. `25`). But the indexes we’ll be passing to this function will be in the range where the function works well, and we won’t bother with more extreme cases for now.
 
-Now that we have all these helper functions in place, we can write the function pick_mating_partner:
+Now that we have all these helper functions in place, we can write the function `pick_mating_partner()`:
 
+~~~~~~~~
 function pick_mating_partner(i, ii) {
     var j   = get_random_int(i-max_mating_distance, i+max_mating_distance);
     var jj  = get_random_int(ii-max_mating_distance, ii+max_mating_distance);
@@ -252,20 +256,18 @@ function pick_mating_partner(i, ii) {
     jj = get_bounded_index(jj);
     return grid[j][jj];
 }
+~~~~~~~~
 
-Well done! Now on to the other missing function, get_offspring. Now that we have a mating partner (which is just a genotype, as you may recall), we need to create an offspring individual (again, simply a genotype). How do we do that? Mendel to rescue!
+Well done! Now on to the other missing function, `get_offspring()`. Now that we have a mating partner (which is just a genotype, as you may recall), we need to create an offspring individual (again, simply a genotype). How do we do that? Mendel to rescue!
 
 You may recall from biology class back in school that Gregor Mendel, an Austrian monk, discovered the basic laws of genetics around 150 years ago (even though nobody, not even he himself, realized it at that point). The first law of Mendel states that alleles segregate during the formation of gametes, and that each parent passes on one allele to the offspring individual. This is not news to us, of course - this concept has formed the basis of our assumptions. Nevertheless, we now need to implement it on an individual-level basis, rather than on a population-level basis as we have done before.
 
-When we pick two individuals, there are essential six combinatorial possibilities: A1A1 and A1A1; A1A1 and A1A2; A1A1 and A2A2; A1A2 and A1A2; A1A2 and A2A2; A2A2 and A2A2. These possibilities have different outcomes, as outlined in these diagrams of mendelian inheritance: 
+When we pick two individuals, there are essential six combinatorial possibilities: A1A1 and A1A1; A1A1 and A1A2; A1A1 and A2A2; A1A2 and A1A2; A1A2 and A2A2; A2A2 and A2A2. These possibilities have different outcomes with respect to offspring production by mendelian inheritance, as outlined in these diagrams of mendelian inheritance: 
 
 
-                 
-               
+Of course you can flip parent 1 and parent 2, the outcome will be the same. Now, we will have to implement this in code. Looks like a bit of work, but the good news is, you’ll only have to implement this once, and you’ll be all set for all individuals and all generations. Also keep in mind the probability of each of the four boxes (i.e. each of the four possible offspring genotypes) is 25% for each paring of parental genotypes, as per the laws of Mendel. Here’s how we would implement this:
 
-
-Of course you can flip parent 1 and parent 2, the outcome will be the same. Now, we will have to implement this in code. Looks like a bit work, but the good news is, you’ll only have to implement this once, and you’ll be all set for all individuals and all generations. Also keep in mind the probability of each of the four boxes (i.e. each of the four possible offspring genotypes) is 25% for each paring of parental genotypes, as per the laws of Mendel. Here’s how we would implement this:
-
+~~~~~~~~
 function get_offspring(parent1, parent2) {
     if (parent1 == "A1A1" && parent2 == "A1A1" || parent2 == "A1A1" && parent1 == "A1A1") {
         return "A1A1";
@@ -305,13 +307,15 @@ function get_offspring(parent1, parent2) {
         return "A2A2";
     }
  }
+~~~~~~~~
 
 This looks a little complicated, but if you’ve followed the diagrams of mendelian inheritance above, this method is actually extremely simple. It just checks for the genotypes of the parents, and then randomly returns one of the 4 possible offspring genotypes. 
 
-Great work so far! So, what would happen if we would put these functions together, and run the code? Well, the code would run all right, but we wouldn’t know what’s going on, since we’re not logging any information. So let’s go ahead and do this. In the function run_generation, I’m going to add a call to another function, print_data. In this function, we can log whatever we want. At the moment, all we care about is the corresponding numbers of genotypes.
+Great work so far! So, what would happen if we would put these functions together, and run the code? Well, the code would run all right, but we wouldn’t know what’s going on, since we’re not logging any information. So let’s go ahead and do this. In the function `run_generation()`, I’m going to add a call to another function, `print_data()`. In this function, we can log whatever we want. At the moment, all we care about is the corresponding numbers of genotypes.
 
 First, let’s add the call to function in the code: 
 
+~~~~~~~~
 function run_generation() {
     var temp_grid = [];
     …
@@ -323,9 +327,11 @@ function run_generation() {
     print_data();
     generation_counter = generation_counter + 1;
   }
+~~~~~~~~
 
-Then, we can go ahead and implement the print_data function:
+Then, we can go ahead and implement the `print_data()` function:
 
+~~~~~~~~
 function print_data() {
     A1A1 = 0;
     A1A2 = 0;
@@ -346,20 +352,20 @@ function print_data() {
     console.log("generation " + generation_counter + ":");
     console.log(A1A1, A1A2, A2A2);
 }
+~~~~~~~~
 
 And now, if we run this, we should see something like this:
 
 
+As always with stochastic simulations, your numbers will look slightly different. The important part here however is that our code seems to be working fine. But just looking at these numbers isn’t really all that insightful yet. After all, we have just implemented a stochastic, individual-based, spatial simulation. How about we visualize what is going on in our two-dimensional world? 
 
+Like before, I am going to give you the corresponding code to visualize the spatial dynamics for you to copy and paste. There is no point at this stage for us to dig into the rather complex visualization code. But it will be helpful to understand the basic principle behind it. What we would like to do is to take our two-dimensional array, and color-code the cells according to the genotype that lives on the cell. At each generation, we would like to update the visualization in order to reflect to new state of the population.
 
-As always with stochastic simulations, your numbers will looks slightly different. The important part here however is that our code seems to be working fine. But just looking at these numbers isn’t really all that insightful yet. After all, we have just implemented a stochastic, individual-based, spatial simulation. How about we visualize what is going on in our two-dimensional world? 
-
-Like before, I am going to hand you the corresponding code to visualize the spatial dynamics for you to copy and paste. There is no point at this stage for us to dig into the rather complex visualization code. But it will be helpful to understand the basic principle behind it. What we would like to do is to take our two-dimensional array, and color-code the cells according to the genotype that lives on the cell. At each generation, we would like to update the visualization in order to reflect to new state of the population.
-
-As it turn out, visualization is much more computation-intensive than our simulation. Thus, the limiting factor will be the visualization. In order to have some control over the timing, I will introduce a new method in JavaScript.
+As it turns out, the visualization itself is much more computation-intensive than our simulation. Thus, the limiting factor will be the visualization. In order to have some control over the timing, I will introduce a new method in JavaScript.
 
 First, copy and paste this code at the top, right after you open your JavaScript tag:
 
+~~~~~~~~
 var width = 600;
 var height = 600;
 var svg = d3.select("body").append("svg")
@@ -405,15 +411,19 @@ function update_population(data,grid_length ){
               return 'genotype'+d;
             });
 }
+~~~~~~~~
 
-In addition to some visual setup, this code contains two drawing functions: draw_population, and update_population.
+In addition to some visual setup, this code contains two drawing functions: `draw_population()`, and `update_population()`.
 
-Since the drawing code uses D3.js, as before, be sure to include the corresponding tag that loads the library before the script tag that contains all the other JavaScript code that we just developed:
+As before, the drawing code uses D3.js, so be sure to include the corresponding tag that loads the library before the script tag that contains all the other JavaScript code that we just developed:
 
+~~~~~~~~
 <script src=“http://d3js.org/d3.v3.js"></script>
+~~~~~~~~
 
-We’re almost done. We need some more visualization code that is not in JavaScript, but in CSS. Go ahead and copy the following tag before the D3.js-loading script tag:
+We’re almost done. We need some more visualization code that is not written in JavaScript, but in CSS. Go ahead and copy the following CSS code right before the D3.js-loading script tag:
 
+~~~~~~~~
 <style>
   .genotypeA1A1 {
     fill:white;
@@ -425,83 +435,99 @@ We’re almost done. We need some more visualization code that is not in JavaScr
     fill:black;
   }
 </style>
+~~~~~~~~
 
 Great - everything is in place, let’s put it to use!
 
-First call the function draw_population right before you run you generation loop, i.e.:
+First call the function `draw_population()` right before you run you generation loop, i.e.:
 
+~~~~~~~~
 draw_population(grid,grid_length);
 
 for (var i = 0; i < 100; i = i + 1) {
     run_generation();
 }
+~~~~~~~~
 
 Now, if you run this code, you will see your simulations run in the logs like before - but in addition, you should also see something like this in the browser:
 
 
 
-Wow! That is your initial population, color-coded to show A1A1 genotypes in white, A1A2 genotypes in gray, and A2A2 genotypes in black. Isn’t this amazing? But it’s going to get much, much better. We’re currently only showing the initial population, and as expected, the genotypes are randomly distributed. Now, let’s go ahead and update the grid when the population is updated. 
+Wow! That is your initial population, color-coded to show A1A1 genotypes in white, A1A2 genotypes in gray, and A2A2 genotypes in black. Isn’t this amazing? But it’s going to get much, much better. We’re currently only showing the initial population, and as expected, the genotypes are randomly distributed in space. Now, let’s go ahead and update the grid when the population is updated. 
 
 We are currently using the following code for to run the generations:
 
+~~~~~~~~
 for (var i = 0; i < 100; i = i + 1) {
     run_generation();
 }
+~~~~~~~~
 
-As mentioned above, the visualization will not be fast enough to keep in pace with the simulations - nor should it. Running one generation barely takes one millisecond, and our eye wouldn’t be able to see 100 visual changes in 100 milliseconds anyways. So the code needs to be replaced with something that runs then generations - and updates the visualization of the grid - at specific time intervals. That code is as follows:
+As mentioned above, the visualization will not be fast enough to keep in pace with the simulations - nor should it. Running one generation barely takes one millisecond, and our eye wouldn’t be able to see 100 visual changes in 100 milliseconds anyways. So the code needs to be replaced with something that runs the generations - and updates the visualization of the grid - at specific time intervals. That code is as follows:
 
+~~~~~~~~
 function simulate_and_visualize() {
     run_generation();
     update_population(grid,grid_length);
 }
 setInterval(simulate_and_visualize, 100);
+~~~~~~~~
 
-Go ahead and remove the old for loop running the generations, and place the code above right after your call to draw_population. The method setInterval is provided by JavaScript and allows to execute any function, specified by the the first parameter, at an interval of some number of milliseconds, defined by the second parameter. Thus,
+Go ahead and remove the old `for` loop running the generations, and place the code above right after your call to `draw_population()`. The method `setInterval()` is provided out of the box by JavaScript and allows you to execute any function, specified by the the first parameter, at an interval of some number of milliseconds, defined by the second parameter. Thus,
 
+~~~~~~~~
 setInterval(simulate_and_visualize, 100);
+~~~~~~~~
 
-will execute the function simulate_and_visualize every 100 milliseconds.
+will execute the function `simulate_and_visualize()` every `100` milliseconds.
 
-Now save / reload the page, and - voilà!
+Now save / reload the page, and - voilà! We can now see the population evolving!
 
-After the first few generations, your population will already look like this:
-
-
-
-
-You can already see clear clusters of homozygotes (both A1A1, in white, and A2A2, in black). Let the simulation run for a while and you’ll see the clusters will get bigger:
+After the first few generations, your population may already look like this:
 
 
 
 
-Why is that? Imagine you are an A1A1 genotype, and you find yourself in one of those A1A1 clusters. Your entire neighborhood is made up of A1A1 genotypes, and thus your offspring will be A1A1 too. The same is true for A2A2 genotypes in A2A2 clusters. However, this is not true for A1A2 genotypes. When two heterozygotes reproduce, there is only a 50% chance that the offspring will be a heterozygote too - that’s why you won’t find any gray clusters.
-
-These clusters of homozygotes are the consequence of inbreeding, and there is inbreeding because the mating neighborhood is spatially limited. What would happen if that were not the case? Well, we have the code in place to see what happens in that case - simply change the value of max_mating_distance to 50, to simulate a “non-spatial” model, as discussed above (or rather a model with global mating, if you will). What you will see is simply this:
+You can already see clear clusters of homozygotes (both A1A1, in white, and A2A2, in black). Let the simulation run for a while and you’ll see that the clusters will get bigger:
 
 
 
-The random pattern that we observed right upon population initialization remains (in different permutations). There is no inbreeding, because mating is completely random over the entire population.
 
-The effect of inbreeding due to limited spatial mating neighborhoods is quite obvious when plotted visually, as we have done. Is there also a more formal way to measure the effect? It turns out there is, and we’re going to develop it based on very simple mathematics first, after which we’re going to measure it in our computational simulations.
+Why is that? Imagine you are an A1A1 genotype, and you find yourself in one of those A1A1 clusters. Your entire neighborhood is made up of A1A1 genotypes, and thus your offspring will be A1A1 too. The same is true for A2A2 genotypes in A2A2 clusters. However, this is not true for A1A2 genotypes. When two heterozygotes reproduce, there is only a 50% chance that the offspring will be a heterozygote too - that’s why you won’t find any big gray clusters.
+
+These clusters of homozygotes are the consequence of inbreeding, and there is inbreeding in this simulation because the mating neighborhood is spatially limited. What would happen if that were not the case? Well, we have the code in place to see what happens in that case: simply change the value of `max_mating_distance` to `50`, to simulate a “non-spatial” model, as discussed above (or rather a model with global mating, if you will). When you reload the page, you will see this:
+
+
+
+The random pattern that we observed right upon population initialization remains (in different permutations) - no clusters emerge. There is simply no inbreeding, because mating is completely random over the entire population.
+
+##Quantifying Inbreeding
+
+The effect of inbreeding due to limited spatial mating neighborhoods is strikingly obvious when plotted visually, as we have done. Is there also a more formal way to measure the effect? It turns out there is, and we’re going to develop it based on very simple mathematics first, after which we’re going to measure it in our computational simulations.
 
 Let’s start again at the definition of inbreeding: the mating between genetically similar individuals. The consequence of mating between genetically similar individuals is an excess of homozygotes in the population - compared to the level of homozygosity that we would expect if mating was random. The flip side of this observation is that there will be a reduction in heterozygosity, compared to the level of heterozygosity that we would expect under random mating.
 
-Well, what level of heterozygosity would we expect under random mating? Hardy-Weinberg to the rescue! Given allele frequencies p and q, the expected heterozygosity is 2pq. If we denote the expected heterozygosity with the label He, we can write
+But what level of heterozygosity would we expect under random mating? Hardy-Weinberg to the rescue! Given allele frequencies *p* and *q*, the expected heterozygosity is *2pq*. If we denote the expected heterozygosity with the label {$$}H_e{/$$}, we can write
 
-He = 2pq 
+{$$}
+H_e = 2pq 
+{/$$}
 
-The observed heterozygosity, Ho, is simply what we observe in the field (or in our simulations). Now, we said that inbreeding leads to less observed heterozygosity than we would expect. We quantify this as follows
+The observed heterozygosity, {$$}H_o{/$$}, is simply what we observe in the field (or in our simulations). Now, we said that inbreeding leads to less observed heterozygosity than we would expect. We can quantify this as follows
 
-F =  (He - Ho) / He
+{$$}
+F =  \frac{H_e - H_o}{H_e}
+{/$$}
 
-This quantity is called the inbreeding coefficient. In words, this quantity measures the difference between what you should have and what you actually have, relative to the what you should have (in terms of heterozygosity). This type of equation is actually very useful anywhere where you have an expected value and an observed value.
+This quantity is called the *inbreeding coefficient*. In words, this quantity measures the difference between what you should have and what you actually do have, relative to the what you should have (in terms of heterozygosity). This type of equation is very useful anywhere where you have an expected value and an observed value.
 
-Consider, for example, a payment of $100 that you are waiting to receive - $100 is the expected value. Now assume you are actually getting a payment of just $80. You will automatically make the following calculation in your head: “I should have gotten $100, but I only got $80. That’s a difference of $20.” Now consider a bank that expects a major monetary transfer of $1,000,000, but ends up receiving just $999,980. The bank makes the same calculation and ends up concluding, “we got $20 less than we expected”. In both cases, the difference is equal in absolute terms - $20. However, we need to put that difference in the context of what we expected in the first place. In your case you expected $100, but only got $20 - a 20% loss. The bank, on the other hand, expected  $1,000,000 and got  $999,980 - a mere 0.002% loss. In relative terms, what the bank got was very, very close to what it expected, but what you got was substantially reduced from what you expected. (I bet the bank would still try to get the $20 back, but I hope you get my point).
+Consider, for example, a payment of $100 that you are waiting to receive - in other words, $100 is the expected value. Now assume you are actually getting a payment of just $80. You will automatically make the following calculation in your head: “I should have gotten $100, but I only got $80. That’s a difference of $20.” Now consider a bank that expects a major monetary transfer of $1,000,000, but ends up receiving just $999,980. The bank makes the same calculation and ends up concluding, “we got $20 less than we expected”. In both cases, the difference is equal in absolute terms - $20. However, we need to put that difference in the context of what we expected in the first place. In your case, you expected $100, but only got $20 - a 20% loss. The bank, on the other hand, expected  $1,000,000 and got  $999,980 - a mere 0.002% loss. In relative terms, what the bank got was very, very close to what it expected, but what you got was substantially reduced from what you expected. (I bet the bank would still try to get the $20 back, but I hope you get my point).
 
 Equipped with this quantity, we can now go back to our code and measure the inbreeding coefficient.
 
-We can simply extend the print_data function like so:
+We can simply extend the `print_data()` function like so:
 
+~~~~~~~~
 function print_data() {
     A1A1 = 0;
     A1A2 = 0;
@@ -528,37 +554,40 @@ function print_data() {
     var F = (h_e - h_o) / h_e;
     console.log("F = " + F);
 }
+~~~~~~~~
 
-All the new code is at the end of the function. The observed heterozygosity Ho is simply the fraction of heterozygotes in the population. In order to calculate He, we need to know the allele frequencies, which we can easily calculate based on the genotypes counts (keep in mind that there are 2N alleles). Finally, we calculate F based on the definition that we saw above. 
+All of the added new code is at the end of the function. The observed heterozygosity {$$}H_o{/$$} is simply the fraction of heterozygotes in the population. In order to calculate the expected heterozygosity {$$}H_e{/$$}, we need to know the allele frequencies, which we can easily calculate based on the genotypes counts (keep in mind that there are *2N* alleles). Finally, we calculate *F* based on the definition that we introduced above. 
 
-First, let’s run the code for the case of global mating - i.e. be sure to set the mating distance to 50:
+First, let’s run the code for the case of global mating - i.e. be sure to set the mating distance to `50`:
 
+~~~~~~~~
 var max_mating_distance = 50;
+~~~~~~~~
 
-Now, if you run the simulation, you can will see something like this in the logs:
+Now, if you run the simulation, you will see something like this in the logs:
 
 
 
-As you can see, I’ve let the simulation run for 1,000 generations, and the A1A1 genotype is already much less frequent (around 2,000 individuals) than the A2A2 genotype (around 3,000 individuals) in this particular run. That’s the normal pattern of genetic drift that we would expect:  allele frequencies change over time in populations with finite size, simply because of random chance. However, the genotypes are almost perfectly in Hardy Weinberg equilibrium, as evidenced by the F value hovering around 0.
+As you can see, I’ve let the simulation run for 1,000 generations, and the A1A1 genotype is already much less frequent (around 2,000 individuals) than the A2A2 genotype (around 3,000 individuals) in this particular run. That’s the normal pattern of genetic drift that we would expect: allele frequencies change over time in populations with finite size, simply because of random chance. However, the genotypes are almost perfectly in Hardy-Weinberg equilibrium, as evidenced by the *F* value hovering around 0 (which means that the observed heterozygosity is practically identical to the expected heterozygosity).
 
-If you now change back to local mating by settin the mating distance back to 1:
+If you now change back to local mating by setting the mating distance back to `1`:
 
+~~~~~~~~
 var max_mating_distance = 1;
+~~~~~~~~
 
 you should see a rather different outcome:
 
 
 
+As you can see, already after 100 generation, the *F* value is around `0.3`, which corresponds to a reduction of heterozygosity of 30% relative to what we would expect! This confirms our visual suspicion that the heterozygosity is substantially reduced due to inbreeding. Only this time, we actually know by how much. 
 
+And with that, we conclude this chapter. Just to remind you of your achievement here - you have just developed an individual-based, spatial, and stochastic simulation of population genetics that actually runs in a browser! We have truly come a long way. What we learned was:
 
-As you can see, already after 100 generation, the F value is around 0.3, which corresponds to a reduction of heterozygosity of 30% relative to what we would expect. This confirms our visual suspicion that the heterogeneity is substantially reduced due to inbreeding. Only this time, we actually know by how much. 
-
-And we that, we conclude this chapter. Just to remind you of your achievement here - you have just developed an individual-based, spatial, and stochastic simulation of population genetics that actually runs in a browser! We have truly come a long way. What we learned was:
-
-	•	Mating is not alway random - sexual selection or limited mating distances can substantially reduce the range of mates. 
-	•	When offspring doesn’t disperse very far from the parental generation, there is much higher chance of inbreeding.
-	•	The effect of inbreeding is a reduction in heterozygosity, which can be measure by the inbreeding coefficient F.
-	•	We have also learned about a new method, setInterval, that allows you to execute a function repeatedly at certain time intervals, which can be very handy for visual simulations.
+* Mating is not alway random - sexual selection or limited mating distances can substantially reduce the range of mates. 
+* When offspring doesn’t disperse very far from the parental generation, there is much higher chance of inbreeding.
+* The effect of inbreeding is a reduction in heterozygosity, which can be measure by the inbreeding coefficient *F*.
+* We have also learned about a new method, setInterval, that allows you to execute a function repeatedly at certain time intervals, which can be very handy for visual simulations.
 
 In the next chapter, we’ll be looking at the queen of ideas in all of evolutionary theory; the idea that some people have called the best idea anyone’s ever had; the idea that has made Charles Darwin the most famous natural scientist in history: natural selection.
 
