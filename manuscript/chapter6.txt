@@ -73,8 +73,8 @@ This example has hopefully brought home the main point about fitness, natural se
 We are going to start by formalizing the concept of fitness. We have mentioned above that an allele, or a genotype, has a fitness. Mathematically, we can capture the genotypic fitness as follows. We can simply assign the following fitness values to the three possible genotypes:
 
 |  |A1A1 |A1A2 |A2A2|
-|-----------|--------------|--------------|---------------|
-| Fitness:  |{$$}w_11{/$$} |{$$}w_12{/$$} | {$$}w_22{/$$} |
+|----------:|:------------:|:------------:|:-------------:|
+| Fitness:  |{$$}w_{11}{/$$}|{$$}w_{12}{/$$}|{$$}w_{22}{/$$}|
 
 Let us assume, for simplicity, that the genotypes are at Hardy Weinberg equilibrium. That is, their frequencies are:
 
