@@ -157,7 +157,7 @@ If {$$}w_{11} = w_{12} = w_{22}{/$$} then
 \bar{w} = p^{2}w_{11} + 2pqw_{11} + q^{2}w_{11}
 {/$$} 
 
-from which we can factor out w11 and obtain
+from which we can factor out {$$}w_{11}{/$$} and obtain
 
 {$$}
 \bar{w} = w_{11}(p^2 + 2pq + q^2)
@@ -179,23 +179,31 @@ Thus, our next generation table will be:
 | Frequency at generation t:  |{$$}p^2{/$$}|{$$}2pq{/$$}|{$$}q^2{/$$}|
 | Frequency at generation t+1:  |{$$}p^{2}w_{11}/w_{11} = p^{2}{/$$}|{$$}2pqw_{11}/w_{11} = 2pq{/$$}|{$$}q^{2}w_{11}/w_{11} = q^{2}{/$$}|
 
-Our frequencies don’t change at all! Since all genotypes have the same fitness, there is no natural selection - and we are back in the Hardy-Weinberg world. This is an important insight - in order to have evolution by natural selection, there needs to be something for natural selection to act on. That something is a difference in fitness, or variance in fitness.
+Our frequencies don’t change at all! Since all genotypes have the same fitness, there is no natural selection - and we are back in the Hardy-Weinberg world. This is an important insight - in order to have evolution by natural selection, there needs to be something for natural selection to act on. That something is a difference in fitness, or *variance in fitness*.
 
-Given the three fitness values w11, w12, and w22, under what circumstances will an allele increase or decrease in frequencies? Because we know what genotype frequencies are at generation t+1, we can easily calculate the frequency of allele A1 at that generation:
+Given the three fitness values {$$}w_{11}{/$$}, {$$}w_{12}{/$$}, and {$$}w_{22}{/$$}, under what circumstances will an allele increase or decrease in frequency? Because we know what genotype frequencies are at generation *t+1*, we can easily calculate the frequency of allele A1 at that generation:
 
-p’ = (w11 p2) / w̅ + (w12 2pq) / 2w̅
+{$$}
+p’ = \frac{p^{2}w_{11}}{\bar{w}} + \frac{2pqw_{12}}{2\bar{w}}
+{/$$}
 
-which is simply adding the frequency of genotype A1A1 to half of the genotype frequency of A1A2. We can simplify this a tad bit by removing the 2's on the right hand side of the equation
+which is simply adding the frequency of genotype A1A1 to half of the genotype frequency of A1A2. We can simplify this a bit by removing the 2's on the right hand side of the equation:
 
-p’ = (w11 p2) / w̅ + (w12 pq) / w̅
+{$$}
+p’ = \frac{p^{2}w_{11}}{\bar{w}} + \frac{pqw_{12}}{\bar{w}}
+{/$$}
 
 which can be rewritten as
 
-p’ = (w11 p2 + w12 pq) / w̅
+{$$}
+p’ = \frac{p^{2}w_{11} + 2pqw_{12}}{\bar{w}}
+{/$$}
 
-The difference per generation is simply what we have at generation t+1, minus what we had at generation t:
+The difference per generation is simply what we have at generation *t+1*, minus what we had at generation *t*:
 
-Δp = p’ - p
+{$$}
+\Delta p = p’ - p
+{/$$}
 
 Having just established the equation for p’, we can rewrite this to get
 
