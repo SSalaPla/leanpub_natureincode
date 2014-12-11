@@ -225,45 +225,54 @@ Now you may think "fine - if an allele has a high fitness, it will increase in f
 
 Half of the answer is yes - natural selection really is quite simple. An allele can confer an advantage or a disadvantage to the individuals carrying the allele. If it is an advantage, then on average, these individuals will survive better, and reproduce more, than the individuals without that allele. Because of genetic inheritance (offspring have the genes of their parents), that allele will become more frequent in the population, eventually being the only allele in the population. This is evolution by natural selection.
 
-The other half of the answer is no - there is one aspect that is incredibly important when thinking about natural selection. That aspect is that fitness must be assigned to a genotype, not to an allele. Each diploid individual has two alleles, and in the case where we have two different alleles, there are three different genotypes: A1A1, A1A2, and A2A2. The different genotypes may have different fitness values. Sometimes, the two ways of assigning fitness (either to the allele or to the genotype) are equivalent. For example, if A1A1 has the highest fitness, A1A2 has an higher fitness than A1A1, and A2A2 has the highest fitness of them all, then you might as well say that the allele A2 confers a fitness benefit: the more A2s you have, the fitter you are:
+The other half of the answer is no - there is one aspect that is incredibly important when thinking about natural selection. That aspect is that fitness must be assigned to a genotype, not to an allele. Each diploid individual has two alleles, and in the case where we have two different alleles, there are three different genotypes: A1A1, A1A2, and A2A2. The different genotypes may have different fitness values. Sometimes, the two ways of assigning fitness (either to the allele or to the genotype) are equivalent. For example, if A1A1 has the lowest fitness, A1A2 has a higher fitness than A1A1, and A2A2 has the highest fitness of them all, then you might as well say that the allele A2 confers a fitness benefit: the more A2s you have, so to speak, the fitter you are:
 
-w11 < w12 < w22 
+{$$}
+w_{11} < w_{12} < w_{22} 
+{/$$}
 
-In that case, natural selection is very easy to predict. A2 will spread in the population. However, there are two cases where things are more interesting. The first case is when the fitness of the A1A2 genotype is higher than the other two fitnesses. The second case is when the fitness of the A1A2 genotype is lower than the other two fitnesses.
+In that case, natural selection is very easy to predict: the allele A2 will spread in the population. However, there are two cases where things are more interesting. The first case is when the fitness of the A1A2 genotype is higher than the other two fitnesses. The second case is when the fitness of the A1A2 genotype is lower than the other two fitnesses.
 
-Let us find a good way to formalize these three cases. First, we start by arbitrarily setting the fitness value of A1A1 to 1. As we have seen before, the absolute values of fitness don’t matter - what matters is the relative fitness values, i.e. how they compare to each other. Thus, we can reduce the complexity of the system by simply setting one of them to a fixed value. The question is now, how to the other to fitness values compare to 1?
+Let us find a good way to formalize these three cases. First, we start by arbitrarily setting the fitness value of A1A1 to 1. As we have seen before, the absolute values of fitness don’t matter - what matters is the relative fitness values, i.e. how they compare to each other. Thus, we can reduce the complexity of the system by simply setting one of them to a fixed value. The question is now, how do the other two fitness values compare to 1?
 
-Let’s simply further and say that no matter what, we assume that the A2A2 fitness is lower than 1, i.e. the genotype A2A2 is always less fit than the genotype A1A1. We could of course also assume that it is always higher, but you might as well just replace A1 with A2, and you would get the same system. It really doesn’t matter in this simple model: we are simply saying one of the other homozygotes has fitness 1, the other has a fitness that is lower than 1. It’s up to you to decide which of the homozygotes is the one with fitness 1. For the purpose of our discussion here, I’m setting A1A1 to be the genotype with fitness value 1, and A2A2 to be genotype with the lower fitness.
+Let’s simplify this a bit further and say that no matter what, we assume that the A2A2 fitness is lower than 1, i.e. the genotype A2A2 is always less fit than the genotype A1A1. We could of course also assume that it is always higher, but you might as well just replace A1 with A2, and you would get the same system. It really doesn’t matter in this simple model: we are simply saying that one of the homozygotes has fitness 1, and that the other homozygote has a fitness that is lower than 1. It’s up to you to decide which of the homozygotes is the one with fitness 1. For the purpose of our discussion here, I’m setting A1A1 to be the genotype with fitness value 1, and A2A2 to be the genotype with the lower fitness.
 
-Lower by how much? For this, let’s introduced a new, important parameter: the selection coefficient s. This coefficient defines by how much the fitness of A2A2 is reduced, compared to the fitness of A1A1. In mathematical terms, w22 = 1-s.
+But lower by how much? For this, let’s introduce a new, important parameter: the *selection coefficient, s*. This coefficient defines by how much the fitness of A2A2 is reduced, compared to the fitness of A1A1. In mathematical terms, {$$}w_{22} = 1-s{/$$}.
 
-What about the fitness of the heterozygote, A1A2? That is where things get interesting. To capture the fitness for A1A2, we introduced another new parameter: the heterozygous effect. We simply define the fitness of A1A2 to be w22 = 1-hs. Depending on the value of h, we can get all three different types of selection. Let me visualize this so that it becomes easier to understand.
+What about the fitness of the heterozygote, A1A2? That is where things get interesting. To capture the fitness for A1A2, we will now introduce another new parameter: the *heterozygous effect, h*. We simply define the fitness of A1A2 to be {$$}w_{22} = 1-hs{/$$}. Depending on the value of *h*, we can get all three different types of selection. Let me visualize this so that it becomes easier to understand.
 
 First, our new fitness table is as follows:
 
+{width="wide"}
+|  |A1A1 |A1A2 |A2A2|
+|----------:|:------------:|:------------:|:-------------:|
+| Fitness:  |{$$}1{/$$}|{$$}1-hs{/$$}|{$$}1-s{/$$}|
 
-As you can see, we now need to work with only two values (h and s), rather than with three (w11, w12 and w22). The first effect of that reduction in parameters is that it makes our equation for Δp a little simpler:
+As you can see, we now need to work with only two values (*h* and *s*), rather than with three ({$$}w_{11}{/$$}, {$$}w_{12}{/$$} and {$$}w_{22}{/$$}). The first effect of that reduction in parameters is that it makes our equation for {$$}\Delta p{/$$} a little simpler:
 
-Δp = (pqs ( ph + q (1-h))) / (1- 2pqhs -q2s)
+{$$}
+\Delta p = \frac{pqs ( ph + q (1-h))}{(1 - 2pqhs - q2s)}
+{/$$}
 
 If we would plot the genotypes fitnesses visually, we would get one of the following graphs:
 
 
 
 
-Any line in the green area, where h is some value between 0 and 1 (including 0 and 1), represents the case where the fitness of the heterozygote is an intermediate value between the fitness of the two homozygotes, or equal to one of them (think fitness slope). This type of selection is called directional selection.
+Any line in the green area, where *h* is some value between 0 and 1 (including 0 and 1), represents the case where the fitness of the heterozygote is an intermediate value between the fitness of the two homozygotes, or equal to one of them (think *fitness slope*). This type of selection is called *directional selection*.
 
-The blue line, or really any line you can think of above the green area, represents the case where the fitness of the heterozygote is higher than the fitness of both homozygotes (think fitness peak). This type of selection is called balancing selection.
+The blue line, or really any line you can think of above the green area, represents the case where the fitness of the heterozygote is higher than the fitness of both homozygotes (think *fitness peak*). This type of selection is called *balancing selection*.
 
-The red line, or really any line you can think of below the green area, represents the case where the fitness of the heterozygote is lower than the fitness of both homozygotes (think fitness valley). This type of selection is called disruptive selection.
+The red line, or really any line you can think of below the green area, represents the case where the fitness of the heterozygote is lower than the fitness of both homozygotes (think *fitness valley*). This type of selection is called *disruptive selection*.
 
 As we’ll see below, these three types of fitness “landscapes” have very different dynamics. 
 
 
-Directional Selection
+##Directional Selection
 
-Let’s start with directional selection. Let’s go ahead and plot Δp, the change in the frequency of allele A1, as a function of p. We’ve used a very similar code before - all I’m changing is the actual equation:
+Let’s start with directional selection. Let’s go ahead and plot {$$}\Delta p{/$$}, the change in the frequency of allele A1, as a function of *p*. We’ve used a very similar code before - all I’m changing is the actual equation:
 
+~~~~~~~~
 var s = 0.1;
 var h = 0.2;
 
@@ -278,12 +287,13 @@ for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
 }
 
 draw_line_chart(data,x_max,"p","\u0394 p”,true);
+~~~~~~~~
 
-You may have noticed that I have passed a fifth parameter to the function draw_line_chart. There are two things I want to mention about that. First, the function has actually been able to deal with five parameters from the moment we start using it. We simply didn’t supply that fifth parameter, which meant the corresponding local variable in the function was undefined.
+You may have noticed that I have passed a fifth parameter to the function `draw_line_chart()`. There are two things I want to mention about that. First, the function has actually been able to deal with five parameters from the moment we started using it. We simply didn’t supply that fifth parameter, which meant the corresponding local variable in the function was `undefined`.
 
-But perhaps more importantly, I’d like to say what the parameter is doing. The argument name for the parameter in the function is called y_max_flexible - if it is not true, then the the y axis will span from 0 to 1 (check some of the earlier figures that we generated with this function to verify that this is indeed the case). On the other hand, if it is true, the y axis will span from 0 to a little bit more than the maximum value in the data set - making sure that the entire vertical space in the figure is utilized.
+But perhaps more importantly, I’d like to explain what the parameter is doing. The argument name for the parameter in the function is called `y_max_flexible` - if it is not `true`, then the the y axis will span from 0 to 1 (check some of the earlier figures that we generated with this function to verify that this is indeed the case). On the other hand, if it is `true`, the y axis will span from 0 to a little bit more than the maximum value in the data set - making sure that the entire vertical space in the figure is utilized.
 
-Setting the values s and h to 0.1 and 0.2, respectively, we get the following plot:
+Setting the values `s` and `h` to `0.1` and `0.2`, respectively, we get the following plot:
 
 
 
