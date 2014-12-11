@@ -92,12 +92,12 @@ Given these fitness values, and the frequencies in the current generation t, wha
 |----------:|:------------:|:------------:|:-------------:|
 | Fitness:  |{$$}w_{11}{/$$}|{$$}w_{12}{/$$}|{$$}w_{22}{/$$}|
 | Frequency at generation t:  |{$$}p^2{/$$}|{$$}2pq{/$$}|{$$}q^2{/$$}|
-| Frequency at generation t+1:  |{$$}\frac{w_{11}p^2}{\bar{w}}{/$$}|{$$}\frac{w_{12}2pq}{\bar{w}}{/$$}|{$$}\frac{w_{22}q^2}{\bar{w}}{/$$}|
+| Frequency at generation t+1:  |{$$}p^{2}w_{11}/\bar{w}{/$$}|{$$}2pqw_{12}/\bar{w}{/$$}|{$$}q^{2}w_{22}/\bar{w}{/$$}|
 
 where {$$}\bar{w}{/$$} is the average fitness in the population, which can be calculated as 
 
 {$$}
-\bar{w} = w_{11}p^2 + w_{12}2pq + w_{22}q^2
+\bar{w} = p^{2}w_{11} + 2pqw_{12} + q^{2}w_{22}
 {/$$} 
 
 These few formulas form the basis for a lot that we will be doing in this chapter, so I want to make sure that we understand them well. Let’s go through an example with actual numbers.
@@ -107,29 +107,29 @@ Assume the genotype frequencies are 20%, 50% and 30% for genotypes A1A1, A1A2, A
 Now, if we would simply multiply the fitness values with the frequencies, we would get the following frequencies:
 
 {$$}
-(w_{11} p^2) = 1 * 0.2 = 0.2
+p^{2}w_{11} = 1 * 0.2 = 0.2
 {/$$}
 
 {$$}
-(w_{12} 2pq) = 1.12 * 0.5 = 0.6
+2pqw_{12} = 1.12 * 0.5 = 0.6
 {/$$}
 
 {$$}
-(w_{22} q^2) = 1.5 * 0.3 = 0.45
+q^{2}w_{22} = 1.5 * 0.3 = 0.45
 {/$$}
 
 The problem is that these new genotype frequencies (0.2, 0.6, and 0.45) don’t add up to 1, but of course they have to. So what we need to do is to normalize these values, so that they do indeed add up to 1 again. Normalizing here means to reduce each of the values by the same factor in such a way that the numbers add up to 1. It’s very easy to do that: simply add the three numbers up (0.2 + 0.6 + 0.45 = 1.25), and then divide each of the three numbers by that sum. We call the sum of the three numbers the average fitness in the population, {$$}\bar{w}{\$$}, and we get the normalized frequencies by dividing by it:
 
 {$$}
-\frac{(w_{11} p^2)}{\bar{w}} = 0.2 / 1.25 = 0.16
+\frac{p^{2}w_{11}}{\bar{w}} = \frac{0.2}{1.25} = 0.16
 {/$$}
 
 {$$}
-\frac{(w_{12} 2pq)}{\bar{w}} = 0.6 / 1.25 = 0.48
+\frac{2pqw_{12}}{\bar{w}} = \frac{0.6}{1.25} = 0.48
 {/$$}
 
 {$$}
-\frac{(w_{22} q^2)}{\bar{w}} = 0.45 / 1.25 = 0.36
+\frac{q^{2}w_{22}}{\bar{w}} = \frac{0.45}{1.25} = 0.36
 {/$$}
 
 These numbers were rounded a bit - but I hope you get the idea. So overall, here is our example, in numbers:
@@ -148,13 +148,13 @@ It’s important to note that the absolute fitness values don’t matter. Instea
 What would happen if all three fitness values were exactly the same? (Think about this before reading on.) Recall that the average fitness is 
 
 {$$}
-\bar{w} = w_{11}p^2 + w_{12}2pq + w_{22}q^2
+\bar{w} = p^{2}w_{11} + 2pqw_{12} + q^{2}w_{22}
 {/$$} 
 
 If {$$}w_{11} = w_{12} = w_{22}{/$$} then
 
 {$$}
-\bar{w} = w_{11}p^2 + w_{11}2pq + w_{21}q^2
+\bar{w} = p^{2}w_{11} + 2pqw_{11} + q^{2}w_{11}
 {/$$} 
 
 from which we can factor out w11 and obtain
@@ -177,7 +177,7 @@ Thus, our next generation table will be:
 |----------:|:------------:|:------------:|:-------------:|
 | Fitness:  |{$$}w_{11}{/$$}|{$$}w_{11}{/$$}|{$$}w_{11}{/$$}|
 | Frequency at generation t:  |{$$}p^2{/$$}|{$$}2pq{/$$}|{$$}q^2{/$$}|
-| Frequency at generation t+1:  |{$$}\frac{w_{11}p^2}{w_{11}}=p^2{/$$}|{$$}\frac{w_{11}2pq}{w_{11}}=2pq{/$$}|{$$}\frac{w_{11}q^2}{w_{11}}=q^2{/$$}|
+| Frequency at generation t+1:  |{$$}p^{2}w_{11}/w_{11} = p^{2}{/$$}|{$$}2pqw_{11}/w_{11} = 2pq{/$$}|{$$}q^{2}w_{11}/w_{11} = q^{2}{/$$}|
 
 Our frequencies don’t change at all! Since all genotypes have the same fitness, there is no natural selection - and we are back in the Hardy-Weinberg world. This is an important insight - in order to have evolution by natural selection, there needs to be something for natural selection to act on. That something is a difference in fitness, or variance in fitness.
 
