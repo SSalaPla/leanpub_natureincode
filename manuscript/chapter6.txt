@@ -597,14 +597,17 @@ The same logic applies in frequency dependent selection, with one important diff
 
 As a concrete example, the fitness of host genotype A1, {$$}w_{H1}{/$$}, depends on both parasite frequencies {$$}f_{P1}{/$$} and {$$}f_{P2}{/$$}, as well as the fitness values for host A1 when interacting with parasite A1 ({$$}w_{H1P1}{/$$}), and when interacting with parasite A2 ({$$}w_{H1P2}{/$$}):
 
-{$$}w_{H1} = w_{H1P1}f_{P1} + w_{H1P2}f_{P2}{/$$}
+{$$}
+w_{H1} = w_{H1P1}f_{P1} + w_{H1P2}f_{P2}
+{/$$}
 
 Think about it as follows. As a host with genotype A1, you can either meet a parasite with genotype A1 (which will happen with probability {$$}f_{P1}{/$$}, the frequency of parasite genotype A1), or you can meet a parasite with genotype A2 (which will happen with probability {$$}f_{P2}{/$$}, the frequency of parasite genotype A2). In the first case, the fitness of the host A1 when meeting parasite A1, {$$}w_{H1P1}{/$$}, will be *1-sh*. In the second case, the fitness of the host A1 when meeting parasite A2, {$$}w_{H1P2}{/$$}, will be 1. The total fitness is simply the sum of these two possible cases. The exact same logic applies for all the other genotypes.
 
-Note the there is no normalizing happening at this stage, since we aren’t calculating frequencies yet. Now, if we want to know that frequency of host genotype A1 in the next generation, we will do the exact same thing as we have before: multiple its fitness, wH1, by its frequency. Then, we do the same thing for host genotype A2. Once we have these two frequencies, we need to normalize them by their sum, since they might add up to a value other than 1.
+Note that there is no normalizing happening at this stage, since we aren’t calculating frequencies yet. Now, if we want to know the frequency of host genotype A1 in the next generation, we will do the exact same thing as we have before: multiple its fitness, {$$}w_{H1}{/$$}, by its frequency. Then, we do the same thing for host genotype A2. Once we have these two frequencies, we need to normalize them by their sum, since they might add up to a value other than 1.
 
 In code, this looks as follows:
 
+~~~~~~~~
 function host_selection() {
     var sum_host_frequencies = 0;
     for (var i = 0; i < host_frequencies.length; i = i + 1) {
@@ -623,60 +626,78 @@ function host_selection() {
 function get_host_fitness(i,ii){
     return (i == ii ? 1-sh : 1) * parasite_frequencies[ii]
 }
+~~~~~~~~
 
-Let’s walk through this line by line. At first, we initialized the variable sum_host_frequencies at 0. This variable will be necessary for the normalizing at the end. Then, in the first loop, we go through all host frequencies, and calculate their new frequencies, using the forumla above.
+Let’s walk through this line by line. At first, we initialized the variable `sum_host_frequencies` at 0. This variable will be necessary for the normalizing at the end. Then, in the first loop, we go through all host frequencies, and calculate their new frequencies, using the formula above.
 
 Notice how the first four lines in that loop,
 
+~~~~~~~~
 var current_host_fitness = 0;
 for (var ii = 0; ii < parasite_frequencies.length; ii = ii + 1) {
     current_host_fitness = current_host_fitness + get_host_fitness(i, ii);
 }
+~~~~~~~~
 
 are the programmed equivalent of 
 
-wH1 = fP1 * wH1P1 + fP2 * wH1P2
+{$$}
+w_{H1} = w_{H1P1}f_{P1} + w_{H1P2}f_{P2}
+{/$$}
 
-The function get_host_fitness(i, ii) simply returns the product of the frequency and the fitness:
+The function `get_host_fitness(i, ii)` simply returns the product of the frequency and the fitness:
 
+~~~~~~~
 function get_host_fitness(i,ii){
     return (i == ii ? 1-sh : 1) * parasite_frequencies[ii]
 }
+~~~~~~~
 
-There is something interesting in the function that we haven’t seen before, which is this expression:
+There is something interesting in that function that we haven’t seen before, which is this expression:
 
+~~~~~~~
 i == ii ? 1-sh : 1
+~~~~~~~
 
-This is the so-called ternary operator ?: which is a short cut for an if else expression. It works as follows. The following if else expression
+This is the so-called *ternary* operator `?:` which is a short cut for an `if else` expression. It works as follows. The following `if else` expression
 
+~~~~~~~
 if (condition) {
    code1
 }
 else {
    code2
 }
+~~~~~~~
 
-Can be simplified with the ternary operator ?: as follows:
+Can be simplified with the ternary operator `?:` as follows:
 
+~~~~~~~
 condition ? code1 : code2
+~~~~~~~
 
-Note that these two pieces of code do the exact same thing - they’re just different versions of expressing an idea. This is very common - there are endless many ways to achieve the same thing in code. Don’t worry if you would implement an idea differently than I have here throughout the book. As long as your code does the same thing, it’s perfectly fine. As you become more comfortable with programming, you will learn that some ways can be better than others to express the same idea - either because they’re easier to read, easier to extend, or for other reasons. At this stage in your path to learning programming, you don’t need to worry about this too much. Shorter code is not automatically better code. What is most important at the moment is that you understand what you’re doing, and that you will find it easy to read your code when you go back to it in the future.
+Note that these two pieces of code do the exact same thing - they’re just different versions of expressing an idea. This is very common - there are infinitely many ways to achieve the same thing in code. Don’t worry if you would implement an idea differently than I have here throughout the book. As long as your code does the same thing, it’s perfectly fine. As you become more comfortable with programming, you will learn that some ways can be better than others to express the same idea - either because they’re easier to read, easier to extend, or for other reasons. At this stage in your path to learning programming, you don’t need to worry about this too much. Shorter code is not automatically better code. What is most important at the moment is that you understand what you’re doing, and that you will find it easy to read your code when you go back to it in the future.
 
 Back to our function, where the next two lines read
 
+~~~~~~~
 host_frequencies[i] = host_frequencies[i] * current_host_fitness;
 sum_host_frequencies = sum_host_frequencies + host_frequencies[i];
+~~~~~~~
 
-Now that we’ve calculated the current host fitness (given the parasite frequencies), we can multiple it with the current host frequency in order to get the new host frequency. Then, we add this value to sum_host_frequencies for later normalization.
+Now that we’ve calculated the current host fitness (given the parasite frequencies), we can multiple it with the current host frequency in order to get the new host frequency. Then, we add this value to `sum_host_frequencies` for later normalization.
 
 After the loop has gone through all hosts genotypes, and calculated the new frequencies, we need to normalize them so that they add up to 1 gain. The last three lines in the function take care of this:
 
+~~~~~~~
 for (i = 0; i < host_frequencies.length; i = i + 1) {
     host_frequencies[i] = host_frequencies[i] / sum_host_frequencies;
 }
+~~~~~~~
 
-And that’s it. The function parasite_selection follows the exact same logic, except that we now do everything from the perspective of the parasite:
+And that’s it. The function `parasite_selection()` follows the exact same logic, except that we now do everything from the perspective of the parasite:
 
+~~~~~~~
 function parasite_selection() {
     var sum_parasite_frequencies = 0;
     for (var i = 0; i < parasite_frequencies.length; i = i + 1) {
@@ -695,6 +716,7 @@ function parasite_selection() {
 function get_parasite_fitness(i,ii) {
     return (i == ii ? 1 : 1-sp) * host_frequencies[ii]
 }
+~~~~~~~
 
 And that’s it! Now that have put everything together, we can run the code and look at the output. Here’s what I see, the first time I run this code:
 
@@ -702,21 +724,27 @@ And that’s it! Now that have put everything together, we can run the code and 
 
 Wow - cyclical dynamics indeed! This is the Red Queen, in action.
 
-Go ahead and reload the page a number of times. You will see that the dynamics are very much dependent on initial conditions. In addition, try changing the values of the selection coefficients sh and sp, and see how that changes the dynamics.
+Go ahead and reload the page a number of times. You will see that the dynamics are very much dependent on initial conditions. In addition, try changing the values of the selection coefficients `sh` and `sp`, and see how that changes the dynamics.
 
-Before we conclude, I’d like to make one very small modification to the code. In your function host_selection(), go ahead and at this line
+Before we conclude, I’d like to make one very small modification to the code. In your function `host_selection()`, go ahead and add this line
 
+~~~~~~~
 host_frequencies[i] = host_frequencies[i] + Math.random() * 0.01;
+~~~~~~~
 
 right after this one
 
+~~~~~~~
 host_frequencies[i] = host_frequencies[i] * current_host_fitness;
+~~~~~~~
 
 What the new line does is to add a very small value - a random number between 0 and 0.01 - to the new host frequencies. At this stage, the host frequencies are not yet normalized, so the net effect of this addition is that the normalized host frequencies will just be slightly disturbed.
 
-Before you reload the page, set the number of generations to 2,000 - you’ll see why in a second:
+Before you reload the page, set the number of generations to `2000` - you’ll see why in a second:
 
+~~~~~~~
 var generations = 2000;
+~~~~~~~
 
 Now reload the page. Here’s what I see the first time:
 
@@ -732,15 +760,15 @@ And with that, we conclude the chapter about natural selection. Natural selectio
 
 Let’s briefly wrap up what we learned in this chapter.
 
-	•	Genotypes and alleles that give individuals a higher average chance to survive and reproduce will over time increase in frequency - this process is called evolution by natural selection.
-	•	Fitness is a measure of the ability to survive and reproduce.
-	•	In diploid individuals, there are three possible types of natural selection: directional selection, balancing selection, and disruptive selection.
-	•	Directional selection will drive alleles to fixation.
-	•	Balancing selection will maintain genetic diversity in a population.
-	•	Disruptive selection will drive alleles to fixation, but which ones depends on initial conditions.
-	•	Negative frequency dependent selection (coevolution) leads to cyclical evolutionary dynamics (red queen dynamics).
-	•	Red queen dynamics can be strongly affected by genetic drift.
-	•	We’ve also introduced the ternary operator in JavaScript.
+* Genotypes and alleles that give individuals a higher average chance to survive and reproduce will over time increase in frequency - this process is called evolution by natural selection.
+* Fitness is a measure of the ability to survive and reproduce.
+* In diploid individuals, there are three possible types of natural selection: directional selection, balancing selection, and disruptive selection.
+* Directional selection will drive alleles to fixation.
+* Balancing selection will maintain genetic diversity in a population.
+* Disruptive selection will drive alleles to fixation, but which ones depends on initial conditions.
+* Negative frequency dependent selection (coevolution) leads to cyclical evolutionary dynamics (red queen dynamics).
+* Red queen dynamics can be strongly affected by genetic drift.
+* We’ve also introduced the ternary operator in JavaScript.
 
 We’ve now covered all four forces affecting evolution: drift, mutation, migration, and natural selection. You’ve come a long way. Not only do you now have an overview on the major forces affecting the living world, but you also have the ability to implement these ideas in code. This is a wonderful achievement - congratulations. In the next chapters, we’ll be looking at some other, highly interesting dynamic systems in biology: we’ll look at how infectious disease spread, and how cooperation evolves.
 
