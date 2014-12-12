@@ -1,0 +1,540 @@
+# Epidemics: The Spread of Infectious Diseases
+
+Have you ever had a cold, or the flu? I’m sure you have - especially common colds, with the runny nose and the coughs, are hard to avoid, and a reoccurring nuisance mostly during the winter months. Hopefully, you have never had the flu, or only rarely - unlike the common cold, the flu is caused by the influenza virus, which can cause very nasty infections that can put you out for multiple weeks. In fact, every year, tens of thousands of people die from complications caused by the flu.
+
+The common cold and the flu are two examples of infectious diseases. An infectious disease is a diseases that is caused by an infectious agent - typically a microorganism such as a virus, a bacterium, or a fungus. When these microorganisms enter our body and cause an infection that makes us sick, we call them pathogens. While it is bad enough for us as individuals that pathogens make us sick, what is really bad is that they make us pass them on to other individuals through infection.
+
+Thus, the term infectious disease is slightly incorrect - you are not actually passing on a disease. Instead, you are passing on the pathogens that cause the disease in the first place. 
+
+But not all microorganisms have the same effect. In fact, most microorganisms in your body do not cause disease. Did you know that you have more bacterial cells in your body than human cells? That’s right - your human cells are outnumbered by about factor 10! In other words, for every single human cell, there are about 10 bacterial cells in your body. Most of them live in your gut, where they don’t cause disease, and indeed, they even keep you healthy.
+
+However, some microorganisms do cause disease, and when they do, the disease can range from hardly noticeable to deadly. The common cold certainly ranges among the most mild infectious diseases. It’s typically a little annoying, sometimes causes a fever, but never kills anyone (although people can die of other complications following a common cold, especially when they are already very weak). On the other hand of the spectrum, we have diseases like Ebola, where untreated individuals have an up to 90% chance of dying because of the disease.
+
+Only a little more than a century ago, infectious diseases were a major killer everywhere in the world. Many children didn’t make it past age 5, and would die of a childhood disease against which there were no vaccines. Nowadays, modern public health systems and medicine have helped us keep many of the killer diseases in check. Nevertheless, infectious disease remain a major threat. In developing countries, they are still a major cause of death. But nobody in the world is safe from new infectious diseases that emerge every year, typically jumping from animals to humans.
+
+In this chapter, we are going to look at the fascinating process of infectious disease spread through a population. We will program a virtual world where a single infectious individual starts infecting others and thereby starts an epidemic that spreads through the population. We will then investigate how a few contacts between random individuals, rather than local neighbors, can completely change the dynamics of an epidemic, leading to much larger outbreaks.
+
+Ready to enter the world of germs? Let’s go!
+
+
+##The SIR Model
+
+The most common way to model an infectious disease outbreak in a population is to assume that individuals are in one of three possible states:
+
+1.	Susceptible: This means that the individual has not been infected yet, and could get infected.
+2.	Infected: This means that the individual is currently infected, and can infect other individuals who are susceptible.
+3.	Recovered: This means that the individual has recovered from the infection. The individual can not infect others anymore, and can’t be infected either because it developed immunity.
+
+Because of the first letters of the three states (susceptible, infected, and recovered), a model implementing these states is called an SIR model. The SIR model captures some key aspects about many infectious diseases, but simplifies the reality down to three states. This follows the same idea that we have encountered earlier in the book: to make a model as simple as possible, but not simpler. 
+
+We are going to assume that initially, everybody is susceptible to an infection. In reality, that is not always true: Some people may have some background immunity because they were infected by a similar virus earlier in their life. Some people may have some genetic mutations that make them resistant to some infections. Some people may be vaccinated. But for a completely new disease that has never circulated in humans, the assumptions is probably quite close to the truth.
+
+So how do susceptible individuals get infected? At first, we are simply going to assume that one individual - patient 0 - becomes infected. We are not going to bother about how exactly that happens. In reality, many emerging disease in humans are of zoonotic origin, which means that a pathogen made the jump from an animal to humans. For example, flu circulates in birds, pigs, horses, and other animal species. The bird flu that most epidemiologists are so worried about is caused by an influenza virus that circulates in birds. Sometimes, a human gets infected by being exposed to an infected bird (for example when working on a poultry market). Ebola, as another example, circulates in fruit bats, and the devastating Ebola outbreak that emerged in West Africa in 2014 is thought to have originated in a person who got infected by a fruit bat (probably by accidentally eating bat droppings on fruit).
+
+But once an individual is infected, we assume that the pathogen can jump from person to person. For that to happen, susceptible individuals need to come in contact with an infected person. Whenever such a contact happens, there’s some probability that the pathogen will jump from the infected person to the susceptible person, and as a consequence, the susceptible person becomes infected.
+
+Finally, an infected individual can recover from infection. This also happens with a certain probability per time. As we will see below, much of the dynamics of infectious disease spread in an SIR model is explained by these two probabilities, the probability of getting infected upon exposure, and the probability of recovery per unit time.
+
+We could go ahead and implement a non-spatial model as we have done most of the time throughout the book, with exception of chapter 5. However, I think epidemic dynamics are best understood when we can observe the spatial spread of the disease through a population. Thankfully, we have already developed most of the code for spatial models in chapter 5, and will be able to reuse almost all of it. In fact, our code is going to be substantially simpler, because we don’t need to deal with genetics.
+
+In the first iteration of the code, we are going to make a simplifying assumption that there is no recovery from the disease. We’ll change that right after we implemented the code. So in a sense, we will start with an SI model, rather than an SIR model, and see what happens. From that, we’ll add the code for recovery in order to get an SIR model. You will see at the end why this is a good way to go about.
+
+Let’s get started and set up a few key variables:
+
+var grid_length = 100;
+var grid = [];
+var temp_grid = [];
+var beta = 0.05;
+var gamma = 0.1;
+
+The variable grid_length once again defines the side length of our two-dimensional world. As in chapter 5, we will store the individuals in a two-dimensional array named grid, and we’ll have a temp_grid (also a two-dimensional array) to store transient values for proper updating (more about that later). Finally, the variable beta defines the infection probability per contact and unit time. Notice that our time steps are not generations anymore. Instead, they are arbitrary units of time (in our case, we can perhaps think of them as days). beta essentially defines the probability that a susceptible individual becomes infected, per time step, when exposed to an infected individual. The variable gamma, on the other hand, defines the probability of recovery of an infected individual, per unit time.
+
+Next, we’ll go ahead and initialize the grid:
+
+function get_random_int(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function init_grid() {
+    for (var i = 0; i < grid_length; i = i + 1) {
+        grid[i] = [];
+        for (var ii = 0; ii < grid_length; ii = ii + 1) {
+           grid[i][ii] = "S";
+        }
+    }
+    grid[get_random_int(0,grid_length-1)][get_random_int(0,grid_length-1)] = "I";
+}
+
+init_grid();
+
+The function init_grid is almost identical to the one we used in chapter 5, but rather than assigning random values to the individual cells, we’ll simply set all values to “S” (for susceptible). After that, we pick a random cell on the grid - using the function get_random_int(min, max) from chapter 5 - and set its value to “I” (for infected). 
+
+And we that, the population is initialized. There are 9,999 susceptible and 1 infected individual, patient 0. We’ll be reusing the plotting functions draw_population(grid,grid_length) and     update_population(grid,grid_length) from chapter 5 to draw the population in the browser. This time, we’ll use slightly different coloring scheme for the different types of individuals: gray for susceptible, red for infected, and green for recovered. Go ahead and copy the two functions over from chapter 5, and add this CSS at the top of your page:
+
+<style>
+  .genotypeS {
+    fill:rgb(220,220,220);
+  }
+  .genotypeI {
+    fill:rgb(200,38,5);
+  }
+  .genotypeR {
+    fill:rgb(111,192,65);
+  }
+</style>
+
+We’re now going to call the draw_population(grid,grid_length) function, und then use the method setInterval that we’ve learned about in chapter 5 to run a time step und update the population, like so:
+
+draw_population(grid,grid_length);
+
+function simulate_and_visualize() {
+    run_time_step();
+    update_population(grid,grid_length);
+}
+
+setInterval(simulate_and_visualize, 20);
+
+In case you’ve missed it: in comparison to chapter 5, we reduced the interval duration from 100 milliseconds to 20 milliseconds, so that the simulations run a little faster.
+ 
+We haven’t defined the function run_time_step() yet - let’s go ahead and implement an empty function so that we won’t get any javascript errors:
+
+function run_time_step() {
+}
+
+With that in place, safe the document and load it in the browser. You should see the following:
+
+
+
+See that little red square in the bottom left corner? That’s our patient 0, the first infected individual in the population.
+
+Now, because we haven’t implemented a function body for run_time_step() yet, nothing happens after this initialization. So let’s go ahead and implement the full SIR model logic.
+
+What we want to do at each time step is to go to each individual, check if it is infected, and then, if it is infected, expose all susceptible individuals who are in contact with that infected individual. We are going to assume that an individual is only in contact with its eight adjacent neighbors on the grid.  
+
+You may recall that in chapter 5, we have a short discussion about the correct way of updating cells on the grid in a simulation like this. We argued that we needed to go through the individuals, apply whatever rules we want to apply, and then update a temporary cell on the grid (or a cell on a temporary grid), rather than updating the actually cell on the grid. The reason why we did this was to simulate a situation where all grid cells would update simultaneously. Since we can’t really do things simultaneously in a computer (code is executed one statement after an other), we needed to resort to this trick.
+
+In this simulation, we will resort to the same trick. We’ll go through all the susceptible individuals that are exposed by an infected individual, and infect them with a certain probability; but we won’t infect the individuals (i.e. the grid cells) right away - rather, we’ll infect the same cell on a temporary grid, and then, once we’ve gone through all cells, we copy the contents of the temporary grid over to the real grid.
+
+Here’s how we will do that:
+
+function run_time_step() {
+    for (var i = 0; i < grid_length; i = i + 1) {
+        temp_grid[i] = [];
+        for (var ii = 0; ii < grid_length; ii = ii + 1) {
+            temp_grid[i][ii] = grid[i][ii];
+        }
+    }
+    for (i = 0; i < grid_length; i = i + 1) {
+        for (ii = 0; ii < grid_length; ii = ii + 1) {
+            if (grid[i][ii] == "I") {
+                expose_neighbors(i,ii);
+            }
+        }
+    }
+    for (i = 0; i < grid_length; i = i + 1) {
+        for (ii = 0; ii < grid_length; ii = ii + 1) {
+            grid[i][ii] = temp_grid[i][ii];
+        }
+    }
+}
+
+This looks intimidating, but is actually fairly straightforward. This function iterates over the two-dimensional grid (using a nested for loop) three times in a row. The first time, it simply sets the temp_grid array to be an exact copy of the current grid. The second time, it goes through all cells, and if the individual on the cell is infected, it calls the function expose_neighbors(i,ii), which we will implement below. The third time, we simply copy all the value from temp_grid back to grid.
+
+Let’s implement the function expose_neighbors(i,ii):
+
+function expose_neighbors(i,ii) {
+    for (var neighbor_i = i-1; neighbor_i <= i+1; neighbor_i = neighbor_i + 1) {
+        for (var neighbor_ii = ii-1; neighbor_ii <= ii+1; neighbor_ii = neighbor_ii + 1) {
+            if (neighbor_i == i && neighbor_ii == ii) {
+                continue;
+            }
+            try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+        }
+    }
+}
+
+function try_infection(i,ii) {
+    if (grid[i][ii] == "S") {
+        if (Math.random() < beta) {
+            temp_grid[i][ii] = "I";
+        }
+    }
+}
+
+The function expose_neighbors(i,ii) has two parameters: the coordinates  i and  ii on the grid. What we want to do is to expose all eight neighborhood cells of that one cell specified by the coordinates. Here are the coordinates of these eight cells:
+ 
+
+
+
+In order to get access to all these cells, we need to loop over the two-dimensional space that these cells occupy. In the function expose_neighbors(i,ii), we do that by using the coordinates i, and ii, like so:
+
+for (var neighbor_i = i-1; neighbor_i <= i+1; neighbor_i = neighbor_i + 1) {
+    for (var neighbor_ii = ii-1; neighbor_ii <= ii+1; neighbor_ii = neighbor_ii + 1) {
+        // do something with cell at coordinates neighbor_i, neighbor_ii
+    }
+}
+
+As you can see, we are using local variables named neighbor_i and neighbor_ii as placeholders for the variables i and ii. Why do we do that? Well, we the function has two arguments, i and ii, and as we’ve learned earlier in this book, arguments are local variables in the function scope. Therefore, i and ii are already taken as variable names, and we don’t want to override them - they represent the original coordinates of the infected cell. 
+
+This nested loop gets iterates over all nice cells above. The outer loop starts at i-1, and stops after i+1. The inner loop starts at ii-1, and stops after ii+1. You’ve probably realized immediately that there is a slight problem with this: By looping through all nice cells, we are also visiting the original cell at coordinates i, ii. We don’t want to expose the cell to itself, of course, so once we’re at that cell, we simply need to instruct our loop to move on immediately. The key expression here is the continue statement:
+
+if (neighbor_i == i && neighbor_ii == ii) {
+   continue;
+}
+try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+
+We know we have arrived at the focal cell when the value of neighbor_i is equal to i, and when the value of neighbor_ii is equal to ii. In this case, the loop will hit the continue statement, and immediately jump to the next iteration, without executing the code in the loop body. 
+
+For all other cells, we will call the function try_infection(i,ii). Notice that when the the function receives the coordinates int the form of the two parameters i and ii, those coordinates now represent a neighboring cell, and we have already taken into account the grid bounding issues by passing them through the function get_bounded_index(index) which we developed in chapter 5. In the function try_infection(i,ii),  we first check to make sure that the exposed individual is actually susceptible. If so, we infect it with probability beta.
+
+Now, with this code in place, let’s go ahead and reload the page. You should an outbreak starting from a single patient 0, expanding rapidly outward:
+
+
+
+After a while, your entire world should be infected, and the grid should be completely red. Because we haven’t built in recovery yet, infected individual continue to expose susceptible individuals indefinitely, and each susceptible individual will eventually become infected. This is why 100% of the population will end up being infected.
+
+This is of course a terrible outcome. Thankfully, it is rarely true, for two reasons. The good reason is that we have an immune system that in many cases eventually manages to get the infection under control and clear it. Because of immune memory, we can’t get infected anymore, at least for some time. The bad reason why people would eventually stop infecting others is that they could succumb to the disease. For example, influenza strains that circulate in birds (bird flu) have occasionally managed to jump the species barrier and infect a human. Unfortunately for the infected person, bird flu in humans is very deadly, and the virus often kills of its host before transmitting itself on to the next person.
+
+The standard SIR model assumes that all hosts recover and retain lifelong immunity. So let’s go ahead and implement that. This is actually very simple: first let’s just add a line in the run_time_step() function, right underneath expose_neighbors(i,ii):
+
+…
+expose_neighbors(i,ii)
+try_recovery(i,ii); 
+…
+
+and then implement the try_recovery(i,ii) function:
+
+function try_recovery(i,ii) {
+    if (grid[i][ii] == "I") {
+        if (Math.random() < gamma) {
+           temp_grid[i][ii] = "R";
+        }
+    }
+}
+
+As you can see, this function is pretty straightforward: it checks if the individual at coordinates i, ii is infected. If that’s the case, the individual recovers with probability gamma.
+
+Let’s go ahead and rerun the simulation. Keep in mind that recovered individuals are colored green:
+
+
+
+As you should be able to observe, the outbreak expands at the red / gray edges, where susceptible individuals are exposed to infected individuals. However, infected individuals in red quickly recover and turn green. At that stage, they can’t get reinfected, nor can they infect others. Eventually, the outbreak will come to a stop, and you will see something like this:
+
+
+
+As you can see, all infected individuals have recovered. However, there are still some susceptible individuals left. How is that possible?
+
+Before we introduced recovery, all individuals got infected. Because infected individuals never recovered, susceptible individuals that were exposed to infected individuals would eventually get infected. It may have taken a long time in some cases, but if would eventually happen. 
+
+Once we introduced recovery, however, the dynamics change. Now, infected individuals may recover before they infect neighboring cells. Overall, this might still be a rare event, depending on the values of gamma and beta. However, it may happen - and if it happens, other neighboring cells are also more likely to share the same fate. Imagine you are the neighbor of a individual that just recovered, and an individual that did not get infected because the first neighbor recovered quickly. Your own risk of getting infected is now much lower, because two of your own neighbors are not infected. This is why the remaining susceptible individuals are often clustered in small groups, as you can see in the figure above.
+
+Indeed, the idea that individuals can recover before they infected someone else can have profound consequences right at the beginning of an outbreak. If you are the 1,436th individual to become infected, the consequence of you recovering before passing on the infection are probably small. However, if you are the very first person with the infection (patient 0), the question of whether you will recover before infecting others is essential: it is the difference between a massive outbreak, and no outbreak at all.
+
+If you rerun your simulation multiple times, your simulation will sometimes end like this:
+
+
+
+The first individual recovered before passing on the infection, and no outbreak occurred. The epidemic hasn’t managed to take off. But you’ll also notice that in practically all cases where patient 0 does indeed infect other individuals, the epidemic will take off and infect almost the entire grid. Thus, with the current parameters for beta (the infection probability per contact and unit time) and gamma (the recovery probability per unit time), we find ourselves in an “either or” type of situation: either there is no epidemic, or the epidemic is all-consuming.
+
+Let’s go ahead an increase our recovery probability from 0.1 to 0.15, but setting gamma as follows:
+
+var gamma = 0.15;
+
+No go head and run a few simulations. You’ll find that the size of the epidemic can vary considerably. An outbreak can stop quickly, and be rather small:
+
+
+
+or it can go on for quite some time, but eventually still fizzle out:
+
+
+
+
+
+It’s a small world
+
+Let’s now focus on something that is a very active area in contemporary research: the role of host contact structure. The host contact structure is the answer to the question “Who is in contact with whom”, i.e. “who could pass the infection on to whom”? Think of the host contact structure as the traffic system on which a disease can spread. If you think about this analogy, it becomes obvious that the structure will affect the dynamics on disease spread. Indeed, if you are in the unfortunate situation of having to commute in a badly designed traffic system, you intuitively grasp the concept. 
+
+We have so far focused our exploration on epidemics that occur on a very special host contact structure: a regular gird. The regular grid is a good approximate structure for populations that don’t move around a lot, for example plants, or medieval human populations. Clearly, the way we implemented the contact structure is still highly stylized, but it captures the essential feature of spatial spread (again keeping in mind that a model should be as simple as possible but no simpler). On our grid, each individual is in contact with exactly eight other individuals, and these individuals are the spatial neighbors.
+
+We are now going to introduce a small change to our contact structure, but one that will have dramatic consequences. We are going to assume that 1% of exposed contacts - i.e. contacts between an infected individual and another individual - will not be with a spatial neighbor, but with a random individual in a grid. This simulates a situation where an individual briefly travels to another location on the grid, and exposes and individual there, rather than a local neighbor.
+
+In order to implement this change, find the following line of code:
+
+try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+
+and replace it with this:
+
+if (Math.random() < 0.01) { 
+    try_infection(get_bounded_index(get_random_int(0,grid_length-1)), 		        		get_bounded_index(get_random_int(0,grid_length-1)));
+    }
+    else {
+    	try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+    }
+}
+
+What we are doing here is running the original code in 99% of the time, but in 1% of the time, we expose a random individual, rather than the local neighbor. Notice that we use the same function and parameters to get random coordinates as we used to define patient 0 in the function init_grid().
+
+Run the simulation, and notice that the dynamics are now strikingly different. Before, we would get a local outbreak that would eventually fizzle out on its own. But now, we generally get very large epidemics, and they happen much faster than before:
+
+
+
+Notice how the epidemic starts in one location, but is quickly spreading in other locations as well, due to these rare jumps of infected individuals across the grid. Each of the small clusters of recovered and infected individuals that you can make out in the figure above was started by a “traveling” infected individual. The clusters are now growing in parallel, making the overall epidemic progress much faster than before, and usually leaving a pattern like this:
+
+
+
+This fascinating example is an example of a so-called small world phenomenon. To understand this phenomenon, let’s pick to random individuals, and ask ourselves how far they are apart, in terms of the number of contacts you would have to go through to get from one individual to the other. 
+
+This problem is much easier to visualize if we put individual on the circumference of a circle. Imagine that every individual is connected to its immediate two neighbors on either side (i.e. each individual has a total of four contacts). We could visualize this as follows:
+
+
+
+Let’s pick two nodes, and think about how long it would take, at minimum, to go from one node to the other. I’ve color-coded the nodes in red in the figure below:
+
+
+
+The shortest path between two nodes is the following, color-coded in red also:
+
+
+
+There are 22 other nodes we have to go through to get from one node to the other. 
+
+Now, let’s go ahead and reconnect a handful of connections at random. Just as in our grid example, imagine that occasionally, rather than being connected to local neighbors only, a node is connected to a random node anywhere on the ring. So let’s go ahead and randomly reconnect some of the links:
+
+
+
+
+We only reshuffled 5 links, out of 200. But if we now visualize the shortest path between our nodes, we can see a dramatic change:
+
+
+
+As you can see, there are now only 5 nodes to go through to get from one node to the other. Compared to the previous 22 nodes, that is a more then four-fold reduction!
+
+Now, before you accuse me of reconnecting the links so that it suits me making a great example: the small world phenomenon is a well-understood phenomenon, even though its broad applicability was only discovered in 1998. In fact, it is now well understood that reconnecting 1% of the links can reduce the average path length more than ten-fold, dependent on the settings.
+
+For our discussion of infectious disease dynamics, this insight has enormous implications, as our last simulation has demonstrated. In a small world - i.e. a world that is mostly dominated by local interactions, but that also has some fraction of “global” interactions - diseases can spread much more rapidly. In addition, as we have seen in our example, diseases are also more likely to cause large outbreaks, because they can start new local outbreaks even when earlier local outbreaks are about to fizzle out.
+
+But rather than taking my word for it, let’s use our coding skills to investigate if this is really true. It is sometimes easy to convince yourself of something based on a few visual examples. It’s always better to verify your intuition with hard data. Let’s go ahead and do just that.
+
+The first thing we’ll do in our simulation is to turn off the visualization, since we don’t need the visual clues anymore. Instead, we want to run multiple simulations, and count, in each simulation, how many individuals got infected. In order to do that, let’s replace this code:
+
+draw_population(grid,grid_length);
+
+function simulate_and_visualize() {
+    run_time_step();
+    update_population(grid,grid_length);
+}
+
+setInterval(simulate_and_visualize, 20);
+
+with this:
+
+function run_simulation() {
+    init_grid();
+    while (get_number_of_infected() > 0) {
+        run_time_step();
+    }
+}
+
+for (var i = 0; i < number_of_simulations; i++) {
+    run_simulation();
+    data.push(get_number_of_recovered());
+}
+
+As you read through the new code, you’ll find that it makes use of a few variables and functions we haven’t defined yet. We’ll get to that in a minute, but let’s first go through the code and try to understand the logic.
+
+The function run_simulation() simply (re)sets the grid, then calls the function run_time_step() for as long as there are infectious individuals around. Then, we set up a loop that calls the run_simulation() function a certain number of times (defined by the variable number_of_simulations), and stores the number of recovered individuals in a data array. The number of recovered individuals corresponds to the size of the outbreak, since each recovered individual was infected at one point.
+
+You may have noticed something curious. Take a look at the first line of the new for loop:
+
+for (var i = 0; i < number_of_simulations; i++) {
+
+Notice something unusual?
+
+Until now, we would have written this line as follows:
+
+for (var i = 0; i < number_of_simulations; i = i + 1) {
+
+Here, I’ve introduced a common shorthand notation that is available in javascript (and many other languages). Instead of writing
+
+something = something + 1
+
+if you want to increase the value of something by one, you can use the shorthand notation and write 
+
+something++
+
+There isn’t any particular advantage to this shorthand notation - it’s simply shorter. However, it’s very commonly used, and I wanted to make sure you know about it.
+
+There is also the equivalent of decreasing a value by one, so that instead of writing
+
+something = something - 1
+
+you can write
+
+something--
+
+There are a few other shorthand notations in the same spirit. If you want to modify a variable by adding to, subtracting from it, multiplying or diving it, you can use the following shorthand notations:
+
+
+
+With that out of the way, let’s modify the code to make sure we have everything set up. First, we are calling init_grid() for every single generation run in the run_simulation() function - so be sure to remove the one  init_grid() call that we used right after we defined the function (it’s wouldn’t be a drama if you we’d forget that - it would simply be an unnecessary function call in the beginning).
+
+Next, we need to define the methods get_number_of_infected() and get_number_of_recovered(). Here’s how we can do that:
+
+function get_number_of_infected() {
+    return get_number_in_state("I");
+}
+
+function get_number_of_recovered() {
+    return get_number_in_state("R");
+}
+
+function get_number_in_state(state) {
+    var number_in_state = 0;
+    for (var i = 0; i < grid_length; i++) {
+        for (var ii = 0; ii < grid_length; ii++) {
+            if (grid[i][ii] == state) {
+                number_in_state++;
+            }
+        }
+    }
+    return number_in_state;
+}
+
+What I’m doing here is first define a generic version of the function called get_number_in_state(state), where I’m going through all the cells and count the number of cells that are in a given state, passed to the function as an argument. That would in principle be sufficient, and I could just call 
+
+get_number_in_state("I")
+
+if I wanted to get the number of individuals that are in infected. However, I'm adding the two convenience functions get_number_of_infected() and get_number_of_recovered() just to make the code a little cleaner and more readable. These functions are called convenience functions because they don't do any heavy lifting by themselves, they just call the appropriate functions for us.
+
+We're almost done - all that is left to do is to define two new variables, number_of_simulations and data. Let's add them to our list of variables at the beginning of the code:
+
+var data = [];
+var number_of_simulations = 100;
+
+We're all set! Now that we're storing the size of each epidemic (measured in number of individuals infected) in the data array, we can start to look at the data. The first obvious thing to do is to look at the epidemic sizes that we collect. So at the end of our code, let's simply add
+
+console.log(data);
+
+Before you run it, one more thing - remember we want to compare the full spatial grid with the small-world grid that has occasional random contacts? Recall that the random contacts are introduced in the function expose_neighbors(i,ii), like so:
+
+if (Math.random() < 0.01) {
+    try_infection(get_bounded_index(get_random_int(0,grid_length-1)), 				                          	get_bounded_index(get_random_int(0,grid_length-1)));
+}
+else {
+    try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+}
+
+If you want no random contacts, that probability would have to be 0. Let's do ourselves a favor and capture this probability in a variable, rather than having this value hardcoded in this function. So go ahead and replace 
+
+if (Math.random() < 0.01)
+
+with 
+
+if (Math.random() < rewiring_probability)
+
+And, of course, be sure to define the variable rewiring_probability at the top of our code where we set up all the other variables:
+
+var rewiring_probability = 0;
+
+Starting with a fully local grid (i.e. no random contacts), my output of epidemic sizes for 100 simulations is as follows:
+
+
+
+As you can see, many epidemics don't even get started - the outbreak is limited to one infected individual, patient 0. The others fizzle out very quickly, some infected hundreds of individuals, and a few even over 1,000 individuals (the maximum is 3,733 individuals, which is about 37% of the population).
+
+Now let's change a few contacts to be random, rather than local, as we have done before. Go ahead and set the rewiring probability to 1%
+
+var rewiring_probability = 0;
+
+and run the code again. This time, my output is the following:
+
+
+
+We can instantly see that while some epidemics still don't get started, those that do end up being very large, very often more than 6,000 individuals. The largest epidemic in this run infected 7,157 individuals - more than 71% of the population.
+
+The extreme epidemic size seems to be about twice as large - but what out the average? Let's go ahead and find out. We can define a function that calculates the average of the values in the data like so:
+
+function calculate_average_size(data) {
+    var sum = 0;
+    for (var i = 0; i < data.length; i++) {
+        sum += data[i];
+    }
+    return sum / data.length;
+}
+
+(not the use of += ) and then output the return value of that function, rather than outputting the individual values:
+
+//console.log(data);
+console.log(calculate_average_size(data));
+
+Before running this code, let's be sure to first reset the rewiring probability to 0 in order to run completely local simulations with no random contacts. After doing that, I get the following values - recall that these are averages from 100 independent simulations -  when I run the code a few times:
+
+364.07 
+523.61 
+417.86
+414.74 
+382.64 
+
+Thus, the average epidemic size seems to be around 400 individuals, or about 4-5% of the population. 
+
+When I set the rewiring probability to 0.01 in order to run small world simulations with a few random contacts, I get the following values:
+
+3332.8
+2987.95 
+2511.06 
+2790.62 
+3418 
+
+which corresponds to about 25-30% of the population. Thus, our visual intuition is confirmed - turning just a few local contacts into random contacts has a dramatic effect, resulting in outbreaks that are on average about 6 times larger.
+
+We could go one step further and ask, what is the average outbreak size, given an outbreak occurs in the firs place? Or in other words, if we ignore all those cases where patient 0 does not infect at least one other individual, what is the average epidemics size? In order to answer this question, we need to adapt the function calculate_average_size(data) slightly:
+
+console.log(calculate_average_size(data, 2));
+
+function calculate_average_size(data, min_size) {
+    var count = 0;
+    var sum = 0;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i] >= min_size) {
+            sum += data[i];
+            count++;
+        }
+    }
+    return sum / count;
+}
+
+Here, we've added a second argument to the function, min_size, which defines the minimum epidemic size required to be included in the calculation. Thus, in order to include only epidemics that are larger than just one individual, the parameter to be passed as min_size needs to be 2. Also note that we need to define a new local variable (count) that keeps track of the number of data points that fulfill our minimum sizes requirement.
+
+Resetting rewiring_probability to 0 again, the new code yields the following values (I'm showing only two significant places):
+
+583.29
+543.41
+526.24
+269.40
+510.23
+
+whereas simulations with a rewiring probability of 0.01 yield
+
+3500.33
+3941.92
+3790.97
+4284.65
+3891.30
+
+In short, the picture remains the same. Even if we would require at least 10 individuals to be infected in order to be included in the calculations, we would get an average of about 600 individual infected on the fully regular grid, and about 5,000 individuals infected on the small world grid.
+
+In short, a few non-local interactions can have quite dramatic effects. This is the main reason why travel, especially long-distance travel - has made our world so much more connected, and why infectious diseases in the most remote places in the world are a threat to public health anywhere in the world.
+
+And that's where we wrap it up. One could write an entire volumes of books on this fascinating topic, and we have once again barely scratched the surface. However, I hope you've learned a few key insights about how we can create virtual epidemics in a computer. You can imagine that we could use such computational simulations to investigate how certain interventions (like vaccination programs, or quarantines) would affect the dynamics of epidemics. Indeed, modeling of infectious disease dynamics has become a major field of interest. Obvisouly, one cannot run experiments about epidemics on human populations, and real world epidemics can't be replayed again and again (thankfully!). Recreating epidemics with computer models is a great way to run millions of epidemics under varying circumstances, and the insight gained from these models helps to inform real-world pubic health.
+
+Let’s briefly summarize what we've learned in this chapter.
+
+	•	Infectious diseases can be modeled with SIR models, where individuals are either susceptible, infected, or have recovered.
+	•	The dynamics of epidemics are shaped by how well the infection can be transmitted, and by how fast infected individuals recover.
+	•	Because of the stochastic nature of transmission, not every patient 0 will trigger an outbreak. An epidemics may fizzle out on its own in the early stages.
+	•	Even when an epidemic takes off, not everyone will get infected: the epidemic will eventually run out of susceptible individuals to infect.
+	•	Small changes in the host contact structure can have dramatic effects on epidemics. Compared to a host structure with only local contacts, a small world host structure will generate dramatically larger epidemics
+	•	We’ve also introduced a few widely used shortcuts for arithmetic manipulations in javascript.
+
+Despite the deep fascination of parasites, and the infectious disease they cause, I would like to finish the book on a more cheery note. In the next and final chapter, we'll dig into game theory, and use our coding skills to show how cooperation among animals (including humans!) can evolve.
+

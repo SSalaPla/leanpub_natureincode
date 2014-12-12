@@ -766,7 +766,7 @@ Let’s briefly wrap up what we learned in this chapter.
 * Directional selection will drive alleles to fixation.
 * Balancing selection will maintain genetic diversity in a population.
 * Disruptive selection will drive alleles to fixation, but which ones depends on initial conditions.
-* Negative frequency dependent selection (coevolution) leads to cyclical evolutionary dynamics (red queen dynamics).
+* Negative frequency-dependent selection (coevolution) leads to cyclical evolutionary dynamics (red queen dynamics).
 * Red queen dynamics can be strongly affected by genetic drift.
 * We’ve also introduced the ternary operator in JavaScript.
 
