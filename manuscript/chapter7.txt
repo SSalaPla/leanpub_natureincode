@@ -25,7 +25,7 @@ The most common way to model an infectious disease outbreak in a population is t
 2.	Infected: This means that the individual is currently infected, and can infect other individuals who are susceptible.
 3.	Recovered: This means that the individual has recovered from the infection. The individual can not infect others anymore, and can’t be infected either because it developed immunity.
 
-Because of the first letters of the three states (susceptible, infected, and recovered), a model implementing these states is called an SIR model. The SIR model captures some key aspects about many infectious diseases, but simplifies the reality down to three states. This follows the same idea that we have encountered earlier in the book: to make a model as simple as possible, but not simpler. 
+Because of the first letters of the three states (____s____usceptible, ____i____nfected, and ____r____ecovered), a model implementing these states is called an SIR model. The SIR model captures some key aspects about many infectious diseases, but simplifies the reality down to three states. This follows the same idea that we have encountered earlier in the book: to make a model as simple as possible, but not simpler. 
 
 We are going to assume that initially, everybody is susceptible to an infection. In reality, that is not always true: Some people may have some background immunity because they were infected by a similar virus earlier in their life. Some people may have some genetic mutations that make them resistant to some infections. Some people may be vaccinated. But for a completely new disease that has never circulated in humans, the assumptions is probably quite close to the truth.
 
