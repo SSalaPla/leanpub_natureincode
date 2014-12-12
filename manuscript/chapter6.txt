@@ -416,84 +416,91 @@ There’s one more thing about balancing selection that I want to mention. It tu
 p* = \frac{h-1}{2h-1}
 {/$$}
 
-In our code above, we used `h = -0.5`. And as you can see, {$$}\frac{-0.5-1}{2*-0.5-1} = 0.75{/$$}. It’s also interesting to note that the equilibrium value does not depend on the selection coefficient, *s*. A higher selection coefficient will lead to faster dynamics, i.e. the population will reach the equilibrium value of *p* faster - but it will still be the same value. You can experiment with the value of `s` in your code to verify this.
+In our code above, we used `h = -0.5`. And if you plug *h = -0.5* into the equation above, you'll get {$$}p* = 0.75{/$$}. It’s also interesting to note that the equilibrium value does not depend on the selection coefficient, *s*. A higher selection coefficient will lead to faster dynamics, i.e. the population will reach the equilibrium value of *p* faster - but it will still be the same value. You can experiment with the value of `s` in your code to verify this.
 
 
-Disruptive Selection
+##Disruptive Selection
 
-Last, but certainly not least, let’s take a look at disruptive selection. Disruptive selection occurs when the fitness value of the heterozygote genotype A1A2 is lower than that of both homozygotes (resulting in the fitness valley in the figure above). Disruptive selection occurs when the value of the heterozygote effect, h, is larger than 1.
+Last, but certainly not least, let’s take a look at disruptive selection. Disruptive selection occurs when the fitness value of the heterozygote genotype A1A2 is lower than that of both homozygotes (resulting in the fitness valley in the figure above). Disruptive selection occurs when the value of the heterozygote effect, *h*, is larger than 1.
 
-As before, let’s go ahead and plot the value Δp as a function of p, but this time with the values s=0.1 and h=1.5. This gives us the following plot:
-
-
-
-This plot looks rather similar to the plot that we saw in the case of balancing selection. For most of p, Δp is positive, but sometimes, it is negative. The only difference here is that the negative values of Δp are found of the left side of the graph, where p is small.
-
-Let’s follow our method again and start with a low value of p, and see where this takes us. With a low value of p, Δp is negative, which means that p will be even lower in the next generation. Because Δp will again be negative (and remain there until p = 0), p will go down to 0, and the A1 allele will be lost.
-
-No let’s start with a higher value, for example p = 0.5. At that value, Δp is positive, which means that p will be higher in the next generation. Because Δp will again be positive (and remain there until p = 1), p will go all the way up to 1, and the A1 allele will be fixed.
-
-This is another astounding finding. It turns out that in the case of disruptive selection, evolutionary dynamics can go either way - the A1 allele can either go to fixation, or it can be lost altogether. It all depends on the initial conditions - i.e. the initial value of p. This is quite remarkable, and somehow violates our intuition. Shouldn’t a deterministic system always go to the same equilibrium value?
-
-As it turns out, no. Some system have multiple equilibria. The system of disruptive selection, it turns out, has three such equilibria. Why three? Let’s go ahead an run a few simulations, plotting the evolutionary dynamics of disruptive selection. We can reuse the code from above, and simply set the heterozygous effect, h, to 1.5. Here’s what we’ll find:
+As before, let’s go ahead and plot the value {$$}\Delta p{/$$} as a function of *p*, but this time with the values `s = 0.1` and `h = 1.5`. This gives us the following plot:
 
 
 
-As predicted, depending on the initial conditions, p will either go to 0 or to 1. These are two of there three equilibria. However, there seems to be another equilibria at p = 0.25. What’s up with that?
+This plot looks rather similar to the plot that we saw in the case of balancing selection above. For most of *p*, {$$}\Delta p{/$$} is positive, but sometimes, it is negative. The only difference here is that the negative values of {$$}\Delta p{/$$} are found of the left side of the graph, where *p* is small.
 
-If we revisit the plot above, we can see that when p=0.25, Δp is 0. That is why p = 0.25 is an equilibrium; the value of p won’t change. However, there is something special about this equilibrium. Let’s say your population is at p=0.25. Now assume that for some reason, the value of p is pushed slightly upward. Now, Δp > 0, and the allele will go to fixation. On the other hand, if you assume that the value of p is pushed slight downward, to a value that is less than 0.25, you’ll find that Δp < 0, and the allele will start its downward path until it is lost from the population. In other words, p=0.25 is not a stable equilibrium. Quite the opposite - it is a so-called unstable equilibrium. An unstable equilibrium is an equilibrium where, if even just slightly pushed away from the equilibrium value, the system will go to another equilibrium value (0 or 1 in this case).
+Let’s follow our method again and start with a low value of *p*, and see where this takes us. With a low value of *p*, {$$}\Delta p{/$$} is negative, which means that *p* will be even lower in the next generation. Because {$$}\Delta p{/$$} will again be negative (and remain there until *p = 0*), *p* will go down to 0, and the A1 allele will be lost.
 
-Thus, the unstable equilibrium is not important with respect to the population remaining there - it won’t. Even if it happens to be there for a moment, the slightest deviation from that value will make the system go to one of the other two states. We can demonstrate this using our code, simply by changing this line in the while loop:
+Now let’s start with a higher value for *p*, for example *p = 0.5*. At that value, {$$}\Delta p{/$$} is positive, which means that *p* will be higher in the next generation. Because {$$}\Delta p{/$$} will again be positive (and remain there until *p = 1*), *p* will go all the way up to 1, and the A1 allele will be fixed.
 
+This is another astounding finding. It turns out that in the case of disruptive selection, evolutionary dynamics can go either way - the A1 allele can either go to fixation, or it can be lost altogether! It all depends on the initial conditions - i.e. the initial value of *p*. This is quite remarkable, and somehow violates our intuition. Shouldn’t a deterministic system always go to the same equilibrium value?
+
+As it turns out, no. Some system have multiple equilibria. The system of disruptive selection, it turns out, has three such equilibria. Why three? Let’s go ahead an run a few simulations, plotting the evolutionary dynamics of disruptive selection. We can reuse the code from above, and simply set the heterozygous effect, `h`, to `1.5`. Here’s what we’ll find:
+
+
+
+As predicted, depending on the initial conditions, *p* will either go to 0 or to 1. These are two of there three equilibria. However, there seems to be another equilibria at *p = 0.25*. What’s up with that?
+
+If we revisit the plot above, we can see that when *p = 0.25*, {$$}\Delta p{/$$} is 0. That is why *p = 0.25* is an equilibrium; the value of *p* won’t change. However, there is something special about this equilibrium. Let’s say your population is exactly at *p = 0.25*. Now assume that for some reason, the value of *p* is pushed very slightly upward. Now, {$$}\Delta p > 0{/$$}, and the allele will go to fixation. On the other hand, if you assume that the value of *p* is pushed very slightly downward, to a value that is less than 0.25, you’ll find that {$$}\Delta p < 0{/$$}, and the allele will start its downward path until it is lost from the population. In other words, *p = 0.25* is not a stable equilibrium. Quite the opposite - it is a so-called *unstable* equilibrium. An unstable equilibrium is an equilibrium where, if even just slightly pushed away from the equilibrium value, the system will go to another equilibrium value (0 or 1 in this case).
+
+Thus, the unstable equilibrium is not important with respect to the population remaining there - it won’t. Even if it happens to be there for a moment, the slightest deviation from that value will make the system go to one of the other two states. We can demonstrate this using our code, simply by changing this line in the `while` loop:
+
+~~~~~~~~
 initial_p = initial_p + 0.01;
+~~~~~~~~
 
 to this
 
+~~~~~~~~
 initial_p = initial_p + 0.01; + (Math.random() * 0.000001);
+~~~~~~~~
 
-What we are doing here is add a tiny value (between 0 and a millionth) to the initial value of p. If you now rerun the code, you will see the following:
+What we are doing here is to add a tiny value (between 0 and a millionth) to the initial value of `p`. If you now rerun the code, you will see the following:
 
 
 
-As you can see, the purple line will not remain at its initial value anymore (something just slightly larger than 0.25). It will, as predicted, increase in frequency and go to fixation. Initially, the values of Δp are very, very small in the vicinity of p = 0.25, which is why it takes quite some time for line to noticeably go on its upward trajectory.
+As you can see, the purple line will not remain at its initial value anymore (something just slightly larger than 0.25). It will, as predicted, increase in frequency and go to fixation. Initially, the values of {$$}\Delta p{/$$} are very, very small in the vicinity of *p = 0.25*, which is why it takes quite some time for the line to noticeably go on its upward trajectory.
 
 It is nevertheless important to know this equilibrium value, because of its importance in predicting the dynamics of the system. Once again, it turns out that it’s very easy to calculate this value. Indeed, it is the exact same value as in the case of balancing selection:
 
-p* = (h-1) / (2h-1)
+{$$}
+p* = \frac{h-1}{2h-1}
+{/$$}
 
-The crucial difference is that in the case of balancing selection, the system will converge to p*, while in the case of disruptive selection, the system will go away from p*, to either 0 or 1. And once again, the value of the selection coefficient, s, has no effect on this value. It will simply determine at what speed the system will find its stable equilibrium.
+The crucial difference is that in the case of balancing selection, the system will converge to {$$}p*{\$$}, while in the case of disruptive selection, the system will go away from {$$}p*{\$$}, to either 0 or 1. And once again, the value of the selection coefficient, *s*, has no effect on this value. It will simply determine at what speed the system will find its stable equilibrium.
 
 To sum up - evolution by natural selection, even in a simple model world of one gene with two alleles, can result in very different dynamics, depending on the fitness landscape. In the case of directional selection, the same allele will always go to fixation. In the case of balancing selection, both alleles will always remain in the population at an equilibrium. In the case of disruptive selection, one of the alleles will go to fixation, but which one will depend on the initial conditions.
 
 
-Coevolution
+##Coevolution
 
 You now understand how evolution by natural selection works. Genotypes with higher fitness have a higher probability of surviving and reproducing, and thus a higher chance of passing on their alleles to the next generation. Over the generations, those alleles and genotypes become more frequent.
 
-We’ve haven’t talked much about fitness until now. We simply mentioned earlier is that fitness is the ability to survive and reproduce. But why are certain genotypes better able to survive and reproduce? Let’s think about some examples. An animal may survive better because it is harder to spot by a predator. Another animal may survive better because it has better senses to locate prey. Another animal may survive better because it can deal with harsher climates. What all of these examples have in common is that the animals are simply better adapted to their environment. It is the environment that is doing the selecting - hence the term natural selection (as opposed to artificial selection in animal and plant breeding, for example).
+We’ve haven’t talked much about fitness until now. We simply mentioned earlier that fitness is the ability to survive and reproduce. But why are certain genotypes better able to survive and reproduce? Let’s think about some examples. An animal may survive better because it is harder to be spotted by a predator. Another animal may survive better because it has better senses to locate its prey. Another animal may survive better because it can deal with harsher climates. What all of these examples have in common is that the animals are simply better adapted to their current environment. It is the natural environment that is doing the selecting - hence the term natural selection (as opposed to artificial selection in animal and plant breeding, for example).
 
-We have seen above that interesting dynamics can result from this simple logic. But things get even more interesting when the environment is not just the abiotic (non-living) environment (such as the climate), but rather the biotic environment - in particular when the environment consists of other species who are subject to natural selection too. When the fitness of one species depends on the fitness of another species, co-evolution is often a direct consequence.
+We have seen above that interesting dynamics can result from this simple logic. But things get even more interesting when the environment is not just the abiotic (non-living) environment (such as the climate), but rather the biotic environment - in particular when the environment consists of other species who are subject to natural selection themselves. When the fitness of one species depends on the fitness of another species, co-evolution is often a direct consequence.
 
-A good example of co-evolution is the interaction between hosts and parasites. A parasite has a high fitness if it can infect a host, evade the host’s immune responses (i.e. survive), and create many offspring parasites. The problem is that the host’s fitness will be reduced by the success of the parasite: many parasitic infections make a host sick, reducing its ability to survive and reproduce. Thus, hosts that can avoid or kill off parasites without getting sick have a higher fitness than those who can’t. In other words, natural selection will favor those hosts that can avoid getting infected. In turn, the parasites that can’t infect a host will have a very low fitness, and natural selection will favor other parasites, the ones that find new ways to infect the hosts. Thus, an endless coevolutionary arms race begins, where the host tries to build defense systems against parasite infection, and the parasites try to find ways around the defense systems. Both species are playing catch up all the time, which can lead to very interesting evolutionary dynamics.
+A good example of co-evolution is the interaction between hosts and parasites. A parasite has a high fitness if it can infect a host, evade the host’s immune responses (i.e. survive), and create many offspring parasites. The problem is that the host’s fitness will be reduced by the success of the parasite: many parasitic infections make a host sick, reducing the host's ability to survive and reproduce. Thus, hosts that can avoid or kill off parasites without getting sick have a higher fitness than those who can’t. In other words, natural selection will favor those hosts that can avoid getting infected. In turn, the parasites that can’t infect a host will have a very low fitness, and natural selection will favor those parasites that find new ways to infect the hosts. Thus, an endless coevolutionary arms race begins, where the host tries to build defense systems against parasite infection, and the parasites try to find ways around the defense systems. Both species are playing catch up all the time, which can lead to very interesting evolutionary dynamics.
 
-In this section, we will build a simple coevolutionary arms race between a host and a parasite species. We will do this by implementing a simple conceptual model of genetic interactions between hosts and parasites. We are going to assume that the host has one gene with two alleles (A1 and A2) that represent a simple immune system. Equally, we are going to assume that the parasite has a gene with two alleles, A1 and A2. To keep things simple, we will assume haploid hosts and parasites - that is, each hosts and parasites have only one allele, not two. Thus, there are only two possible genotypes, A1 and A2, and we can use the term allele and genotype interchangeably.
+In this section, we will build a simple coevolutionary arms race between a host and a parasite species. We will do this by implementing a simple conceptual model of genetic interactions between hosts and parasites. We are going to assume that the host has one gene with two alleles (A1 and A2) that represent a simple immune system. Equally, we are going to assume that the parasite has a gene with two alleles, A1 and A2. To keep things simple, we will assume haploid hosts and parasites - that is, both hosts and parasites have only one allele, not two. Thus, there are only two possible genotypes, A1 and A2, and we can use the term allele and genotype interchangeably.
 
-You can think of the genetic host parasite interaction system as a key lock mechanism: in order to get into the host, the parasite allele (they key) needs to match the host’s allele (the lock).
+You can think of the genetic host-parasite interaction system as a key-lock mechanism: in order to get into the host, the parasite allele (the key) needs to match the host’s allele (the lock).
 
-In reality, the genetics of parasites and hosts are much more complicated, but this simple system captures a key idea. That key idea is negative frequency-dependent selection. This sounds like a mouthful, but is actually rather easy to grasp. Frequency-dependent selection simply means that an individual’s fitness value does not only depend on its genotype, but also on the frequency of its genotypes in a population. This can work in two ways:
+In reality, the genetics of parasites and hosts are much more complicated, but this simple system captures a key idea. That key idea is *negative frequency-dependent selection*. This is quite a mouthful, but it is actually a rather easy idea to grasp. Frequency-dependent selection simply means that an individual’s fitness value does not only depend on its genotype, but also on the *frequency* of its genotypes in a population. This can work in two ways:
 
-1. A genotype could be more fit when it is more common (this is called positive frequency-dependent selection).
+1. A genotype could be more fit when it is more common in the population (this is called *positive* frequency-dependent selection).
 
-2. A genotype could be less fit when it is more common (this is called negative frequency-dependent selection).
+2. A genotype could be less fit when it is more common (this is called *negative* frequency-dependent selection).
 
-Negative frequency dependent selection is much more common in nature than positive frequency dependent selection. Almost all antagonistic species interactions such as host-parasite or predator-pray interactions result in negative frequency-dependent selection. The key-lock model above is a great example. Imagine that almost every host has the lock A1. Because only parasites with the key A1 can infect those hosts, there is a huge selective benefits for A1 parasites, and they will increase rapidly in frequency. However, that means that there are increasingly fewer parasites with the A2 keys. This in turn means that the hosts with the A2 locks are becoming less infected. In this case, the A2 host genotype benefited from being rare, because the parasite population adapted to attacked the frequent A1 host genotype.
+Negative frequency-dependent selection is much more common in nature than positive frequency-dependent selection. Almost all antagonistic species interactions such as host-parasite or predator-pray interactions result in negative frequency-dependent selection. The key-lock model above is a great example. Imagine that almost every host has the lock A1. Because only parasites with the key A1 can infect those hosts, there is a huge selective benefits for A1 parasites, and they will increase rapidly in frequency. However, that means that there are increasingly fewer parasites with the (non-matching) A2 keys. This in turn means that the hosts with the A2 locks are becoming less infected. In this case, the A2 host genotype benefited from being rare, because the parasite population adapted to attacked the very frequent A1 host genotype.
 
-However, this blissful safety that the A2 hosts enjoy is only of limited duration. Because A2 hosts get less often infected, they are at a selective advantage, and will thus increase in frequency. As they increase in frequency, the parasite population will catch up on them, driven by natural selection. As you can guess, this leads to a never ending cycling of genotypes, where the hosts try to escape the parasites (genetically speaking), and the parasites try to catch up with the hosts. This type of dynamic is often called “Red Queen” dynamic, inspired by the fictitious character of the Red Queen in Lewis Carroll's famous book ‘Through the Looking-Glass’, who at on point in the story explains: “Now, here, you see, it takes all the running you can do, to keep in the same place!”.
+However, this blissful safety that the A2 hosts enjoy is only of limited duration. Because A2 hosts get less often infected, they are at a selective advantage, and will thus increase in frequency. As they increase in frequency, the parasite population will catch up on them, driven by natural selection. As you can guess, this leads to a never ending cycling of genotypes, where the hosts try to escape the parasites (genetically speaking), and the parasites try to catch up with the hosts. This type of dynamic is often called “Red Queen” dynamic, inspired by the fictitious character of the Red Queen in Lewis Carroll's famous book ‘Through the Looking-Glass’, who at one point in the story explains: “Now, here, you see, it takes all the running you can do, to keep in the same place!”.
 
 Let’s go ahead and implement this simple host-parasite model, and see if we really get those cyclical dynamics!
 
 The first thing we’re going to do is set up a few key variables:
 
+~~~~~~~~
 var data=[];
 var generations = 400;
 
@@ -502,20 +509,22 @@ var parasite_frequencies = [0,0];
 
 var sh = 0.2;
 var sp = 0.5;
+~~~~~~~~
 
-The data array, as always, will store the data that we want to plot, i.e. the host and parasite genotype frequencies. The generations variable defines the duration of the simulation, expressed as the number of generations. The two arrays host_frequencies and parasite_frequencies will keep track of the frequencies of the two genotypes in each species throughout the simulation. We initialize the values at 0, but we’ll change that in a minute. Note that both arrays have two elements, since there are only two possible genotypes in each of the haploid species (A1 and A2). 
+The `data` array, as always, will store the data that we want to plot, i.e. the host and parasite genotype frequencies. The `generations` variable defines the duration of the simulation, expressed as the number of generations. The two arrays `host_frequencies` and `parasite_frequencies` will keep track of the frequencies of the two genotypes in each species throughout the simulation. We initialize the values at `0`, but we’ll change that in a minute. Note that both arrays have two elements, since there are only two possible genotypes in each of the haploid species (A1 and A2). 
 
-Finally, the last two variables, sh and sp, define the fitness reduction (selection coefficient s) if the host gets infected by a a parasite, or if the parasite cannot infect a host, respectively. 
+Finally, the last two variables, `sh` and `sp`, define the fitness reduction (selection coefficient *s*) if the host gets infected by a a parasite, or if the parasite cannot infect a host, respectively. 
 
 There are four combinations of possible interactions between the two host and parasite genotypes, with the following outcomes:
 
 
 
 
-We will implement this fitness model in a minute. The important thing to note is that if the genotypes don’t match, the parasite won’t be able to infect the host. That’s great for the host, who will have the maximal fitness value 1. It’s bad for the parasite though, as parasites generally need a host to reproduce. The parasite’s fitness value is reduced by the parasite-specific selection coefficient sp, to 1-sp. On the other hand, if the genotypes match, the parasite will be able to infect the host. In this case, the parasite’s fitness is maximal (i.e. 1), and the host’s fitness is reduced by the host-specific selection coefficient sh, to 1-sh, due to the infection.
+We will implement this fitness model in a minute. The important thing to note is that if the genotypes don’t match, the parasite won’t be able to infect the host. That’s great for the host, who will have the maximal fitness value `1`. It’s bad for the parasite though, as parasites generally need a host to reproduce. The parasite’s fitness value is reduced by the parasite-specific selection coefficient `sp`, to `1-sp`. On the other hand, if the genotypes do match, the parasite will be able to infect the host. In this case, the parasite’s fitness is maximal (i.e. `1`), and the host’s fitness is reduced by the host-specific selection coefficient `sh`, to `1-sh`, due to the infection.
 
 To start the simulation, let’s initiate the genotype frequencies and push to the data array accordingly:
 
+~~~~~~~~
 function initialize_frequencies() {
     host_frequencies[0] = Math.random();
     data.push([host_frequencies[0]]);
@@ -528,34 +537,44 @@ function initialize_frequencies() {
 }
 
 initialize_frequencies();
+~~~~~~~~
 
-The first line in this method sets the first element of the host_frequencies array (which holds the frequency of host genotype A1) to a random number between 0 and 1. The second line adds an array to the the data array, initialized with a single value - that of the host genotype A1 frequency which we have just set. 
+The first line in this method sets the first element of the `host_frequencies` array (which holds the frequency of host genotype A1) to a random number between 0 and 1. The second line adds an array to the the `data` array, initialized with a single value - that of the host genotype A1 frequency which we have just set. 
 
-Keep in mind that our data array will end up being a two-dimensional array, which holds the the four arrays storing the four genotype frequencies over the generations. Because the data array is initially empty, the line 
+Keep in mind that our `data` array will end up being a two-dimensional array, which holds the the four arrays storing the four genotype frequencies over the generations. Because the data array is initially empty, the line 
 
+~~~~~~~~
 data.push([]);
+~~~~~~~~
 
-would simply add an empty array [] to the array, making it an empty two-dimensional array. Instead of pushing an empty array, we can push an array that has values in it already. For example, we could write
+would simply add an empty array `[]` to the array, making it an empty two-dimensional array. Instead of pushing an empty array, we can push an array that has values in it already. For example, we could write
 
+~~~~~~~~
 data.push([1,4,7]);
+~~~~~~~~
 
-In this case, we would now have a two-dimensional array where the first element of data (i.e. data[0]), would contain the array [1,4,7]. Our actual code reads
+In this case, we would now have a two-dimensional array where the first element of `data` (i.e. `data[0]`), would contain the array `[1,4,7]`. Our actual code reads
 
+~~~~~~~~
 data.push([host_frequencies[0]]);
+~~~~~~~~
 
-which means that the first element in data is now an array with one value, namely the host genotype A1 frequency, host_frequencies[0].
+which means that the first element in data is now an array with one value, namely the host genotype A1 frequency, `host_frequencies[0]`.
 
 The next two lines are similar:
 
+~~~~~~~~
 host_frequencies[1] = 1 - host_frequencies[0];
 data.push([host_frequencies[1]]);
+~~~~~~~~
 
-In the first line, we simply set the frequency of host genotype A2, which is 1 minus the frequency of host genotype A1 (as the must both add up to 1). The second line pushes another, new array into data, this time with the initial frequency of the host genotype A2.
+In the first line, we simply set the frequency of host genotype A2, which is 1 minus the frequency of host genotype A1 (since they must add up to 1). The second line pushes another, new array into `data`, this time with the initial frequency of the host genotype A2.
 
 The following four lines are more or less identical, simply setting the parasite frequencies in the exact same manner. After this function has finished executing, we have all initial four genotype frequencies set to random values, and our data array is initialized with the four arrays keeping track of the four genotype frequencies over time, and the first value in each array is already set. We’re good to move on!
 
-After calling the function initialize_frequencies(), we we will run the following code:
+After calling the function `initialize_frequencies()`, we we will run the following code:
 
+~~~~~~~~
 for (var i = 0; i < generations; i = i + 1) {
     host_selection();
     parasite_selection();
@@ -564,22 +583,23 @@ for (var i = 0; i < generations; i = i + 1) {
     data[2].push(parasite_frequencies[0]);
     data[3].push(parasite_frequencies[1]);
 }
+~~~~~~~~
 
-This loop runs over a given number of generations, and in each generation, calls the two methods host_selection() and parasite_selection().  These methods will calculate the new genotype frequencies, based on the genotype frequencies and the fitness values. We’ll implement them right away. Once they have finished executing, we will store the new genotype frequencies in the corresponding array in data.
+This loop runs over a given number of generations, and in each generation, calls the two methods `host_selection()` and `parasite_selection()`. These methods will calculate the new genotype frequencies, based on the current genotype frequencies and the fitness values. We’ll implement them right away. Once they have finished executing, we will store the new genotype frequencies in the corresponding array in `data`.
 
-Let’s now turn to the key methods in our simulation, host_selection() and parasite_selection(). Before we develop the code, let’s think through how they should work. 
+Let’s now turn to the key methods in our simulation, `host_selection()` and `parasite_selection()`. Before we develop the code, let’s think about how they should work. 
 
-At the beginning of this chapter, we calculated frequencies of alleles over time, given certain fitness values of genotypes. These fitness values were assumed to be constant. Then, we simply developed the following logic for a given genotype: The frequency of a genotype at time t+1, ft+1, equals its frequency at t, ft, times its fitness value, w, normalized by total population fitness, w̅. In mathematical terms, we had
+At the beginning of this chapter, we calculated frequencies of alleles over time, given certain fitness values of genotypes. These fitness values were assumed to be constant. Then, we simply developed the following logic for a given genotype: The frequency of a genotype at time *t+1*, {$$}f_{t+1}{/$$}, equals its frequency at *t*, {$$}f_{t}{/$$}, times its fitness value, w, normalized by total population fitness, {$$}\bar{w}{/$$}. In mathematical terms, we had
 
-ft+1 = ft w / w̅
+{$$}f_{t+1} = \frac{wf_{t}}{\bar{w}}{/$$}
 
-The same logic applies in frequency dependent selection, with one important difference: the fitness value w is not a constant anymore, but rather a function of other genotype frequencies. In our case, the fitness of a given host genotype depends on the parasite frequencies. For example, the fitness of host genotype A1 depends on the parasite frequencies.
+The same logic applies in frequency dependent selection, with one important difference: the fitness value *w* is not a constant anymore, but rather a function of other genotype frequencies. In our case, the fitness of a given host genotype depends on the parasite frequencies.
 
-As a concrete example, 
+As a concrete example, the fitness of host genotype A1, {$$}w_{H1}{/$$}, depends on both parasite frequencies {$$}f_{P1}{/$$} and {$$}f_{P2}{/$$}, as well as the fitness values for host A1 when interacting with parasite A1 ({$$}w_{H1P1}{/$$}), and when interacting with parasite A2 ({$$}w_{H1P2}{/$$}):
 
-wH1 = fP1 * wH1P1 + fP2 * wH1P2
+{$$}w_{H1} = w_{H1P1}f_{P1} + w_{H1P2}f_{P2}{/$$}
 
-Think about it as follows. As a host with genotype A1, you can either meet a parasite with genotype A1 (which will happen with probability fP1, the frequency of parasite genotype A1), or you can meet a parasite with genotype A1 (which will happen with probability fP2, the frequency of parasite genotype A2). In the first case, the fitness of the host A1 when meeting parasite A1, wH1P1, will be 1-sh. In the second case, the fitness of the host A1 when meeting parasite A2, wH1P1, will be 1. The total fitness is simply the sum of these two possible cases. The exact same logic applies for all the other genotypes.
+Think about it as follows. As a host with genotype A1, you can either meet a parasite with genotype A1 (which will happen with probability {$$}f_{P1}{/$$}, the frequency of parasite genotype A1), or you can meet a parasite with genotype A2 (which will happen with probability {$$}f_{P2}{/$$}, the frequency of parasite genotype A2). In the first case, the fitness of the host A1 when meeting parasite A1, {$$}w_{H1P1}{/$$}, will be *1-sh*. In the second case, the fitness of the host A1 when meeting parasite A2, {$$}w_{H1P2}{/$$}, will be 1. The total fitness is simply the sum of these two possible cases. The exact same logic applies for all the other genotypes.
 
 Note the there is no normalizing happening at this stage, since we aren’t calculating frequencies yet. Now, if we want to know that frequency of host genotype A1 in the next generation, we will do the exact same thing as we have before: multiple its fitness, wH1, by its frequency. Then, we do the same thing for host genotype A2. Once we have these two frequencies, we need to normalize them by their sum, since they might add up to a value other than 1.
 
