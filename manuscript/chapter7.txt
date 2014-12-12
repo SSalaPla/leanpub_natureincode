@@ -428,8 +428,9 @@ There are a few other shorthand notations in the same spirit. If you want to mod
 
 With that out of the way, let’s modify the code to make sure we have everything set up. First, we are calling `init_grid()` for every single generation run in the `run_simulation()` function - so be sure to remove the one `init_grid()` call that we used right after we defined the function (it’s wouldn’t be a drama if you’d forget that - it would simply be an unnecessary function call in the beginning).
 
-Next, we need to define the methods get_number_of_infected() and get_number_of_recovered(). Here’s how we can do that:
+Next, we need to define the methods `get_number_of_infected()` and `get_number_of_recovered()`. Here’s how we can do that:
 
+~~~~~~~~
 function get_number_of_infected() {
     return get_number_in_state("I");
 }
@@ -449,52 +450,69 @@ function get_number_in_state(state) {
     }
     return number_in_state;
 }
+~~~~~~~~
 
-What I’m doing here is first define a generic version of the function called get_number_in_state(state), where I’m going through all the cells and count the number of cells that are in a given state, passed to the function as an argument. That would in principle be sufficient, and I could just call 
+What I’m doing here is first define a generic version of the function called `get_number_in_state(state)`, where I’m going through all the cells and count the number of cells that are in a given state, passed to the function as an argument. That would in principle be sufficient, and I could just call 
 
+~~~~~~~~
 get_number_in_state("I")
+~~~~~~~~
 
-if I wanted to get the number of individuals that are in infected. However, I'm adding the two convenience functions get_number_of_infected() and get_number_of_recovered() just to make the code a little cleaner and more readable. These functions are called convenience functions because they don't do any heavy lifting by themselves, they just call the appropriate functions for us.
+if I wanted to get the number of individuals that are infected. However, I'm adding the two convenience functions `get_number_of_infected()` and `get_number_of_recovered()` just to make the code a little cleaner and more readable. These functions are called *convenience* functions because they don't do any heavy lifting by themselves, they just call the appropriate functions for us.
 
-We're almost done - all that is left to do is to define two new variables, number_of_simulations and data. Let's add them to our list of variables at the beginning of the code:
+We're almost done - all that is left to do is to define two new variables, `number_of_simulations` and `data`. Let's add them to our list of variables at the beginning of the code:
 
+~~~~~~~~
 var data = [];
 var number_of_simulations = 100;
+~~~~~~~~
 
 We're all set! Now that we're storing the size of each epidemic (measured in number of individuals infected) in the data array, we can start to look at the data. The first obvious thing to do is to look at the epidemic sizes that we collect. So at the end of our code, let's simply add
 
+~~~~~~~~
 console.log(data);
+~~~~~~~~
 
-Before you run it, one more thing - remember we want to compare the full spatial grid with the small-world grid that has occasional random contacts? Recall that the random contacts are introduced in the function expose_neighbors(i,ii), like so:
+Before you run it, one more thing - remember we want to compare the full spatial grid with the small-world grid that has occasional random contacts? Recall that the random contacts are introduced in the function `expose_neighbors(i,ii)`, like so:
 
+~~~~~~~~
 if (Math.random() < 0.01) {
     try_infection(get_bounded_index(get_random_int(0,grid_length-1)), 				                          	get_bounded_index(get_random_int(0,grid_length-1)));
 }
 else {
     try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
 }
+~~~~~~~~
 
-If you want no random contacts, that probability would have to be 0. Let's do ourselves a favor and capture this probability in a variable, rather than having this value hardcoded in this function. So go ahead and replace 
+If you want no random contacts, that probability would have to be `0`. Let's do ourselves a favor and capture this probability in a variable, rather than having this value hardcoded in this function. So go ahead and replace 
 
+~~~~~~~~
 if (Math.random() < 0.01)
+~~~~~~~~
 
 with 
 
+~~~~~~~~
 if (Math.random() < rewiring_probability)
+~~~~~~~~
 
-And, of course, be sure to define the variable rewiring_probability at the top of our code where we set up all the other variables:
+And, of course, be sure to define the variable `rewiring_probability` at the top of our code where we set up all the other variables:
 
+~~~~~~~~
 var rewiring_probability = 0;
+~~~~~~~~
 
 Starting with a fully local grid (i.e. no random contacts), my output of epidemic sizes for 100 simulations is as follows:
 
 
 
-As you can see, many epidemics don't even get started - the outbreak is limited to one infected individual, patient 0. The others fizzle out very quickly, some infected hundreds of individuals, and a few even over 1,000 individuals (the maximum is 3,733 individuals, which is about 37% of the population).
+As you can see, many epidemics don't even get started - the outbreak is limited to one infected individual, patient 0. The others fizzle out very quickly, while some infect hundreds of individuals; and a few even over 1,000 individuals (the maximum is 3,733 individuals, which is about 37% of the population).
 
-Now let's change a few contacts to be random, rather than local, as we have done before. Go ahead and set the rewiring probability to 1%
+Now let's change a few contacts to be random, rather than local, as we have done before. Go ahead and set the rewiring probability to 1%:
 
+~~~~~~~~
 var rewiring_probability = 0;
+~~~~~~~~
 
 and run the code again. This time, my output is the following:
 
@@ -502,8 +520,9 @@ and run the code again. This time, my output is the following:
 
 We can instantly see that while some epidemics still don't get started, those that do end up being very large, very often more than 6,000 individuals. The largest epidemic in this run infected 7,157 individuals - more than 71% of the population.
 
-The extreme epidemic size seems to be about twice as large - but what out the average? Let's go ahead and find out. We can define a function that calculates the average of the values in the data like so:
+The extreme epidemic size seems to be about twice as large - but what about the average? Let's go ahead and find out. We can define a function that calculates the average of the values in the data like so:
 
+~~~~~~~~
 function calculate_average_size(data) {
     var sum = 0;
     for (var i = 0; i < data.length; i++) {
@@ -511,34 +530,42 @@ function calculate_average_size(data) {
     }
     return sum / data.length;
 }
+~~~~~~~~
 
-(not the use of += ) and then output the return value of that function, rather than outputting the individual values:
+(note the use of `+=`) and then output the return value of that function, rather than outputting the individual values:
 
+~~~~~~~~
 //console.log(data);
 console.log(calculate_average_size(data));
+~~~~~~~~
 
-Before running this code, let's be sure to first reset the rewiring probability to 0 in order to run completely local simulations with no random contacts. After doing that, I get the following values - recall that these are averages from 100 independent simulations -  when I run the code a few times:
+Before running this code, let's be sure to first reset the rewiring probability to `0` in order to run completely local simulations with no random contacts. After doing that, I get the following values - recall that these are averages from 100 independent simulations -  when I run the code a few times:
 
+~~~~~~~~
 364.07 
 523.61 
 417.86
 414.74 
 382.64 
+~~~~~~~~
 
 Thus, the average epidemic size seems to be around 400 individuals, or about 4-5% of the population. 
 
-When I set the rewiring probability to 0.01 in order to run small world simulations with a few random contacts, I get the following values:
+When I set the rewiring probability to `0.01` in order to run small world simulations with a few random contacts, I get the following values:
 
+~~~~~~~~
 3332.8
 2987.95 
 2511.06 
 2790.62 
 3418 
+~~~~~~~~
 
-which corresponds to about 25-30% of the population. Thus, our visual intuition is confirmed - turning just a few local contacts into random contacts has a dramatic effect, resulting in outbreaks that are on average about 6 times larger.
+which corresponds to about 25-30% of the population. Thus, our visual intuition is confirmed - turning just a few local contacts into random contacts has a dramatic effect, resulting in outbreaks that are on average about six times larger.
 
-We could go one step further and ask, what is the average outbreak size, given an outbreak occurs in the firs place? Or in other words, if we ignore all those cases where patient 0 does not infect at least one other individual, what is the average epidemics size? In order to answer this question, we need to adapt the function calculate_average_size(data) slightly:
+We could go one step further and ask, what is the average outbreak size, given that an outbreak occurs in the first place? Or in other words, if we ignore all those cases where patient 0 does not infect at least one other individual, what is the average epidemics size? In order to answer this question, we need to adapt the function `calculate_average_size(data)` slightly:
 
+~~~~~~~~
 console.log(calculate_average_size(data, 2));
 
 function calculate_average_size(data, min_size) {
@@ -552,39 +579,44 @@ function calculate_average_size(data, min_size) {
     }
     return sum / count;
 }
+~~~~~~~~
 
-Here, we've added a second argument to the function, min_size, which defines the minimum epidemic size required to be included in the calculation. Thus, in order to include only epidemics that are larger than just one individual, the parameter to be passed as min_size needs to be 2. Also note that we need to define a new local variable (count) that keeps track of the number of data points that fulfill our minimum sizes requirement.
+Here, we've added a second argument to the function, `min_size`, which defines the minimum epidemic size required to be included in the calculation. Thus, in order to include only epidemics that are larger than just one individual, the parameter to be passed as `min_size` needs to be `2`. Also note that we need to define a new local variable (`count`) that keeps track of the number of data points that fulfill our minimum size requirement.
 
-Resetting rewiring_probability to 0 again, the new code yields the following values (I'm showing only two significant places):
+Resetting `rewiring_probability` to `0` again, the new code yields the following values (I'm showing only two significant places):
 
+~~~~~~~~
 583.29
 543.41
 526.24
 269.40
 510.23
+~~~~~~~~
 
-whereas simulations with a rewiring probability of 0.01 yield
+whereas simulations with a rewiring probability of `0.01` yield
 
+~~~~~~~~
 3500.33
 3941.92
 3790.97
 4284.65
 3891.30
+~~~~~~~~
 
-In short, the picture remains the same. Even if we would require at least 10 individuals to be infected in order to be included in the calculations, we would get an average of about 600 individual infected on the fully regular grid, and about 5,000 individuals infected on the small world grid.
+In short, the picture remains the same. Even if we would require at least `10` individuals to be infected in order to be included in the calculations, we would get an average of about 600 individual infected on the fully regular grid, and about 5,000 individuals infected on the small world grid.
 
-In short, a few non-local interactions can have quite dramatic effects. This is the main reason why travel, especially long-distance travel - has made our world so much more connected, and why infectious diseases in the most remote places in the world are a threat to public health anywhere in the world.
+Thus, a few non-local interactions can have quite dramatic effects. This is the main reason why travel, especially long-distance travel - has made our world so much more connected, and why infectious diseases in the most remote places in the world are a threat to public health anywhere in the world.
 
-And that's where we wrap it up. One could write an entire volumes of books on this fascinating topic, and we have once again barely scratched the surface. However, I hope you've learned a few key insights about how we can create virtual epidemics in a computer. You can imagine that we could use such computational simulations to investigate how certain interventions (like vaccination programs, or quarantines) would affect the dynamics of epidemics. Indeed, modeling of infectious disease dynamics has become a major field of interest. Obvisouly, one cannot run experiments about epidemics on human populations, and real world epidemics can't be replayed again and again (thankfully!). Recreating epidemics with computer models is a great way to run millions of epidemics under varying circumstances, and the insight gained from these models helps to inform real-world pubic health.
+And that's where we wrap it up. One could write volumes of books on this fascinating topic, and we have once again barely scratched the surface. However, I hope you've learned a few key insights about how we can create virtual epidemics in a computer. You can imagine that we could use such computational simulations to investigate how certain interventions (like vaccination programs, or quarantines) would affect the dynamics of epidemics. Indeed, modeling of infectious disease dynamics has become a major field of interest. Obvisouly, one cannot run experiments about epidemics on human populations, and real-world epidemics can't be replayed again and again (thankfully!). Recreating epidemics with computer models is a great way to run millions of epidemics under varying circumstances, and the insights gained from these models help to inform real-world public health.
 
 Let’s briefly summarize what we've learned in this chapter.
 
-	•	Infectious diseases can be modeled with SIR models, where individuals are either susceptible, infected, or have recovered.
-	•	The dynamics of epidemics are shaped by how well the infection can be transmitted, and by how fast infected individuals recover.
-	•	Because of the stochastic nature of transmission, not every patient 0 will trigger an outbreak. An epidemics may fizzle out on its own in the early stages.
-	•	Even when an epidemic takes off, not everyone will get infected: the epidemic will eventually run out of susceptible individuals to infect.
-	•	Small changes in the host contact structure can have dramatic effects on epidemics. Compared to a host structure with only local contacts, a small world host structure will generate dramatically larger epidemics
-	•	We’ve also introduced a few widely used shortcuts for arithmetic manipulations in javascript.
+* Infectious diseases can be modeled with SIR models, where individuals are either susceptible, infected, or have recovered.
+* The dynamics of epidemics are shaped by how well the infection can be transmitted, and by how fast infected individuals recover.
+* Because of the stochastic nature of transmission, not every patient 0 will trigger an outbreak. An epidemics may fizzle out on its own in the early stages.
+* Even when an epidemic takes off, not everyone will get infected: the epidemic will eventually run out of susceptible individuals to infect.
+* Small changes in the host contact structure can have dramatic effects on epidemics. Compared to a host structure with only local contacts, a small world host structure will generate dramatically larger epidemics
+* We’ve also introduced a few widely used shortcuts for arithmetic manipulations in JavaScript.
 
 Despite the deep fascination of parasites, and the infectious disease they cause, I would like to finish the book on a more cheery note. In the next and final chapter, we'll dig into game theory, and use our coding skills to show how cooperation among animals (including humans!) can evolve.
 
