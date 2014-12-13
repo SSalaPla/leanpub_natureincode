@@ -648,6 +648,9 @@ and reload the page. You should see something like this:
 
 Again, yours will look different each time you reload the page, but you’ll note that one of the alleles will go to fixation very rapidly, sometimes within just a few generations. Now increase the population size to 50, and you’ll get a result like this: 
 
+{width=90%}
+![](images/ch_3_drift_single_population_N_50.png)
+
 With `N = 50`, the time to loss / fixation is a little longer, but it’s still shorter than with `N = 500`. If you play around with different numbers, you’ll notice the general pattern that we already observed earlier: that the random effects are much stronger when the population is smaller, and as a consequence, allele loss / fixation happens faster.
 
 Rather than reloading the page and seeing a single simulation run its course, I want to modify the code so that we can run a number of simulations and plot them all at once. In order to do this though, I first need to explain in more detail the concept of an array. I mentioned above that we are using a JavaScript array that we name data, and the we initialize to be an empty array, like so:
