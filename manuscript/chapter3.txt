@@ -1112,7 +1112,8 @@ This is useful for a number of reasons. I have already mentioned one of the reas
 
 Here is a way of showing this graphically:
 
-// TODO figure
+{width=90%}
+![](images/ch_3_effective_population_size_concept.png)
 
 As you can see, the effect of genetic drift, which is due reduce genetic variation, follows the pattern that you would expect in a Wright-Fisher of population of size 100. In other words, the effective population size of this population is 100, whereas the census population size is 200. Or put differently, even though this population consists of 200 individuals, it behaves - from a genetic drift perspective - as if it consisted of 100 individuals in a Wright-Fisher population. And this brings us to the definition of the effective population size, which is *the size of an ideal (Wright-Fisher) population that shows the same decay of genetic variation as the actual population of interest*.
 
@@ -1205,18 +1206,24 @@ var generations = 100;
 
 Save the document and load it in the browser. You should see something like this: 
 
-
-
+{width=90%}
+![](images/ch_3_effective_population_size_N_1000.png)
 
 Which is exactly what we expected. Since `N` remains constant throughout the `100` generations, the effective population size will be `1000`.
 
 Now let’s adapt the code further to allow for a change in population size. We are going to add a slight modification that allows us to introduce a bottleneck of `N = 10` every `10` generations.
 
 First, let’s briefly do the math. If we did not know about the harmonic mean, we might have thought that the average population size would be a good predictor of the dynamics. The average population size of `90` generations at `N = 1000` and `10` generations at `N = 10` is `901`. If we run ten simulations, using our current code with `N = 901`, we get the following outcome: 
+
+{width=90%}
+![](images/ch_3_effective_population_size_N_901.png)
  
 As expected, because of the reduced population size, the allele fluctuations are a bit more pronounced, but by and large the effect is small. 
 
 On the other hand, I have just claimed above that the population will behave much more like a Wright-Fisher population of a size that corresponds to the effective population size, which in this case would be `92`. How does a Wright-Fisher population of size 92 behave? Let’s find out by setting `N` to `92`, and here is what we get: 
+
+{width=90%}
+![](images/ch_3_effective_population_size_N_92.png)
 
 Obvisouly quite different - a substantial reduction in genetic variation, with some populations having lost all variation by generation `100` already.
 
