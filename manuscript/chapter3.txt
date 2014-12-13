@@ -423,6 +423,8 @@ Fundamentally, genetic drift cannot add more variation - it is simply a random s
 
 As we established in the beginning of this chapter, stochastic effects are strongest when population sizes are smaller. Extreme results, like throwing only heads, are much more likely when you are throwing the coin only a few times. In the same vein, when the population size is small, loss of an allele is much more likely, and will thus occur much sooner, than when the population size is big. Recall from above that at population size `N=1000`, only rarely was an allele lost within `1000` generations, typically. Go ahead and change your population size to `100` (also be sure to set the simulation to run for `1000` generations only), and you will see that in practically all cases, one of the alleles will be lost.
 
+#Visualizing Drift
+
 These simulations are a great tool to examine the dynamics of genetic drift, but it’s bit cumbersome to scroll though hundreds or thousands of lines of allele frequencies. Wouldn’t it be nice if we had a way to visualize the allele dynamics? Let’s start visualizing things to get a better overview on what’s going on here.
 
 Before we get to it, a word of warning: Data plotting in the browser isn’t trivial. What I’m going to do here is to give you some plotting code that I’m simply asking you to copy and paste into your documents. The code that we will continue to write simply generates the data, and we then hand the data over to a plotting function. There’s no need for you at this stage to understand how plotting works, and it would be a significant distraction at the moment. Feel free to examine the plotting code, of course, but I won’t explain it, nor do I expect you to understand it.
@@ -430,7 +432,7 @@ Before we get to it, a word of warning: Data plotting in the browser isn’t tri
 First, add this line to your code, at the beginning of your `<head>` element:
 
 ~~~~~~~~
-<script src=“http://d3js.org/d3.v3.js"></script>
+<script src="http://d3js.org/d3.v3.js"></script>
 ~~~~~~~~
 
 This line loads and external JavaScript library called `D3.js`, which is the most advanced data plotting library available for the browser to date. Note that you need to be connected to the internet for this library to be loaded!
@@ -627,6 +629,9 @@ draw_line_chart(data,N,generations);
 This is the line that calls the function `draw_line_chart()` with the parameters `data`, `N` and `generations`. Note that I’m calling the function at the end of the code - at that point, the array `data` is not empty anymore, but in fact contains all `p` values over the `1000` generations. It’s that set of values that we hand over to the function, and the function then plots the data visually.
 
 Save the document and reload the browser. You should see a nice line chart showing the change of `p` over time:
+
+{width=90%}
+![](images/ch_3_drift_single_population.png)
  
 In this particular simulation run, the allele A1 went to fixation around generation 850, which is another way of saying that its frequency reached 100%. This also means that the allele A2 was lost at the same time (whenever an allele goes to fixation, all other alleles are lost). Reload the page and watch different evolutionary dynamics unravel. As you can observe, the dynamics are completely random, as we expected. Sometimes, one of the allele goes relatively straight to fixation. Other times, the frequencies fluctuate widely, with one allele almost driven to extinction, only to make a dramatic comeback, and then still being lost 200 generations later.
 
