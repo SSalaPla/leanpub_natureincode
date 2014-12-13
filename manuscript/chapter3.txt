@@ -1229,7 +1229,7 @@ Obvisouly quite different - a substantial reduction in genetic variation, with s
 
 Let me repeat this - if the claim about effective population size and harmonic mean is indeed correct, then the dynamics of a population with `N = 1000` that goes through `N = 10` bottlenecks every 10^th^ generation should be much more like a population that has a constant population size of `N = 92`, rather than `N = 901` (and as the two previous images have shown, the dynamics would be quite different).
 
-Only one way to find out! Let’s go to the code and implement the actual bottlenecks.
+Only one way to find out! Let’s go into the code and implement the actual bottlenecks.
 
 First, just to be sure, set `N` back to `1000`.
 
@@ -1269,7 +1269,7 @@ function simulation(simulation_counter) {
             population_size = N;
         }
         population_sizes.push(population_size);
-next_generation(data[simulation_counter],population_size);
+				next_generation(data[simulation_counter],population_size);
     }
 }
 ~~~~~~~~
@@ -1316,11 +1316,15 @@ I simply changed `N` to `population_size`, because it is the variable `populatio
 
 That’s it! Save the document and load it in a browser, and here’s what you’ll get:
  
+{width=90%}
+![](images/ch_3_effective_population_size_bottleneck_N_1000.png)
 
 Wow - that does look much more like the Wright-Fisher population at a constant `N = 92`! The effective population size is indeed `92` - substantially lower than the average in the census population size, which is `901`. You can clearly see when the population goes through the bottlenecks, but if you flatten out those jumps visually in your mind, you can see that the population behaves pretty much like a Wright-Fisher population at `N = 92`, rather than at `N = 901`.
 
 To make an even more extreme case, set `N = 100000`, but keep the bottlenecks in the code. Your simulations will now of course run a bit slower (they take a few seconds on my laptop computer), but here’s what you will see when the they are done:
  
+{width=90%}
+![](images/ch_3_effective_population_size_bottleneck_N_100000.png)
 
 As you can see, the effective population size is still very small (`100`), despite the fact that this population has a size of `100000` during 90% of the time! You can also see that the dynamics are completely driven by the bottlenecks.
 
