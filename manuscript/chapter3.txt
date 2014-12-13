@@ -1,4 +1,4 @@
-#3. Genetic Drift
+#3. Genetic Drift: The Power of Chance
 
 In the previous chapter, we have established that under Hardy-Weinberg assumptions - infinite population size, random mating, no mutation or selection, etc. - nothing ever changes. Allele frequencies stay the same forever, and if the genotype frequencies are not currently at Hardy-Weinberg frequencies, they will get there in a single generation, and then remain there forever.
 
@@ -281,7 +281,7 @@ Getting 8 heads, 2 tails 4.38968% of the time
 
 Thus, 4.39% is indeed correct.
 
-##The randomness of finite populations
+##The Randomness of Finite Populations
 
 So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same circle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (they zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can  struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
 
@@ -899,7 +899,7 @@ These figures are telling. They show that the smaller the population, to more pr
 
 Now that we have a good intuition from the simulations, let’s see if we can develop a mathematical model that captures this process. Don’t worry, the math is going to be easy, and I will be explaining every step in great detail.
 
-##A mathematical formulation of genetic drift
+##A Mathematical Formulation of Genetic Drift
 
 We have just established, through stochastic simulations, that the main effect of genetic drift is the reduction of genetic variance. We are now looking to find a way to capture this process mathematically.
 
@@ -1098,7 +1098,7 @@ These are fundamental insights into the biology of populations. They are also in
 
 I hope to have shown you that both approaches - that of the computational simulation, and that of the mathematical analysis - are valuable and correct approaches to address a problem. They’re certainly the most powerful when they’re combined, but it’s important to note that each has its unique strengths. 
 
-##Effective population size
+##Effective Population Size
 
 In the remainder of this chapter, I want to introduce an important concept that should always be on your radar when talking about drift: that of effective population size. We have until now assume a finite population size of *N*. We have also assumed that the population size is constant overt time (i.e. *N* in every generation). Both the simulations and the mathematical equations were based on this assumption. In reality, the size of a population can fluctuate over generations, sometimes strongly so.
 
