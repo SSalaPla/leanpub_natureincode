@@ -1524,6 +1524,9 @@ function draw_line_chart(data, x_max, x_label, y_label) {
 
 And here is the outcome: 
 
+{width=90%}
+![](images/ch_3_sex_ratio.png)
+
 As you can see, the effect is very strong when the sex ratio is strongly skewed. A quick check at a proportion of males at 10% shows that the graph correctly predicts that the effective population size will be 36% of the census population size, as our farm example above has shown.
 
 Overall, the message here is that unless the sex ratio is severely skewed (less than 30% of one sex), the overall relative reduction in effective population size is small. However, beyond that value, the effect can be quite severe.
