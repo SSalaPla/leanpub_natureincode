@@ -47,19 +47,27 @@ it would find itself at the following position at time step t=2:
 
 The great thing about this spatial structure is that we will be able to implement it with a data structure that we already know: a two-dimensional array.
 
-We can now define a concept of neighborhood, or of “nearby”. We don’t need to simulate the individuals as moving entities - but their choice of mating should be restricted by their neighborhood. For example, we could define a distance measure, *d*, that defines the range of mates (i.e. the mating neighborhood). Concretely, *d* means that an individual can choose to mate with any other individual that is maximally *d* cells away from its own cell. Thus, for *d=1*, the neighborhood of the red individual would be given by the red square:
+We can now define a concept of neighborhood, or of “nearby”. We don’t need to simulate the individuals as moving entities - but their choice of mating should be restricted by their neighborhood. For example, we could define a distance measure, *d*, that defines the range of mates (i.e. the mating neighborhood). Concretely, *d* means that an individual can choose to mate with any other individual that is maximally *d* cells away from its own cell. Thus, for *d=1*, the neighborhood of the red individual would be given by the pink square:
  
+{width=100%}
+![](images/ch_5_demo_grid_neighborhood_d_1.png)
 
 Note that we could exclude the current cell of the individual, if we wanted to. To keep things simple, we won’t do this in our simulation, and simply assume that individuals can in principle mate with themselves.
 
 If *d=2*, the mating neighborhood would be as follows: 
 
+{width=100%}
+![](images/ch_5_demo_grid_neighborhood_d_2.png)
 
 Note that it is up to you how you define the neighborhood. You could for example say that you won’t include the uttermost diagonal cells in the example above, so that the neighborhood would look more like a circle: 
 
+{width=100%}
+![](images/ch_5_demo_grid_neighborhood_d_2_special.png)
 
 In our code, we will stick to the simpler case of considering the entire rectangle. Finally, what would happen if *d* were half of the grid length, i.e. *d=5*? The neighborhood would now look like this:
  
+{width=100%}
+![](images/ch_5_demo_grid_neighborhood_d_5.png)
 
 This means that the neighborhood corresponds to the entire population, which, in the absence of sexual selection, is the equivalent of random mating (because any individual in the entire population could be randomly picked as a mate). Thus, by setting *d* to at least half of the grid length, we can simulate the case of completely random mating that doesn’t care about spatial considerations. The model would still be spatial, but space would have no effect. Of course, if random mating was all you cared about, you wouldn’t implement a spatial model in the first place! But when we do implement a spatial model, we can easily compare the case of highly localized processes such as local mating - which is what we’re really interested in - to the case of fully random mating simply by setting a parameter value, rather than having to implement a second, separate (non-spatial) model.
 
