@@ -1,4 +1,4 @@
-# Chapter 2
+# 2. The Genes, they are a-Changin'
 
 Life is change. It is also beautiful. The process responsible for these two outcomes is evolution.
 
@@ -14,15 +14,15 @@ Now here is the most interesting aspect of this story: there is strong evidence 
 
 This is evolution in action, precisely as we have defined it above: the change of allele frequencies in a population over time. What caused this change? There could be many different explanations, but all of them fall into four basic categories: natural selection, mutation, migration, and random drift. These are the four basic forces of evolution, and we will encounter them time and time again in this book. Of these forces, natural selection may be the most famous of them all. It’s the only force capable of producing adaptations. It’s the one described by Charles Darwin, although he, like any scientist in the mid-18th century, had a very different - and wrong - understanding of genetic heredity than we have today, which makes his insights all the more stunning. But evolution can occur even in the absence of natural selection; as long as allele frequencies change, for whatever reason, that is evolution. 
 
-##What happens when nothing happens?
+##What's Happening When Nothing's Happening
 
 Consider these two conversations between two friends:
 
-Friend 1: “The other day, I was riding my bike along main street, and three cars passed me by.”  
+Friend 1: “The other day, on my way back home, I saw a car driving next to me!”  
 Friend 2: “And?”
 
 
-Friend 1: “The other day, I was riding my bike along main street, and three cars flew over me.”  
+Friend 1: “The other day, on my way back home, I saw a car fying right over me!”  
 Friend 2: “SAY WHAT???”
 
 In science, just as in life, a phenomenon is interesting to the extent that it is unexpected. (Coincidentally, this is also the reason why life gets boring as you get older unless you continuously immerse yourself in new experiences, and learn new things.) Thus, for a scientific phenomenon to be called interesting, you need to know what to expect. 

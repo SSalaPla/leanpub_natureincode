@@ -1,4 +1,4 @@
-# Chapter 4
+# 4. Mutation: The Power of Mistakes
 
 In the last chapter, we’ve learned a number of highly interesting aspects about evolution by genetic drift. One of the rather depressing consequences of drift, we learned, is the total elimination of genetic variation in the long run. Clearly, something else must be going on, for the world is not void of genetic variation. That something else is *mutation*.
 
@@ -412,7 +412,8 @@ draw_line_chart(data,x_max,"4N\u03BC","H");
 
 and then pass that to the `draw_line_chart()` function that we’ve used above (note that `\u03BC` is simply the unicode character for *μ*). Here’s what you’ll see:
  
-
+{width=90%}
+![](images/ch_4_H_vs_4nu.png)
 
 As you can see, *H* is quite sensitive in the 0 - 1 range for *4Nμ*, and thereafter starts to asymptotically approach 1. The way to think about this as follows. If *4Nμ* is small (i.e. less than 1), the population will have little genetic variation at equilibrium. *4Nμ* can be small if either *N* is small, in which case the variance-reducing effect of drift would be strong, and / or the mutation rate *μ* can be low, which generates little genetic variation. On the other hand, if *4Nμ* is large (i.e. larger than 1), the population will have a lot of genetic variation at equilibrium. *4Nμ* can be large if either *N* is large, in which case there would be very little reduction of genetic variation by drift, and / or the mutation rate *μ* can be high, which continuously generates a lot of genetic variation.
 

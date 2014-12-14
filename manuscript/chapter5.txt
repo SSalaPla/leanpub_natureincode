@@ -1,4 +1,4 @@
-# Chapter 5
+# 5. Migration: Spatial Models
 
 In this chapter, we’ll be addressing an assumption that we introduced early on when we first introduced the Hardy-Weinberg principle. The assumption was that mating is completely random. In fact, in our code, we went one step further and didn’t even assume that there were any individuals - we just simulated a gene pool, with alleles floating around almost like molecules in a gas. In addition to not having a concept of individuality, with also had no concept of space, and location. 
 
@@ -20,7 +20,8 @@ Because the model is more complex, I will build it up step by step, rather than 
 
 We could assume that our grid contains e.g. 10 times 10 cells, and each of the cells is inhabited by one individual, which would give us a population size of 100 individuals. Our world would thus look like this:
 
-
+{width=100%}
+![](images/ch_5_demo_grid_empty.png)
 
 A typical assumption in these types of model is that there are no borders. If an individual would exit the grid on the left side, it would simply re-enter the grid on the right hand side, as if the grid were wrapped:
 
