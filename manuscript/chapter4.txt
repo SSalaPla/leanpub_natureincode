@@ -106,9 +106,12 @@ Once that’s done, we’re done with the function `generate_first_generation()`
 
 If you save this code in a new file and load it in a browser, you should see the following in your console (depending on the browser): 
 
-The console window is being nice here, and rather than printing the same output a hundred times, it is printing it once, and letting me know that it was asked to print the same output `100` times. If you reload, you should see the same thing, but with an other sequence. 
+{width=50%}
+![](images/ch_4_one_sequence.png)
 
-Things seem to be working well. You now have a uniform population of `100` DNA strings, an no variation whatsoever. Now let’s introduce mutation. 
+The console window in my browser (Chrome) is being nice here, and rather than printing the same output a hundred times, it is printing it once, and letting me know that it was asked to print the same output `100` times. If you reload, you should see the same thing, but with an other sequence. 
+
+The code seems to be working well. You now have a uniform population of `100` DNA strings, an no variation whatsoever. Now let’s introduce mutation. 
 
 I’m going to add one method:
 
@@ -217,6 +220,8 @@ print_sequences("After 100 generations");
 
 If you save the file and load in the computer, you’ll see something like this:
  
+{width=50%}
+![](images/ch_4_many_sequences.png)
 
 In the interest of space, I’m only showing a fraction of what you’ll see, but the point is as follows: mutation has introduced a substantial amount of genetic variation. In an example run on my machine, there are now 34 unique genetic sequences, and the population is dominate by 4 sequences that each occur more than 10 times. Of course, this will be different every time you re-run the simulation, but it’s nevertheless remarkable. We are often tempted to think that mutations rates as low as 1 in 10,000 don’t have a strong effect, simply because 1 in 10,000 is an unlikely event. Nevertheless, if you have lots of base pairs in lots of individuals over many generations, even much lower mutation rates will produce a substantial amount of genetic variation. 
 
