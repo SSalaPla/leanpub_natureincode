@@ -1157,8 +1157,8 @@ This variable holds an empty array into which I’m going to add the population 
 function simulation(simulation_counter) {
     p = 0.5;
     for (var i = 0; i < generations; i = i + 1) {
-      	population_sizes.push(N);
-      	next_generation(data[simulation_counter]);
+        population_sizes.push(N);
+        next_generation(data[simulation_counter]);
     }
 }
 ~~~~~~~~
