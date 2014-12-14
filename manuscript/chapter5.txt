@@ -23,12 +23,17 @@ We could assume that our grid contains e.g. 10 times 10 cells, and each of the c
 {width=100%}
 ![](images/ch_5_demo_grid_empty.png)
 
-A typical assumption in these types of model is that there are no borders. If an individual would exit the grid on the left side, it would simply re-enter the grid on the right hand side, as if the grid were wrapped:
+A typical assumption in these types of model is that there are no borders. If an individual would exit the grid on the left side, it would simply re-enter the grid on the right hand side, as if the grid were wrapped.
 
-For example, if the individual denoted by the red dot below would move one step to the left at time step t=1  
+For example, if the individual denoted by the red dot below would move one step to the left at time step t=1:
+
+{width=100%}
+![](images/ch_5_demo_grid_arrow_left.png)
 
 it would find itself at the following position at time step t=2:
   
+{width=100%}
+![](images/ch_5_demo_grid_arrow_right.png)
 
 Similarly, if the individual denoted by the red dot below would move one step down at time step t=1   
 
@@ -419,7 +424,7 @@ In addition to some visual setup, this code contains two drawing functions: `dra
 As before, the drawing code uses D3.js, so be sure to include the corresponding tag that loads the library before the script tag that contains all the other JavaScript code that we just developed:
 
 ~~~~~~~~
-<script src=“http://d3js.org/d3.v3.js"></script>
+<script src="http://d3js.org/d3.v3.js"></script>
 ~~~~~~~~
 
 We’re almost done. We need some more visualization code that is not written in JavaScript, but in CSS. Go ahead and copy the following CSS code right before the D3.js-loading script tag:
