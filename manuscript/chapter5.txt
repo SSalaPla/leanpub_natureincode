@@ -35,9 +35,15 @@ it would find itself at the following position at time step t=2:
 {width=100%}
 ![](images/ch_5_demo_grid_arrow_right.png)
 
-Similarly, if the individual denoted by the red dot below would move one step down at time step t=1   
+Similarly, if the individual denoted by the red dot below would move one step down at time step t=1:
+
+{width=100%}
+![](images/ch_5_demo_grid_arrow_bottom.png)   
 
 it would find itself at the following position at time step t=2:  
+
+{width=100%}
+![](images/ch_5_demo_grid_arrow_top.png)
 
 The great thing about this spatial structure is that we will be able to implement it with a data structure that we already know: a two-dimensional array.
 
@@ -182,7 +188,7 @@ There are a few changes that we’ve made. First, we set up a temporary grid, us
 
 Ok, let’s go ahead an start implementing the two functions that we’re calling from within `run_generation()`: `pick_mating_partner()`, and `get_offspring()`. Let’s start with `pick_mating_partner()`.
 
-We’ll be using the neighborhood model that I described above. In formal terms, given the maximum distance *d*, the neighborhood of an individual at position *i, ii* is *j, jj**, such that 
+We’ll be using the neighborhood model that I described above. In formal terms, given the maximum distance *d*, the neighborhood of an individual at position *i, ii* is *j, jj*, such that 
 
 {$$}
 j \geq i - d
