@@ -485,7 +485,7 @@ for (var i = 0; i < 100; i = i + 1) {
 
 Now, if you run this code, you will see your simulations run in the logs like before - but in addition, you should also see something like this in the browser:
 
-{width=90%}
+{width=75%}
 ![](images/ch_5_simulation_initial.png)
 
 Wow! That is your initial population, color-coded to show A1A1 genotypes in white, A1A2 genotypes in bright blue, and A2A2 genotypes in dark blue. Isn’t this amazing? But it’s going to get much, much better. We’re currently only showing the initial population, and as expected, the genotypes are randomly distributed in space. Now, let’s go ahead and update the grid when the population is updated. 
@@ -520,19 +520,19 @@ Now save / reload the page, and - voilà! We can now see the population evolving
 
 After the first few generations, your population may already look like this:
 
-{width=90%}
+{width=75%}
 ![](images/ch_5_simulation_medium.png)
 
 You can already see clear clusters of homozygotes (both A1A1, in white, and A2A2, in dark blue). Let the simulation run for a while and you’ll see that the clusters will get bigger:
 
-{width=90%}
+{width=75%}
 ![](images/ch_5_simulation_advanced.png)
 
 Why is that? Imagine you are an A1A1 genotype, and you find yourself in one of those A1A1 clusters. Your entire neighborhood is made up of A1A1 genotypes, and thus your offspring will be A1A1 too. The same is true for A2A2 genotypes in A2A2 clusters. However, this is not true for A1A2 genotypes. When two heterozygotes reproduce, there is only a 50% chance that the offspring will be a heterozygote too - that’s why you won’t find any big clusters in bright blue.
 
 These clusters of homozygotes are the consequence of inbreeding, and there is inbreeding in this simulation because the mating neighborhood is spatially limited. What would happen if that were not the case? Well, we have the code in place to see what happens in that case: simply change the value of `max_mating_distance` to `50`, to simulate a “non-spatial” model, as discussed above (or rather a model with global mating, if you will). When you reload the page, you will see this:
 
-{width=90%}
+{width=75%}
 ![](images/ch_5_simulation_global.png)
 
 The random pattern that we observed right upon population initialization remains (in different permutations) - no clusters emerge. There is simply no inbreeding, because mating is completely random over the entire population.
