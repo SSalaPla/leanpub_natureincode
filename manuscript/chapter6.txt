@@ -258,8 +258,8 @@ As you can see, we now need to work with only two values (*h* and *s*), rather t
 
 If we would plot the genotypes fitnesses visually, we would get one of the following graphs:
 
-
-
+{width=50%}
+![](images/ch_6_fitness_landscapes.png)
 
 Any line in the green area, where *h* is some value between 0 and 1 (including 0 and 1), represents the case where the fitness of the heterozygote is an intermediate value between the fitness of the two homozygotes, or equal to one of them (think *fitness slope*). This type of selection is called *directional selection*.
 
