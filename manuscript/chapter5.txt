@@ -116,12 +116,15 @@ init_grid();
 
 What we’re doing here is to iterate over the grid array, and add new empty arrays as elements - that is, each `grid[i]` will be a new empty array, and `grid` will thus be a two-dimensional array representing our spatial world. Then, we start another `for` loop that sets up the elements for each cell. We said we’ll have exactly one individual per cell, and the only individual trait we care about is their genotype, which we represent by the strings `"A1A1"`, `"A1A2"`, and `"A2A2"`. Since we know the desired initial `p`, the frequency of the A1 allele, we can easily calculate the desired initial Hardy-Weinberg genotype frequencies of A1A1, A1A2, and A2A2, which are *p^2^*, *2p(1-p)*, and *(1-p)^2^*. We can randomly assign these genotypes to cells by first drawing a random number between 0 and 1, using our old friend `Math.random()`. How do we do this? Think of the values from 0 to 1 as a horizontal line. `Math.random()` will randomly pick a point on that line. When the value is smaller than *p^2^*, then we’re assigning the cell the A1A1 genotype. If the value happens to be larger than *1-(1-p)^2^*, then we’re assigning the cell the A2A2 genotype. Otherwise, we’re assigning the cell the A1A2 genotype. You can visual this using the line as follows:
 
-{width=90%}
+{width=80%}
 ![](images/ch_5_genotype_distribution.png)
 
 Finally, we also keep count of how many A1A1, A1A2, and A2A2 genotypes we’re getting - at this point this is simply a sanity check, to make sure our code does what we want it to do.
 
 Since we have a quadratic grid of length 100, our population size is *N = 10,000*. With `p = 0.5`, we should get about 2,500 A1A1 genotypes, 5,000 A1A2 genotypes, and 2,500 A2A2 genotypes. Note that since we’re creating the genotypes stochastically, we do not expect these numbers to be matched exactly. But the final tally should be close enough. If you now run this code, you should see something like:
+
+{width=35%}
+![](images/ch_5_initial_genotype_numbers.png)
  
 The numbers are close enough, so it looks like our code is working. The population is initialized on a grid, with 10,000 individuals at Hardy-Weinberg equilibrium. 
 
