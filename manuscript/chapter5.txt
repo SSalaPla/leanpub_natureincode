@@ -142,20 +142,22 @@ Before we get to the code, let’s think about what should happen during each ge
 
 There is a potential pitfall in these spatial, individual-based models that would be easy to fall into if you implemented this by yourself for the first time. In principle, we want the individuals to reproduce - and the offspring individuals to replace the parental individuals - at the exact same time, in parallel. However, as you know by now, in programming things don’t generally happen at the exact same time - everything happens in sequence, and one statement will be executed after the other. However, what happens in one individual will depend on the individuals nearby, and if we update individuals sequentially, we would run into strange dynamical issues. Let me explain this with an example.
 
-Let’s say we’re iterating through all the individuals one at a time. Let’s assume we’re now at the individual that’s colored in red (each cell on the grid has an individual - they're not shown here). 
+Let’s say we’re iterating through all the individuals one at a time. Let’s assume we’re now at the individual that’s colored in red (each cell on the grid contains one individual - they're not shown here): 
               
+{width=100%}
+![](images/ch_5_demo_grid_neighborhood_d_1.png)
 
 After this individual has picked a random mate in his local neighborhood, we generate an offspring genotype and replace the red individual. 
 
-
 Let’s say, just for the sake of the argument, that the offspring individual is blue:
 
-
-
-
+{width=100%}
+![](images/ch_5_demo_grid_blue_dot.png)
 
 This seems fine at first sight, but consider what happens next. Our iterator will move on to the next individual, the individual on the right of the blue individual (colored in black):
-    
+
+{width=100%}
+![](images/ch_5_demo_grid_blue_black_dot.png)
 
 As you can see, the local neighborhood of the black individual now contains a blue individual. However, if we had replaced all individuals in parallel at the same time, that individual left of the black individual would still have been the original red, as we’ve seen above.
 
