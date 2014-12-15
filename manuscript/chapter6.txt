@@ -1,12 +1,13 @@
-# Natural Selection
+# 6. Natural Selection
 
 Natural selection is often equated with evolution. But as you now know, evolution is simply the change in allele frequencies. Natural selection is just one of the forces affecting these allele frequencies. Thus, natural selection is not evolution - rather, natural selection is a cause of evolution.
 
 What sets natural selection apart from the other forces that shape evolution (drift, mutation, and migration) is that it is the only force capable of producing adaptive traits. An adaptive trait is a trait of an individual - such as the color of a flower, the shape of a hand, the efficiency of a lung - that makes the individual well adapted to the environment it lives in. But what does “well adapted“ mean? It simply means that all else being equal, the individual is more likely to survive and produce offspring than it would without that specific trait.
 
-Some of the most visually stunning examples of adaptation are those of animal mimicry. Mimicry is the imitation of another species. If you have a hard time seeing the caterpillar in the image below, it’s because of the spectacular visual imitation of the plant leave that it sits on. If it wasn’t for the bright blue background, you would probably have missed it entirely - just like most birds and other predators, who would love nothing more than to eat the caterpillar for lunch. 
+Some of the most visually stunning examples of adaptation are those of animal mimicry. Mimicry is the imitation of another species. If you have a hard time seeing the leaf katydid (an insect) in the image below, it’s because of the spectacular visual imitation of the plant that it rests on. In nature, you would probably have missed it entirely - just like most birds and other predators who would love nothing more than to eat the insect for lunch. 
 
-http://en.wikipedia.org/wiki/Euthalia_aconthea#mediaviewer/File:Euthalia_aconthea_cat_mango.jpg - CC BY 2.5
+![](images/ch_6_mimicry.jpg)
+Photo by [Geoff Gallice](https://www.flickr.com/photos/dejeuxx/8128706025/in/photolist-aLtn1F-fr5AvS-doiK6T-7pXFg6-4NrWie-98YHhf-fAf3jx-bg5QHF-cqVYih-dYZDoj-9cnJjz-hZpUgG-dtyp3o-84A7fp-dW2zSq-8yXeeF-eFfrP6-jPcb5z-9sBGV8-btv4Q9-dVW1R8-9sBrxp-doiDut-jPcqhK-4kUQQ-bqzrud-jw56g-aaci5o-q7FXw-ahCPeP-pUZzdb-oPejr-eys1LB-55mEJ-55mEM-6eMi1s-r6gx-acqKsX-49poTh-dVVYYX-oNpypL-hLPCWq-a1uz4E-pSMi-oYy3ji-3cV4CJ-4p1v9B-7kPiSC-agUM8Y-TquFN)
 
 Darwin’s insight was the following. Those individuals who are better adapted to survive and produce many offspring individuals will contribute more offspring individuals to the next generation than those who are less well adapted. However, as better adapted individuals leave more offspring, the resources that these individuals require to survive will become a limiting factor - simply because resources are limited. Thus, a struggle for survival and reproduction will begin, and the individuals with traits that contributed to a better outcome in this struggle will thrive, and become more common.
 
