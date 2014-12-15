@@ -272,7 +272,7 @@ As we’ll see below, these three types of fitness “landscapes” have very di
 
 ##Directional Selection
 
-Let’s start with directional selection. Let’s go ahead and plot {$$}\Delta p{/$$}, the change in the frequency of allele A1, as a function of *p*. We’ve used a very similar code before - all I’m changing is the actual equation:
+Let’s start with directional selection. Let’s go ahead and plot {$$}\Delta p{/$$}, the change in the frequency of allele A1, as a function of *p*. We’ve used very similar code before - all I’m changing is the actual equation:
 
 ~~~~~~~~
 var s = 0.1;
@@ -288,16 +288,17 @@ for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
     data.push(delta_p);
 }
 
-draw_line_chart(data,x_max,"p","\u0394 p”,true);
+draw_line_chart(data,x_max,"p","\u0394 p",true);
 ~~~~~~~~
 
-You may have noticed that I have passed a fifth parameter to the function `draw_line_chart()`. There are two things I want to mention about that. First, the function has actually been able to deal with five parameters from the moment we started using it. We simply didn’t supply that fifth parameter, which meant the corresponding local variable in the function was `undefined`.
+(Note that '\u0394' stands for {$$}\Delta{/$$}). You may have noticed that I have passed a fifth parameter to the function `draw_line_chart()`. There are two things I want to mention about that. First, the function has actually been able to deal with five parameters from the moment we started using it. We simply didn’t supply that fifth parameter, which meant the corresponding local variable in the function was `undefined`.
 
 But perhaps more importantly, I’d like to explain what the parameter is doing. The argument name for the parameter in the function is called `y_max_flexible` - if it is not `true`, then the the y axis will span from 0 to 1 (check some of the earlier figures that we generated with this function to verify that this is indeed the case). On the other hand, if it is `true`, the y axis will span from 0 to a little bit more than the maximum value in the data set - making sure that the entire vertical space in the figure is utilized.
 
 Setting the values `s` and `h` to `0.1` and `0.2`, respectively, we get the following plot:
 
-
+{width=90%}
+![](images/ch_6_directional_selection_deltap_vs_p.png)
 
 Let’s examine this plot. The first, and most important thing to notice is that {$$}\Delta p{/$$} is always positive. This means that no matter what the value of `p` is, it will be higher in the next generation. In other words, the frequency of the A1 always increases. This is why this type of selection is called directional selection - it always goes only in one direction. The A1 allele will go to fixation.
 
