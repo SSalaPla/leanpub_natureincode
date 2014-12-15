@@ -249,7 +249,7 @@ So far so good. But you may have noticed an issue. What happens if our cell is n
 
 Let’s think about how we would implement this in a regular, one-dimensional array. Let’s say we have an array with ten elements. We could visualize the array as follows:
 
-{width=50%}
+{width=55%}
 ![](images/ch_5_array.png)
 	
 Since the array has length 10, the indexes start at `0` and end at `9`. Now imagine you are at `9`, and you would like to move one to the right. The index `10` does not exist, but since we want to re-enter the array from the left, we can just imagine placing a copy of the array on the right hand side of the array, and the index `10` would simply correspond to the actual index `0`, `11` would correspond to index `1`, `12` to index `2`, and so on. In the same spirit, if we are at index `0` and would like to move one to the left, we would be at index `-1`, which doesn’t exist. Once again, we can simply imagine placing a copy of the array on the left side of the array, and index `-1` would then correspond to the actual index `9`, `-2` would correspond to index `8`, `-3` to index `7`, and so on: 
@@ -294,6 +294,8 @@ You may recall from biology class back in school that Gregor Mendel, an Austrian
 
 When we pick two individuals, there are essential six combinatorial possibilities: A1A1 and A1A1; A1A1 and A1A2; A1A1 and A2A2; A1A2 and A1A2; A1A2 and A2A2; A2A2 and A2A2. These possibilities have different outcomes with respect to offspring production by mendelian inheritance, as outlined in these diagrams of mendelian inheritance: 
 
+{width=100%}
+![](images/ch_5_mendel.png)	
 
 Of course you can flip parent 1 and parent 2, the outcome will be the same. Now, we will have to implement this in code. Looks like a bit of work, but the good news is, you’ll only have to implement this once, and you’ll be all set for all individuals and all generations. Also keep in mind the probability of each of the four boxes (i.e. each of the four possible offspring genotypes) is 25% for each paring of parental genotypes, as per the laws of Mendel. Here’s how we would implement this:
 
@@ -386,6 +388,8 @@ function print_data() {
 
 And now, if we run this, we should see something like this:
 
+{width=40%}
+![](images/ch_5_log_genotypes.png)
 
 As always with stochastic simulations, your numbers will look slightly different. The important part here however is that our code seems to be working fine. But just looking at these numbers isn’t really all that insightful yet. After all, we have just implemented a stochastic, individual-based, spatial simulation. How about we visualize what is going on in our two-dimensional world? 
 
