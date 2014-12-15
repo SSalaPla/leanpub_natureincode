@@ -602,7 +602,8 @@ var max_mating_distance = 50;
 
 Now, if you run the simulation, you will see something like this in the logs:
 
-
+{width=35%}
+![](images/ch_5_log_Fst_d_50.png)
 
 As you can see, I’ve let the simulation run for 1,000 generations, and the A1A1 genotype is already much less frequent (around 2,000 individuals) than the A2A2 genotype (around 3,000 individuals) in this particular run. That’s the normal pattern of genetic drift that we would expect: allele frequencies change over time in populations with finite size, simply because of random chance. However, the genotypes are almost perfectly in Hardy-Weinberg equilibrium, as evidenced by the *F* value hovering around 0 (which means that the observed heterozygosity is practically identical to the expected heterozygosity).
 
@@ -614,7 +615,8 @@ var max_mating_distance = 1;
 
 you should see a rather different outcome:
 
-
+{width=35%}
+![](images/ch_5_log_Fst_d_1.png)
 
 As you can see, already after 100 generation, the *F* value is around `0.3`, which corresponds to a reduction of heterozygosity of 30% relative to what we would expect! This confirms our visual suspicion that the heterozygosity is substantially reduced due to inbreeding. Only this time, we actually know by how much. 
 
