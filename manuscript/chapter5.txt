@@ -605,7 +605,7 @@ Now, if you run the simulation, you will see something like this in the logs:
 {width=35%}
 ![](images/ch_5_log_Fst_d_50.png)
 
-As you can see, I’ve let the simulation run for 1,000 generations, and the A1A1 genotype is already much less frequent (around 2,000 individuals) than the A2A2 genotype (around 3,000 individuals) in this particular run. That’s the normal pattern of genetic drift that we would expect: allele frequencies change over time in populations with finite size, simply because of random chance. However, the genotypes are almost perfectly in Hardy-Weinberg equilibrium, as evidenced by the *F* value hovering around 0 (which means that the observed heterozygosity is practically identical to the expected heterozygosity).
+As you can see, I’ve let the simulation run for 1,000 generations, and the A1A1 genotype is already much more frequent (around 3,500 individuals) than the A2A2 genotype (around 1,700 individuals) in this particular run. That’s the normal pattern of genetic drift that we would expect: allele frequencies change over time in populations with finite size, simply because of random chance. However, the genotypes are almost perfectly in Hardy-Weinberg equilibrium, as evidenced by the *F* value hovering around 0 (which means that the observed heterozygosity is practically identical to the expected heterozygosity).
 
 If you now change back to local mating by setting the mating distance back to `1`:
 
