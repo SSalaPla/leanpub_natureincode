@@ -367,7 +367,7 @@ and the output is
 
 Everything looking great, so let’s move on and… wait, what is this? `0.16000000000000003`? This should just be `0.16` - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to JavaScript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in JavaScript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, even though we know that 1/3 + 1/3 + 1/3 = 1, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies when it comes to computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because JavaScript uses 64 bits to store numbers, the rounding usually occurs at an insignificant place, as it does in `0.16000000000000003`. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time though, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
 
-Back to our genotypes - we already know what will happen next generation, but just to be sure, let’s code it up. Once again, we will calculate the genotype frequencies using the following code:
+Back to our genotypes - we already know what will happen in the next generation, but just to be sure, let’s code it up. Once again, we will calculate the genotype frequencies using the following code:
 
 ~~~~~~~~
 a1a1 = p * p;
@@ -449,7 +449,7 @@ some_function(); // jump to the function and execute the code in the function
 
 Functions, as their name suggests, encapsulate functionality. Almost all of your code will be inside of functions. Ultimately, programming is nothing more than manipulating data, and functions are the places where the manipulations happen. They are the bread and butter of programming.
 
-In our code, we copy-pasted the code:
+In our code, we copy-pasted the code
 
 ~~~~~~~~
 a1a1 = p * p;
@@ -457,7 +457,7 @@ a1a2 = 2 * p * q;
 a2a2 = q * q;
 ~~~~~~~~
 
-We should probably encapsulate this code in a function. What does this code do? It creates the next generation using allele frequencies, so let’s call it `create_next_generation()`: 
+many times, so we should probably encapsulate this code in a function. What does this code do? It creates the next generation using allele frequencies, so let’s call it `create_next_generation()`: 
 
 ~~~~~~~~
 function create_next_generation() {
@@ -469,7 +469,7 @@ function create_next_generation() {
 
 This function doesn’t take any parameters at the moment. As you can see, its body makes use of variables that were defined somewhere else. We’ll talk about this in a moment. You can also see that I used a fairly long name for the function name. The benefit is that anyone who reads your code, including your future self, can instantly guess what the function does from its name alone. There are two widespread styles to name functions that contain multiple words. You can either separate the words by underscore, like I prefer to do, or you can use the so-called camelCase notation, where you don’t use underscores, but rather capitalize each new word like so: `createNextGeneration`. It’s up to you which style you choose. JavaScript programmers have historically often used camelCase, but I simply find the underscore notation more readable, and will stick to it.
 
-Having encapsulated this functionality, we can now rewrite the code and simply replace the five occurrences of
+Having encapsulated this functionality, we can now rewrite the code. We add the function, and then simply replace the five occurrences of
 
 ~~~~~~~~
 a1a1 = p * p;
@@ -477,14 +477,10 @@ a1a2 = 2 * p * q;
 a2a2 = q * q;
 ~~~~~~~~
 
-with 
+with calls to the function:
 
 ~~~~~~~~
-function create_next_generation() {
-    a1a1 = p * p;
-    a1a2 = 2 * p * q;
-    a2a2 = q * q;
-}
+create_next_generation();
 ~~~~~~~~
 
 which will lead to:
@@ -521,15 +517,15 @@ create_next_generation();
 console.log("generation 5:", a1a1, a1a2, a2a2);
 ~~~~~~~~
 
-Much better, but not quite perfect yet. What if we would want to do this a hundred times, rather than just five times? Time for yet another concept (I did warn you this was going to be a dense chapter - but we’re almost done): *iterations*. Iterations can be used to repeat code a certain number of times, or until certain conditions are met. The most common iterator is the `for` loop. It’s forma syntax is as follows:
+Much better, but not quite perfect yet. What if we would want to do this a hundred times, rather than just five times? Time for yet another concept (I did warn you this was going to be a dense chapter - but we’re almost done): *iterations*. Iterations can be used to repeat code a certain number of times, or until certain conditions are met. The most common iterator is the `for` loop. It’s formal syntax is as follows:
 
 ~~~~~~~~
-for (initialization; condition; final-expression) {
+for (initialization; condition; final_expression) {
     code to be iterated
 }
 ~~~~~~~~
 
-The initialization is executed once, in the beginning. Then, as long as the condition is met, the code to be iterated is executed. After each iteration, the final-expression is executed. In practice, the `for` loop often looks like this:
+The `initialization` is executed once, in the beginning. Then, as long as the `condition` is met, the `code to be iterated` is executed. After each iteration, the `final_expression` is executed. In practice, the `for` loop often looks like this:
 
 ~~~~~~~~
 for (var i = 0; i < 10; i=i+1) {
@@ -580,7 +576,7 @@ This works, but will always print `generation 1`, which is not what we want. Tha
 ~~~~~~~~
 for (var i = 0; i < 5; i=i+1) {
     create_next_generation();
-    console.log("generation “+(i+1)+”:", a1a1, a1a2, a2a2);
+    console.log("generation "+(i+1)+":", a1a1, a1a2, a2a2);
 }
 ~~~~~~~~
 
@@ -632,7 +628,7 @@ function create_next_generation() {
 
 (yes, you can call functions from within other functions). Our code is now a little longer, but clearer about our assumptions. As you will see in your console, the results will still be the same.
 
-While everything works as it should, the output is still a bit ugly. Let’s clean up these rounding errors, and round the numbers to two decimal places. As I mentioned above, JavaScript in a browser comes with a whole package of functionalities encapsulated in methods. One such method is `Math.round(x)` which returns the value of x rounded to the nearest integer. That’s not what we want, and unfortunately there is no built-in function that takes a number and the number of decimals of precision you’d want it to return, so we will have to write the function ourselves:
+While everything works as it should, the output is still a bit ugly. Let’s clean up these rounding errors, and round the numbers to two decimal places. As I mentioned above, JavaScript in a browser comes with a whole package of functionalities encapsulated in methods. One such method is `Math.round(x)` which returns the value of `x` rounded to the nearest integer. That’s not what we want, though - we want to round the number to two decimals of precision. Unfortunately, there is no built-in function that takes a number, and the number of decimals of precision you’d want it to return, so we will have to write the function ourselves:
 
 ~~~~~~~~
 function round_number(value) {
@@ -640,7 +636,7 @@ function round_number(value) {
 }
 ~~~~~~~~
 
-This function takes one argument, `value`, and returns the number rounded to two decimal places. Before explaining how it works, we need to talk about a new concept: that of a return value. You’ve certainly noticed the `return` keyword in the function. What does it do? The keyword `return` has two effects: first, it does indeed “return” the value that immediately follows it - in this case, `Math.round(value *100) / 100`. But to whom does it return it? To whomever called the function in the first place. This will make more sense in a moment. Second, `return` terminates the function. Most of the time, you will find the return statement at the end of the function - but sometimes, you’ll find it much earlier. Whenever and wherever your function hits a `return` statement, it will return the value following the `return` statement, and terminate the function’s execution, jumping back to where the function was called. A `return` statement isn’t always necessary - as you can see, this is the first time I’ve used in this chapter.
+This function takes one argument, `value`, and returns the number rounded to two decimal places. Before explaining how it works, we need to talk about a new concept: that of a return value. You’ve certainly noticed the `return` keyword in the function. What does it do? The keyword `return` has two effects: first, it does indeed “return” the value that immediately follows it - in this case, `Math.round(value *100) / 100`. But to whom does it return it? To whomever called the function in the first place. This will make more sense in a moment. Second, `return` terminates the function. Most of the time, you will find the return statement at the end of the function - but sometimes, you’ll find it much earlier. Whenever and wherever your function hits a `return` statement, it will return the value following the `return` statement, and terminate the function’s execution, jumping back to where the function was called. A `return` statement isn’t always necessary (you might have nothing to return) - indeed, as you can see, this is the first time I’ve used in this chapter.
 
 Going back to our `round_number(value)` function, how does this work? It’s a simple idea. Let’s say you have a number, like `3.4567`, which you want to round to two decimals. First, multiply it by hundred, shifting the decimal point to the right by two: `345.67`. Now, round the number using the built-in `Math.round` method: `346`. Great, you just got rid of the decimals you did not care about. Now, shift the decimal point back to the left by two, which you can do by dividing by 100 again: `3.46`. Done! Now, we could stop here and say our function does what it is supposed to do, namely to round a number to 2 decimals. But what if we want to round it to 3 decimals, or to 4, later on, either in this or another project? Let’s go ahead and make the function more flexible, by adding a second parameter that I’m going to name `decimals`:
 
@@ -687,20 +683,19 @@ console.log("generation 0:", a1a1, a1a2, a2a2);
 
 for (var i = 0; i < 5; i=i+1) {
     create_next_generation();
-    console.log("generation "+(i+1)+":", round_number(a1a1,2), round_number(a1a2,2),
-          round_number(a2a2,2));
+    console.log("generation "+(i+1)+":", round_number(a1a1,2), round_number(a1a2,2), round_number(a2a2,2));
 }
 
 function round_number(value, decimals) {
     var shifter = Math.pow(10,decimals);
     return Math.round(value * shifter) / shifter;
 }
-
 ~~~~~~~~
 
 leading to the following result:
 
-
+{width=40%}
+![](images/ch_2_five_generations_nice.png)
 
 which is exactly what we wanted. (For the record, we could have used the `round_number(value, decimals)` function in the first `console.log` statement too - I didn’t bother because it was simply printing the values I had defined above in the code).
 
@@ -740,7 +735,7 @@ test1();
 test2();
 ~~~~~~~~
 
-then `foo` will be in the global scope of the function in which it is declared (i.e. `test1()`), and upon trying to access it anywhere outside that function - e.g. in `test2()` - you would see this error:
+then `foo` will be in the local scope of the function in which it is declared (i.e. `test1()`), and upon trying to access it anywhere outside that function - e.g. in `test2()` - you would see this error:
 
 {width=50%}
 ![](images/ch_2_error.png)
