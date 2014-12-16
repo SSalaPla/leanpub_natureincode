@@ -332,24 +332,24 @@ This fascinating example is an example of a so-called *small world* phenomenon. 
 
 This problem is much easier to visualize if we put individual on the circumference of a circle. Imagine that every individual is connected to its immediate two neighbors on either side (i.e. each individual has a total of four contacts). We could visualize this as follows:
 
-{width=55%}
+{width=75%}
 ![](images/ch_7_regular.png)
 
 Let’s pick two nodes, and think about how long it would take, at minimum, to go from one node to the other. I’ve color-coded the nodes in red in the figure below:
 
-{width=60%}
+{width=75%}
 ![](images/ch_7_regular_infected.png)
 
 The shortest path between two nodes is the following, color-coded in red also:
 
-{width=65%}
+{width=75%}
 ![](images/ch_7_regular_shortest_path.png)
 
 There are 22 other nodes we have to go through to get from one node to the other. 
 
 Now, let’s go ahead and reconnect a handful of connections at random. Just as in our grid example, imagine that occasionally, rather than being connected to local neighbors only, a node is connected to a random node anywhere on the ring. So let’s go ahead and randomly reconnect some of the links:
 
-{width=70%}
+{width=75%}
 ![](images/ch_7_small_world_infected.png)
 
 We only reshuffled 5 links, out of 200. But if we now visualize the shortest path between our two nodes, we can see a dramatic change:
@@ -640,5 +640,5 @@ Let’s briefly summarize what we've learned in this chapter.
 * Small changes in the host contact structure can have dramatic effects on epidemics. Compared to a host structure with only local contacts, a small world host structure will generate dramatically larger epidemics
 * We’ve also introduced a few widely used shortcuts for arithmetic manipulations in JavaScript.
 
-Despite the deep fascination of parasites, and the infectious disease they cause, I would like to finish the book on a more cheery note. In the next and final chapter, we'll dig into game theory, and use our coding skills to show how cooperation among animals (including humans!) can evolve.
+Despite the deep fascination of parasites, and the infectious disease they cause, I would like to finish the book on a more cheery note. In a future chapter, we'll dig into game theory, and use our coding skills to show how cooperation among animals (including humans!) can evolve. This chapter will be added in the next few weeks. 
 

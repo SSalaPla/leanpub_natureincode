@@ -1,4 +1,4 @@
-# Chapter 1
+# 1. Introduction
 
 This is a book about biology. It is a also a book about programming. And it’s probably unlike any book you’ve ever read.
 
