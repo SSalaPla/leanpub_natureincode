@@ -6,7 +6,8 @@ What sets natural selection apart from the other forces that shape evolution (dr
 
 Some of the most visually stunning examples of adaptation are those of animal mimicry. Mimicry is the imitation of another species. If you have a hard time seeing the leaf katydid (an insect) in the image below, it’s because of the spectacular visual imitation of the plant that it rests on. In nature, you would probably have missed it entirely - just like most birds and other predators who would love nothing more than to eat the insect for lunch. 
 
-![Photo by [Geoff Gallice](https://www.flickr.com/photos/dejeuxx/8128706025/in/photolist-aLtn1F-fr5AvS-doiK6T-7pXFg6-4NrWie-98YHhf-fAf3jx-bg5QHF-cqVYih-dYZDoj-9cnJjz-hZpUgG-dtyp3o-84A7fp-dW2zSq-8yXeeF-eFfrP6-jPcb5z-9sBGV8-btv4Q9-dVW1R8-9sBrxp-doiDut-jPcqhK-4kUQQ-bqzrud-jw56g-aaci5o-q7FXw-ahCPeP-pUZzdb-oPejr-eys1LB-55mEJ-55mEM-6eMi1s-r6gx-acqKsX-49poTh-dVVYYX-oNpypL-hLPCWq-a1uz4E-pSMi-oYy3ji-3cV4CJ-4p1v9B-7kPiSC-agUM8Y-TquFN)](images/ch_6_mimicry.jpg)
+![](images/ch_6_mimicry.jpg)
+Photo by [Geoff Gallice](http://bit.ly/1vU1Y0W)
 
 Darwin’s insight was the following. Those individuals who are better adapted to survive and produce many offspring individuals will contribute more offspring individuals to the next generation than those who are less well adapted. However, as better adapted individuals leave more offspring, the resources that these individuals require to survive will become a limiting factor - simply because resources are limited. Thus, a struggle for survival and reproduction will begin, and the individuals with traits that contributed to a better outcome in this struggle will thrive, and become more common.
 
@@ -760,7 +761,7 @@ Now reload the page. Here’s what I see the first time:
 {width=90%}
 ![](images/ch_6_red_queen_2000.png)
 
-Wow - that’s a very different system from what we just observed. What is going on here?
+Look at that - that’s a very different system from what we just observed. What is going on here?
 
 It turns out the the very strong and regular cyclical dynamics are an artifact of a purely deterministic system. In our original code, everything was deterministic - there was no randomness to anything. As this small code change demonstrates, adding a little bit of randomness - or noise, if you will - to the host frequencies dramatically changes the dynamics of the system. In other words, the dynamics that we observed are not robust. When slightly perturbed, they turn out very different. 
 
