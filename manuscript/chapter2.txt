@@ -202,7 +202,7 @@ We added a `<script>` tag, which is the tag that contains our JavaScript code. B
 <script type="text/javascript">
 ~~~~~~~~
 
-What we’ve done here is to add a so-called *attribute* to the tag (type in this case) with a value of `"text/javascript"`. Generally, HTML tags can have many different attributes, and if you’ve glanced over the HTML documentation above, you’ve noticed that attributes are a major part of the HTML specifications. You could almost go as far as saying that HTML without the attributes is practically useless, since the effect and behavior of most tags depends completely on their attributes and their values. In the present example, the `type` attribute specifies the type of scripting language. In principle, browsers could be able to interpret multiple scripting languages, but currently JavaScript is the only one that’s supported by all modern browsers. If you wouldn’t add the `type` attribute to the `script` tag, everything would still work - that’s because `"text/javascript"` is the default value for the `type` attribute.
+What we’ve done here is to add a so-called *attribute* to the tag (`type` in this case) with a value of `"text/javascript"`. Generally, HTML tags can have many different attributes, and in case you’ve glanced over the HTML documentation above (don't worry if you haven't), you’ve noticed that attributes are a major part of the HTML specifications. You could almost go as far as saying that HTML without the attributes is practically useless, since the effect and behavior of most tags depends completely on their attributes and their values. In the present example, the `type` attribute specifies the type of scripting language. In principle, browsers could be able to interpret multiple scripting languages, but currently JavaScript is the only one that’s supported by all modern browsers. If you wouldn’t add the `type` attribute to the `script` tag, everything would still work - that’s because `"text/javascript"` is the default value for the `type` attribute.
 
 Let’s move on to the actual JavaScript code, which reads
 
@@ -221,7 +221,7 @@ console.log("My first line of JavaScript");
 
 It's sometimes important to leave a clarifying comment in the code - either for yourself, or for someone else who might work on the code later on. In JavaScript, everything after a double slash (`//`) on a line is interpreted as a comment, rather than as executable code.
 
-So how would we implement the Hardy-Weinberg principle in code? Let’s start with declaring there variables that will store the genotype frequencies, and initialize them with values that we used in the example above:
+So how would we implement the Hardy-Weinberg principle in code? Let’s start with declaring three variables that will store the genotype frequencies, and initialize them with values that we used in the example above:
 
 ~~~~~~~~
 var a1a1 = 0.15;
@@ -242,7 +242,7 @@ var q = 1-p;
 
 The variable `p` denotes the frequency of A1 alleles, which is simply the frequency of the A1A1 genotype (since they only carry A1 alleles) plus half of the frequency of the A1A2 genotype (since half of their alleles are A1). We then calculate `q` by simply subtracting `p` from 1; `p` and `q` need to add up to one because there are only two alleles in the population.
 
-I should highlight two subtleties in the first line of code. The first is that I am using parentheses to group the equation. JavaScript uses the standard algebraic rules and would first divide `a1a2` by `2` before adding the result to `a1a1`, even without the parentheses - just as algebraic rules dictate. However, I prefer to make these rules explicit with parentheses. Even more than the semicolons, explicit parentheses are just good style that makes your code clearer and prevents subtle errors in the future, when your code becomes more complex (which it most certainly will). The second subtlety is that I divided `a1a2` by `2`, rather than by `2.0`. If you have any experience with other programming languages, that might raise a red flag. That’s because most programming languages have two numeric types, integer and floating point numbers, but JavaScript doesn’t. All numbers are floating point numbers. `2` is equivalent to `2.0`, which avoids many numerical errors that plague other languages. 
+I should highlight two subtleties in the first line of code. The first is that I am using parentheses to group the equation. JavaScript uses the standard algebraic rules and would first divide `a1a2` by `2` before adding the result to `a1a1`, even without the parentheses - just as algebraic rules dictate. However, I prefer to make these rules explicit with parentheses. Even more than the semicolons, explicit parentheses are just good style that makes your code clearer and prevents subtle errors in the future, when your code becomes more complex (which it most certainly will). The second subtlety is that I divided `a1a2` by `2`, rather than by `2.0`. If you have any experience with other programming languages, that might raise a red flag. That’s because most programming languages have two numeric types, integer and floating point numbers, but JavaScript doesn’t (and that's a good thing). All numbers are floating point numbers. `2` is equivalent to `2.0`, which avoids many numerical errors that plague other languages. 
 
 Combine these five lines and copy them into your `script` tag in your HTML file, like so:
 
@@ -285,7 +285,7 @@ Above, we used
 console.log("My first line of JavaScript");
 ~~~~~~~
 
-We were passing one argument to the method, namely `"My first line of JavaScript"`. In JavaScript, anything wrapped in single or double quotes is a so-called *string* which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, `a1a1` (without any quote) refers to the variable `a1a1`, while `"a1a1"` is simply text. Similarly, `"100"` is simply text, and has no numerical meaning whatsoever, while `100` represents the actual number one hundred (remember why the number `100` isn’t at risk to be confused the variable `100`? That’s right, because there is no variable `100` - all variable names must begin with a letter).
+We were passing one argument to the method, namely `"My first line of JavaScript"`. In JavaScript, anything wrapped in single or double quotes is a so-called *string* which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, `a1a1` (without any quote) refers to the variable `a1a1`, while `"a1a1"` is simply text. Similarly, `"100"` is simply text, and has no numerical meaning whatsoever, while `100` represents the actual number one hundred (remember why the number `100` isn’t at risk to be confused with the variable `100`? That’s right, because there is no variable `100` - all variable names must begin with a letter).
 
 In line with the example above, let’s try to pass one string as an argument to `console.log`. Say we’d like to output 
 
