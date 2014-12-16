@@ -1,4 +1,4 @@
-# Epidemics: The Spread of Infectious Diseases
+# 7. Epidemics: The Spread of Infectious Diseases
 
 Have you ever had a cold, or the flu? I’m sure you have - especially common colds, with the runny nose and the coughs, are hard to avoid, and a reoccurring nuisance mostly during the winter months. Hopefully, you have never had the flu, or only rarely - unlike the common cold, the flu is caused by the influenza virus, which can cause very nasty infections that can put you out for multiple weeks. In fact, every year, tens of thousands of people die from complications caused by the flu.
 
@@ -25,7 +25,7 @@ The most common way to model an infectious disease outbreak in a population is t
 2.	Infected: This means that the individual is currently infected, and can infect other individuals who are susceptible.
 3.	Recovered: This means that the individual has recovered from the infection. The individual can not infect others anymore, and can’t be infected either because it developed immunity.
 
-Because of the first letters of the three states (____s____usceptible, ____i____nfected, and ____r____ecovered), a model implementing these states is called an *SIR model*. The SIR model captures some key aspects about many infectious diseases, but simplifies the reality down to three states. This follows the same idea that we have encountered earlier in the book: to make a model as simple as possible, but not simpler. 
+Because of the first letters of the three states (susceptible, infected, and recovered), a model implementing these states is called an *SIR model*. The SIR model captures some key aspects about many infectious diseases, but simplifies the reality down to three states. This follows the same idea that we have encountered earlier in the book: to make a model as simple as possible, but not simpler. 
 
 We are going to assume that initially, everybody is susceptible to an infection. In reality, that is not always true: Some people may have some background immunity because they were infected by a similar pathogen earlier in their life. Some people may have some genetic mutations that make them resistant to some infections. Some people may be vaccinated. But for a completely new disease that has never circulated in humans, the assumption is probably quite close to the truth.
 
@@ -73,7 +73,7 @@ init_grid();
 
 The function `init_grid()` is almost identical to the one we used in chapter 5, but rather than assigning random values to the individual cells, we’ll simply set all values to `"S"` (which stands for susceptible). After that, we pick a random cell on the grid - using the function `get_random_int(min, max)` from chapter 5 - and set its value to `"I"` (for infected). 
 
-And with that, the population is initialized. There are 9,999 susceptible and 1 infected individual: patient 0. We’ll be reusing the plotting functions `draw_population(grid,grid_length)` and `update_population(grid,grid_length)` from chapter 5 to draw the population in the browser. This time, we’ll use a slightly different coloring scheme for the different types of individuals: gray for susceptible, red for infected, and green for recovered. Go ahead and copy the two functions over from chapter 5, and add this CSS at the top of your page:
+And with that, the population is initialized. There are 9,999 susceptible and 1 infected individual: patient 0. We’ll be reusing the plotting functions `draw_population()` and `update_population()` from chapter 5 to draw the population in the browser. This time, we’ll use a slightly different coloring scheme for the different types of individuals: gray for susceptible, red for infected, and green for recovered. Go ahead and copy the two drawing functions (`draw_population()`, and `update_population()`) over from chapter 5, and add this CSS at the top of your page:
 
 ~~~~~~~~
 <style>
@@ -113,7 +113,8 @@ function run_time_step() {
 
 With that in place, save the document and load it in the browser. You should see the following:
 
-
+{width=90%}
+![](images/ch_7_patient_0.png)
 
 See that little red square in the bottom left corner? That’s our patient 0, the first infected individual in the population.
 
@@ -166,6 +167,17 @@ function expose_neighbors(i,ii) {
     }
 }
 
+function get_bounded_index(index) {
+    var bounded_index = index;
+    if (index < 0) {
+        bounded_index = index + grid_length;
+    }
+    if (index >= grid_length) {
+        bounded_index = index - grid_length;
+    }
+    return bounded_index;
+}
+
 function try_infection(i,ii) {
     if (grid[i][ii] == "S") {
         if (Math.random() < beta) {
@@ -177,8 +189,8 @@ function try_infection(i,ii) {
 
 The function `expose_neighbors(i,ii)` has two parameters: the coordinates `i` and `ii` on the grid. What we want to do is to expose all eight neighborhood cells of that one cell specified by the coordinates. Here are the coordinates of these eight cells:
  
-
-
+{width=30%}
+![](images/ch_7_neighborhood.png)
 
 In order to get access to all these cells, we need to loop over the two-dimensional space that these cells occupy. In the function `expose_neighbors(i,ii)`, we do that by using the coordinates `i`, and `ii`, like so:
 
@@ -203,11 +215,12 @@ try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
 
 We know that we have arrived at the focal cell when the value of `neighbor_i` is equal to `i`, and when the value of `neighbor_ii` is also equal to `ii`. In this case, the code will hit the `continue` statement, and immediately jump to the next iteration, without executing the remaining code in the loop body. 
 
-For all other cells, we will call the function `try_infection(i,ii)`. Notice that when the the function receives the coordinates in the form of the two parameters `i` and `ii`, those coordinates now represent a neighboring cell, and we have already taken into account the grid bounding issues by passing them through the `function get_bounded_index(index)` which we developed in chapter 5. In the function `try_infection(i,ii)`, we first check to make sure that the exposed individual is actually susceptible. If so, we infect it with probability `beta`.
+For all other cells, we will call the function `try_infection(i,ii)`. Notice that when the the function receives the coordinates in the form of the two parameters `i` and `ii`, those coordinates now represent a neighboring cell, and we have already taken into account the grid bounding issues by passing them through the function `get_bounded_index(index)` which we developed in chapter 5. In the function `try_infection(i,ii)`, we first check to make sure that the exposed individual is actually susceptible. If so, we infect it with probability `beta`.
 
 Now, with this code in place, let’s go ahead and reload the page. You should see an outbreak starting from a single patient 0, expanding rapidly outward:
 
-
+{width=90%}
+![](images/ch_7_no_recovery.png)
 
 After a while, your entire world should be infected, and the grid should be completely red. Because we haven’t built in recovery yet, infected individual continue to expose susceptible individuals indefinitely, and each susceptible individual will eventually become infected. This is why 100% of the population will end up being infected.
 
@@ -238,11 +251,13 @@ As you can see, this function is pretty straightforward: it checks if the indivi
 
 Let’s go ahead and rerun the simulation. Keep in mind that recovered individuals are colored green:
 
-
+{width=90%}
+![](images/ch_7_with_recovery.png)
 
 As you should be able to observe, the outbreak expands at the red / gray edges, where susceptible individuals are exposed to infected individuals. However, infected individuals in red quickly recover and turn green. At that stage, they can’t get reinfected, nor can they infect others. Eventually, the outbreak will come to a stop, and you will see something like this:
 
-
+{width=90%}
+![](images/ch_7_all_recovered.png)
 
 As you can see, all infected individuals have recovered. However, there are still some susceptible individuals left. How is that possible?
 
