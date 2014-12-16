@@ -1438,7 +1438,7 @@ function draw_line_chart(data, x_max, x_label, y_label, y_max_flexible) {
     var x = d3.scale.linear()
             .domain([0, x_max])
             .range([0, width]);
-
+            
     var y = y_max_flexible ? d3.scale.linear()
             .domain([0, 1.1 * d3.max(data, function(d) {return d;})])
             .range([height, 0]) : d3.scale.linear()
@@ -1453,8 +1453,8 @@ function draw_line_chart(data, x_max, x_label, y_label, y_max_flexible) {
             .orient("left");
 
     var line = d3.svg.line()
-            .x(function (d, i) {
-              return x((i/(data.length-1)) * x_max);
+            .x(function (d, i) { 
+              return x((i/((data[0].length > 0 ? data[0] : data).length-1)) * x_max);
             })
             .y(function (d) {
               return y(d);
@@ -1506,8 +1506,8 @@ function draw_line_chart(data, x_max, x_label, y_label, y_max_flexible) {
             .append("line")
             .attr(
             {
-              "x1" : function(d,i){ return x((i/10) * x_max);},
-              "x2" : function(d,i){ return x((i/10) * x_max);},
+              "x1" : function(d,i){ return x(d);},
+              "x2" : function(d,i){ return x(d);},
               "y1" : 1,
               "y2" : height,
               "fill" : "none",
@@ -1515,11 +1515,24 @@ function draw_line_chart(data, x_max, x_label, y_label, y_max_flexible) {
               "stroke" : "#eee",
               "stroke-width" : "1px"
             });
-
-    svg.append("path")
-            .datum(data)
-            .attr("class", "line")
-            .attr("d", line);
+            
+     
+     if (data[0].length > 0) {
+     	var simulation = svg.selectAll(".simulation")
+               .data(data)
+               .enter().append("g")
+               .attr("class", "simulation");
+ 
+     	simulation.append("path")
+               .attr("class", "line")
+               .attr("d", function(d) { return line(d); })
+     } 
+     else {
+     	svg.append("path")
+             .datum(data)
+             .attr("class", "line")
+             .attr("d", line);
+     }
 
   }
 ~~~~~~~~

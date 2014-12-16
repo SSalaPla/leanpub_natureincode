@@ -321,14 +321,15 @@ for (var i = 0; i < generations; i = i + 1) {
     data.push(p);
 }
 
-draw_line_chart(data,generations,”Generation","p");
+draw_line_chart(data,generations,"Generation","p");
 ~~~~~~~~
 
 This code is very similar to the one we used above. Given `s`, `h`, and `p`, we simply run a number of generations where we calculate {$$}\Delta p{/$$}, and then add that to the previous value of `p` in order to get the new value of `p`.
 
 What we will see is the following plot:
 
-
+{width=90%}
+![](images/ch_6_directional_selection_p_vs_time.png)
 
 As you can see, *p* starts increasing right from the start, even if a little slow. Then, around generation 25, when *p* is roughly 0.1, the increase starts accelerating noticeably. We know from the plot above that the per generation increase is maximal at around *p = 0.35*, after which the increase starts slowing down again, leading to the classical observed S-shaped curve.
 
@@ -341,8 +342,8 @@ Let us now move on to the next type of selection: balancing selection. Recall th
 
 We can reuse the code from above, and plot {$$}\Delta p{/$$} as a function of *p* with the values `s = 0.1` and `h = -0.5`. If we do that, we get the following plot:
 
-
-
+{width=90%}
+![](images/ch_6_balancing_selection_deltap_vs_p.png)
 
 Interesting! As you can see, {$$}\Delta p{/$$} is mostly positive, but for values of *p* higher than 0.75, it starts to become negative. What does that mean for the evolutionary dynamics?
 
@@ -407,7 +408,8 @@ For our purpose here, the `while` loop is sufficient. It fills up the `p_values`
 
 This produces the following plot:
 
-
+{width=90%}
+![](images/ch_6_balancing_selection_p_vs_time.png)
 
 As this plot clearly shows, all simulation will go the equilibrium allele frequency of *p = 0.75*, independent of the initial value of p. Thus, our reasoning was correct.
 
@@ -428,7 +430,8 @@ Last, but certainly not least, let’s take a look at disruptive selection. Disr
 
 As before, let’s go ahead and plot the value {$$}\Delta p{/$$} as a function of *p*, but this time with the values `s = 0.1` and `h = 1.5`. This gives us the following plot:
 
-
+{width=90%}
+![](images/ch_6_disruptive_selection_deltap_vs_p.png)
 
 This plot looks rather similar to the plot that we saw in the case of balancing selection above. For most of *p*, {$$}\Delta p{/$$} is positive, but sometimes, it is negative. The only difference here is that the negative values of {$$}\Delta p{/$$} are found of the left side of the graph, where *p* is small.
 
@@ -440,7 +443,8 @@ This is another astounding finding. It turns out that in the case of disruptive 
 
 As it turns out, no. Some system have multiple equilibria. The system of disruptive selection, it turns out, has three such equilibria. Why three? Let’s go ahead an run a few simulations, plotting the evolutionary dynamics of disruptive selection. We can reuse the code from above, and simply set the heterozygous effect, `h`, to `1.5`. Here’s what we’ll find:
 
-
+{width=90%}
+![](images/ch_6_disruptive_selection_p_vs_time.png)
 
 As predicted, depending on the initial conditions, *p* will either go to 0 or to 1. These are two of there three equilibria. However, there seems to be another equilibria at *p = 0.25*. What’s up with that?
 
@@ -455,14 +459,15 @@ initial_p = initial_p + 0.01;
 to this
 
 ~~~~~~~~
-initial_p = initial_p + 0.01; + (Math.random() * 0.000001);
+initial_p = initial_p + 0.01 + (Math.random() * 0.000001);
 ~~~~~~~~
 
 What we are doing here is to add a tiny value (between 0 and a millionth) to the initial value of `p`. If you now rerun the code, you will see the following:
 
+{width=90%}
+![](images/ch_6_disruptive_selection_p_vs_time_v2.png)
 
-
-As you can see, the purple line will not remain at its initial value anymore (something just slightly larger than 0.25). It will, as predicted, increase in frequency and go to fixation. Initially, the values of {$$}\Delta p{/$$} are very, very small in the vicinity of *p = 0.25*, which is why it takes quite some time for the line to noticeably go on its upward trajectory.
+As you can see, the initially flat line at {$$}p \approx 0.25{\$$} will not remain at its initial value anymore. It will, as predicted, increase in frequency and go to fixation. Initially, the values of {$$}\Delta p{/$$} are very, very small in the vicinity of *p = 0.25*, which is why it takes quite some time for the line to visibly begin its upward trajectory.
 
 It is nevertheless important to know this equilibrium value, because of its importance in predicting the dynamics of the system. Once again, it turns out that it’s very easy to calculate this value. Indeed, it is the exact same value as in the case of balancing selection:
 
