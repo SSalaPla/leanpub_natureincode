@@ -525,8 +525,8 @@ Finally, the last two variables, `sh` and `sp`, define the fitness reduction (se
 
 There are four combinations of possible interactions between the two host and parasite genotypes, with the following outcomes:
 
-
-
+{width=75%}
+![](images/ch_6_host_parasite_matrix.png)
 
 We will implement this fitness model in a minute. The important thing to note is that if the genotypes don’t match, the parasite won’t be able to infect the host. That’s great for the host, who will have the maximal fitness value `1`. It’s bad for the parasite though, as parasites generally need a host to reproduce. The parasite’s fitness value is reduced by the parasite-specific selection coefficient `sp`, to `1-sp`. On the other hand, if the genotypes do match, the parasite will be able to infect the host. In this case, the parasite’s fitness is maximal (i.e. `1`), and the host’s fitness is reduced by the host-specific selection coefficient `sh`, to `1-sh`, due to the infection.
 
@@ -728,7 +728,8 @@ function get_parasite_fitness(i,ii) {
 
 And that’s it! Now that have put everything together, we can run the code and look at the output. Here’s what I see, the first time I run this code:
 
-
+{width=90%}
+![](images/ch_6_red_queen_400.png)
 
 Wow - cyclical dynamics indeed! This is the Red Queen, in action.
 
@@ -756,7 +757,8 @@ var generations = 2000;
 
 Now reload the page. Here’s what I see the first time:
 
-
+{width=90%}
+![](images/ch_6_red_queen_2000.png)
 
 Wow - that’s a very different system from what we just observed. What is going on here?
 
