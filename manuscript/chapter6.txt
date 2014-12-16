@@ -467,7 +467,7 @@ What we are doing here is to add a tiny value (between 0 and a millionth) to the
 {width=90%}
 ![](images/ch_6_disruptive_selection_p_vs_time_v2.png)
 
-As you can see, the initially flat line at {$$}p \approx 0.25{\$$} will not remain at its initial value anymore. It will, as predicted, increase in frequency and go to fixation. Initially, the values of {$$}\Delta p{/$$} are very, very small in the vicinity of *p = 0.25*, which is why it takes quite some time for the line to visibly begin its upward trajectory.
+As you can see, the initially flat line at {$$}p \approx 0.25{/$$} will not remain at its initial value anymore. It will, as predicted, increase in frequency and go to fixation. Initially, the values of {$$}\Delta p{/$$} are very, very small in the vicinity of *p = 0.25*, which is why it takes quite some time for the line to visibly begin its upward trajectory.
 
 It is nevertheless important to know this equilibrium value, because of its importance in predicting the dynamics of the system. Once again, it turns out that it’s very easy to calculate this value. Indeed, it is the exact same value as in the case of balancing selection:
 
