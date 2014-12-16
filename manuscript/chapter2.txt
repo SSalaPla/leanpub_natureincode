@@ -291,15 +291,15 @@ console.log("My first line of JavaScript");
 
 We were passing one argument to the method, namely `"My first line of JavaScript"`. In JavaScript, anything wrapped in single or double quotes is a so-called *string* which is simply a sequence of textual characters. This is an important tool that allows us to differentiate text from numbers and variables. For example, `a1a1` (without any quote) refers to the variable `a1a1`, while `"a1a1"` is simply text. Similarly, `"100"` is simply text, and has no numerical meaning whatsoever, while `100` represents the actual number one hundred (remember why the number `100` isn’t at risk to be confused with the variable `100`? That’s right, because there is no variable `100` - all variable names must begin with a letter).
 
-In line with the example above, let’s try to pass one string as an argument to `console.log`. Say we’d like to output 
+In line with the example above, let’s try to pass one string as an argument to `console.log`. Let's say we’d like to output 
 
 ~~~~~~~
 generation 0:	0.15	0.5	0.35
 ~~~~~~~
 
-(values separated by tabs). 
+(where the values are separated by tabs). 
 
-The problem is that some of this information is stored in variables (such as `a1a1`), rather than as text. String concatenation to the rescue! In JavaScript, you can add string together using the `+` operator, like so:
+The problem is that some of this information is stored in variables (such as `a1a1`), rather than as text. String *concatenation* to the rescue! In JavaScript, you can add string together using the `+` operator, like so:
 
 ~~~~~~~
 "hello " + "world"
@@ -365,7 +365,7 @@ and the output is
 {width=50%}
 ![](images/ch_2_one_generation.png)
 
-Everything looking great, so let’s move on and… wait, what is this? 0.16000000000000003? This should just be 0.16 - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to JavaScript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in JavaScript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies when it comes to computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because JavaScript uses 64 bits to store numbers, the rounding usually occurs at an insignificant place, as it does in 0.16000000000000003. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
+Everything looking great, so let’s move on and… wait, what is this? `0.16000000000000003`? This should just be `0.16` - what’s going on here? Well, you have just entered the world of floating point rounding errors. This is not specific to JavaScript - all languages know this phenomenon, and it’s a consequence of the binary nature of computers. Fundamentally, anything in a computer is stored in bits, represented by 0 and 1, or off and on. Floating numbers are represented by 64 bits in JavaScript, which means there is a limited count of numbers that can be stored, and they are all stored in binary format. As a consequence, some numbers need to be rounded at a (hopefully) insignificant place. Think about it this way: what is 1/3? It’s 0.33333333333333… and so on. The decimal system cannot perfectly capture 1/3, and we’re usually fine to round it to 0.33 or 0.333. But then, even though we know that 1/3 + 1/3 + 1/3 = 1, if we added 0.333 + 0.333 + 0.333, we would get 0.999, which isn’t the same as 1. The same logic applies when it comes to computers - some numbers cannot be captured perfectly in the binary system, and some rounding is necessary. As a consequence, when we perform calculations with these rounded numbers, we may get some rounding errors. Because JavaScript uses 64 bits to store numbers, the rounding usually occurs at an insignificant place, as it does in `0.16000000000000003`. However, you need to keep the issue in mind because it can introduce subtle errors. Most of the time though, it’s just a matter of aesthetics, which is easily solvable - we’ll get to it in a minute.
 
 Back to our genotypes - we already know what will happen next generation, but just to be sure, let’s code it up. Once again, we will calculate the genotype frequencies using the following code:
 
