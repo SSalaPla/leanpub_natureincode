@@ -113,7 +113,7 @@ function run_time_step() {
 
 With that in place, save the document and load it in the browser. You should see the following:
 
-{width=90%}
+{width=75%}
 ![](images/ch_7_patient_0.png)
 
 See that little red square in the bottom left corner? That’s our patient 0, the first infected individual in the population.
@@ -219,7 +219,7 @@ For all other cells, we will call the function `try_infection(i,ii)`. Notice tha
 
 Now, with this code in place, let’s go ahead and reload the page. You should see an outbreak starting from a single patient 0, expanding rapidly outward:
 
-{width=90%}
+{width=75%}
 ![](images/ch_7_no_recovery.png)
 
 After a while, your entire world should be infected, and the grid should be completely red. Because we haven’t built in recovery yet, infected individual continue to expose susceptible individuals indefinitely, and each susceptible individual will eventually become infected. This is why 100% of the population will end up being infected.
@@ -251,12 +251,12 @@ As you can see, this function is pretty straightforward: it checks if the indivi
 
 Let’s go ahead and rerun the simulation. Keep in mind that recovered individuals are colored green:
 
-{width=90%}
+{width=75%}
 ![](images/ch_7_with_recovery.png)
 
 As you should be able to observe, the outbreak expands at the red / gray edges, where susceptible individuals are exposed to infected individuals. However, infected individuals in red quickly recover and turn green. At that stage, they can’t get reinfected, nor can they infect others. Eventually, the outbreak will come to a stop, and you will see something like this:
 
-{width=90%}
+{width=75%}
 ![](images/ch_7_all_recovered.png)
 
 As you can see, all infected individuals have recovered. However, there are still some susceptible individuals left. How is that possible?
@@ -269,7 +269,8 @@ Indeed, the idea that individuals can recover before they infect someone else ca
 
 If you rerun your simulation multiple times, it will sometimes end like this:
 
-
+{width=75%}
+![](images/ch_7_patient_0_recovered.png)
 
 The first individual has recovered before passing on the infection, and no outbreak occurred. The epidemic hasn’t managed to take off. But you’ll also notice that in practically all cases where patient 0 does indeed infect other individuals, the epidemic will take off and infect almost the entire grid. Thus, with the current parameters for `beta` (the infection probability per contact and unit time) and `gamma` (the recovery probability per unit time), we find ourselves in an “either or” type of situation: either there is no epidemic, or the epidemic is all-consuming.
 
@@ -281,9 +282,13 @@ var gamma = 0.15;
 
 Now go head and run a few simulations. You’ll find that the size of the epidemic can vary considerably. An outbreak can stop quickly, and be rather small:
 
-
+{width=75%}
+![](images/ch_7_simulation_gamma_015_small.png)
 
 or it can go on for quite some time, but eventually still fizzle out:
+
+{width=75%}
+![](images/ch_7_simulation_gamma_015_medium.png)
 
 
 
