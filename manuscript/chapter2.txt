@@ -166,6 +166,7 @@ Now - how does one program in HTML? The simple answer is one doesn’t: HTML is 
 
 In order to use JavaScript, you need to put your JavaScript code within a `<script>` tag, like so:
 
+{lang="html"} 
 ~~~~~~~~
 <script type="text/javascript">
     console.log("My first line of JavaScript");
@@ -174,6 +175,7 @@ In order to use JavaScript, you need to put your JavaScript code within a `<scri
 
 It doesn’t really matter where you add the script tag, but it’s mostly found within the `<head>` tag. We’ll talk about these lines of code in a second, but first, go ahead and put them in the `<head>` tag of your document, like so:
 
+{lang="html"} 
 ~~~~~~~~
 <!DOCTYPE html>
 <html>
@@ -198,6 +200,7 @@ Nice! So what just happened?
 
 We added a `<script>` tag, which is the tag that contains our JavaScript code. Before we get to that, take a close look at the opening tag, which reads
 
+{lang="html"} 
 ~~~~~~~~
 <script type="text/javascript">
 ~~~~~~~~
@@ -246,6 +249,7 @@ I should highlight two subtleties in the first line of code. The first is that I
 
 Combine these five lines and copy them into your `script` tag in your HTML file, like so:
 
+{lang="html"} 
 ~~~~~~~~
 <script type="text/javascript">
     var a1a1 = 0.15;
