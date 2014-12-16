@@ -291,9 +291,6 @@ or it can go on for quite some time, but eventually still fizzle out:
 ![](images/ch_7_simulation_gamma_015_medium.png)
 
 
-
-
-
 ##It’s a Small World
 
 Let’s now focus on something that is a very active area in contemporary epidemiological research: the role of host contact structure. The host contact structure is the answer to the question “Who is in contact with whom”, i.e. “who could pass the infection on to whom”? Think of the host contact structure as the traffic system on which a disease can spread. If you think about this analogy, it becomes obvious that the structure will affect the dynamics of disease spread. Indeed, if you are in the unfortunate situation of having to commute in a badly designed traffic system, you intuitively grasp the concept. 
@@ -317,18 +314,19 @@ if (Math.random() < 0.01) {
     else {
 try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
     }
-}
 ~~~~~~~~
 
 What we are doing here is running the original code in 99% of the time, but in 1% of the time, we expose a random individual, rather than the local neighbor. Notice that we use the same function and parameters to get random coordinates as we used to define patient 0 in the function `init_grid()`.
 
 Run the simulation, and notice that the dynamics are now strikingly different. Before, we would get a local outbreak that would eventually fizzle out on its own. But now, we generally get very large epidemics, and they unfold much faster than before:
 
-
+{width=75%}
+![](images/ch_7_simulation_small_world_start.png)
 
 Notice how the epidemic starts in one location, but is quickly spreading in other locations as well, due to these occasional, rare jumps of infected individuals across the grid. Each of the small clusters of recovered and infected individuals that you can make out in the figure above was started by a “traveling” infected individual. The clusters are now growing in parallel, making the overall epidemic progress much faster than before, and usually leaving a pattern like this:
 
-
+{width=75%}
+![](images/ch_7_simulation_small_world_end.png)
 
 This fascinating example is an example of a so-called *small world* phenomenon. To understand this phenomenon, let’s pick two random individuals, and ask ourselves how far they are apart, in terms of the number of contacts you would have to go through to get from one individual to the other. 
 
