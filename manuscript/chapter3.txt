@@ -513,9 +513,12 @@ function draw_line_chart(data,N,generations) {
         .attr("y", 30)
         .attr("x", width-100)
         .append("tspan").attr("class", "legend_title").text("Population Size:")
-        .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 20).text(N)
-        .append("tspan").attr("class", "legend_title").attr("x", width-100).attr("dy", 20).text("Generations:")
-        .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 20).text(generations);
+        .append("tspan").attr("class", "legend_text")
+        .attr("x", width-100).attr("dy", 20).text(N)
+        .append("tspan").attr("class", "legend_title")
+        .attr("x", width-100).attr("dy", 20).text("Generations:")
+        .append("tspan").attr("class", "legend_text")
+        .attr("x", width-100).attr("dy", 20).text(generations);
         
     d3.select("body").style("font","10px sans-serif");
     d3.selectAll(".axis path, .axis line")
@@ -788,11 +791,11 @@ Let’s go back to our marble jar example. Recall that we had all the allele cop
 
 Let’s define *G* as the probability that two alleles picked randomly from the population of *2N* alleles are identical by state (in our example, that would mean they are both A1s, or both A2s). Thus *G* is the probability that if you pick any two marbles from the jar, at the same time, they would both be A1s, or both be A2s.
 
-We are now in a position to ask ourselves, if the current generation has a certain value of *G*, what is *G* going to be in the next generation? We’re going to denote *G* in the next generation simply as *G’*, to avoid confusion with *G* in this generation.
+We are now in a position to ask ourselves the following question: given that the current generation has a certain value of *G*, what is *G* going to be in the next generation? We’re going to denote *G* in the next generation simply as *G’*, to avoid confusion with *G* in this generation.
 
 There are two ways by which two randomly picked marbles are identical by state. It could be that they had the same ancestor marble that was simply picked twice. The probability of this is {$$}\frac{1}{2N}{/$$}. Why? Because once you pick a certain marble from a jar out of *2N* marbles, and put it back again, the possibility that you pick that exact same marble again next time is {$$}\frac{1}{2N}{/$$} (since there are *2N* marbles you can pick from).
 
-The second way by which two randomly picked marbles are identical by state is that they were did not have the same ancestor marble, but their ancestors just happened to be the same type (i.e. either both ancestors were A1 or both were A2). The probability of that is {$$}1-\frac{1}{2N}G{/$$}, and here’s why. First, the probability that two marbles did not have the same ancestor is {$$}1-\frac{1}{2N}{/$$}. We know this because we have just established above that the probability that they do have the same ancestor is {$$}\frac{1}{2N}G{/$$}, so the probability that they *don’t* have the same ancestor is 1 minus that, i.e. {$$}1-\frac{1}{2N}{/$$}. But that’s not the end of the story - the two alleles also need to be identical in state, which is *G*. Thus the total probability is the product of these two probabilities, i.e. {$$}1-\frac{1}{2N}G{/$$}.
+The second way by which two randomly picked marbles are identical by state is that they did *not* have the same ancestor marble, but their ancestors just happened to be the same type (i.e. either both ancestors were A1 or both were A2). The probability of that is {$$}(1-\frac{1}{2N})G{/$$}, and here’s why. First, the probability that two marbles did not have the same ancestor is {$$}1-\frac{1}{2N}{/$$}. We know this because we have just established above that the probability that they do have the same ancestor is {$$}\frac{1}{2N}{/$$}, so the probability that they *don’t* have the same ancestor is 1 minus that, i.e. {$$}1-\frac{1}{2N}{/$$}. But that’s not the end of the story - the two alleles also need to be identical in state (i.e. of the same type), which is *G* by definition. The total probability, then, is the product of these two probabilities, i.e. {$$}(1-\frac{1}{2N})G{/$$}.
 
 Having established the two (mutually exclusive) ways by which two randomly picked marbles can be identical, considering what *G* is in this generation, we simply need to add them up to get the total probability, which is 
 
@@ -802,9 +805,9 @@ Having established the two (mutually exclusive) ways by which two randomly picke
 
 which corresponds to *G’* in the next generation.
 
-What we have just done is started from the probability that two randomly picked alleles in this generation are the same with probability *G*, and then established that in the next generation, *G’* will be {$$}\frac{1}{2N} + (1-\frac{1}{2N})G{/$$}. This is the most important part of the story - everything that follows now is just algebraic reformulation.
+What we have just done is the following: we have started from the probability that two randomly picked alleles in this generation are the same (*G*), and then established that in the next generation, *G’* will be {$$}\frac{1}{2N} + (1-\frac{1}{2N})G{/$$}. This is the most important part of the story - everything that follows now is just algebraic reformulation.
 
-Let’s start by defining *H* as *H = 1-G*. Thus, *H* is the probability that two alleles picked randomly from the population of *2N* alleles are different (because *G* was the probability that they are the same). This is a good measure for genetic variance. If you have high genetic variation, then the chance that two randomly picked alleles are different is high. Conversely, if you have low genetic variation, then the chance that two randomly picked alleles are different is low. In the worst case, you have no genetic variation (*H = 0*) - all alleles are the same type, and the chance that two randomly picked alleles are different is zero.
+Let’s start by defining *H* as *H = 1 - G*. Thus, *H* is the probability that two alleles picked randomly from the population of *2N* alleles are different (because *G* was the probability that they are the same). This is a good measure for genetic variance. If you have high genetic variation, then the chance that two randomly picked alleles are different is high. Conversely, if you have low genetic variation, then the chance that two randomly picked alleles are different is low. In the worst case, you have no genetic variation (*H = 0*) - all alleles are the same type, and the chance that two randomly picked alleles are different is zero.
 
 Because *H = 1 - G*, the same must also be true in the next generation, i.e.
 
@@ -812,7 +815,7 @@ Because *H = 1 - G*, the same must also be true in the next generation, i.e.
 H’ = 1 - G’
 {/$$} 
 
-since we know that 
+Since we know that 
 
 {$$} 
 G’ = \frac{1}{2N} + (1-\frac{1}{2N})G
@@ -824,7 +827,7 @@ we can replace this term in the equation above and write
 H’ = 1 - (\frac{1}{2N} + (1-\frac{1}{2N})G)
 {/$$} 
 
-Because *H = 1-G*, it’s also true that *G = 1-H*, and we can thus replace the *G* in the previous equation as well, and write
+Because *H = 1 - G*, it’s also true that *G = 1 - H*, and we can thus replace the *G* in the previous equation as well, and write
 
 {$$} 
 H’ = 1 - (\frac{1}{2N} + (1-\frac{1}{2N})(1-H))
@@ -856,7 +859,7 @@ H’ = (1 - \frac{1}{2N})H
 
 which is an equation that looks unassuming - but is indeed one of the most profound equations of evolutionary biology, immediately revealing two major aspects about genetic drift. First, it tells us that no matter what *H* is in this generation, in the next generation it is going to be smaller. That’s because {$$}(1 - \frac{1}{2N}){/$$} will always be smaller than 1, and in order to get *H’*, we need to multiply *H* by something that is smaller than 1, which means that *H’ < H*. Boom -  right there, we’ve shown mathematically that the effect of genetic drift is to reduce genetic variation. But this formula is not done yet! It reveals another truth, which is that the smaller the population size *N*, the stronger the reduction in genetic variation per generation. Why? Well, we just said that in order to get *H’*, we need to multiply *H* by something that is smaller than 1 - but how much smaller? As you can easily see, the term {$$}(1 - \frac{1}{2N}){/$$} will be smaller if *N* is small. And it will be closer to 1 if *N* is large. 
 
-Two major insights based on a simple equation, that we were able to derive from simple principles, with simple algebra. Not too shabby! But wait, there’s more!
+Two major insights based on a simple equation that we were able to derive from simple principles, with simple algebra. Not too shabby! But wait, there’s more!
 
 Let’s denote the genetic variance and generation 0 with {$$}H_0{/$$}, and thus
 
@@ -896,7 +899,7 @@ H_t = (1 - \frac{1}{2N})^t H_0
 
 What this means is that if *t* is large enough - in other words, over sufficiently long time - the term {$$}(1 - \frac{1}{2N})^t{/$$} will approach 0, which means genetic variation will approach 0, and all alleles but one will be lost. This is another significant insight from just this one formula. Unless other forces counter it, genetic drift will reduce all genetic variation in every population.
 
-And as if those three insights were not enough, let’s develop a fourth insight. We know that drift reduces genetic variation; we know that the effect of drift is strongest in smaller populations; and we know that the ultimate outcome of drift would be the fixation of one allele, and hence a total destruction of genetic variance, unless other process counter it. One question remains open, though - how long does all of this take?
+And as if those three insights were not enough, let’s develop a fourth insight. We know that drift reduces genetic variation; we know that the effect of drift is strongest in smaller populations; and we know that the ultimate outcome of drift would be the fixation of one allele, and hence a total destruction of genetic variance, unless other processes counter it. One question remains open, though - how long does all of this take?
 
 As with any process of decay, the best way to address this problem is by asking how long it takes to reduce the current genetic variance by half. You may have come across this concept as that of half-life - i.e. the amount of time required for a quantity to fall to half of its initial value - in physics or chemistry.
 
