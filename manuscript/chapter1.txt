@@ -12,6 +12,6 @@ This book covers quite a bit of material, not at least because it's a book about
 
 Having learned programming myself - and continuing to do so - I am perfectly aware that things will not always go smoothly, and that there will be bumps in the road. To help you through these, all examples, with the full code, are available at the website [www.natureincode.com](http://www.natureincode.com). Go there if you just can't make your code work, and be inspired by - but don't copy - a working solution. 
 
-To keep updated on anything related to the book, you can follow the Twitter account [@natureincode](https://twitter.com/natureincode). If you feel adventurous, you can also follow my personal account  [@marcelsalathe](https://twitter.com/marcelsalathe) where I post about anything under the sun, including biology and programming related topic. 
+To keep updated on anything related to the book, you can follow the Twitter account [@natureincode](https://twitter.com/natureincode). If you feel adventurous, you can also follow my personal account  [@marcelsalathe](https://twitter.com/marcelsalathe) where I post about anything under the sun, including topics related to biology and programming. 
 
 All set up? Let's get started.
