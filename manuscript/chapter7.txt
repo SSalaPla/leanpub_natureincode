@@ -526,21 +526,23 @@ var rewiring_probability = 0;
 
 Starting with a fully local grid (i.e. no random contacts), my output of epidemic sizes for 100 simulations is as follows:
 
+{width=80%}
+![](images/ch_7_outbreak_sizes_regular.png)
 
-
-As you can see, many epidemics don't even get started - the outbreak is limited to one infected individual, patient 0. The others fizzle out very quickly, while some infect hundreds of individuals; and a few even over 1,000 individuals (the maximum is 3,733 individuals, which is about 37% of the population).
+As you can see, many epidemics don't even get started - the outbreak is limited to one infected individual, patient 0. The others fizzle out very quickly, while some infect hundreds of individuals; and a few even over 1,000 individuals (the maximum is 3,589 individuals, which is about 37% of the population).
 
 Now let's change a few contacts to be random, rather than local, as we have done before. Go ahead and set the rewiring probability to 1%:
 
 ~~~~~~~~
-var rewiring_probability = 0;
+var rewiring_probability = 0.01;
 ~~~~~~~~
 
 and run the code again. This time, my output is the following:
 
+{width=80%}
+![](images/ch_7_outbreak_sizes_small_world.png)
 
-
-We can instantly see that while some epidemics still don't get started, those that do end up being very large, very often more than 6,000 individuals. The largest epidemic in this run infected 7,157 individuals - more than 71% of the population.
+We can instantly see that while some epidemics still don't get started, those that do end up being very large, very often more than 6,000 individuals. The largest epidemic in this run infected 7,124 individuals - more than 71% of the population.
 
 The extreme epidemic size seems to be about twice as large - but what about the average? Let's go ahead and find out. We can define a function that calculates the average of the values in the data like so:
 
