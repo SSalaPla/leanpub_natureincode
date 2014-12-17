@@ -283,7 +283,7 @@ Thus, 4.39% is indeed correct.
 
 ##The Randomness of Finite Populations
 
-So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same circle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (they zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can be struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
+So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same cycle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (they zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can be struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
 
 Life is complicated, and if we would set out to simulate life in all its details, we would end up with a very complicated model. But just as we have done in the previous chapter, we can again reduce the complexity into a simple model that captures the essence of these random processes. Once again, the model is named after the two originators, Sewall Wright and Ronald Fisher: it's called the *Wright-Fisher model*.
 
@@ -425,9 +425,12 @@ As we have established in the beginning of this chapter, stochastic effects are 
 
 ##Visualizing Drift
 
-These simulations are a great tool to examine the dynamics of genetic drift, but it’s bit cumbersome to scroll though hundreds or thousands of lines of allele frequencies. Wouldn’t it be nice if we had a way to visualize the allele dynamics? Let’s start visualizing things to get a better overview about what’s going on here.
+These simulations are a great tool to examine the dynamics of genetic drift, but it’s a bit cumbersome to scroll though hundreds or thousands of lines of allele frequencies. Wouldn’t it be nice if we had a way to visualize the allele dynamics? Let’s start visualizing things to get a better overview about what’s going on here.
 
 Before we get to it, a word of warning: Data plotting in the browser isn’t trivial. What I’m going to do here is to give you some plotting code that I’m simply asking you to copy and paste into your documents. The code that we will continue to write focusses on generating the data, and we then hand the data over to a plotting function. There’s no need for you at this stage to understand how plotting works, and it would be a significant distraction at the moment. Feel free to examine the plotting code, of course, but I won’t explain it, nor do I expect you to understand it.
+
+W> ## Copying Code
+W> Just as a reminder: all the code, including the plotting code below, is available at the book website [www.natureincode.com](http://www.natureincode.com). I recommend copying the plotting code from the website - some ebooks readers introduce weird characters that the browsers don't like.
 
 First, add this line to your code, at the beginning of your `<head>` element:
 
