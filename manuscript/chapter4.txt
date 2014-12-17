@@ -1,6 +1,6 @@
 # 4. Mutation: The Power of Mistakes
 
-In the last chapter, we’ve learned a number of highly interesting aspects about evolution by genetic drift. One of the rather depressing consequences of drift, we learned, is the total elimination of genetic variation in the long run. Clearly, something else must be going on, for the world is not void of genetic variation. That something else is *mutation*.
+In the previous chapter, we’ve learned a number of highly interesting aspects about evolution by genetic drift. One of the rather depressing consequences of drift, we learned, is the total elimination of genetic variation in the long run. Clearly, something else must be going on, for the world is not void of genetic variation. That something else is *mutation*.
 
 Mutation is simply the random change in a genetic sequence. Most mutations occur when the genetic sequence (the DNA in all living species) is replicated. The replication process, even though highly accurate, is not quite 100% error-free. Now and then, an error will occur, and the new copy will not be identical base for base to the original. 
 

@@ -268,7 +268,7 @@ for (var i = 0; i < repeats; i = i + 1) {
         counter = counter + 1;
     }
 }
-console.log("Getting 8 heads, 2 tails " + (counter / repeats) * 100 + "% of the time")
+console.log("Getting 8 heads, 2 tails " + (counter / repeats) * 100 + "% of the time");
 ~~~~~~~~
 
 When I run this code three times (i.e. reload the page three times) I’m getting the following output:
@@ -984,13 +984,13 @@ I hope to have shown you that both approaches - that of the computational simula
 
 ##Effective Population Size
 
-In the remainder of this chapter, I want to introduce an important concept that should always be on your radar when talking about drift: that of effective population size. We have until now assume a finite population size of *N*. We have also assumed that the population size is constant overt time (i.e. *N* in every generation). Both the simulations and the mathematical equations were based on this assumption. In reality, the size of a population can fluctuate over generations, sometimes strongly so.
+In the remainder of this chapter, I want to introduce an important concept that should always be on your radar when talking about drift: that of effective population size. We have until now assumed a finite population size of *N*. We have also assumed that the population size is constant overt time (i.e. *N* in every generation). Both the simulations and the mathematical equations were based on this assumption. In reality, the size of a population can fluctuate over generations, sometimes strongly so.
 
 Another assumption we’ve made so far is that we did not differentiate between sexes, and simply assumed that individuals are *hermaphroditic*, which is to say that they are both male and female at the same time. That assumption is violated in many species, although hermaphroditism is widespread among plants, and certain groups of animals such as snails and slugs.
 
 There are other assumptions that we may have violated, so the question naturally emerges whether the simplified Wright-Fisher model is useful at all. The answer to this question is a resounding yes. As you have seen, the simplifying assumptions of the Wright-Fisher model allowed us to derive many important effects of a finite population size. The problem is, each of the violated assumptions, when taken into account, may have different effects on evolutionary dynamics, so how are we going to be able to reconcile all these differences? How can we compare different populations that have different specific biological characteristics? What we need is a way for us to translate what we observe in nature into something we can all agree on when talking about models. That something is the *effective population size*. 
 
-Before I go into the details, let’s make sure we all understand this idea. When you talk about the effect of drift in your population, your focus should be on the effective population size, not the actual size of your population (commonly referred to as the *census* population size). Another way of saying this is as follows: from the perspective of genetic drift, it is not really important how large your population is in reality, if you were to count up the individuals - what matters is *as how large a population it behaves if it were a Wright-Fisher population*.
+Before I go into the details, let’s make sure we really understand this idea. When you talk about the effect of drift in your population, your focus should be on the effective population size, not the actual size of your population (commonly referred to as the *census* population size). Another way of saying this is as follows: from the perspective of genetic drift, it is not really important how large your population is in reality, i.e. if you were to count up the individuals - what matters is *as how large a population it behaves if it were a Wright-Fisher population*.
 
 This is useful for a number of reasons. I have already mentioned one of the reasons above, which is that it allows for much more sensible comparisons of populations when you are interested in the effect of genetic drift. The second reason is that the effective population size, as it turns out, is usually *smaller* than the census population size, for reasons we’ll go into in a minute. Thus, you would usually underestimate the force of genetic drift if you would make your calculations based on the actual number of individuals in your population.
 
@@ -999,15 +999,15 @@ Here is a way of showing this graphically:
 {width=90%}
 ![](images/ch_3_effective_population_size_concept.png)
 
-As you can see, the effect of genetic drift, which is due reduce genetic variation, follows the pattern that you would expect in a Wright-Fisher of population of size 100. In other words, the effective population size of this population is 100, whereas the census population size is 200. Or put differently, even though this population consists of 200 individuals, it behaves - from a genetic drift perspective - as if it consisted of 100 individuals in a Wright-Fisher population. And this brings us to the definition of the effective population size, which is *the size of an ideal (Wright-Fisher) population that shows the same decay of genetic variation as the actual population of interest*.
+As you can see, the effect of genetic drift, which is to reduce genetic variation, follows the pattern that you would expect in a Wright-Fisher of population of size 100. In other words, the effective population size of this population is 100, whereas the census population size is 200. Or put differently, even though this population consists of 200 individuals, it behaves - from a genetic drift perspective - as if it consisted of 100 individuals in a Wright-Fisher population. And this brings us to the definition of the effective population size, which is *the size of an ideal (Wright-Fisher) population that shows the same decay of genetic variation as the actual population of interest*.
 
 Now that we have established the concept of the effective population size, let’s take a look at why the effective population size is usually smaller than the census population size. There can be a number of reasons, but I will focus on two of the most important ones.
 
-The first reason for a substantially reduced effective population size are *population bottlenecks*. Sometimes, populations that are usually largely stable in population size may experience a substantial reduction in population size. Perhaps the population has been infected by a very deadly pathogen, or predation pressure has been unusually high. In that case, even just one generation of a strong population size reduction can have a very strong effect on the effective population size.
+The first reason for a substantially reduced effective population size is the occurrence of *population bottlenecks*. Sometimes, populations that are usually stable in population size may experience a substantial reduction in population size. Perhaps the population has been infected by a very deadly pathogen, or predation pressure has been unusually high. In that case, even just one generation of a strong population size reduction can have a very strong effect on the effective population size.
 
-Let’s look at a simple numerical example. Let’s assume that the size of a population is usually 1,000 individuals, However, for reasons unknown, the population size collapses to 100 in one generation, before going back up to 1,000 again in the following generation.
+Let’s look at a simple numerical example. Let’s assume that the size of a population is usually 1,000 individuals. However, for reasons unknown, the population size collapses to 100 in one generation, before going back up to 1,000 again in the following generation.
 
-If we look at just three generations in a row, where the population sizes were 1000, 100, and 1000 individuals, respectively, we could be forgiven for thinking that the effective population size in these three generations would be the average, which is 700. It turns out that the effective population size is the *harmonic mean* of the population sizes, which is 250. This is quite remarkable - this single generation bottleneck has slashed the effective population size to a number that’s almost three times smaller than what you would have expected by simply calculating the average. To make an even more extreme sample, let’s say the population sizes in these three generations are 1000, 10, and 1000. The average population size over the three generations is 670, but the effective population size is 29.4!
+If we look at just three generations in a row, where the population sizes were 1000, 100, and 1000 individuals, respectively, we could be forgiven for thinking that the effective population size in these three generations would be the average, which is 700. It turns out that the effective population size is the *harmonic mean* of the population sizes, which is 250. This is quite remarkable - this single generation bottleneck has slashed the effective population size to a number that’s almost three times smaller than what you would have expected by simply calculating the average. To make an even more extreme example, let’s say the population sizes in these three generations are 1000, 10, and 1000. The average population size over the three generations is 670, but the effective population size is 29.4!
 
 Let’s have a quick look at the definition of the harmonic mean - for any set of numbers {$$}x_1{/$$}, {$$}x_2{/$$}, {$$}x_3{/$$} … {$$}x_n{/$$}, the harmonic mean is
 
@@ -1015,13 +1015,13 @@ Let’s have a quick look at the definition of the harmonic mean - for any set o
 \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \frac{1}{x_3} + … + \frac{1}{x_n}}
 {/$$}
 
-Because this term is a reciprocal of a sum of reciprocal, small numbers will have very strong effects on the mean. For the numbers 1000, 10, and 1000, the mean is 
+Because this term is a reciprocal of a sum of reciprocals, small numbers will have very strong effects on the mean. For the numbers 1000, 10, and 1000, the mean is 
 
 {$$}
 \frac{3}{\frac{1}{1000} + \frac{1}{10} + \frac{1}{1000}} = \frac{3}{0.102}
 {/$$}
 
-The reason why the harmonic mean is so low (29.4) is because the denominator is rather large, and it itself is almost fully determined by the value {$$}\frac{1}{10}{/$$}. Even if you had population sizes of 1,000,000 before and after the bottleneck, the formula shows that they wouldn’t have mattered the slightest bit, because then the mean would simply be equal to {$$}\frac{3}{0.100002}{/$$}, which is still about 30. The other important thing that the formula shows is that even when you have longer time periods of large, stable population sizes, the one generation with population size 10 can still dominate the outcome, and the effective population size would still be much smaller than expected.
+The reason why the harmonic mean is so small (29.4) is that the denominator is rather big, and it itself is almost fully determined by the value {$$}\frac{1}{10}{/$$}. Even if you had population sizes of 1,000,000 before and after the bottleneck, the formula shows that they wouldn’t have mattered the slightest bit, because then the mean would simply be equal to {$$}\frac{3}{0.100002}{/$$}, which is still about 30. The other important insight that the formula reveals is that even when you have longer time periods of large, stable population sizes, the one generation with population size 10 can still dominate the outcome, and the effective population size would still be much smaller than expected.
 
 The important message here is obvious: because the effective population size is given by the harmonic mean, population bottlenecks, even if over very short periods of time, will dramatically reduce the effective population size.
 
@@ -1053,7 +1053,7 @@ All I’m changing here is the line
 population_sizes.push(N);
 ~~~~~~~~
 
-which will add the population size `N` into the array. "But wait", I hear you say, "since `N` currently remains constant, we are always pushing the same value into the array!" That’s right, and we’ll change that in a little bit. For now I just want to make sure we have all the pieces set up.
+which will add the population size `N` to the array. "But wait", I hear you say, "since `N` currently remains constant, we are always pushing the same value into the array!" That’s right, and we’ll change that in a little bit. For now I just want to make sure we have all the pieces set up.
 
 Now that we have our array with all the population sizes over the course of a simulation, we need to write a function that can actually calculate the effective population size based on the values in the array. Here’s how we can do this:
 
@@ -1097,19 +1097,19 @@ Which is exactly what we expected. Since `N` remains constant throughout the `10
 
 Now let’s adapt the code further to allow for a change in population size. We are going to add a slight modification that allows us to introduce a bottleneck of `N = 10` every `10` generations.
 
-First, let’s briefly do the math. If we did not know about the harmonic mean, we might have thought that the average population size would be a good predictor of the dynamics. The average population size of `90` generations at `N = 1000` and `10` generations at `N = 10` is `901`. If we run ten simulations, using our current code with `N = 901`, we get the following outcome: 
+First, let’s briefly do the math. If we did not know about the harmonic mean, we might have thought that the average population size would be a good predictor of the evolutionary dynamics. The average population size of 90 generations at `N = 1000` and `10` generations at `N = 10` is 901. If we run ten simulations, using our current code with `N = 901`, we get the following outcome: 
 
 {width=90%}
 ![](images/ch_3_effective_population_size_N_901.png)
  
 As expected, because of the reduced population size, the allele fluctuations are a bit more pronounced, but by and large the effect is small. 
 
-On the other hand, I have just claimed above that the population will behave much more like a Wright-Fisher population of a size that corresponds to the effective population size, which in this case would be `92`. How does a Wright-Fisher population of size 92 behave? Let’s find out by setting `N` to `92`, and here is what we get: 
+On the other hand, I have just claimed above that the population will behave much more like a Wright-Fisher population of a size that corresponds to the effective population size, which in this case would be 92. How does a Wright-Fisher population of size 92 behave? Let’s find out by setting `N = 92`, and here is what we get: 
 
 {width=90%}
 ![](images/ch_3_effective_population_size_N_92.png)
 
-Obvisouly quite different - a substantial reduction in genetic variation, with some populations having lost all variation by generation `100` already.
+Obvisouly quite different - a substantial reduction in genetic variation, with some populations having lost all variation by generation 100 already.
 
 Let me repeat this - if the claim about effective population size and harmonic mean is indeed correct, then the dynamics of a population with `N = 1000` that goes through `N = 10` bottlenecks every 10^th^ generation should be much more like a population that has a constant population size of `N = 92`, rather than `N = 901` (and as the two previous images have shown, the dynamics would be quite different).
 
@@ -1153,7 +1153,7 @@ function simulation(simulation_counter) {
             population_size = N;
         }
         population_sizes.push(population_size);
-				next_generation(data[simulation_counter],population_size);
+next_generation(data[simulation_counter],population_size);
     }
 }
 ~~~~~~~~
@@ -1212,9 +1212,9 @@ To make an even more extreme case, set `N = 100000`, but keep the bottlenecks in
 
 As you can see, the effective population size is still very small (`100`), despite the fact that this population has a size of `100000` during 90% of the time! You can also see that the dynamics are completely driven by the bottlenecks.
 
-To sum up: changing census population sizes can have a strong effect on the effective population size, especially when the population goes though severe bottlenecks. The effect of bottlenecks is to reduce the effective population size, which will result in a much faster reduction in genetic variation.
+To sum up: changing census population sizes can have a strong effect on the effective population size, especially when the population goes though severe bottlenecks. The effect of bottlenecks is to reduce the effective population size, which will result in a much faster reduction of genetic variation.
 
-The second reason for a substantially reduced effective population size is an *unbalanced sex ratio*. Recall that the Wright-Fisher model assumes hermaphroditic individuals. Because many species are not hermaphroditic, but rather have individuals with distinct sexes, the sex ratio can have a big impact on the effective population size. Imagine a population of 100 individuals, where 99 are female, and only one is male. The next generation will all have genes from the one male, and it is intuitively clear that this offspring generation will have a much lower genetic variance than it would have had, if the parent generation had had a more balanced sex ratio.
+The second reason for a substantially reduced effective population size is an *unbalanced sex ratio*. Recall that the Wright-Fisher model assumes hermaphroditic individuals. Because many species are not hermaphroditic, but rather have individuals with distinct sexes, the sex ratio can have a big impact on the effective population size. Imagine a population of 100 individuals, where 99 are female, and only one is male. The next generation will all have alleles from the one male, and it is intuitively clear that this offspring generation will have a much lower genetic variance than it would have had, if the parent generation had had a more balanced sex ratio.
 
 As it turns out, there is a simple formula to calculate the effective population size if we know the number of females, {$$}N_f{/$$}, and the number of males, {$$}N_m{/$$}, in a population ({$$}N = N_f + N_m{/$$}). The formula is 
 
@@ -1248,7 +1248,7 @@ which is
 
 which is *N*, and thus {$$}N_e = N{/$$} in that case.
 
-However, let’s look at an example where the ratio is very unequal. Unequal sex ratio may be due to sexual selection (where females prefer certain males over others, and vice versa), or due to artificial breeding (where a farmer has just a few males but many females), or due to other reasons. Let’s look at the case where we have a population of 10 male bulls and 90 female cows. Thus, {$$}N_f = 90{/$$}, and {$$}N_m = 10{/$$}. If you plug these numbers into the equation above, you get
+However, let’s look at an example where the ratio is very unequal. Unequal sex ratio may be due to sexual selection (where females prefer certain males over others, and vice versa), or due to artificial breeding (e.g. where a farmer has just a few male bulls but many female cows), or due to other reasons. Let’s look at the case where we have a population of 10 male bulls and 90 female cows. Thus, {$$}N_f = 90{/$$}, and {$$}N_m = 10{/$$}. If you plug these numbers into the equation above, you get
 
 {$$}
 N_e = \frac{4 * 90 * 10}{100} = 36
@@ -1297,7 +1297,7 @@ for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
 draw_line_chart(data,x_max,"Proportion Males","Ne / N");
 ~~~~~~~~
 
-As you can see, I’m implementing the equation above, and push the result into an array that we’ll hand over to the plotting function (which I will show you in a second). First, there are two subtleties in the `for` loop that I want to mention. First, I’m using the smaller than or equal operator, because I want to include the last value, `x_max` (which I’m setting to `1`). Second, I’m not actually writing 
+As you can see, I’m implementing the equation above, and push the result into an array that we’ll hand over to the plotting function (which I will show you in a second). But there are two subtleties in the `for` loop that I want to mention. First, I’m using the smaller than or equal operator (`<=`), because I want to include the last value, `x_max` (which I’m setting to `1`). Second, I’m not actually writing 
 
 ~~~~~~~~
 i <= x_max;
@@ -1309,7 +1309,7 @@ but rather
 i <= x_max + 0.005;
 ~~~~~~~~
 
-why is that? It’s because the rounding error would kick in again otherwise. Feel free to output the value of `i` to the console - you would see that after you’ve added the value `0.1` a hundred times to `0`, your final value will be `1.0000000000000007`, rather than `1`. To be sure that the for loop doesn’t end prematurely, I’m adding a small amount as an error margin to `1` when making the comparison.
+why is that? It’s because the rounding error would kick in again otherwise. Feel free to output the value of `i` to the console - you would see that after you’ve added the value `0.01` a hundred times to `0`, your final value will be `1.0000000000000007`, rather than `1`. To be sure that the for loop doesn’t end prematurely, I’m adding a small amount as an error margin to `1` when making the comparison.
 
 Here’s the drawing function which you can again just copy and paste:
 
@@ -1433,7 +1433,7 @@ As you can see, the effect is very strong when the sex ratio is strongly skewed.
 
 Overall, the message here is that unless the sex ratio is severely skewed (less than 30% of one sex), the overall relative reduction in effective population size is small. However, beyond that value, the effect can be quite severe.
 
-Boy, what a chapter! We’re done! Congratulations for following me all the way through here. Let’s briefly wrap up what we learned in this chapter.
+Boy, what a chapter! We’re done! Congratulations for following me all the way through here. Let’s briefly wrap up what we've learned in this chapter.
 
 * Finite population size introduces randomness into evolutionary dynamics (genetic drift).
 * Genetic drift acts to reduce genetic variation.
