@@ -439,144 +439,119 @@ First, add this line to your code, at the beginning of your `<head>` element:
 <script src="http://d3js.org/d3.v3.js"></script>
 ~~~~~~~~
 
-This line loads and external JavaScript library called `D3.js`, which is the most advanced data plotting library available for the browser to date. Note that you need to be connected to the internet for this library to be loaded!
+This line loads an external JavaScript library called `D3.js`, which is the most advanced data plotting library available for the browser to date. Note that you need to be connected to the internet for this library to be loaded!
 
 Next, in your already existing `<script>` tag, put the following plotting code at the top: 
 
 ~~~~~~~~
- function draw_line_chart(data,N,generations) {
-      var margin = {top: 20, right: 20, bottom: 50, left: 50},
-              width = 700 - margin.left - margin.right,
-              height = 400 - margin.top - margin.bottom;
+function draw_line_chart(data,N,generations) {
+    var margin = {top: 20, right: 20, bottom: 50, left: 50},
+    width = 700 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
+    var color = d3.scale.category10();
 
-      var x = d3.scale.linear()
-              .range([0, width]);
+    var x = d3.scale.linear()
+        .domain([0,data[0].length > 0 ? data[0].length : data.length])
+        .range([0, width]);
 
-      var y = d3.scale.linear()
-              .range([height, 0]);
+    var y = d3.scale.linear()
+        .range([height, 0]);
 
-      var xAxis = d3.svg.axis()
-              .scale(x)
-              .orient("bottom");
+    var xAxis = d3.svg.axis()
+        .scale(x).orient("bottom");
 
-      var yAxis = d3.svg.axis()
-              .scale(y)
-              .orient("left");
+    var yAxis = d3.svg.axis()
+        .scale(y).orient("left");
 
-      var line = d3.svg.line()
-              .x(function (d, i) {
-                return x(i);
-              })
-              .y(function (d) {
-                return y(d);
-              });
+    var line = d3.svg.line()
+        .x(function (d, i) {
+            return x(i);
+        })
+        .y(function (d) {
+            return y(d);
+        });
+        
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      var svg = d3.select("body").append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width / 2)
+        .attr("y", 6)
+        .attr("dy", "3em")
+        .text("Generation");
 
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("dy", "-3.5em")
+        .style("text-anchor", "middle").
+        text("p");
 
-      x.domain(d3.extent(data, function (d, i) {
-        return i;
-      }));
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("x", width / 2)
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("p");
 
-      svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-              .call(xAxis)
-              .append("text")
-              .attr("text-anchor", "middle")
-              .attr("x", width / 2)
-              .attr("y", 6)
-              .attr("dy", "3em")
-              .text("Generation");
+    var legend = svg.append("text")
+        .attr("text-anchor", "star")
+        .attr("y", 30)
+        .attr("x", width-100)
+        .append("tspan").attr("class", "legend_title").text("Population Size:")
+        .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 20).text(N)
+        .append("tspan").attr("class", "legend_title").attr("x", width-100).attr("dy", 20).text("Generations:")
+        .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 20).text(generations);
+        
+    d3.select("body").style("font","10px sans-serif");
+    d3.selectAll(".axis path, .axis line")
+        .style({"fill":"none","stroke":"#000","shape-rendering":"crispEdges"});
+    d3.selectAll(".x.axis path").style("display","none");    
+    d3.selectAll(".legend_title")
+        .style({"font-size":"12px","fill":"#555","font-weight":"400"});
+    d3.selectAll(".legend_text")
+        .style({"font-size":"20px","fill":"#bbb","font-weight":"700"});
 
-      svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
-              .append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("x", -height / 2)
-              .attr("dy", "-3.5em")
-              .style("text-anchor", "middle").
-              text("p");
+    if (data[0].length > 0) {
+        var simulation = svg.selectAll(".simulation")
+            .data(data)
+            .enter().append("g")
+            .attr("class", "simulation");
 
-      svg.append("text")
-              .attr("class", "y label")
-              .attr("text-anchor", "end")
-              .attr("x", width / 2)
-              .attr("y", 6)
-              .attr("dy", ".75em")
-              .attr("transform", "rotate(-90)")
-              .text("p");
-
-      var legend = svg.append("text")
-              .attr("text-anchor", "star")
-              .attr("y", 30)
-              .attr("x", width-100)
-              .append("tspan").attr("class", "legend_title").text("Population Size:")
-              .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 			20).text(N)
-              .append("tspan").attr("class", "legend_title").attr("x", width-100).attr("dy", 			20).text("Generations:")
-              .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 			20).text(generations);
-
-
-      svg.append("path")
-              .datum(data)
-              .attr("class", "line")
-              .attr("d", line);
+        simulation.append("path")
+            .attr("class", "line")
+            .attr("d", function(d) { return line(d); })
+            .style("stroke", function(d,i) { return color(i); });
+	} 
+    else {
+        svg.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", line)
+            .style("stroke","steelblue");
     }
-~~~~~~~~
+    d3.selectAll(".line").style({"fill":"none","stroke-width":"1.5px"});    
 
+}
+~~~~~~~~
 
 Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with three parameters: `data`, `N` and `generations`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `N` and `generations` simply correspond to the population size, and the number of generations that we want the simulations to run. The function then takes those arguments, and plots the dynamics of our simulation in the browser.
 
-In order for the plots to look pretty, copy this code into your somewhere within your `<head>` element:  
-
-~~~~~~~~
-<style>
-
-  body {
-    font: 10px sans-serif;
-  }
-
-  .axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
-
-  .x.axis path {
-    display: none;
-  }
-
-  .line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 1.5px;
-  }
-
-  .legend_title {
-    font-size:12px;
-    fill:#555;
-    font-weight:400;
-  }
-
-  .legend_text {
-    font-size:20px;
-    fill:#bbb;
-    font-weight:700;
-  }
-
-</style>
-~~~~~~~~
-
-This is not JavaScript code; it is *CSS*, which stands for cascading style sheets, and it is a very common “language” to stylize data, i.e. to define colors, font sizes, line thickness, etc. Once again, because it is only used to help us visualize the data, I won’t go into the details here. 
-
-With these things in place, we are now ready to plot our simulation results. 
+With the plotting code in place, we are now ready to plot our simulation results. 
 
 Let’s take our simulation code form above, and modify it slightly:
 
@@ -639,7 +614,7 @@ Save the document and reload the browser. You should see a nice line chart showi
  
 In this particular simulation run, the allele A1 went to fixation around generation 800, which is another way of saying that its frequency reached 100%. This also means that the allele A2 was lost at the same time (whenever an allele goes to fixation, all other alleles are lost). Reload the page and watch different evolutionary dynamics unravel. As you can observe, the dynamics are completely random, as we expected. Sometimes, one of the alleles goes relatively straight to fixation. Other times, the frequencies fluctuate widely, with one allele almost driven to extinction, only to make a dramatic comeback, and then still being lost 200 generations later.
 
-With this code in place, let’s focus on the effect of population size. Change the population size to 10 by setting the corresponding variable to `10`:
+With this code in place, let’s focus on the effect of the population size *N*. Change the population size to 10 by setting the corresponding variable to `10`:
 
 ~~~~~~~~
 var N = 10;
@@ -650,14 +625,14 @@ and reload the page. You should see something like this:
 {width=90%}
 ![](images/ch_3_drift_single_population_N_10.png)
 
-Again, yours will look different each time you reload the page, but you’ll note that one of the alleles will go to fixation very rapidly, sometimes within just a few generations. Now increase the population size to 50, and you’ll get a result like this: 
+Again, yours will look different every time you reload the page, but you’ll note that one of the alleles will go to fixation very rapidly, sometimes within just a few generations. Now increase the population size to 50, and you’ll get a result like this: 
 
 {width=90%}
 ![](images/ch_3_drift_single_population_N_50.png)
 
 With `N = 50`, the time to loss / fixation is a little longer, but it’s still shorter than with `N = 500`. If you play around with different numbers, you’ll notice the general pattern that we already observed earlier: that the random effects are much stronger when the population is smaller, and as a consequence, allele loss / fixation happens sooner.
 
-Rather than reloading the page and seeing a single simulation run its course, I want to modify the code so that we can run a number of simulations and plot them all at once. In order to do this though, I first need to explain in more detail the concept of an array. I mentioned above that we are using a JavaScript array that we name data, and the we initialize to be an empty array, like so:
+Rather than reloading the page and seeing a single simulation run its course, I want to modify the code so that we can run a number of simulations and plot them all at once. In order to do this though, I first need to explain in more detail the concept of an array. I mentioned above that we are using a JavaScript array that we call `data`, and that we initialize it as an empty array, like so:
 
 ~~~~~~~~
 var data = [];
@@ -677,7 +652,7 @@ Why are arrays important? The variable types that we encountered so far - number
 var b = [4,"hello there",6,true,false];
 ~~~~~~~~
 
-Now that you know what an array is, how to do you manage it? How do you add data to it, and how to retrieve it later?
+Now that you know what an array is, how to do you manage it? How do you add data to it, and how do you retrieve the data later on?
 
 There are two ways by which you can add data to an array. The first way is to do it when you initialize the array, as we’ve done with array `arr` above. The second way is to *push* data into an existing array, as we’ve done in the genetic drift code example above, like so:
 
@@ -687,17 +662,17 @@ arr.push(5);
 
 This line adds the number five to the list of numbers in the array. Importantly, it will be added *at the end* of the list, so that the new array will contain the values 4, 3, 6, 8, 3 and 5, in that order.
 
-You can retrieve elements by using the concept of an *index*. If you want the n^th^ element of an array `arr`, you retrieve like so:
+You can retrieve elements by using the concept of an *index*. If you want the n^th^ element of the array `arr`, you retrieve like so:
 
 ~~~~~~~~
 arr[n]
 ~~~~~~~~
 
-However, there is one major gotcha: like in almost any data structure in almost any programming languages, JavaScript arrays are zero-indexed. This means that the first element has index 0, not index 1. If you are new to programming, this is going to be a major source of bugs, and probably hours of desperation. Sorry to be so blunt, but it is quite true. Perhaps this dramatic warning will at least remind you what to look for when your code behaves strangely.
+However, there is one major gotcha: like in almost any data structure in almost any programming language, JavaScript arrays are zero-indexed. This means that the first element has index 0, not index 1. If you are new to programming, this is going to be a major source of bugs, and probably hours of desperation. Sorry to be so blunt, but it is quite true. Perhaps this dramatic warning will at least remind you what to look for when your code behaves strangely.
 
 Thus, in order to retrieve the first element in the array `arr`, you would use `arr[0]`; in order to retrieve the second element, you would use `arr[1]`; and so on.
 
-Here where it gets interesting: I mentioned above that you can store any type of variable in an array. What that means is that you can also store *other arrays*, allowing you to create *multi-dimensional arrays*. Imagine you want to store three sets of five numbers in an array. You could do it as follows:
+Here's where it gets interesting: I mentioned above that you can store any type of variable in an array. What that means is that you can also store *other arrays*, allowing you to create *multi-dimensional arrays*. Imagine you want to store three sets of five numbers in an array. You could do it as follows:
 
 ~~~~~~~~
 var set1 = [1,2,3,4,5];
@@ -713,9 +688,9 @@ Alternatively, you could initialize the data array directly, like so:
 var data = [[1,2,3,4,5], [10,11,12,13,14], [33,44,55,66,77]];
 ~~~~~~~~
 
-If you need access the subsets, you would then do it as before: `data[0]` accesses the first element in the array, which is `[1,2,3,4,5]`. 
+If you need to access the subsets, you would then do it as before: `data[0]` accesses the first element in the array, which is the array `[1,2,3,4,5]`. 
 
-If you want to access a number in one of the arrays, you would first have to access the corresponding array, and then access the element that you want from that array. For example, in order to get the number 33 from the data array, you would have to write `data[2][0]`.
+If you want to access a specific element in one of the arrays, you would first have to access the corresponding array, and then access the element that you want from that array. For example, in order to get the number 33 from the `data` array, you would have to write `data[2][0]`.
 
 Multidimensional arrays sound complicated, but they are very simple, as you've just learned. They are also very handy when you deal with more complex datasets. For example, when we want to store the dynamics of multiple simulation runs, rather than just one, we can simply use a multidimensional array. The main array would then contain all the arrays for each simulation run, and those in turn would contain the allele frequencies for each generation.
 
@@ -770,115 +745,17 @@ for (var i = 0; i < simulations; i = i + 1) {
 draw_line_chart(data,N,generations);
 ~~~~~~~~
 
-Let’s go through the changes here. First, I define the global variable `p`, but don’t assign it a value any more. That’s because every simulation should start again with a new value, so it’ll be part of the simulation code to set `p` to `0.5` every time a new simulation begins. I’m also introducing a new variable `simulations` that defines how many simulations we’re going to run.
+Let’s go through the changes here. First, I define the global variable `p`, but don’t assign it a value any more. That’s because every simulation should start again with a new value, so it’ll be the responsibility of the `simulation()` function to set `p` to `0.5` every time a new simulation begins. I’m also introducing a new variable `simulations` that defines how many simulations we’re going to run.
 
 The function `next_generation()` has one subtle but important change. It now has an argument called `simulation_data`, and in the last line, the allele frequency `p` is added to `simulation_data`. (i.e. `simulation_data` is expected to be an array). I’ll get back to that in a second.
 
 The loop where we call the `next_generation()` function is now encapsulated in a function called `simulation()`. This function is also where we make sure to (re)set the value of `p` to `0.5` every time we start a new simulation. It also has one argument, `simulation_counter`, which we use as an index for the data array. 
 
-All of this should become clear on the next few lines, where we have a loop that iterates as many times as we have simulations. In each iteration, we add an empty array to the `data` array. This empty array is the array that will contain all the A1 allele frequency values for one simulation run. Then, we call the function simulation, with the value `i` as an argument, which is our current counter for the simulations (starting at `0`). So when the function `simulation()` is called, `simulation_counter` will be set to whatever `i` was, and `data[simulation_counter]` thus corresponds to the array for a given simulation. It’s that array that we pass as an argument to the function `next_generation()`.
+All of this should become clear on the next few lines, where we have a loop that iterates as many times as we have simulations. In each iteration, we add an empty array to the `data` array. This empty array is the array that will contain all the A1 allele frequency values for one simulation run. Then, we call the function `simulation()`, with the value `i` as an argument, which is our current counter for the simulations (starting at `0`). So when the function `simulation()` is called, `simulation_counter` will be set to whatever `i` was, and `data[simulation_counter]` thus corresponds to the array for a given simulation. It’s that array that we pass as an argument to the function `next_generation()`.
 
-At the end, we call the `draw_line_chart()` function as before - but importantly, this time we will be passing it a multidimensional array (unlike in the example before, where we passed it a one-dimensional array containing only the results of a single simulation run).
+At the end, we call the `draw_line_chart()` function as before - but importantly, this time we will be passing it a multidimensional array (unlike in the example before, where we passed it a one-dimensional array containing only the results of a single simulation run). Thankfully, `draw_line_chart()` is already prepared to handle two-dimensional data, so no need to change anything there! 
 
-Our drawing code - which I previously asked you to cut and paste - needs to be updated as well to handle multiple simulations. So once again, I’m going to ask you to cut and past the following, updated drawing code, replacing the function `draw_line_chart`:
-
-~~~~~~~~
-function draw_line_chart(data,N,generations) {
-    var margin = {top: 20, right: 20, bottom: 50, left: 50},
-    width = 700 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-
-    var x = d3.scale.linear()
-              .range([0, width]);
-
-    var y = d3.scale.linear()
-              .range([height, 0]);
-
-    var xAxis = d3.svg.axis()
-              .scale(x)
-              .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-              .scale(y)
-              .orient("left");
-
-    var line = d3.svg.line()
-              .x(function (d, i) {
-                return x(i);
-              })
-              .y(function (d) {
-                return y(d);
-              });
-
-     var svg = d3.select("body").append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var color = d3.scale.category10();
-
-    x.domain(d3.extent(data[0], function (d, i) {
-        return i;
-    }));
-
-
-    svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-              .call(xAxis)
-              .append("text")
-              .attr("text-anchor", "middle")
-              .attr("x", width / 2)
-              .attr("y", 6)
-              .attr("dy", "3em")
-              .text("Generation");
-
-
-    svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
-              .append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("x", -height / 2)
-              .attr("dy", "-3.5em")
-              .style("text-anchor", "middle").
-              text("p");
-
-    svg.append("text")
-              .attr("class", "y label")
-              .attr("text-anchor", "end")
-              .attr("x", width / 2)
-              .attr("y", 6)
-              .attr("dy", ".75em")
-              .attr("transform", "rotate(-90)")
-              .text("p");
-
-    var legend = svg.append("text")
-              .attr("text-anchor", "star")
-              .attr("y", 30)
-              .attr("x", width-100)
-              .append("tspan").attr("class", "legend_title").text("Population Size:")
-              .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 			20).text(N)
-              .append("tspan").attr("class", "legend_title").attr("x", width-100).attr("dy", 			20).text("Generations:")
-              .append("tspan").attr("class", "legend_text").attr("x", width-100).attr("dy", 			20).text(generations);
-
-
-    var simulation = svg.selectAll(".simulation")
-              .data(data)
-              .enter().append("g")
-              .attr("class", "simulation");
-
-    simulation.append("path")
-              .attr("class", "line")
-              .attr("d", function(d) { return line(d); })
-              .style("stroke", function(d,i) { return color(i); });
-
-    }
-~~~~~~~~
-
-With this new function in place, save your HTML file and reload the page. You will see 10 simulation runs at the same time. 
+Go ahead and save your HTML file, and then reload the page. You will see 10 simulation runs at the same time. 
 
 With that in place, let us run this code three times for 200 generations, with three different population sizes: `N = 20`, `N = 200`, and `N = 2000`.
 
