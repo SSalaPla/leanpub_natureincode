@@ -441,7 +441,28 @@ First, add this line to your code, at the beginning of your `<head>` element:
 
 This line loads an external JavaScript library called `D3.js`, which is the most advanced data plotting library available for the browser to date. Note that you need to be connected to the internet for this library to be loaded!
 
-Next, in your already existing `<script>` tag, put the following plotting code at the top: 
+Next, you will need to add the plotting code to your document.
+
+W> ## Careful!
+W> So far, it didn't matter whether your JavaScript code was located in the `<head>` or the `<body>` of the document. However, for the visualizations in this book to work, the JavaScript code that generates the visualizations needs to be located in the <body>. I recommend you use the following HTML structure as a template:
+W>
+W>{lang="html"}
+W>~~~~~~~~
+W><!DOCTYPE html>
+W><html>
+W>    <head>
+W>        <title>Nature, Im Code</title>
+W>            <script src="http://d3js.org/d3.v3.js"></script>
+W>    </head>
+W>    <body>
+W>        <script type="text/javascript">
+W>            // your code
+W>        </script>
+W>    </body>
+W></html>
+W>~~~~~~~~
+
+You will need to have the following plotting code in your document:
 
 ~~~~~~~~
 function draw_line_chart(data,N,generations) {
