@@ -25,7 +25,7 @@ We’ll be storing a number of sequences in the array `sequences` - each sequenc
 
 If you are wondering why the variable `BASES` is in capital letters: I’m simply following the established practice of using all capital letters in variables that are expected to be constant and never changing. JavaScript doesn’t have a built in mechanism to make a variable immutable, and thus making it clear to others that this variable shouldn't change by using all capital letters is considered the best practice.
 
-Let’s first establish the code for generation the first generation. Here it is:
+Let’s first establish the code for generating the first generation. Here it is:
 
 ~~~~~~~~
 function random_base(current_base) {
@@ -140,7 +140,7 @@ Granted, the function `run_generations()` looks a little intimidating. But we’
 
 Notice that each loop has a different counter variable. I use `i`, `ii`, `iii` etc. Other people use `i`, `j`, `k`, etc. I prefer my style because it instantly tells me which nesting level I’m at, but feel free to use whichever variable names you prefer.
 
-Once we are in the third loop that iterates over each single base pair in a sequence, we can trigger a mutation even with probability `0.0001`. As before, we are implementing this stochastic event by using the built-in random number generator `Math.random()`. Let’s take a look at how we do this:
+Once we are in the third loop that iterates over each single base pair in a sequence, we can trigger a mutation event with probability `0.0001`. As before, we are implementing this stochastic event by using the built-in random number generator `Math.random()`. Let’s take a look at how we do this:
 
 ~~~~~~~~
 if (Math.random() < mutation_rate) {
@@ -223,9 +223,9 @@ If you save the file and load in the computer, you’ll see something like this:
 {width=50%}
 ![](images/ch_4_many_sequences.png)
 
-In the interest of space, I’m only showing a fraction of what you’ll see, but the point is as follows: mutation has introduced a substantial amount of genetic variation. In an example run on my machine, there are now 34 unique genetic sequences, and the population is dominate by 4 sequences that each occur more than 10 times. Of course, this will be different every time you re-run the simulation, but it’s nevertheless remarkable. We are often tempted to think that mutations rates as low as 1 in 10,000 don’t have a strong effect, simply because 1 in 10,000 is an unlikely event. Nevertheless, if you have lots of base pairs in lots of individuals over many generations, even much lower mutation rates will produce a substantial amount of genetic variation. 
+In the interest of space, I’m only showing a fraction of what you’ll see, but the point is as follows: mutation has introduced a substantial amount of genetic variation. In an example run on my machine, there are now 34 unique genetic sequences, and the population is dominated by 4 sequences that each occur more than 10 times. Of course, this will be different every time you re-run the simulation, but it’s nevertheless remarkable. We are often tempted to think that mutations rates as low as 1 in 10,000 don’t have a strong effect, simply because 1 in 10,000 is an unlikely event. Nevertheless, if you have lots of base pairs in lots of individuals over many generations, even much lower mutation rates will produce a substantial amount of genetic variation. 
 
-Feel free to play around with the value of the mutation rate. If you increase by a factor of ten, to `0.001`, you’ll notice that you get even more variation: almost all sequences will be unique. Conversely, if you decrease the mutation rate by a factor of ten, to `0.00001`, you’ll notice that you get very little variation, and sometimes even none at all in a single simulation run.
+Feel free to play around with the value of the mutation rate. If you increase the mutation rate by a factor of ten, to `0.001`, you’ll notice that you get even more variation: almost all sequences will be unique. Conversely, if you decrease the mutation rate by a factor of ten, to `0.00001`, you’ll notice that you get very little variation, and sometimes even none at all in a single simulation run.
 
 Mutation rates in nature are quite variable. In humans, the estimates are somewhere around 10^-10^ per base pair and replication, and 10^-8^ per base pair and generation - that is, around 1 in 10 billion per base pair and replication, and 1 in 100 million per base pair and generation (human germ cells go through many replications per single human generation). At the lower end, some viruses have mutation rates as low as 1 in 1,000 per base pair and replication. It’s important to be careful about what exactly the mutation rate denotes. Mutation rates are always per some unit, and per some time interval. They can be per base pair, per gene / allele, or per genome (the totality of all base pairs). They can be per replication or per generation. 
 
@@ -257,10 +257,10 @@ We simply multiple the entire term by the probability that no mutation occurs in
 G’ = (1 - 2\mu  + \mu ^2) (\frac{1}{2N} + (1-\frac{1}{2N})G)
 {/$$}
 
-This can be simplified if we make the reasonable assumption that the mutation rate *μ* is small, and therefore, the square mutation rates will be extremely small to the point where we can ignore it in an addition. That is, we apply the approximation 
+This can be simplified if we make the reasonable assumption that the mutation rate *μ* is small, and therefore, the square mutation rate will be extremely small to the point where we can ignore it in an addition. That is, we apply the approximation 
 
 {$$}
-(1-\mu )^2 \approx 1 - 2\mu  + \mu ^2
+1 - 2\mu  + \mu ^2 \approx 1 - 2\mu
 {/$$}
 
 when *μ* is small, giving us 
@@ -287,25 +287,25 @@ The next simplifying approximation is similar to the previous one. As you can se
 G’ \approx \frac{1}{2N} + (1-\frac{1}{2N})G - 2\mu G
 {/$$}
 
-Before we move on, let’s bring *H* back into the scene. Recall that *H* is simply the opposite of *G*, and thus *1-G*, and thus *G = 1-H*. Starting from 
+Before we move on, let’s bring *H* back into the scene. Recall that *H* is simply the opposite of *G*, and thus *1 - G*, and thus *G = 1 - H*. Starting from 
 
 {$$}
 H’ = 1-G’
 {/$$}
 
-we can now insert the previous equation 
+we can now insert the previous term for *G'*: 
 
 {$$}
 H’ \approx 1-(\frac{1}{2N} + (1-\frac{1}{2N})G - 2\mu G)
 {/$$}
 
-and replace all occurrences of *G* with *1-H* to get
+and replace all occurrences of *G* with *1 - H* to obtain
 
 {$$}
 H’ \approx 1- \frac{1}{2N} - (1-\frac{1}{2N})(1-H) + 2\mu (1-H)
 {/$$}
 
-If we full expand this equation, we’ll get
+If we fullly expand this equation, we’ll get
 
 {$$}
 H’ \approx 1 - \frac{1}{2N} - 1 + \frac{1}{2N} + H - \frac{H}{2N} + 2\mu  - 2\mu H
@@ -329,7 +329,7 @@ Thus *ΔH* is simply the change in genetic variation per generation. By replacin
 \Delta H = H - \frac{H}{2N} + 2\mu  - 2\mu H - H
 {/$$}
 
-Because the *H* is canceling itself, we can simply this to
+Because the *H* is canceling itself, we can simplify this to
 
 {$$}
 \Delta H = -\frac{H}{2N} + 2\mu  - 2\mu H
@@ -341,7 +341,7 @@ which can be rewritten as
 \Delta H = -(\frac{1}{2N})H + 2\mu (1-H)
 {/$$}
 
-Note that this equation is a sum of a negative term and a positive term. Indeed, this is quite a beautiful equation: the negative term, {$$}-(\frac{1}{2N})H{/$$}, denotes the loss of genetic variation due to drift, while the positive term, *2μ(1-H)*, denotes the gain of genetic variation due to mutation.
+Note that this equation is a sum of a negative term and a positive term. Indeed, this is quite a beautiful equation: the negative term, {$$}-(\frac{1}{2N})H{/$$}, denotes the loss of genetic variation due to drift, while the positive term, *2μ(1 - H)*, denotes the gain of genetic variation due to mutation.
 
 From this simple equation, which captures both processes elegantly, we can deduce another interesting observation. First, it confirms what we already know, which is that the loss of genetic variation depends on the population size *N*, in such a way the the loss is larger if *N* is smaller. But second, it also shows quite clearly that the gain of genetic variation depends on the mutation rate *μ*, such that the gain is higher if the mutation rate is higher, as we would expect.
 
@@ -353,7 +353,7 @@ We’ve just established that
 \Delta H = -(\frac{1}{2N})H + 2\mu (1-H)
 {/$$}
 
-The equilibrium will be reach when *ΔH* is zero, i.e.
+The equilibrium will be reached when *ΔH* is zero, i.e.
 
 {$$}
 -(\frac{1}{2N})H + 2\mu (1-H) = 0
@@ -389,7 +389,7 @@ Dividing both sides by {$$}(\frac{1}{2N} + 2\mu ){/$$} gives us *H*
 \frac{2\mu }{(\frac{1}{2N} + 2\mu )} = H
 {/$$}
 
-This looks a little unwieldy with a double fraction. Let’s simply this by multiplying the term by {$$}\frac{2N}{2N}{/$$}, and we’ll get 
+This looks a little unwieldy with a double fraction. Let’s simplify this by multiplying the term by {$$}\frac{2N}{2N}{/$$}, and we’ll get 
 
 {$$}
 H = \frac{4N\mu }{(1 + 4N\mu )}
@@ -397,7 +397,7 @@ H = \frac{4N\mu }{(1 + 4N\mu )}
 
 This is much nicer indeed. It is also a rather profound result. It tells us how much genetic variation we should expect in a population subject to drift and mutation. 
 
-Let’s plot this relationship between *H* and the term *4Nμ*. We can do this fairly simply by filling up a data array:
+Let’s plot this relationship between *H* and the term *4Nμ*. We can do this fairly simply by filling up a `data` array:
 
 ~~~~~~~~
 var data=[];
@@ -421,7 +421,7 @@ The overall take-home message is the following - just as genetic drift reduces g
 
 ##The Fixation of Mutations
 
-Let’s move on to another interesting dynamic. We know that mutation introduces new genetic variants. But what does the future of such a mutation look like? In the beginning, the mutation exists as a single copy. Recall that in our world, everything is selectively neutral - we still assume no form of selection whatsoever. It’s quite possible that such a rare mutation will be lost, due to random sampling, in the next generation already. It might stay around for a few generations, even manage to make a few copies of itself, and then disappear from the population. Or, if might actually take over the population and go to fixation!
+Let’s move on to another interesting dynamic. We know that mutation introduces new genetic variants. But what does the future of such a mutation look like? In the beginning, the mutation exists as a single copy. Recall that in our world, everything is selectively neutral - we still assume no form of selection whatsoever. It’s quite possible that such a rare mutation will be lost, due to random sampling, in the next generation already. It might stay around for a few generations, even manage to make a few copies of itself, and then disappear from the population. Or, it might actually take over the population and go to fixation!
 
 You may think “yeah ok, but that’s probably rare” and you would be right, as we’ll see in a minute. Nevertheless, consider this: every allele that you see in a population, even the most common alleles, once started as a single copy. Granted, some of them might have been very beneficial to its bearer from the outside, which would have made its ride to domination over time a little easier. Nevertheless, even neutral alleles can go from a single copy to fixation in a population. The question is, how likely is that?
 
@@ -472,7 +472,7 @@ console.log(fixations_of_mutant / simulations);
 
 You should now be in good shape understanding almost everything this code does. The function `next_generation()` is identical to the one we used in the previous chapter. I’ve defined an additional function called `run_until_fixation()`, that runs a simulation until one of the two alleles has become fixed. Its code is relatively simple - first, we (re)set `p` to `1 / (2*N)`. Forgetting to do this is a typical beginner’s mistake. If you don’t reset `p` for every simulation run, only the first simulation run will be meaningful - all the following simulation runs would start with `p` either being 0 or 1, depending on the outcome of the very first simulation. Next, we call the `next_generation()` function however often we need to, as long as `p` is neither `0` nor `1`. But what’s this strange-looking operator `&&` doing there?
 
-You’ve encountered the `do while` loop before. It says “do something while a certain condition is true”. However, so far in this book, we have only every encountered simple conditions, where we tested for either a boolean value to be true, or where we tested for a number to be smaller, equal to, or greater than a certain value. But sometimes, our conditions need to be a bit more complex. For example, we may requires that multiple expressions are true. Or, we may require that at least one of multiple expressions is true. This is where so-called *logical operators* come in handy.
+You’ve encountered the `do while` loop before. It says “do something while a certain condition is true”. However, so far in this book, we have only ever encountered simple conditions, where we tested for either a boolean value to be true, or where we tested for a number to be smaller, equal to, or greater than a certain value. But sometimes, our conditions need to be a bit more complex. For example, we may require that multiple expressions are true. Or, we may require that at least one of multiple expressions is true. This is where so-called *logical operators* come in handy.
 
 The most frequent logical operators in JavaScript are 
 
@@ -490,7 +490,7 @@ The first, `&&`, is the *logical and*. If you need two expressions to be true at
 
 is true if `p` is greater than `0` *and* `p` is smaller than `1`.
 
-The second is the *logical or*. If you have multiple expressions and you need at least one of them to be true, you should use this operator like so, for example:
+The second operator is the *logical or*. If you have multiple expressions and you need at least one of them to be true, you should use this operator like so, for example:
 
 ~~~~~~~~
 (p == 0 || p == 1)
@@ -546,7 +546,7 @@ But have you noticed what happened here? The replacement rate corresponds exactl
 
 {$$}\text{replacement rate} = 2N\mu  * \frac{1}{2N} = \mu {/$$}
 
-This a remarkable result. Most of us would have guessed that population size must play a role. You may have though that in large populations, there would be more replacement than in small populations, because there are simply more mutations. On the other hand, your intuition may have told you - correctly - that it’s harder for mutations to go to fixation in larger populations, which may have led you to believe that the replacement rate would be lower. But as it turns out, the two effects - more mutations, but it’s harder for them to make it all the way to fixation - are both dependent on *N* in such a way that *N* falls out of the equation.
+This a remarkable result. Most of us would have guessed that population size must play a role. You may have thought that in large populations, there would be more replacement than in small populations, because there are simply more mutations. On the other hand, your intuition may have told you - correctly - that it’s harder for mutations to go to fixation in larger populations, which may have led you to believe that the replacement rate would be lower. But as it turns out, the two effects - more mutations, but it’s harder for them to make it all the way to fixation - are both dependent on *N* in such a way that *N* falls out of the equation.
 
 We now have a good feeling for how often a new mutant allele fixes in a population. But *how long* does it take for a successful mutant allele to do that, on average? Before I give you the answer to that, I would like you to adapt the code above to find out. You already have more or less everything in place, and all you need to do is to keep track of the number of generations in those runs where `p` actually goes to `1`.
 

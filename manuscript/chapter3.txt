@@ -429,8 +429,8 @@ These simulations are a great tool to examine the dynamics of genetic drift, but
 
 Before we get to it, a word of warning: Data plotting in the browser isn’t trivial. What I’m going to do here is to give you some plotting code that I’m simply asking you to copy and paste into your documents. The code that we will continue to write focusses on generating the data, and we then hand the data over to a plotting function. There’s no need for you at this stage to understand how plotting works, and it would be a significant distraction at the moment. Feel free to examine the plotting code, of course, but I won’t explain it, nor do I expect you to understand it.
 
-W> ## Copying Code
-W> Just as a reminder: all the code, including the plotting code below, is available at the book website [www.natureincode.com](http://www.natureincode.com). I recommend copying the plotting code from the website - some ebooks readers introduce weird characters that the browsers don't like.
+T> ## Copying Code
+T> Just as a reminder: all the code, including the plotting code below, is available at the book website [www.natureincode.com](http://www.natureincode.com). I recommend copying the plotting code from the website - some ebooks readers introduce weird characters that the browsers don't like.
 
 First, add this line to your code, at the beginning of your `<head>` element:
 
@@ -451,7 +451,7 @@ W>~~~~~~~~
 W><!DOCTYPE html>
 W><html>
 W>    <head>
-W>        <title>Nature, Im Code</title>
+W>        <title>Nature, In Code</title>
 W>            <script src="http://d3js.org/d3.v3.js"></script>
 W>    </head>
 W>    <body>
@@ -1174,7 +1174,7 @@ function simulation(simulation_counter) {
             population_size = N;
         }
         population_sizes.push(population_size);
-next_generation(data[simulation_counter],population_size);
+        next_generation(data[simulation_counter],population_size);
     }
 }
 ~~~~~~~~
