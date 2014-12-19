@@ -466,158 +466,151 @@ You will need to have the following plotting code in your document:
 
 ~~~~~~~~
 function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
-				var margin = {top: 20, right: 20, bottom: 50, left: 50},
-				width = 700 - margin.left - margin.right,
-				height = 400 - margin.top - margin.bottom;
+    var margin = {top: 20, right: 20, bottom: 50, left: 50},
+        width = 700 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
-				var color = d3.scale.category10();
+    var color = d3.scale.category10();
 				
-				if (!x_max) {
-					x_max = data[0].length > 0 ? data[0].length : data.length
-				}
+    if (!x_max) {
+        x_max = data[0].length > 0 ? data[0].length : data.length
+    }
 				
-				var y_max = data[0].length > 0 ? d3.max(data, function(array) {return d3.max(array);}) : d3.max(data);
+    var y_max = data[0].length > 0 ? d3.max(data, function(array) {
+            return d3.max(array);
+        }) : d3.max(data);
 
-				var x = d3.scale.linear()
-					.domain([0,x_max])
-					.range([0, width]);
+    var x = d3.scale.linear()
+        .domain([0,x_max])
+        .range([0, width]);
 
-				var y = y_max_flex ? d3.scale.linear()
-					.domain([0, 1.1 * y_max])
-					.range([height, 0]) : d3.scale.linear()
-					.range([height, 0]);
+    var y = y_max_flex ? d3.scale.linear()
+        .domain([0, 1.1 * y_max])
+        .range([height, 0]) : d3.scale.linear()
+        .range([height, 0]);
 
-				var xAxis = d3.svg.axis()
-					.scale(x).orient("bottom");
+    var xAxis = d3.svg.axis()
+        .scale(x).orient("bottom");
 
-				var yAxis = d3.svg.axis()
-					.scale(y).orient("left");
+    var yAxis = d3.svg.axis()
+        .scale(y).orient("left");
 
-				var line = d3.svg.line()
-					.x(function (d, i) {
-					    return x((i/((data[0].length > 0 ? data[0] : data).length-1)) * x_max);
-					})
-					.y(function (d) {
-						return y(d);
-					});
+    var line = d3.svg.line()
+        .x(function (d, i) {
+            return x((i/((data[0].length > 0 ? data[0] : data).length-1)) * x_max);
+        })
+        .y(function (d) {
+            return y(d);
+        });
 		
-				var svg = d3.select("body").append("svg")
-					.attr("width", width + margin.left + margin.right)
-					.attr("height", height + margin.top + margin.bottom)
-					.append("g")
-					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-				svg.append("g")
-					.attr("class", "x axis")
-					.attr("transform", "translate(0," + height + ")")
-					.call(xAxis)
-					.append("text")
-					.attr("text-anchor", "middle")
-					.attr("x", width / 2)
-					.attr("y", 6)
-					.attr("dy", "3em")
-					.text(x_label);
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width / 2)
+        .attr("y", 6)
+        .attr("dy", "3em")
+        .text(x_label);
 
-				svg.append("g")
-					.attr("class", "y axis")
-					.call(yAxis)
-					.append("text")
-					.attr("transform", "rotate(-90)")
-					.attr("x", -height / 2)
-					.attr("dy", "-3.5em")
-					.style("text-anchor", "middle").
-					text(y_label);
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("dy", "-3.5em")
+        .style("text-anchor", "middle").
+        text(y_label);
 
-				svg.append("text")
-					.attr("class", "y label")
-					.attr("text-anchor", "end")
-					.attr("x", width / 2)
-					.attr("y", 6)
-					.attr("dy", ".75em")
-					.attr("transform", "rotate(-90)")
-					.text("p");
-					
-			   if (legend_values.length > 0) {		
-				   var legend = svg.append("text")
-						.attr("text-anchor", "star")
-						.attr("y", 30)
-						.attr("x", width-100)
-						.append("tspan").attr("class", "legend_title")
-						.text(legend_values[0])
-						.append("tspan").attr("class", "legend_text")
-						.attr("x", width-100).attr("dy", 20).text(legend_values[1])
-						.append("tspan").attr("class", "legend_title")
-						.attr("x", width-100).attr("dy", 20).text(legend_values[2])
-						.append("tspan").attr("class", "legend_text")
-						.attr("x", width-100).attr("dy", 20).text(legend_values[3]);
-				}
-				else {
-					svg.selectAll("line.horizontalGridY")
-						.data(y.ticks(10)).enter()
-						.append("line")
-						.attr(
-						{
-						  "x1" : 1,
-						  "x2" : width,
-						  "y1" : function(d){ return y(d);},
-						  "y2" : function(d){ return y(d);},
-						  "fill" : "none",
-						  "shape-rendering" : "crispEdges",
-						  "stroke" : "#f5f5f5",
-						  "stroke-width" : "1px"
-						});
+    if (legend_values.length > 0) {		
+        var legend = svg.append("text")
+            .attr("text-anchor", "star")
+            .attr("y", 30)
+            .attr("x", width-100)
+            .append("tspan").attr("class", "legend_title")
+            .text(legend_values[0])
+            .append("tspan").attr("class", "legend_text")
+            .attr("x", width-100).attr("dy", 20).text(legend_values[1])
+            .append("tspan").attr("class", "legend_title")
+            .attr("x", width-100).attr("dy", 20).text(legend_values[2])
+            .append("tspan").attr("class", "legend_text")
+            .attr("x", width-100).attr("dy", 20).text(legend_values[3]);
+    }
+    else {
+        svg.selectAll("line.horizontalGridY")
+            .data(y.ticks(10)).enter()
+            .append("line")
+            .attr(
+            {
+            "x1" : 1,
+            "x2" : width,
+            "y1" : function(d){ return y(d);},
+            "y2" : function(d){ return y(d);},
+            "fill" : "none",
+            "shape-rendering" : "crispEdges",
+            "stroke" : "#f5f5f5",
+            "stroke-width" : "1px"
+            });
 
-					svg.selectAll("line.horizontalGridX")
-						.data(x.ticks(10)).enter()
-						.append("line")
-						.attr(
-						{
-						  "x1" : function(d,i){ return x(d);},
-						  "x2" : function(d,i){ return x(d);},
-						  "y1" : 1,
-						  "y2" : height,
-						  "fill" : "none",
-						  "shape-rendering" : "crispEdges",
-						  "stroke" : "#f5f5f5",
-						  "stroke-width" : "1px"
-						});
-				}
-		
-				d3.select("body").style("font","10px sans-serif");
-				d3.selectAll(".axis path, .axis line")
-					.style({"fill":"none","stroke":"#000","shape-rendering":"crispEdges"});
-				d3.selectAll(".x.axis path").style("display","none");    
-				d3.selectAll(".legend_title")
-					.style({"font-size":"12px","fill":"#555","font-weight":"400"});
-				d3.selectAll(".legend_text")
-					.style({"font-size":"20px","fill":"#bbb","font-weight":"700"});
+        svg.selectAll("line.horizontalGridX")
+            .data(x.ticks(10)).enter()
+            .append("line")
+            .attr(
+            {
+            "x1" : function(d,i){ return x(d);},
+            "x2" : function(d,i){ return x(d);},
+            "y1" : 1,
+            "y2" : height,
+            "fill" : "none",
+            "shape-rendering" : "crispEdges",
+            "stroke" : "#f5f5f5",
+            "stroke-width" : "1px"
+            });
+    }
 
-				if (data[0].length > 0) {
-					var simulation = svg.selectAll(".simulation")
-						.data(data)
-						.enter().append("g")
-						.attr("class", "simulation");
+    d3.select("body").style("font","10px sans-serif");
+    d3.selectAll(".axis path, .axis line")
+        .style({"fill":"none","stroke":"#000","shape-rendering":"crispEdges"});
+    d3.selectAll(".x.axis path").style("display","none");    
+    d3.selectAll(".legend_title")
+        .style({"font-size":"12px","fill":"#555","font-weight":"400"});
+    d3.selectAll(".legend_text")
+        .style({"font-size":"20px","fill":"#bbb","font-weight":"700"});
 
-					simulation.append("path")
-						.attr("class", "line")
-						.attr("d", function(d) { return line(d); })
-						.style("stroke", function(d,i) { return color(i); });
-				} 
-				else {
-					svg.append("path")
-						.datum(data)
-						.attr("class", "line")
-						.attr("d", line)
-						.style("stroke","steelblue");
-				}
-				d3.selectAll(".line").style({"fill":"none","stroke-width":"1.5px"});    
+    if (data[0].length > 0) {
+        var simulation = svg.selectAll(".simulation")
+            .data(data)
+            .enter().append("g")
+            .attr("class", "simulation");
 
-			}
+        simulation.append("path")
+            .attr("class", "line")
+            .attr("d", function(d) { return line(d); })
+            .style("stroke", function(d,i) { return color(i); });
+    } 
+    else {
+        svg.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", line)
+            .style("stroke","steelblue");
+    }
+    d3.selectAll(".line").style({"fill":"none","stroke-width":"1.5px"});    
+
+}
 ~~~~~~~~
 
 Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with a number of parameters: `data`, `x_label`, `y_label`, `legend_values`, `x_max`, and `y_max_flex`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `x_label ` and `y_label ` simply correspond to the labels that we want on the axes. The parameter `legend_values` contains the values that we want to show in the legend. We will use the two remaining parameters `x_max`, and `y_max_flex`, later. At the moment, simply note that if you don't provide these last two parameters when calling the function, their value in the function will be `undefined`. 
 
->I The function `draw_line_chart()` is quite generic: indeed, it will be the only function you'll need to use to plot line charts throughout the book. The only other plotting function that we'll use later in the book will be used to plot spatial dynamics.
+I> The function `draw_line_chart()` is quite generic: indeed, it will be the only function you'll need to use to plot line charts throughout the book. The only other plotting function that we'll use later in the book will be used to plot spatial dynamics.
 
 With the plotting code in place, we are now ready to plot our simulation results. 
 
@@ -1380,7 +1373,7 @@ What about plotting? We're passing the data to the plotting function like so:
 draw_line_chart(data,"Proportion Males","Ne / N",[],x_max);
 ~~~~~~~~
 
-I> The first three parameters are straightforward: the data, and the axis labels. The fourth parameter is an empty array - empty because we don't want a legend in the figure. The last parameter defines the maximum range for the values of x, `x_max` (which is `1` in our code example). If we don't provide that value, the x axis labels would be set according to the number of elements in the `data` array. In the previous plotting examples, that was fine, because the each element in the `data` array corresponded to one generation. But for this plot, each point on the x axis should represent an increase of 0.01 (rather than 1), with a maximum value of 1. That's why we pass `x_max` (i.e. 1) as a parameter. 
+I> The first three parameters are straightforward: the data, and the axis labels. The fourth parameter is an empty array - empty because we don't want a legend in the figure. The last parameter defines the maximum range for the values of x, `x_max` (which is `1` in our code example). If we don't provide that value, the x axis labels would be set according to the number of elements in the `data` array. In the previous plotting examples, that was fine, because each element in the `data` array corresponded to one generation. But for this plot, each point on the x axis should represent an increase of 0.01 (rather than 1), with a maximum value of 1. That's why we pass `x_max` (i.e. 1) as a parameter. 
 
 And here is the outcome: 
 
