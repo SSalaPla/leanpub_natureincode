@@ -498,7 +498,7 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
     var line = d3.svg.line()
         .x(function (d, i) {
             var dat = (data[0].length > 0 ? data[0] : data);
-						return x((i/(dat.length-1)) * x_max);
+            return x((i/(dat.length-1)) * x_max);
         })
         .y(function (d) {
             return y(d);
