@@ -497,7 +497,8 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
 
     var line = d3.svg.line()
         .x(function (d, i) {
-            return x((i/((data[0].length > 0 ? data[0] : data).length-1)) * x_max);
+            var dat = (data[0].length > 0 ? data[0] : data);
+						return x((i/(dat.length-1)) * x_max);
         })
         .y(function (d) {
             return y(d);
@@ -608,7 +609,7 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
 }
 ~~~~~~~~
 
-Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with a number of parameters: `data`, `x_label`, `y_label`, `legend_values`, `x_max`, and `y_max_flex`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `x_label ` and `y_label ` simply correspond to the labels that we want on the axes. The parameter `legend_values` contains the values that we want to show in the legend. We will use the two remaining parameters `x_max`, and `y_max_flex`, later. At the moment, simply note that if you don't provide these last two parameters when calling the function, their value in the function will be `undefined`. 
+Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with a number of parameters: `data`, `x_label`, `y_label`, `legend_values`, `x_max`, and `y_max_flex`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `x_label` and `y_label` simply correspond to the labels that we want on the axes. The parameter `legend_values` contains the values that we want to show in the legend. We will use the two remaining parameters `x_max`, and `y_max_flex`, later. At the moment, simply note that if you don't provide these last two parameters when calling the function, their value in the function will be `undefined`. 
 
 I> The function `draw_line_chart()` is quite generic: indeed, it will be the only function you'll need to use to plot line charts throughout the book. The only other plotting function that we'll use later in the book will be used to plot spatial dynamics.
 
