@@ -465,7 +465,7 @@ W>~~~~~~~~
 You will need to have the following plotting code in your document:
 
 ~~~~~~~~
-function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flexible) {
+function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
 				var margin = {top: 20, right: 20, bottom: 50, left: 50},
 				width = 700 - margin.left - margin.right,
 				height = 400 - margin.top - margin.bottom;
@@ -482,7 +482,7 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flexible
 					.domain([0,x_max])
 					.range([0, width]);
 
-				var y = y_max_flexible ? d3.scale.linear()
+				var y = y_max_flex ? d3.scale.linear()
 					.domain([0, 1.1 * y_max])
 					.range([height, 0]) : d3.scale.linear()
 					.range([height, 0]);
@@ -615,7 +615,7 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flexible
 			}
 ~~~~~~~~
 
-Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with a number of parameters: `data`, `x_label`, `y_label`, `legend_values`, `x_max`, and `y_max_flexible`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `x_label ` and `y_label ` simply correspond to the labels that we want on the axes. The parameter `legend_values` contains the values that we want to show in the legend. We will use the two remaining parameters `x_max`, and `y_max_flexible`, later. At the moment, simply note that if you don't provide these last two parameters when calling the function, their value in the function will be `undefined`. 
+Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with a number of parameters: `data`, `x_label`, `y_label`, `legend_values`, `x_max`, and `y_max_flex`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `x_label ` and `y_label ` simply correspond to the labels that we want on the axes. The parameter `legend_values` contains the values that we want to show in the legend. We will use the two remaining parameters `x_max`, and `y_max_flex`, later. At the moment, simply note that if you don't provide these last two parameters when calling the function, their value in the function will be `undefined`. 
 
 >I The function `draw_line_chart()` is quite generic: indeed, it will be the only function you'll need to use to plot line charts throughout the book. The only other plotting function that we'll use later in the book will be used to plot spatial dynamics.
 
