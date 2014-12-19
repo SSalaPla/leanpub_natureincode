@@ -465,115 +465,159 @@ W>~~~~~~~~
 You will need to have the following plotting code in your document:
 
 ~~~~~~~~
-function draw_line_chart(data,N,generations) {
-    var margin = {top: 20, right: 20, bottom: 50, left: 50},
-    width = 700 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flexible) {
+				var margin = {top: 20, right: 20, bottom: 50, left: 50},
+				width = 700 - margin.left - margin.right,
+				height = 400 - margin.top - margin.bottom;
 
-    var color = d3.scale.category10();
+				var color = d3.scale.category10();
+				
+				if (!x_max) {
+					x_max = data[0].length > 0 ? data[0].length : data.length
+				}
+				
+				var y_max = data[0].length > 0 ? d3.max(data, function(array) {return d3.max(array);}) : d3.max(data);
 
-    var x = d3.scale.linear()
-        .domain([0,data[0].length > 0 ? data[0].length : data.length])
-        .range([0, width]);
+				var x = d3.scale.linear()
+					.domain([0,x_max])
+					.range([0, width]);
 
-    var y = d3.scale.linear()
-        .range([height, 0]);
+				var y = y_max_flexible ? d3.scale.linear()
+					.domain([0, 1.1 * y_max])
+					.range([height, 0]) : d3.scale.linear()
+					.range([height, 0]);
 
-    var xAxis = d3.svg.axis()
-        .scale(x).orient("bottom");
+				var xAxis = d3.svg.axis()
+					.scale(x).orient("bottom");
 
-    var yAxis = d3.svg.axis()
-        .scale(y).orient("left");
+				var yAxis = d3.svg.axis()
+					.scale(y).orient("left");
 
-    var line = d3.svg.line()
-        .x(function (d, i) {
-            return x(i);
-        })
-        .y(function (d) {
-            return y(d);
-        });
-        
-    var svg = d3.select("body").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				var line = d3.svg.line()
+					.x(function (d, i) {
+					    return x((i/((data[0].length > 0 ? data[0] : data).length-1)) * x_max);
+					})
+					.y(function (d) {
+						return y(d);
+					});
+		
+				var svg = d3.select("body").append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-        .append("text")
-        .attr("text-anchor", "middle")
-        .attr("x", width / 2)
-        .attr("y", 6)
-        .attr("dy", "3em")
-        .text("Generation");
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + height + ")")
+					.call(xAxis)
+					.append("text")
+					.attr("text-anchor", "middle")
+					.attr("x", width / 2)
+					.attr("y", 6)
+					.attr("dy", "3em")
+					.text(x_label);
 
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -height / 2)
-        .attr("dy", "-3.5em")
-        .style("text-anchor", "middle").
-        text("p");
+				svg.append("g")
+					.attr("class", "y axis")
+					.call(yAxis)
+					.append("text")
+					.attr("transform", "rotate(-90)")
+					.attr("x", -height / 2)
+					.attr("dy", "-3.5em")
+					.style("text-anchor", "middle").
+					text(y_label);
 
-    svg.append("text")
-        .attr("class", "y label")
-        .attr("text-anchor", "end")
-        .attr("x", width / 2)
-        .attr("y", 6)
-        .attr("dy", ".75em")
-        .attr("transform", "rotate(-90)")
-        .text("p");
+				svg.append("text")
+					.attr("class", "y label")
+					.attr("text-anchor", "end")
+					.attr("x", width / 2)
+					.attr("y", 6)
+					.attr("dy", ".75em")
+					.attr("transform", "rotate(-90)")
+					.text("p");
+					
+			   if (legend_values.length > 0) {		
+				   var legend = svg.append("text")
+						.attr("text-anchor", "star")
+						.attr("y", 30)
+						.attr("x", width-100)
+						.append("tspan").attr("class", "legend_title")
+						.text(legend_values[0])
+						.append("tspan").attr("class", "legend_text")
+						.attr("x", width-100).attr("dy", 20).text(legend_values[1])
+						.append("tspan").attr("class", "legend_title")
+						.attr("x", width-100).attr("dy", 20).text(legend_values[2])
+						.append("tspan").attr("class", "legend_text")
+						.attr("x", width-100).attr("dy", 20).text(legend_values[3]);
+				}
+				else {
+					svg.selectAll("line.horizontalGridY")
+						.data(y.ticks(10)).enter()
+						.append("line")
+						.attr(
+						{
+						  "x1" : 1,
+						  "x2" : width,
+						  "y1" : function(d){ return y(d);},
+						  "y2" : function(d){ return y(d);},
+						  "fill" : "none",
+						  "shape-rendering" : "crispEdges",
+						  "stroke" : "#f5f5f5",
+						  "stroke-width" : "1px"
+						});
 
-    var legend = svg.append("text")
-        .attr("text-anchor", "star")
-        .attr("y", 30)
-        .attr("x", width-100)
-        .append("tspan").attr("class", "legend_title").text("Population Size:")
-        .append("tspan").attr("class", "legend_text")
-        .attr("x", width-100).attr("dy", 20).text(N)
-        .append("tspan").attr("class", "legend_title")
-        .attr("x", width-100).attr("dy", 20).text("Generations:")
-        .append("tspan").attr("class", "legend_text")
-        .attr("x", width-100).attr("dy", 20).text(generations);
-        
-    d3.select("body").style("font","10px sans-serif");
-    d3.selectAll(".axis path, .axis line")
-        .style({"fill":"none","stroke":"#000","shape-rendering":"crispEdges"});
-    d3.selectAll(".x.axis path").style("display","none");    
-    d3.selectAll(".legend_title")
-        .style({"font-size":"12px","fill":"#555","font-weight":"400"});
-    d3.selectAll(".legend_text")
-        .style({"font-size":"20px","fill":"#bbb","font-weight":"700"});
+					svg.selectAll("line.horizontalGridX")
+						.data(x.ticks(10)).enter()
+						.append("line")
+						.attr(
+						{
+						  "x1" : function(d,i){ return x(d);},
+						  "x2" : function(d,i){ return x(d);},
+						  "y1" : 1,
+						  "y2" : height,
+						  "fill" : "none",
+						  "shape-rendering" : "crispEdges",
+						  "stroke" : "#f5f5f5",
+						  "stroke-width" : "1px"
+						});
+				}
+		
+				d3.select("body").style("font","10px sans-serif");
+				d3.selectAll(".axis path, .axis line")
+					.style({"fill":"none","stroke":"#000","shape-rendering":"crispEdges"});
+				d3.selectAll(".x.axis path").style("display","none");    
+				d3.selectAll(".legend_title")
+					.style({"font-size":"12px","fill":"#555","font-weight":"400"});
+				d3.selectAll(".legend_text")
+					.style({"font-size":"20px","fill":"#bbb","font-weight":"700"});
 
-    if (data[0].length > 0) {
-        var simulation = svg.selectAll(".simulation")
-            .data(data)
-            .enter().append("g")
-            .attr("class", "simulation");
+				if (data[0].length > 0) {
+					var simulation = svg.selectAll(".simulation")
+						.data(data)
+						.enter().append("g")
+						.attr("class", "simulation");
 
-        simulation.append("path")
-            .attr("class", "line")
-            .attr("d", function(d) { return line(d); })
-            .style("stroke", function(d,i) { return color(i); });
-	} 
-    else {
-        svg.append("path")
-            .datum(data)
-            .attr("class", "line")
-            .attr("d", line)
-            .style("stroke","steelblue");
-    }
-    d3.selectAll(".line").style({"fill":"none","stroke-width":"1.5px"});    
+					simulation.append("path")
+						.attr("class", "line")
+						.attr("d", function(d) { return line(d); })
+						.style("stroke", function(d,i) { return color(i); });
+				} 
+				else {
+					svg.append("path")
+						.datum(data)
+						.attr("class", "line")
+						.attr("d", line)
+						.style("stroke","steelblue");
+				}
+				d3.selectAll(".line").style({"fill":"none","stroke-width":"1.5px"});    
 
-}
+			}
 ~~~~~~~~
 
-Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with three parameters: `data`, `N` and `generations`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `N` and `generations` simply correspond to the population size, and the number of generations that we want the simulations to run. The function then takes those arguments, and plots the dynamics of our simulation in the browser.
+Like I said, let’s not bother to understand this code. All we care about is that it defines a function called `draw_line_chart()` with a number of parameters: `data`, `x_label`, `y_label`, `legend_values`, `x_max`, and `y_max_flexible`. The `data` corresponds to the data that we generate in the simulation, i.e. the frequencies of the A1 allele over time. `x_label ` and `y_label ` simply correspond to the labels that we want on the axes. The parameter `legend_values` contains the values that we want to show in the legend. We will use the two remaining parameters `x_max`, and `y_max_flexible`, later. At the moment, simply note that if you don't provide these last two parameters when calling the function, their value in the function will be `undefined`. 
+
+>I The function `draw_line_chart()` is quite generic: indeed, it will be the only function you'll need to use to plot line charts throughout the book. The only other plotting function that we'll use later in the book will be used to plot spatial dynamics.
 
 With the plotting code in place, we are now ready to plot our simulation results. 
 
@@ -604,7 +648,7 @@ function next_generation() {
 for (var i = 0; i < generations; i = i + 1) {
     next_generation();
 }
-draw_line_chart(data,N,generations);
+draw_line_chart(data,"Generation","p",["Population Size:",N,"Generations:",generations]);
 ~~~~~~~~
 
 I’ve made a few changes, which I’m going to explain next. First, after I’ve played around with various values for `N` and `generations` above, I’ve set them to `500` and `1000`, respectively.
@@ -626,10 +670,10 @@ data.push(p)
 which simply adds `p` to the `data` array. Next, I’ve removed the line the prints the values of `p` and `q` to the JavaScript console, but you can leave it in there if you want to. Finally, I’ve added this line:
 
 ~~~~~~~~
-draw_line_chart(data,N,generations);
+draw_line_chart(data,"Generation","p",["Population Size:",N,"Generations:",generations]);
 ~~~~~~~~
 
-This is the line that calls the function `draw_line_chart()` with the parameters `data`, `N` and `generations`. Note that I’m calling the function at the end of the code - at that point, the array `data` is not empty anymore, but in fact contains all `p` values over the `1000` generations. It’s that set of values that we hand over to the function, and the function then plots the data visually.
+This is the line that calls the function `draw_line_chart()` to plot the data. Note that I’m calling the function at the end of the code - at that point, the array `data` is not empty anymore, but in fact contains all `p` values over the `1000` generations. It’s that set of values that we hand over to the function, and the function then plots the data visually.
 
 Save the document and reload the browser. You should see a nice line chart showing the change of `p` over time:
 
@@ -766,7 +810,7 @@ for (var i = 0; i < simulations; i = i + 1) {
     simulation(i);
 }
 
-draw_line_chart(data,N,generations);
+draw_line_chart(data,"Generation","p",["Population Size:",N,"Generations:",generations]);
 ~~~~~~~~
 
 Let’s go through the changes here. First, I define the global variable `p`, but don’t assign it a value any more. That’s because every simulation should start again with a new value, so it’ll be the responsibility of the `simulation()` function to set `p` to `0.5` every time a new simulation begins. I’m also introducing a new variable `simulations` that defines how many simulations we’re going to run.
@@ -1315,10 +1359,10 @@ for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
     data.push(Ne_to_N_ratio);
 }
 
-draw_line_chart(data,x_max,"Proportion Males","Ne / N");
+draw_line_chart(data,"Proportion Males","Ne / N",[],x_max);
 ~~~~~~~~
 
-As you can see, I’m implementing the equation above, and push the result into an array that we’ll hand over to the plotting function (which I will show you in a second). But there are two subtleties in the `for` loop that I want to mention. First, I’m using the smaller than or equal operator (`<=`), because I want to include the last value, `x_max` (which I’m setting to `1`). Second, I’m not actually writing 
+As you can see, I’m implementing the equation above, and push the result into an array that we’ll hand over to the plotting function (which we will talk about in a second). But there are two subtleties in the `for` loop that I want to mention. First, I’m using the smaller than or equal operator (`<=`), because I want to include the last value, `x_max` (which I’m setting to `1`). Second, I’m not actually writing 
 
 ~~~~~~~~
 i <= x_max;
@@ -1332,118 +1376,13 @@ i <= x_max + 0.005;
 
 why is that? It’s because the rounding error would kick in again otherwise. Feel free to output the value of `i` to the console - you would see that after you’ve added the value `0.01` a hundred times to `0`, your final value will be `1.0000000000000007`, rather than `1`. To be sure that the for loop doesn’t end prematurely, I’m adding a small amount as an error margin to `1` when making the comparison.
 
-Here’s the drawing function which you can again just copy and paste:
+What about plotting? We're passing the data to the plotting function like so:
 
 ~~~~~~~~
-function draw_line_chart(data, x_max, x_label, y_label, y_max_flexible) {
-    var margin = {top: 20, right: 20, bottom: 50, left: 50},
-            width = 700 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
-   
-    var color = d3.scale.category10();
-
-    var x = d3.scale.linear()
-            .domain([0, x_max])
-            .range([0, width]);
-            
-    var y = y_max_flexible ? d3.scale.linear()
-            .domain([0, 1.1 * d3.max(data, function(d) {return d;})])
-            .range([height, 0]) : d3.scale.linear()
-            .range([height, 0]);
-
-    var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left");
-
-    var line = d3.svg.line()
-            .x(function (d, i) { 
-              return x((i/((data[0].length > 0 ? data[0] : data).length-1)) * x_max);
-            })
-            .y(function (d) {
-              return y(d);
-            });
-
-    var svg = d3.select("body").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-    svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("text-anchor", "middle")
-            .attr("x", width / 2)
-            .attr("y", 6)
-            .attr("dy", "3em")
-            .text(x_label);
-
-    svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -height / 2)
-            .attr("dy", "-3.5em")
-            .style("text-anchor", "middle").
-            text(y_label);
-
-    svg.selectAll("line.horizontalGridY").data(y.ticks(10)).enter()
-            .append("line")
-            .attr(
-            {
-              "x1" : 1,
-              "x2" : width,
-              "y1" : function(d){ return y(d);},
-              "y2" : function(d){ return y(d);},
-              "fill" : "none",
-              "shape-rendering" : "crispEdges",
-              "stroke" : "#eee",
-              "stroke-width" : "1px"
-            });
-
-    svg.selectAll("line.horizontalGridX").data(x.ticks(10)).enter()
-            .append("line")
-            .attr(
-            {
-              "x1" : function(d,i){ return x(d);},
-              "x2" : function(d,i){ return x(d);},
-              "y1" : 1,
-              "y2" : height,
-              "fill" : "none",
-              "shape-rendering" : "crispEdges",
-              "stroke" : "#eee",
-              "stroke-width" : "1px"
-            });
-            
-     
-     if (data[0].length > 0) {
-     	var simulation = svg.selectAll(".simulation")
-               .data(data)
-               .enter().append("g")
-               .attr("class", "simulation");
- 
-     	simulation.append("path")
-               .attr("class", "line")
-               .attr("d", function(d) { return line(d); })
-               .style("stroke", function(d,i) { return color(i); });
-     } 
-     else {
-     	svg.append("path")
-             .datum(data)
-             .attr("class", "line")
-             .attr("d", line);
-     }
-
-  }
+draw_line_chart(data,"Proportion Males","Ne / N",[],x_max);
 ~~~~~~~~
+
+I> The first three parameters are straightforward: the data, and the axis labels. The fourth parameter is an empty array - empty because we don't want a legend in the figure. The last parameter defines the maximum range for the values of x, `x_max` (which is `1` in our code example). If we don't provide that value, the x axis labels would be set according to the number of elements in the `data` array. In the previous plotting examples, that was fine, because the each element in the `data` array corresponded to one generation. But for this plot, each point on the x axis should represent an increase of 0.01 (rather than 1), with a maximum value of 1. That's why we pass `x_max` (i.e. 1) as a parameter. 
 
 And here is the outcome: 
 
