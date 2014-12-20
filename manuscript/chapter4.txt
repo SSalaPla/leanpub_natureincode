@@ -407,7 +407,7 @@ for (var i = 0; i <= x_max+0.005; i = i + 0.01) {
     data.push(i/(1+i));
 }
 
-draw_line_chart(data,x_max,"4N\u03BC","H");
+draw_line_chart(data,"4N\u03BC","H",[],x_max);
 ~~~~~~~~
 
 and then pass that to the `draw_line_chart()` function that we’ve used above (note that `\u03BC` is simply the unicode character for *μ*). Here’s what you’ll see:
