@@ -392,7 +392,7 @@ As it turns out, the visualization itself is much more computation-intensive tha
 
 First, you will need to copy and past the spatial drawing code - this time, it's made up of two function: `draw_grid()`, and update_grid()`
 
-W> As before when we used code to plot things visually, be sure to place this code within the `<body>`. And once again, you can copy and past this code from the book website, [www.natureincode.com](http://www.natureincode.com).
+W> As before when we used code to plot things visually, be sure to place this code within the `<body>`. And once again, you can copy and paste this code from the book website, [www.natureincode.com](http://www.natureincode.com).
 
 ~~~~~~~~
 function draw_grid(data,grid_length) {
