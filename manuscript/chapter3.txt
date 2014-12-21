@@ -452,7 +452,7 @@ W><!DOCTYPE html>
 W><html>
 W>    <head>
 W>        <title>Nature, In Code</title>
-W>            <script src="http://d3js.org/d3.v3.js"></script>
+W>        <script src="http://d3js.org/d3.v3.js"></script>
 W>    </head>
 W>    <body>
 W>        <script type="text/javascript">
