@@ -73,7 +73,7 @@ init_grid();
 
 The function `init_grid()` is almost identical to the one we used in chapter 5, but rather than assigning random values to the individual cells, we’ll simply set all values to `"S"` (which stands for susceptible). After that, we pick a random cell on the grid - using the function `get_random_int(min, max)` from chapter 5 - and set its value to `"I"` (for infected). 
 
-And with that, the population is initialized. There are 9,999 susceptible and 1 infected individual: patient 0. We’ll be reusing the plotting functions `draw_population()` and `update_population()` from chapter 5 to draw the population in the browser. This time, we’ll use a slightly different coloring scheme for the different types of individuals: gray for susceptible, red for infected, and green for recovered. Go ahead and copy the two drawing functions (`draw_population()`, and `update_population()`) over from chapter 5, and add this CSS at the top of your page:
+And with that, the population is initialized. There are 9,999 susceptible and 1 infected individual: patient 0. We’ll be reusing the plotting functions `draw_grid()` and `update_grid()` from chapter 5 to draw the population in the browser. This time, we’ll use a slightly different coloring scheme for the different types of individuals: gray for susceptible, red for infected, and green for recovered. Go ahead and copy the two drawing functions (`draw_grid()`, and `update_grid()`) over from chapter 5, and add this CSS at the top of your page:
 
 ~~~~~~~~
 <style>
@@ -89,14 +89,14 @@ And with that, the population is initialized. There are 9,999 susceptible and 1 
 </style>
 ~~~~~~~~
 
-We’re now going to call the `draw_population(grid,grid_length)` function, und then use the method `setInterval()` that we’ve learned about in chapter 5 to run a time step und update the population, like so:
+We’re now going to call the `draw_grid(grid,grid_length)` function, und then use the method `setInterval()` that we’ve learned about in chapter 5 to run a time step und update the population, like so:
 
 ~~~~~~~~
-draw_population(grid,grid_length);
+draw_grid(grid,grid_length);
 
 function simulate_and_visualize() {
     run_time_step();
-    update_population(grid,grid_length);
+    update_grid(grid,grid_length);
 }
 
 setInterval(simulate_and_visualize, 20);
@@ -368,11 +368,11 @@ But rather than taking my word for it, let’s use our coding skills to investig
 The first thing we’ll do in our simulation is to turn off the visualization, since we don’t need the visual clues anymore. Instead, we want to run multiple simulations, and count, in each simulation, how many individuals got infected. In order to do that, let’s replace this code:
 
 ~~~~~~~~
-draw_population(grid,grid_length);
+draw_grid(grid,grid_length);
 
 function simulate_and_visualize() {
     run_time_step();
-    update_population(grid,grid_length);
+    update_grid(grid,grid_length);
 }
 
 setInterval(simulate_and_visualize, 20);
