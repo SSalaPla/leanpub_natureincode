@@ -7,13 +7,12 @@ What sets natural selection apart from the other forces that shape evolution (dr
 Some of the most visually stunning examples of adaptation are those of animal mimicry. Mimicry is the imitation of another species. If you have a hard time seeing the leaf katydid (an insect) in the image below, it’s because of the spectacular visual imitation of the plant that it rests on. In nature, you would probably have missed it entirely - just like most birds and other predators who would love nothing more than to eat the insect for lunch. 
 
 ![](images/ch_6_mimicry.jpg)
-Photo by [Geoff Gallice](http://bit.ly/1vU1Y0W)
 
-Darwin’s insight was the following. Those individuals who are better adapted to survive and produce many offspring individuals will contribute more offspring individuals to the next generation than those who are less well adapted. However, as better adapted individuals leave more offspring, the resources that these individuals require to survive will become a limiting factor - simply because resources are limited. Thus, a struggle for survival and reproduction will begin, and the individuals with traits that contributed to a better outcome in this struggle will thrive, and become more common.
+(Photo by [Geoff Gallice](http://bit.ly/1vU1Y0W)). Darwin’s insight was the following. In a world where natural resources are limited, there will be a struggle for survival and reproduction. Those individuals who are better adapted to survive, and to produce many offspring individuals, will contribute more offspring individuals to the next generation than those who are less well adapted. Because the offspring individuals inherit the traits that made their parents better adapted, those traits will increase in frequency over the generations. 
 
 We have so far in this booked avoided the issue of the struggle for survival and reproduction. In all of our models so far, we have assumed that in terms of the probabilities of making it to the next generation, all alleles, and all genotypes, are equal. *Natural selection occurs when that assumption is not true anymore.*
 
-Another way of saying that all alleles and genotypes are equal with respect to making it into the next generation is to say that they have the same *evolutionary (or darwinian) fitness*. This is a key concept in evolutionary biology. Evolutionary fitness is the ability to survive and reproduce. Notice that fitness is not an absolute value, but rather a relative one. If a certain allele has a higher fitness than other alleles, that means that it is more likely than the other alleles to survive and make copies of itself (of course, alleles don’t survive themselves, but the individuals carrying the alleles do). As a consequence of this, the allele is expected to increase in frequency in the population. This is evolution by natural selection. It is evolution because the allele frequencies change; it is by natural selection because the allele frequencies change as a consequence of a higher fitness.
+Another way of saying that all alleles and genotypes are equal with respect to making it into the next generation is to say that they have the same *evolutionary (or darwinian) fitness*. This is a key concept in evolutionary biology. Evolutionary fitness is the ability to survive and reproduce. Notice that fitness is not an absolute value, but rather a relative one. If a certain allele has a higher fitness than other alleles, that means that it is more likely than the other alleles to survive and make copies of itself (of course, alleles don’t survive themselves, but the individuals carrying the alleles do). As a consequence of this, the allele is expected to increase in frequency in the population. This is evolution by natural selection. It is *evolution* because the allele frequencies change; and it is *by natural selection* because the allele frequencies change as a consequence of a higher fitness.
 
 What we have assumed so far throughout the book is that all alleles and genotypes have the same fitness - without actually invoking the concept of fitness. Because all alleles or genotypes had the same fitness, they were *selectively neutral*. As we have now seen many times, just because alleles are selectively neutral does *not* mean that we don’t get evolution as an outcome! Finite population size, mutations, and migration alone will lead to evolution, even if all alleles have the same fitness and are thus selectively neutral. The only difference when alleles do have differential fitness (i.e. not all of them have the exact same fitness) is that evolution becomes predictable in one regard: the alleles with higher fitness will become more common, and the ones with lower fitness will become less common. That’s very different from the situation when alleles are selectively neutral - which alleles will go to fixation, and which ones will be lost, is completely due to chance, and thus impossible to predict.
 
@@ -71,7 +70,34 @@ Quite a different outcome! What is happening here? Natural selection, that’s w
 
 By increasing the probability of picking allele A1 to make it into the next generation from `p` to `1.01*p`, we are giving the allele a slight selective benefit over allele A2. In other words, allele A1 has a slightly higher fitness than allele A2.
 
-This example has hopefully brought home the main point about fitness, natural selection, and its consequences. Because the example is borrowed from chapter 3, it uses a finite population size, and thus the effects of drift are still acting. In this case, they are simply overwhelmed by the force of natural selection. In real populations, both drift and natural selection are generally acting at the same time, and depending on the situation, one force can be much stronger than the other. In this chapter, however, we are going to investigate the effects of natural selection in isolation - that is, in populations of infinite size, where drift does not come into play at all.
+This example has hopefully brought home the main point about fitness, natural selection, and its consequences. Because the example is borrowed from chapter 3, it uses a finite population size, and thus the effects of drift are still acting. Indeed, in real populations, both drift and natural selection are generally acting at the same time, and depending on the situation, one force can be much stronger than the other. In the example above, the dynamics were dominated by the force of natural selection. However, you can still see that the lines zigzag a little bit - that's the force of chance that's still acting there.
+
+This is important in the beginning, when a new mutation arises - even one that has a higher fitness than its competing alleles. We can take the code of the example above, and start the simulation at `p=0.01`, rather than at `p=0.5`. To do that, change the first line in the `simulation()` function from 
+
+~~~~~~~~
+p = 0.5;
+~~~~~~~~
+
+to
+
+~~~~~~~~
+p = 0.01;
+~~~~~~~~ 
+
+In order to see the dynamics in full, you will also need to increase the number of generations by setting `generations` to `1000`:
+
+~~~~~~~~
+var generations = 1000;
+~~~~~~~~
+
+When you run this code, you'll see the following dynamic play out:
+
+{width=90%}
+![](images/ch_6_selection_multi_population_N_2000_p_001.png)
+
+As you can see, the allele will go to fixation in only a fraction of the simulations. In the other simulations, genetic drift has pushed it to extinction *before* natural selection could sweep the allele to fixation. And consider that in reality, mutations don't start at *p=0.1*, but at the generally lower frequency of {$$}p=\frac{1}{2N}{/$$}, which means that the initial hump to overcome is even higher. It's sobering to think about all the highly adaptive mutations that have occurred in the history of life, but that have never made it across the threshold where natural selection could take over and bring them to fixation.
+
+With that in mind, in this chapter, we are going to investigate the effects of natural selection in isolation - that is, in populations of infinite size, where drift does not come into play at all.
 
 We are going to start by formalizing the concept of fitness. We have mentioned above that an allele, or a genotype, has a fitness. Mathematically, we can capture the genotypic fitness as follows. We can simply assign the following fitness values to the three possible genotypes:
 
