@@ -299,7 +299,7 @@ As we’ll see below, these three types of fitness “landscapes” have very di
 
 ##Directional Selection
 
-Let’s start with directional selection. Let’s go ahead and plot {$$}\Delta p{/$$}, the change in the frequency of allele A1, as a function of *p*. We’ve used very similar code before - all I’m changing is the actual equation:
+Let’s start with directional selection. Let’s go ahead and plot {$$}\Delta p{/$$}, the change in the frequency of allele A1, as a function of *p*. We’ve used very similar code before, and we're also reusing our `draw_line_chart()` function for the plotting. All that needs to be implemented here is the actual equation:
 
 ~~~~~~~~
 var s = 0.1;
@@ -315,12 +315,14 @@ for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
     data.push(delta_p);
 }
 
-draw_line_chart(data,x_max,"p","\u0394 p",true);
+draw_line_chart(data,"p","\u0394 p",[],x_max,true);
 ~~~~~~~~
 
-(Note that '\u0394' stands for {$$}\Delta{/$$}). You may have noticed that I have passed a fifth parameter to the function `draw_line_chart()`. There are two things I want to mention about that. First, the function has actually been able to deal with five parameters from the moment we started using it. We simply didn’t supply that fifth parameter, which meant the corresponding local variable in the function was `undefined`.
+(Note that '\u0394' stands for {$$}\Delta{/$$}). 
 
-But perhaps more importantly, I’d like to explain what the parameter is doing. The argument name for the parameter in the function is called `y_max_flexible` - if it is not `true`, then the the y axis will span from 0 to 1 (check some of the earlier figures that we generated with this function to verify that this is indeed the case). On the other hand, if it is `true`, the y axis will span from 0 to a little bit more than the maximum value in the data set - making sure that the entire vertical space in the figure is utilized.
+I> You may have noticed that I have passed a sixth parameter to the function `draw_line_chart()`. As indicated in chapter 3 where I introduced it, the function has been defined with 6 arguments. I simply never supplied values for all 6 arguments, until now. If a value is not supplied for an argument, the corresponding local variable in the function will be `undefined`. Thankfully, the function has always been able to deal with this situation.
+I> 
+I> So what is this argument for? The argument name for the parameter in the function is called `y_max_flex` - if it is not `true` (which is the case if you don't pass 6 values to the function in the first place), then the y axis will span from 0 to 1 (check some of the earlier figures that we generated with this function to verify that this is indeed the case). On the other hand, if it is `true`, the y axis will span from 0 to a little bit more than the maximum value in the data set - making sure that the entire vertical space in the figure is utilized.
 
 Setting the values `s` and `h` to `0.1` and `0.2`, respectively, we get the following plot:
 
