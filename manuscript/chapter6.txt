@@ -95,7 +95,7 @@ When you run this code, you'll see the following dynamic play out:
 {width=90%}
 ![](images/ch_6_selection_multi_population_N_2000_p_001.png)
 
-As you can see, the allele will go to fixation in only a fraction of the simulations. In the other simulations, genetic drift has pushed it to extinction *before* natural selection could sweep the allele to fixation. And consider that in reality, mutations don't start at *p=0.1*, but at the generally lower frequency of {$$}p=\frac{1}{2N}{/$$}, which means that the initial hump to overcome is even higher. It's sobering to think about all the highly adaptive mutations that have occurred in the history of life, but that have never made it across the threshold where natural selection could take over and bring them to fixation.
+As you can see, the allele will go to fixation in only a fraction of the simulations. In the other simulations, genetic drift has pushed it to extinction *before* natural selection could sweep the allele to fixation. And consider that in reality, mutations don't start at *p=0.01*, but at the generally lower frequency of {$$}p=\frac{1}{2N}{/$$}, which means that the initial hump to overcome is even higher. It's sobering to think about all the highly adaptive mutations that have occurred in the history of life, but that have never made it across the threshold where natural selection could take over and bring them to fixation.
 
 With that in mind, in this chapter, we are going to investigate the effects of natural selection in isolation - that is, in populations of infinite size, where drift does not come into play at all.
 
@@ -131,7 +131,7 @@ where {$$}\bar{w}{/$$} is the average fitness in the population, which can be ca
 
 These few formulas form the basis for a lot that we will be doing in this chapter, so I want to make sure that we understand them well. Let’s go through an example with actual numbers.
 
-Assume the genotype frequencies are 20%, 50% and 30% for genotypes A1A1, A1A2, A2A2, respectively. In other words, *p^2^ = 0.2*, *2pq = 0.5*, and *q^2^ = 0.3*. Let’s also assume that the fitness of the three genotypes are {$$}w_{11} = 1{/$$}, {$$}w_{12} = 1.2{/$$}, and {$$}w_{22} = 1.5{/$$}. That is, A2A2 has the highest fitness, A1A2 has the second highest fitness, and A1A1 has the lowest fitness.
+Assume the genotype frequencies are 20%, 50% and 30% for genotypes A1A1, A1A2, A2A2, respectively. In other words, *p^2^ = 0.2*, *2pq = 0.5*, and *q^2^ = 0.3*. Let’s also assume that the fitness values of the three genotypes are {$$}w_{11} = 1{/$$}, {$$}w_{12} = 1.2{/$$}, and {$$}w_{22} = 1.5{/$$}. That is, A2A2 has the highest fitness, A1A2 has the second highest fitness, and A1A1 has the lowest fitness.
 
 Now, if we would simply multiply the fitness values with the frequencies, we would get the following frequencies:
 
@@ -147,7 +147,7 @@ p^{2}w_{11} = 1 * 0.2 = 0.2
 q^{2}w_{22} = 1.5 * 0.3 = 0.45
 {/$$}
 
-The problem is that these new genotype frequencies (0.2, 0.6, and 0.45) don’t add up to 1, but of course they have to. So what we need to do is to normalize these values, so that they do indeed add up to 1 again. Normalizing here means to reduce each of the values by the same factor in such a way that the numbers add up to 1. It’s very easy to do that: simply add the three numbers up (0.2 + 0.6 + 0.45 = 1.25), and then divide each of the three numbers by that sum. We call the sum of the three numbers the average fitness in the population, {$$}\bar{w}{\$$}, and we get the normalized frequencies by dividing by it:
+The problem is that these new genotype frequencies (0.2, 0.6, and 0.45) don’t add up to 1, but of course they have to. So what we need to do is to normalize these values, so that they do indeed add up to 1 again. Normalizing here means to reduce each of the values by the same factor in such a way that the numbers add up to 1. It’s very easy to do that: simply add the three numbers up (0.2 + 0.6 + 0.45 = 1.25), and then divide each of the three numbers by that sum. We call the sum of the three numbers the average fitness in the population, {$$}\bar{w}{/$$}, and we get the normalized frequencies by dividing by it:
 
 {$$}
 \frac{p^{2}w_{11}}{\bar{w}} = \frac{0.2}{1.25} = 0.16
@@ -248,7 +248,7 @@ If we replace {$$}\bar{w}{/$$} with {$$}p^{2}w_{11} + 2pqw_{12} + q^{2}w_{22}{/$
 
 Now, I am the first to grant you that this is not a very memorable equation. However, it is the fundamental equation of evolution by natural selection. What it describes is the change in allele frequency, given the current allele frequencies, and the three fitness values. As we will see soon, this equation can explain a whole range of interesting phenomena.
 
-If {$$}\Delta p{/$$} is positive, the allele will increase in frequency. If {$$}\Delta p{/$$} is negative, the allele will decrease in frequency. Note that in this world of an infinite population size, there is no randomness anymore - everything is determined. That’s why these models are called *deterministic* models (as opposed to the stochastic models that we worked with in in some of the chapters above, where randomness played a big role).
+If {$$}\Delta p{/$$} is positive, the allele will increase in frequency. If {$$}\Delta p{/$$} is negative, the allele will decrease in frequency. Note that in this world of an infinite population size, there is no randomness anymore - everything is determined. That’s why these models are called *deterministic* models (as opposed to the stochastic models that we worked with in some of the chapters above, where randomness played a big role).
 
 Now you may think "fine - if an allele has a high fitness, it will increase in frequency; if it has a low fitness, it will decrease in frequency. So far so good. But is that all there is? Because it sounds almost too simple".
 
