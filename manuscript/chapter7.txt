@@ -2,13 +2,13 @@
 
 Have you ever had a cold, or the flu? I’m sure you have - especially common colds, with the runny nose and the coughs, are hard to avoid, and a reoccurring nuisance mostly during the winter months. Hopefully, you have never had the flu, or only rarely - unlike the common cold, the flu is caused by the influenza virus, which can cause very nasty infections that can put you out for multiple weeks. In fact, every year, tens of thousands of people die from complications caused by the flu.
 
-The common cold and the flu are two examples of infectious diseases. An infectious disease is a diseases that is caused by an infectious agent - typically a microorganism such as a virus, a bacterium, or a fungus. When these microorganisms enter our body and cause an infection that makes us sick, we call them pathogens. While it is bad enough for us as individuals that pathogens make us sick, what is really bad is that they make us pass them on to other individuals through infection.
+The common cold and the flu are two examples of infectious diseases. An infectious disease is a disease that is caused by an infectious agent - typically a microorganism such as a virus, a bacterium, or a fungus. When these microorganisms enter our body and cause an infection that makes us sick, we call them pathogens. While it is bad enough for us as individuals that pathogens make us sick, what is really bad is that they make us pass them on to other individuals through infection.
 
 Thus, the term infectious disease is slightly incorrect - you are not actually passing on a disease. Instead, you are passing on the pathogens that cause the disease in the first place. 
 
 But not all microorganisms have the same effect. In fact, most microorganisms in your body do not cause disease. Did you know that you have more bacterial cells in your body than human cells? That’s right - your human cells are outnumbered by about factor 10! In other words, for every single human cell, there are about 10 bacterial cells in your body. Most of them live in your gut, where they don’t cause disease, and indeed, they even keep you healthy.
 
-However, some microorganisms do cause disease, and when they do, the disease can range from hardly noticeable to deadly. The common cold certainly ranges among the most mild infectious diseases. It’s typically a little annoying, sometimes causes a fever, but never kills anyone (although people can die of other complications following a common cold, especially when they are already very weak). On the other hand of the spectrum, we have diseases like Ebola, where untreated individuals have an up to 90% chance of dying because of the disease.
+However, some microorganisms do cause disease, and when they do, the disease can range from hardly noticeable to deadly. The common cold certainly ranges among the mildest infectious diseases. It’s typically a little annoying, sometimes causes a fever, but never kills anyone (although people can die of other complications following a common cold, especially when they are already very weak). On the other hand of the spectrum, we have diseases like Ebola, where untreated individuals have an up to 90% chance of dying because of the disease.
 
 Only a little more than a century ago, infectious diseases were a major killer everywhere in the world. Many children didn’t make it past age 5, and would die of a childhood disease against which there were no vaccines. Nowadays, modern public health systems and medicine have helped us keep many of the killer diseases in check. Nevertheless, infectious disease remain a major threat. In developing countries, they are still a major cause of death. But nobody in the world is safe from new infectious diseases that emerge every year, typically jumping from animals to humans.
 
@@ -23,7 +23,7 @@ The most common way to model an infectious disease outbreak in a population is t
 
 1.	Susceptible: This means that the individual has not been infected yet, and could get infected.
 2.	Infected: This means that the individual is currently infected, and can infect other individuals who are susceptible.
-3.	Recovered: This means that the individual has recovered from the infection. The individual can not infect others anymore, and can’t be infected either because it developed immunity.
+3.	Recovered: This means that the individual has recovered from the infection. The individual cannot infect others anymore, and can’t be infected either because it developed immunity.
 
 Because of the first letters of the three states (susceptible, infected, and recovered), a model implementing these states is called an *SIR model*. The SIR model captures some key aspects about many infectious diseases, but simplifies the reality down to three states. This follows the same idea that we have encountered earlier in the book: to make a model as simple as possible, but not simpler. 
 
@@ -71,40 +71,30 @@ function init_grid() {
 init_grid();
 ~~~~~~~~
 
-The function `init_grid()` is almost identical to the one we used in chapter 5, but rather than assigning random values to the individual cells, we’ll simply set all values to `"S"` (which stands for susceptible). After that, we pick a random cell on the grid - using the function `get_random_int(min, max)` from chapter 5 - and set its value to `"I"` (for infected). 
+The function `init_grid()` is almost identical to the one we used in chapter 5, but rather than assigning random values to the individual cells, we’ll simply set all values to `"S"` (which stands for susceptible). After that, we pick a random cell on the grid - using the function `get_random_int(min, max)` from chapter 5 - and set its value to `"I"` (for infected). And with that, the population is initialized. There are 9,999 susceptible and 1 infected individual: patient 0. 
 
-And with that, the population is initialized. There are 9,999 susceptible and 1 infected individual: patient 0. We’ll be reusing the plotting functions `draw_grid()` and `update_grid()` from chapter 5 to draw the population in the browser. This time, we’ll use a slightly different coloring scheme for the different types of individuals: gray for susceptible, red for infected, and green for recovered. Go ahead and copy the two drawing functions (`draw_grid()`, and `update_grid()`) over from chapter 5, and add this CSS at the top of your page:
+We’ll be reusing the plotting functions `draw_grid()` and `update_grid()` from chapter 5 to draw the population in the browse, so go ahead and copy them over from chapter 5.
 
-~~~~~~~~
-<style>
-  .genotypeS {
-    fill:rgb(220,220,220);
-  }
-  .genotypeI {
-    fill:rgb(200,38,5);
-  }
-  .genotypeR {
-    fill:rgb(111,192,65);
-  }
-</style>
-~~~~~~~~
+This time, we’ll use a slightly different coloring scheme for the different types of individuals: gray for susceptible, red for infected, and green for recovered. I have developed the plotting functions in such a way that you can pass the colors to the function, as the second argument. 
 
-We’re now going to call the `draw_grid(grid,grid_length)` function, und then use the method `setInterval()` that we’ve learned about in chapter 5 to run a time step und update the population, like so:
+We’re now going to call the `draw_grid()` function, and then use the method `setInterval()` that we’ve learned about in chapter 5 to run a time step und update the population, like so:
 
 ~~~~~~~~
-draw_grid(grid,grid_length);
+draw_grid(grid,["S","#dcdcdc","I","#c82605","R","#6fc041"]);
 
 function simulate_and_visualize() {
     run_time_step();
-    update_grid(grid,grid_length);
+    update_grid(grid,["S","#dcdcdc","I","#c82605","R","#6fc041"]);
 }
 
 setInterval(simulate_and_visualize, 20);
 ~~~~~~~~
 
-In case you’ve missed it: in comparison to chapter 5, we reduced the interval duration from `100` milliseconds to `20` milliseconds, so that the simulations run a little faster. If you feel things are too fast, or that your computer can't quite keep up with the speed, simply change the milliseconds parameter to whatever is appropriate in your browser.
+As you can see, we are passing a second parameter - the array `["S","#dcdcdc","I","#c82605","R","#6fc041"]` - to the plotting functions. The values after "S", "I", and "R" are color-codes; but like before, let's not worry about the drawing functions, but rather about the simulation code. 
+
+I've changed one more thing, even if only slightly: in comparison to chapter 5, we reduced the interval duration from `100` milliseconds to `20` milliseconds, so that the simulations run a little faster. If you feel things are too fast, or that your computer can't quite keep up with the speed, simply change the milliseconds parameter to whatever is appropriate in your browser.
  
-We haven’t defined the function `run_time_step()` yet - let’s go ahead and implement an empty function so that we won’t get any javascript errors:
+We haven’t defined the function `run_time_step()` yet - let’s go ahead and implement an empty function so that we won’t get any JavaScript errors:
 
 ~~~~~~~~
 function run_time_step() {
@@ -157,12 +147,12 @@ Let’s implement the function `expose_neighbors(i,ii)`:
 
 ~~~~~~~~
 function expose_neighbors(i,ii) {
-    for (var neighbor_i = i-1; neighbor_i <= i+1; neighbor_i = neighbor_i + 1) {
-        for (var neighbor_ii = ii-1; neighbor_ii <= ii+1; neighbor_ii = neighbor_ii + 1) {
-            if (neighbor_i == i && neighbor_ii == ii) {
+    for (var n_i = i-1; n_i <= i+1; n_i = n_i + 1) {
+        for (var n_ii = ii-1; n_ii <= ii+1; n_ii = n_ii + 1) {
+            if (n_i == i && n_ii == ii) {
                 continue;
             }
-            try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+            try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
         }
     }
 }
@@ -195,25 +185,25 @@ The function `expose_neighbors(i,ii)` has two parameters: the coordinates `i` an
 In order to get access to all these cells, we need to loop over the two-dimensional space that these cells occupy. In the function `expose_neighbors(i,ii)`, we do that by using the coordinates `i`, and `ii`, like so:
 
 ~~~~~~~~
-for (var neighbor_i = i-1; neighbor_i <= i+1; neighbor_i = neighbor_i + 1) {
-    for (var neighbor_ii = ii-1; neighbor_ii <= ii+1; neighbor_ii = neighbor_ii + 1) {
-        // do something with cell at coordinates neighbor_i, neighbor_ii
+for (var n_i = i-1; n_i <= i+1; n_i = n_i + 1) {
+    for (var n_ii = ii-1; n_ii <= ii+1; n_ii = n_ii + 1) {
+        // do something with cell at coordinates n_i, n_ii
     }
 }
 ~~~~~~~~
 
-As you can see, we are using local variables named `neighbor_i` and `neighbor_ii` as placeholders for the variables `i` and `ii`. Why do we do that? Well, the function has two arguments, `i` and `ii`, and as we’ve learned earlier in this book, arguments are local variables in the function scope. Therefore, `i` and `ii` are already taken as variable names within the function body, and we don’t want to override them - they represent the original coordinates of the infected cell. That's why we introduce the the new variables in the function body. 
+As you can see, we are using local variables named `n_i` and `n_ii` as "neighbor" placeholders for the variables `i` and `ii`. Why do we do that? Well, the function has two arguments, `i` and `ii`, and as we’ve learned earlier in this book, arguments are local variables in the function scope. Therefore, `i` and `ii` are already taken as variable names within the function body, and we don’t want to override them - they represent the original coordinates of the infected cell. That's why we introduce the the new variables in the function body. 
 
 The nested loop iterates over all nine cells shown above. The outer loop starts at `i-1`, and stops after `i+1`. The inner loop starts at `ii-1`, and stops after `ii+1`. You’ve probably realized immediately that there is a slight problem with this: By looping through all nine cells, we are also visiting the original cell at coordinates `i`, `ii`. We don’t want to expose the cell to itself, of course, so once we’re at that cell, we simply need to instruct our loop to move on immediately. The key expression here is the `continue` statement:
 
 ~~~~~~~~
-if (neighbor_i == i && neighbor_ii == ii) {
+if (n_i == i && n_ii == ii) {
    continue;
 }
-try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
 ~~~~~~~~
 
-We know that we have arrived at the focal cell when the value of `neighbor_i` is equal to `i`, and when the value of `neighbor_ii` is also equal to `ii`. In this case, the code will hit the `continue` statement, and immediately jump to the next iteration, without executing the remaining code in the loop body. 
+We know that we have arrived at the focal cell when the value of `n_i` is equal to `i`, *and* when the value of `n_ii` is equal to `ii`. In this case, the code will hit the `continue` statement, and immediately jump to the next iteration, without executing the remaining code in the loop body. 
 
 For all other cells, we will call the function `try_infection(i,ii)`. Notice that when the the function receives the coordinates in the form of the two parameters `i` and `ii`, those coordinates now represent a neighboring cell, and we have already taken into account the grid bounding issues by passing them through the function `get_bounded_index(index)` which we developed in chapter 5. In the function `try_infection(i,ii)`, we first check to make sure that the exposed individual is actually susceptible. If so, we infect it with probability `beta`.
 
@@ -222,7 +212,7 @@ Now, with this code in place, let’s go ahead and reload the page. You should s
 {width=75%}
 ![](images/ch_7_no_recovery.png)
 
-After a while, your entire world should be infected, and the grid should be completely red. Because we haven’t built in recovery yet, infected individual continue to expose susceptible individuals indefinitely, and each susceptible individual will eventually become infected. This is why 100% of the population will end up being infected.
+After a while, your entire world should be infected, and the grid should be completely red. Because we haven’t built in recovery yet, infected individuals continue to expose susceptible individuals indefinitely, and each susceptible individual will eventually become infected. This is why 100% of the population will end up being infected.
 
 100% infection - what a terrible outcome! Thankfully, that is rarely the case, for two reasons. The "good" reason is that we have an immune system that in many cases eventually manages to get the infection under control and clear it. Because of immune memory, we can’t get infected anymore by the exact same pathogen, at least for some time. The "bad" reason why people would eventually stop infecting others is that they could succumb to the disease. For example, influenza strains that circulate in birds (bird flu) have occasionally managed to jump the species barrier and infect a human. Unfortunately for the infected person, bird flu in humans is very deadly, and the virus often kills its host before transmitting itself on to the next person.
 
@@ -254,7 +244,7 @@ Let’s go ahead and rerun the simulation. Keep in mind that recovered individua
 {width=75%}
 ![](images/ch_7_with_recovery.png)
 
-As you should be able to observe, the outbreak expands at the red / gray edges, where susceptible individuals are exposed to infected individuals. However, infected individuals in red quickly recover and turn green. At that stage, they can’t get reinfected, nor can they infect others. Eventually, the outbreak will come to a stop, and you will see something like this:
+As you should be able to observe, the outbreak expands at the red / gray edges, where susceptible individuals (in gray) are exposed to infected individuals (in red). However, infected individuals quickly recover and turn green. At that stage, they can’t get reinfected, nor can they infect others. Eventually, the outbreak will come to a stop, and you will see something like this:
 
 {width=75%}
 ![](images/ch_7_all_recovered.png)
@@ -263,9 +253,9 @@ As you can see, all infected individuals have recovered. However, there are stil
 
 Before we introduced recovery, all individuals got infected. Because infected individuals never recovered, susceptible individuals that were exposed to infected individuals would eventually get infected. It may have taken a long time in some cases, but if would eventually happen. 
 
-Once we introduced recovery, however, the dynamics change. Now, infected individuals may recover before they infect neighboring cells. Overall, this might still be a rare event, depending on the values of `gamma` and `beta`. However, it may happen - and if it happens, other neighboring cells are also more likely to share the same fate. Imagine you are the susceptible neighbor of both an individual that just recovered, and an individual that did not get infected because the first neighbor recovered quickly. Your own risk of getting infected is now much lower, because two of your own neighbors are not infected. This is why the remaining susceptible individuals are often clustered in small groups, as you can see in the figure above.
+Once we introduce recovery, however, the dynamics change. Now, infected individuals may recover before they infect neighboring cells. Overall, this might still be a rare event, depending on the values of `gamma` and `beta`. However, it may happen - and when it happens, other neighboring cells are also more likely to share the same fate. Imagine you are the susceptible neighbor of both an individual that just recovered, and an individual that did not get infected because the first neighbor recovered quickly. Your own risk of getting infected is now much lower, because two of your own neighbors are not infected. This is why the remaining susceptible individuals are often clustered in small groups, as you can see in the figure above.
 
-Indeed, the idea that individuals can recover before they infect someone else can have profound consequences right at the beginning of an outbreak. If you are the 1,436^th^ individual to become infected, the consequence of you recovering before passing on the infection are probably small. However, if you are the very first person with the infection (patient 0), the question of whether you will recover before infecting others is essential: it is the difference between a potentially massive outbreak, and no outbreak at all.
+Indeed, the idea that individuals can recover before they infect someone else can have profound consequences right at the beginning of an outbreak. If you are the 1,436^th^ individual to become infected, the consequences of you recovering before passing on the infection are probably small. However, if you are the very first person with the infection (patient 0), the question of whether you will recover before infecting others is essential: it is the difference between a potentially massive outbreak, and no outbreak at all.
 
 If you rerun your simulation multiple times, it will sometimes end like this:
 
@@ -293,7 +283,7 @@ or it can go on for quite some time, but eventually still fizzle out:
 
 ##It’s a Small World
 
-Let’s now focus on something that is a very active area in contemporary epidemiological research: the role of host contact structure. The host contact structure is the answer to the question “Who is in contact with whom”, i.e. “who could pass the infection on to whom”? Think of the host contact structure as the traffic system on which a disease can spread. If you think about this analogy, it becomes obvious that the structure will affect the dynamics of disease spread. Indeed, if you are in the unfortunate situation of having to commute in a badly designed traffic system, you intuitively grasp the concept. 
+Let’s now focus on something that is a very active area in contemporary epidemiological research: the role of host contact structure. The host contact structure is the answer to the question “Who is in contact with whom?”, i.e. “who could pass the infection on to whom?”. Think of the host contact structure as the traffic system on which a disease can spread. If you think about this analogy, it becomes obvious that the structure will affect the dynamics of disease spread. Indeed, if you are in the unfortunate situation of having to commute in a badly designed traffic system, you intuitively grasp the concept. 
 
 We have so far focused our exploration on epidemics that occur on a very special host contact structure: a regular gird. The regular grid is a good approximate structure for populations where individuals don’t move around a lot, for example plants, or medieval human populations. Clearly, the way we implemented the contact structure is still highly stylized, but it captures the essential feature of spatial spread (again keeping in mind that a model should be as simple as possible but no simpler). On our grid, each individual is in contact with exactly eight other individuals, and these individuals are the spatial neighbors.
 
@@ -302,18 +292,20 @@ We are now going to introduce a very small change to our contact structure, but 
 In order to implement this change, find the following line of code:
 
 ~~~~~~~~
-try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
 ~~~~~~~~
 
 and replace it with this:
 
 ~~~~~~~~
 if (Math.random() < 0.01) { 
-    try_infection(get_bounded_index(get_random_int(0,grid_length-1)), 		        		get_bounded_index(get_random_int(0,grid_length-1)));
-    }
-    else {
-try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
-    }
+			    var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
+				var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
+    	        try_infection(random_i, random_ii);
+			}
+			else {
+			    try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
+			}
 ~~~~~~~~
 
 What we are doing here is running the original code in 99% of the time, but in 1% of the time, we expose a random individual, rather than the local neighbor. Notice that we use the same function and parameters to get random coordinates as we used to define patient 0 in the function `init_grid()`.
