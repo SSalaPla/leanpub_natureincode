@@ -299,12 +299,12 @@ and replace it with this:
 
 ~~~~~~~~
 if (Math.random() < 0.01) { 
-var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
-var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
-try_infection(random_i, random_ii);
+    var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
+    var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
+    try_infection(random_i, random_ii);
 }
 else {
-try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
+    try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
 }
 ~~~~~~~~
 
@@ -579,7 +579,7 @@ When I set the rewiring probability to `0.01` in order to run small world simula
 
 which corresponds to about 25-30% of the population. Thus, our visual intuition is confirmed - turning just a few local contacts into random contacts has a dramatic effect, resulting in outbreaks that are on average about six times larger.
 
-We could go one step further and ask, what is the average outbreak size, given that an outbreak occurs in the first place? Or in other words, if we ignore all those cases where patient 0 does not infect at least one other individual, what is the average epidemics size? In order to answer this question, we need to adapt the function `calculate_average_size(data)` slightly:
+We could go one step further and ask, what is the average outbreak size, given that an outbreak occurs in the first place? Or in other words, if we ignore all those cases where patient 0 does not infect at least one other individual, what is the average epidemic size? In order to answer this question, we need to adapt the function `calculate_average_size(data)` slightly:
 
 ~~~~~~~~
 console.log(calculate_average_size(data, 2));
@@ -619,7 +619,7 @@ whereas simulations with a rewiring probability of `0.01` yield
 3891.30
 ~~~~~~~~
 
-In short, the picture remains the same. Even if we would require at least `10` individuals to be infected in order to be included in the calculations, we would get an average of about 600 individual infected on the fully regular grid, and about 5,000 individuals infected on the small world grid.
+In short, while the specific numbers change, the broad picture remains the same. Even if we would require at least `10` individuals to be infected in order to be included in the calculations, we would get an average of about 600 individual infected on the fully regular grid, and about 5,000 individuals infected on the small world grid.
 
 Thus, a few non-local interactions can have quite dramatic effects. This is the main reason why travel, especially long-distance travel - has made our world so much more connected, and why infectious diseases in the most remote places in the world are a threat to public health anywhere in the world.
 
@@ -629,7 +629,7 @@ Let’s briefly summarize what we've learned in this chapter.
 
 * Infectious diseases can be modeled with SIR models, where individuals are either susceptible, infected, or have recovered.
 * The dynamics of epidemics are shaped by how well the infection can be transmitted, and by how fast infected individuals recover.
-* Because of the stochastic nature of transmission, not every patient 0 will trigger an outbreak. An epidemics may fizzle out on its own in the early stages.
+* Because of the stochastic nature of transmission, not every patient 0 will trigger an outbreak. An epidemic may fizzle out on its own in the early stages.
 * Even when an epidemic takes off, not everyone will get infected: the epidemic will eventually run out of susceptible individuals to infect.
 * Small changes in the host contact structure can have dramatic effects on epidemics. Compared to a host structure with only local contacts, a small world host structure will generate dramatically larger epidemics
 * We’ve also introduced a few widely used shortcuts for arithmetic manipulations in JavaScript.
