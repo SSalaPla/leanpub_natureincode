@@ -842,6 +842,6 @@ These figures are telling. They show that the smaller the population, to more pr
 
 Now that we have a good intuition from the simulations, let’s see if we can develop a mathematical model that captures this process. Don’t worry, the math is going to be easy, and I will be explaining every step in great detail.
 
-I> You've reached the end of this sample chapter (part of chapter 3 in the book. Please be sure to check out the website [www.natureincode.com](http://www.natureincode.com) where you can find all code examples that are developed in the book.
+I> You've reached the end of this sample chapter (part of chapter 3 in the book). Please be sure to check out the website [www.natureincode.com](http://www.natureincode.com) where you can find all code examples that are developed in the book.
 I>
 I> I hope you have enjoyed this sample chapter, and would be delighted if you decided to purchase the full book for $19.95 at [the Leanpub website](https://leanpub.com/natureincode/). If you buy a Leanpub book you get all the updates to the book for free. All books are available in PDF, EPUB (for iPad) and MOBI (for Kindle), and there is no DRM on any of the formats.
