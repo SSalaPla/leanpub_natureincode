@@ -620,9 +620,10 @@ for (var i = 0; i < generations; i = i + 1) {
     data[2].push(parasite_frequencies[0]);
     data[3].push(parasite_frequencies[1]);
 }
+draw_line_chart(data,"p","Generation",[]);
 ~~~~~~~~
 
-This loop runs over a given number of generations, and in each generation, calls the two methods `host_selection()` and `parasite_selection()`. These methods will calculate the new genotype frequencies, based on the current genotype frequencies and the fitness values. We’ll implement them right away. Once they have finished executing, we will store the new genotype frequencies in the corresponding array in `data`.
+This loop runs over a given number of generations, and in each generation, calls the two methods `host_selection()` and `parasite_selection()`. These methods will calculate the new genotype frequencies, based on the current genotype frequencies and the fitness values. We’ll implement them right away. Once they have finished executing, we will store the new genotype frequencies in the corresponding array in `data`. And finally, after the generations have passed, we'll plot the results stored in `data` visually.
 
 Let’s now turn to the key methods in our simulation, `host_selection()` and `parasite_selection()`. Before we develop the code, let’s think about how they should work. 
 
