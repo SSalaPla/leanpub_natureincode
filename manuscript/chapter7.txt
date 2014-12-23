@@ -87,12 +87,12 @@ function simulate_and_visualize() {
     update_grid(grid,["S","#dcdcdc","I","#c82605","R","#6fc041"]);
 }
 
-setInterval(simulate_and_visualize, 20);
+setInterval(simulate_and_visualize, 50);
 ~~~~~~~~
 
 As you can see, we are passing a second parameter - the array `["S","#dcdcdc","I","#c82605","R","#6fc041"]` - to the plotting functions. The values after "S", "I", and "R" are color-codes; but like before, let's not worry about the drawing functions, but rather about the simulation code. 
 
-I've changed one more thing, even if only slightly: in comparison to chapter 5, we reduced the interval duration from `100` milliseconds to `20` milliseconds, so that the simulations run a little faster. If you feel things are too fast, or that your computer can't quite keep up with the speed, simply change the milliseconds parameter to whatever is appropriate in your browser.
+I've changed one more thing, even if only slightly: in comparison to chapter 5, we reduced the interval duration from `100` milliseconds to `50` milliseconds, so that the simulations run a little faster. If you feel things are too fast, or that your computer can't quite keep up with the speed, simply change the milliseconds parameter to whatever is appropriate in your browser.
  
 We haven’t defined the function `run_time_step()` yet - let’s go ahead and implement an empty function so that we won’t get any JavaScript errors:
 
@@ -360,14 +360,14 @@ But rather than taking my word for it, let’s use our coding skills to investig
 The first thing we’ll do in our simulation is to turn off the visualization, since we don’t need the visual clues anymore. Instead, we want to run multiple simulations, and count, in each simulation, how many individuals got infected. In order to do that, let’s replace this code:
 
 ~~~~~~~~
-draw_grid(grid,grid_length);
+draw_grid(grid,["S","#dcdcdc","I","#c82605","R","#6fc041"]);
 
 function simulate_and_visualize() {
     run_time_step();
-    update_grid(grid,grid_length);
+    update_grid(grid,["S","#dcdcdc","I","#c82605","R","#6fc041"]);
 }
 
-setInterval(simulate_and_visualize, 20);
+setInterval(simulate_and_visualize, 50);
 ~~~~~~~~
 
 with this:
