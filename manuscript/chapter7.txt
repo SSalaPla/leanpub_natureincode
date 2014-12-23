@@ -490,11 +490,13 @@ console.log(data);
 Before you run it, one more thing - remember we want to compare the full spatial grid with the small-world grid that has occasional random contacts? Recall that the random contacts are introduced in the function `expose_neighbors(i,ii)`, like so:
 
 ~~~~~~~~
-if (Math.random() < 0.01) {
-    try_infection(get_bounded_index(get_random_int(0,grid_length-1)), 				                          	get_bounded_index(get_random_int(0,grid_length-1)));
+if (Math.random() < 0.01) { 
+    var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
+    var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
+    try_infection(random_i, random_ii);
 }
 else {
-    try_infection(get_bounded_index(neighbor_i),get_bounded_index(neighbor_ii));
+    try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
 }
 ~~~~~~~~
 
