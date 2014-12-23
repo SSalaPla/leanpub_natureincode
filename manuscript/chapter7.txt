@@ -299,12 +299,12 @@ and replace it with this:
 
 ~~~~~~~~
 if (Math.random() < 0.01) { 
-	var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
-	var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
-	try_infection(random_i, random_ii);
+var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
+var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
+try_infection(random_i, random_ii);
 }
 else {
-	try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
+try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
 }
 ~~~~~~~~
 
@@ -410,7 +410,7 @@ Here, I’ve introduced a common shorthand notation that is available in JavaScr
 something = something + 1
 ~~~~~~~~
 
-if you want to increase the value of something by one, you can use the shorthand notation and write 
+if you want to increase the value of `something` by 1, you can use the shorthand notation and write 
 
 ~~~~~~~~
 something++
@@ -418,7 +418,7 @@ something++
 
 There isn’t any particular advantage to this shorthand notation - it’s simply shorter. However, it’s very commonly used, and I wanted to make sure you knew about it.
 
-There is also the equivalent of decreasing a value by one, so that instead of writing
+There is also the equivalent of decreasing a value by 1, so that instead of writing
 
 ~~~~~~~~
 something = something - 1
@@ -430,7 +430,7 @@ you can write
 something--
 ~~~~~~~~
 
-There are a few other shorthand notations in the same spirit. If you want to modify a variable by adding to it, subtracting from it, multiplying or diving it, you can use the following shorthand notations:
+There are a few other shorthand notations in the same spirit. If you want to modify a variable by adding to it, subtracting from it, multiplying or dividing it, you can use the following shorthand notations:
 
 {width="wide"}
 |  |Full version |Shorthand |
@@ -440,7 +440,7 @@ There are a few other shorthand notations in the same spirit. If you want to mod
 | Multiplication  |`something = something * value`|`something *= value`|
 | Division  |`something = something / value`|`something /= value`|
 
-With that out of the way, let’s modify the code to make sure we have everything set up. First, we are calling `init_grid()` for every single generation run in the `run_simulation()` function - so be sure to remove the one `init_grid()` call that we used right after we defined the function (it’s wouldn’t be a drama if you’d forget that - it would simply be an unnecessary function call in the beginning).
+With that out of the way, let’s modify the code to make sure we have everything set up. First, we are calling `init_grid()` for every single generation run in the `run_simulation()` function - so be sure to remove the one `init_grid()` call that we used right after we defined the function (it wouldn’t be a drama if you’d forget that - it would simply be an unnecessary function call in the beginning).
 
 Next, we need to define the methods `get_number_of_infected()` and `get_number_of_recovered()`. Here’s how we can do that:
 
@@ -466,7 +466,7 @@ function get_number_in_state(state) {
 }
 ~~~~~~~~
 
-What I’m doing here is first define a generic version of the function called `get_number_in_state(state)`, where I’m going through all the cells and count the number of cells that are in a given state, passed to the function as an argument. That would in principle be sufficient, and I could just call 
+What I’m doing here is to first define a generic version of the function called `get_number_in_state()`, where I’m going through all the cells and count the number of cells that are in a given state, passed to the function as an argument. That would in principle be sufficient, and I could just call 
 
 ~~~~~~~~
 get_number_in_state("I")
