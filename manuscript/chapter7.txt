@@ -299,13 +299,13 @@ and replace it with this:
 
 ~~~~~~~~
 if (Math.random() < 0.01) { 
-			    var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
-				var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
-    	        try_infection(random_i, random_ii);
-			}
-			else {
-			    try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
-			}
+	var random_i = get_bounded_index(get_random_int(0,grid_length-1)); 
+	var random_ii = get_bounded_index(get_random_int(0,grid_length-1));
+	try_infection(random_i, random_ii);
+}
+else {
+	try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
+}
 ~~~~~~~~
 
 What we are doing here is running the original code in 99% of the time, but in 1% of the time, we expose a random individual, rather than the local neighbor. Notice that we use the same function and parameters to get random coordinates as we used to define patient 0 in the function `init_grid()`.
