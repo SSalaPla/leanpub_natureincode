@@ -22,10 +22,10 @@ The game that we would like to play here is as follows. Since we are interested 
 |  |Individual 2 Defecting |Individual 2 Cooperating|
 |:----------:|:------------:|:------------:|
 | Individual 1 Defecting  |Payoff Individual 1: ?|Payoff Individual 1: ?|
-|                         |Payoff Individual 2: ?|Payoff Individual 1: ?|
+|                         |Payoff Individual 2: ?|Payoff Individual 2: ?|
 |:----------:|:------------:|:------------:|
 | Individual 1 Cooperating  |Payoff Individual 1: ?|Payoff Individual 1: ?|
-|                           |Payoff Individual 2: ?|Payoff Individual 1: ?|
+|                           |Payoff Individual 2: ?|Payoff Individual 2: ?|
 
 In order to define the game, we now have to come up with the fitness values for each individual in each of the four possible combinations. By doing so, we are generating a payoff matrix that defines a game.
 
@@ -35,10 +35,10 @@ If we broadly think of cooperation as paying a cost, *c*, to help another player
 |  |Individual 2 Defecting |Individual 2 Cooperating|
 |:----------:|:------------:|:------------:|
 | Individual 1 Defecting  |Payoff Individual 1: 0|Payoff Individual 1: b|
-|                         |Payoff Individual 2: 0|Payoff Individual 1: -c|
+|                         |Payoff Individual 2: 0|Payoff Individual 2: -c|
 |:----------:|:------------:|:------------:|
 | Individual 1 Cooperating  |Payoff Individual 1: -c|Payoff Individual 1: b-c|
-|                           |Payoff Individual 2: b|Payoff Individual 1: b-c|
+|                           |Payoff Individual 2: b|Payoff Individual 2: b-c|
 
 If the benefit is larger than the cost (i.e. *b > c*), this payoff matrix represents the so-called "Prisoner's dilemma" game, which is a classic game in evolutionary game theory. The game was originally developed in a non-biological context, but its logic can easily be applied to many biological situations. The gist of the game - and the reason why it is called a dilemma - is as follows. In essence, it would be best for a pair of players to cooperate - they would get a positive payoff of *b-c*, which is larger than 0. On the other hand, if they both defected, they would not receive any payoff (0). However, if one of them defects, and the other cooperates, the defector receives the benefit *b*, without having to pay the cost *c*, while the cooperator has to pay the cost *c*, without receiving the benefit *b*.
 
@@ -64,13 +64,13 @@ var strategies = ["ALL_C","ALL_D"];
 var data = [];
 ~~~~~~~~
 
+The variables `c` and `b` define the costs and benefits for our model. The array `population` is where we will store all the individuals in the population, and `population_size` defines how many individuals we will keep track of in the population. We'll be running a simulation for `number_of_time_steps` time steps, and we'll mutate strategies at the rate given by `mutation_rate` (more about that below). There are two possible strategies for an individual to take: `ALL_C` (meaning the individual will always cooperate) or `ALL_D` (meaning the individual will always defect). We store these two strategies as strings in the array `strategies`. Finally, we will store the frequency of the strategies in the `data` array for easy plotting.
 
-The variables c and b define the costs and benefits for our model. The array population is where we will store all the individuals in the population, and population_size defines how many individuals we will keep track of in the population. We'll be running a simulation for number_of_time_steps time steps, and we'll mutate strategies at the rate given by mutation_rate (more about that below). There are tow possible strategies for an individual to take: ALL_C (meaning the individual will always cooperate) or ALL_D (meaning the individual will always defect). We store these two strategies as string in the array strategies. Finally, we will store the frequency of the strategies in the data array for easy plotting.
+You can think about time steps as generations, if you want to. But you could also imagine that time steps are simply arbitrary time intervals in which everyone in a population plays a game. I'll stick with the term time steps, rather than generations, because it is a more generic term.
 
-You can think about time steps as generations, if you want to. But you could also imagine that time steps are simply arbitrary time intervals in which everyone in a population plays a game. I'll stick with the term time steps, rather then generations, because it is a more generic term.
+To run a simulation, we will define, and immediately call, the function `run_simulation()`. Here's what it'll look like:
 
-To run a simulation, we will define, and immediately call, the function run_simulation. Here's what it'll look like:
-
+~~~~~~~~
 function run_simulation() {
     init_simulation();
     for (var i = 0; i < number_of_time_steps; i++) {
@@ -79,11 +79,13 @@ function run_simulation() {
 }
 
 run_simulation();
+~~~~~~~~
 
-The function run_simulation() first calls another function, init_simulation(), to sets up the initial population and the data collection. Then, using a for loop, we'll call the function run_time_step() as many times as defined by the variable number_of_time_steps.
+The function `run_simulation()` first calls another function, `init_simulation()`, to set up the initial population and the data collection. Then, using a `for` loop, we'll call the function `run_time_step()` as many times as defined by the variable `number_of_time_steps`.
 
-Let's go ahead and implement these two functions. The function init_simulation() looks as follows:
+Let's go ahead and implement these two functions. The function `init_simulation()` looks as follows:
 
+~~~~~~~~
 function init_simulation() {
     for (var i = 0; i < population_size; i++) {
         population.push(new Individual("ALL_C",0));
@@ -92,95 +94,124 @@ function init_simulation() {
         data.push([]);
     }
 }
+~~~~~~~~
 
-As you can see, there are two for loops used here: first, to initialize the population, and second, to set up the data collection using the data array. The second for loop should be self-explanatory at this stage: it simply adds an empty array to data for each strategy. So once again, data will be a two-dimensional array, where the inner arrays will contain the frequencies for the corresponding strategy at each time step.
+As you can see, there are two `for` loops used here: first, to initialize the population, and second, to set up the data collection using the `data` array. The second `for` loop should be self-explanatory at this stage: it simply adds an empty array to `data` for each strategy. So once again, `data` will be a two-dimensional array, where the inner arrays will contain the frequencies for the corresponding strategy at each time step.
 
+The first `for` loop needs as more extensive discussion. The loop itself is rather simple: it simply pushes elements into the `population` array. But what kind of elements? Well, our `population` array is supposed to keep track of all the individuals. In the previous examples in this book, we kept track of individuals simply as genotypes, or alleles, or as states, usually by using a number or a string (such as `"A1"`, `"A2"`, `"S"`, `"I"`, `"R"`, etc.). However, many times, the elements that we want to store are more complex than that. For example, for the current model, we would like to store both a strategy - such as cooperate or defect - and a numerical payoff value for each individual. We could go ahead and store these values in an array:
 
-The first for loop needs as more extensive discussion. The loop itself is rather simple: it simples pushes elements into the population array. But what kind of elements? Well, our population array is supposed to keep track of all the individuals. In the previous examples in this book, we kept track of individuals simply as genotypes, or alleles, or as states, usually by using a number or a string (such as "A1", "A2", "S", "I", "R", etc.). However, many times, the elements that we want to store are more complex than that. For example, for the current model, we would like to store both a strategy - such as cooperate or defect - and a numerical payoff value for each individual. We could go ahead and store these values in an array:
-
+~~~~~~~~
 population.push(["C",0]);
+~~~~~~~~
 
 But then, we would always have to remember that the strategy is stored as the first element of the array, and the payoff as the second element. And what if we added more values to an individual? We would have to extend the array. And let's hope we would never come up with the idea to change the order in which we store these individual properties in the array - we would have to change the code everywhere we access the properties! This sounds like a recipe for disaster.
 
-Enter objects. Objects are a very powerful concept, and yet they are very easy to understand. In JavaScript, an object is simply a container of properties. Properties are named values, i.e. they have a name, and a value. You can define an object using the shorthand notation {}. 
+Enter *objects*. Objects are a very powerful concept, and yet they are very easy to understand. In JavaScript, an object is simply a container of properties. Properties are named values, i.e. they have a name, and a value. You can define an object using the shorthand notation `{}`. 
 
-Recall how we introduced arrays in chapter 3 - we saw that you can initialize an empty array using the shorthand notation [], like so:
+Recall how we introduced arrays in chapter 3 - we saw that you can initialize an empty array using the shorthand notation `[]`, like so:
 
+~~~~~~~~
 var array = [];
+~~~~~~~~
 
 or you can initialize the array with some values right away:
 
+~~~~~~~~
 var array = [1,4,7];
+~~~~~~~~
 
 Similarly, you can initialize an empty object like this:
 
+~~~~~~~~
 var object = {};
+~~~~~~~~
 
 and alternatively, you can initialize the object with a few properties right away:
 
+~~~~~~~~
 var object = {"first_name":"marcel", "last_name":"salathe"};
+~~~~~~~~
 
-As you can see, this object contains two properties. One has the name "first_name", and the value "marcel"; the other has the name "last_name", and the value "salathe". Property names can be strings, but you can omit the quotes if the names are legal JavaScript variable names (which I highly recommend they are). In other words, you could initialize the same object as follows:
+As you can see, this object contains two properties. One has the name `"first_name"`, and the value `"marcel"`; the other has the name `"last_name"`, and the value `"salathe"`. Property names can be strings, but you can omit the quotes if the names are legal JavaScript variable names (which I highly recommend they are). In other words, you could initialize the same object as follows:
 
+~~~~~~~~
 var object = {first_name:"marcel", last_name:"salathe"};
+~~~~~~~~
 
-So that's how you set the property values - but how do you retrieve them when you need them later on? JavaScript provides two notations to access property values: the dot notation, and the shorthand notation []. For example, in order to retrieve the value of the property first_name, you could use either 
+So that's how you set the property values - but how do you retrieve them when you need them later on? JavaScript provides two notations to access property values: the *dot notation*, and the shorthand notation `[]`. For example, in order to retrieve the value of the property `first_name`, you could use either 
 
+~~~~~~~~
 object.first_name
+~~~~~~~~
 
 or 
 
+~~~~~~~~
 object["first_name"]
+~~~~~~~~
 
 independent of how you defined it. Throughout the rest of this book, I will use the dot notation, which I prefer because it is shorter and cleaner. 
 
-Now, for the purpose of our model, we would like to store individuals as objects with two properties. Those properties are (i) the strategy of the individual, and (ii) the payoff. The strategy can be of value "ALL_C" or "ALL_D" (for cooperator and defector, respectively), and the payoff is a numerical value initially set to 0. Thus, we could create individuals like so:
+Now, for the purpose of our model, we would like to store individuals as objects with two properties. Those properties are (i) the strategy of the individual, and (ii) the payoff. The strategy can be of value `"ALL_C"` or `"ALL_D"` (for cooperator and defector, respectively), and the payoff is a numerical value initially set to 0. Thus, we could create individuals like so:
 
+~~~~~~~~
 var individual_0 = {strategy:"ALL_C", payoff:0};
 var individual_1 = {strategy:"ALL_D", payoff:0};
 var individual_2 = {strategy:"ALL_C", payoff:0};
 var individual_3 = {strategy:"ALL_D", payoff:0};
 ...
+~~~~~~~~
 
-But this is a bit cumbersome, especially if we repeatedly want to generate new objects of the same kind. It turns out that JavaScript provides a very handy object generator. It is called constructor function, which is simply a function that by convention starts with a capital letter, and is invoked with the new keyword. Let's take a look at this step by step.
+But this is a bit cumbersome, especially if we repeatedly want to generate new objects of the same kind. It turns out that JavaScript provides a very handy object generator. It is called *constructor function*, which is simply a function that by convention starts with a capital letter, and is invoked with the `new` keyword. Let's take a look at this step by step.
 
 Like any function, a constructor function can take any number of arguments. For example, a constructor function for an individual could look like this:
 
+~~~~~~~~
 function Individual(strategy, payoff) {
 
 }
+~~~~~~~~
 
-This function doesn't do anything - yet. What we would like to do, though, is for the function to create a new object, assign values to the properties, and return the object. It turns out that when we invoke the function with the new keyword, like so:
+This function doesn't do anything - yet. What we would like to do, though, is for the function to create a new object, assign values to the properties, and return the object. It turns out that when we invoke the function with the `new` keyword, like so:
 
+~~~~~~~~
 var example_individual = new Individual("C",0);
+~~~~~~~~
 
-then the constructor implicitly creates a new empty object, assigns it to a local variable called this, and returns this at the end of the function. Thus, if we want to assign the parameter values to the corresponding properties, our constructor function should look like this:
+then the constructor implicitly creates a new empty object, assigns it to a local variable called `this`, and returns `this` at the end of the function. Thus, if we want to assign the parameter values to the corresponding properties, our constructor function should look like this:
 
+~~~~~~~~
 function Individual(strategy, payoff) {
     this.strategy = strategy;
     this.payoff = payoff;
 }
+~~~~~~~~
 
-Note that we neither have to write var this = {}; at the beginning, nor return this; at the end - both of these things happen automatically if the function is invoked with the keyword new. Which is of course exactly what we are doing in the first for loop in the function init_simulation():
+Note that we neither have to write `var this = {};` at the beginning, nor `return this;` at the end - both of these things happen automatically if the function is invoked with the keyword `new`. Which is of course exactly what we are doing in the first `for` loop in the function `init_simulation()`:
 
+~~~~~~~~
 for (var i = 0; i < population_size; i++) {
     population.push(new Individual("ALL_C",0));
 }
+~~~~~~~~
 
-Thus, in every iteration of this loop, we create a new object using the Individual constructor function, and each of these objects has two properties, strategy and payoff, which are set to "ALL_C" and 0, respectively.
+Thus, in every iteration of this loop, we create a new object using the Individual constructor function, and each of these created objects has two properties, `strategy` and `payoff`, which are set to `"ALL_C"` and `0`, respectively.
 
-After this brief detour to introduce JavaScript objects, let's return to our function run_simulation(), which repeatedly calls the function run_time_step() which is currently undefined - let's fix this and define run_time_step() like this:
+After this brief detour to introduce JavaScript objects, let's return to our function `run_simulation()`, which repeatedly calls the function `run_time_step()` which is currently undefined - let's fix that and define `run_time_step()` like this:
 
+~~~~~~~~
 function run_time_step() {
     games();
     selection();
     mutation();
 }
+~~~~~~~~
   
-As you can see, this function does not do much by itself, other than calling three functions in sequence: games(), which is the function where all individuals play their games; selection(), which is the function that replaces the strategies of individuals that have low payoffs with strategies of individuals that have high payoffs; and mutation(), which introduces the occasional random strategy change. Let's take a look at each of these functions in detail.
+As you can see, this function does not do much by itself, other than calling three functions in sequence: `games()`, which is the function where all individuals play their games; `selection()`, which is the function that replaces the strategies of individuals that have low payoffs with strategies of individuals that have high payoffs; and `mutation()`, which introduces the occasional random strategy change. Let's take a look at each of these functions in detail.
 
-The games() function is where we make all individual play a game against another, randomly chosen individual. We can implement this as follows:
+The `games()` function is where we make all individuals play a game against another, randomly chosen individual. We can implement this as follows:
 
+~~~~~~~~
 function games() {
     for (var i = 0; i < population_size; i++) {
         var current_individual = population[i];
@@ -188,6 +219,7 @@ function games() {
         play_game(current_individual, other_individual);
     }
 }
+~~~~~~~~
 
 This function loops through all individuals, picks another, random individual, and then makes the two individuals play the game. Let's first implement the function get_other_individual():
 
