@@ -21,9 +21,11 @@ The game that we would like to play here is as follows. Since we are interested 
 {width="wide"}
 |  |Individual 2 Defecting |Individual 2 Cooperating|
 |:----------:|:------------:|:------------:|
-| Individual 1 Defecting  |||
+| Individual 1 Defecting  |Payoff Individual 1: ?|Payoff Individual 1: ?|
+|                         |Payoff Individual 2: ?|Payoff Individual 1: ?|
 |:----------:|:------------:|:------------:|
-| Individual 1 Cooperating  |||
+| Individual 1 Cooperating  |Payoff Individual 1: ?|Payoff Individual 1: ?|
+|                           |Payoff Individual 2: ?|Payoff Individual 1: ?|
 
 In order to define the game, we now have to come up with the fitness values for each individual in each of the four possible combinations. By doing so, we are generating a payoff matrix that defines a game.
 
