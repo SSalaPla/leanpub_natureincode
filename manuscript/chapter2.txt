@@ -25,7 +25,7 @@ Friend 2: “And?”
 Friend 1: “The other day, on my way back home, I saw a car flying right over me!”  
 Friend 2: “SAY WHAT???”
 
-In science, just as in life, a phenomenon is interesting to the extent that it is unexpected. (Coincidentally, this is also the reason why life gets boring as you get older unless you continuously immerse yourself in new experiences, and learn new things.) Thus, for a scientific phenomenon to be called interesting, you need to know what to expect. 
+In science, just as in life, a phenomenon is interesting to the extent that it is unexpected. (Coincidentally, this is also the reason why life gets boring as you get older unless you continuously immerse yourself in new experiences, and learn new things.) Thus, for a scientific phenomenon to be called interesting, you first need to know what to expect so that you know when you see something unexpected.
 
 In science, this idea is conceptualized in the *null model*. The null model states how a system behaves, given what you know about the system. This is an enormously important concept. Your brain is constantly scanning the world and comparing it to the null models you hold in your head. In fact, you do this subconsciously, which is why you would run away from a tiger in a supermarket without having to think about it: your observation (“there is a tiger staring at me from the dairy section”) is very different from your null model (“there should be no animal, and certainly no tiger, in any section of a supermarket”), raising your mental red flags.
 
