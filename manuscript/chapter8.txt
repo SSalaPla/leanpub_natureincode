@@ -10,7 +10,7 @@ In addition, this chapter introduces a brand new programming concept: *objects*.
 
 Let's get started!
 
-#Game Theory
+##Game Theory
 
 The most common framework to study cooperation is that of *game theory*. Game theory is the study of strategic decision making. It was originally developed to study economic behavior, but was later adapted by evolutionary biologists to study behavior in non-human species as well.
 
@@ -20,9 +20,10 @@ The game that we would like to play here is as follows. Since we are interested 
 
 {width="wide"}
 |  |Individual 2 Defecting |Individual 2 Cooperating|
-|----------:|:------------:|:------------:|
-| Individual 1 Defecting  |some payoff|some payoff|
-| Individual 2 Cooperating  |some payoff|some payoff|
+|:----------:|:------------:|:------------:|
+| Individual 1 Defecting  |||
+|:----------:|:------------:|:------------:|
+| Individual 2 Cooperating  |||
 
 In order to define the game, we now have to come up with the fitness values for each individual in each of the four possible combinations. By doing so, we are generating a payoff matrix that defines a game.
 
