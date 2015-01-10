@@ -10,7 +10,7 @@ In addition, this chapter introduces a brand new programming concept: *objects*.
 
 Let's get started!
 
-##Game Theory
+## Game Theory
 
 The most common framework to study cooperation is that of *game theory*. Game theory is the study of strategic decision making. It was originally developed to study economic behavior, but was later adapted by evolutionary biologists to study behavior in non-human species as well.
 
@@ -34,22 +34,24 @@ If we broadly think of cooperation as paying a cost, *c*, to help another player
 {width="wide"}
 |  |Individual 2 Defecting |Individual 2 Cooperating|
 |:----------:|:------------:|:------------:|
-| Individual 1 Defecting  |Payoff 1: 0|Payoff 1: 0|
-|                         |Payoff 2: 0|Payoff 1: 0|
+| Individual 1 Defecting  |Payoff Individual 1: 0|Payoff Individual 1: b|
+|                         |Payoff Individual 2: 0|Payoff Individual 1: -c|
 |:----------:|:------------:|:------------:|
-| Individual 1 Cooperating  |Payoff 1: 0|Payoff 1: 0|
-|                           |Payoff 2: 0|Payoff 1: 0|
+| Individual 1 Cooperating  |Payoff Individual 1: -c|Payoff Individual 1: b-c|
+|                           |Payoff Individual 2: b|Payoff Individual 1: b-c|
 
-If the benefit is larger than the cost (i.e. b > c), this payoff matrix represents the so-called "Prisoner's dilemma" game, which is a classic game in evolutionary game theory. The game was originally developed in a non-biological context, but its logic can easily be applied to many biological situations. The gist of the game - and the reason why it is called a dilemma - is as follows. In essence, it would be best for a pair of players to cooperate - they would get a positive payoff of b-c, which is larger than 0. On the other hand, if they both defected, they would not receive any payoff (0). However, if one of them defects, and the other cooperates, the defector receives the benefit b, without having to pay the cost c, while the cooperator only pays the cost c, without receiving the benefit b.
+If the benefit is larger than the cost (i.e. *b > c*), this payoff matrix represents the so-called "Prisoner's dilemma" game, which is a classic game in evolutionary game theory. The game was originally developed in a non-biological context, but its logic can easily be applied to many biological situations. The gist of the game - and the reason why it is called a dilemma - is as follows. In essence, it would be best for a pair of players to cooperate - they would get a positive payoff of *b-c*, which is larger than 0. On the other hand, if they both defected, they would not receive any payoff (0). However, if one of them defects, and the other cooperates, the defector receives the benefit *b*, without having to pay the cost *c*, while the cooperator has to pay the cost *c*, without receiving the benefit *b*.
 
-The consequence of this payoff matrix is that it is always in the selfish interest of individuals to defect. Why is that? Imagine you are playing this game, and you are contemplating your move - should you cooperate, or defect? If you expect the other player to cooperate, it will be better for you to defect, because your payoff will be b instead of the reduced b-c. Equally, if you expect the other player to defect, it will also be better for you to defect, because your payoff will be 0, which is still better than the negative payoff of -c. In short, no matter what the other player plays, your best move, selfishly, is to defect. Sadly, the outcome of this is that all individuals will defect, leading to the worst possible outcome for all interactions. It would be much better for everyone if everyone cooperated (they would all receive a positive payoff of b-c), but because it is individually better to defect, everyone will end up defecting, receiving no payoff at all.
+The consequence of this payoff matrix is that *it is always in the selfish interest of individuals to defect*. Why is that? Imagine you are playing this game, and you are contemplating your move - should you cooperate, or defect? If you expect the other player to cooperate, it will be better for you to defect, because your payoff will be *b* instead of the smaller *b-c*. Equally, if you expect the other player to defect, it will also be better for you to defect, because your payoff will be 0, which is still better than the negative payoff of *-c*. In short, no matter what the other player plays, your best move, selfishly, is to defect. Sadly, the outcome of this is that all individuals will defect, leading to the worst possible outcome for all interactions. It would be much better for everyone if everyone cooperated (they would all receive a positive payoff of *b-c*), but because it is individually better to defect, everyone will end up defecting, receiving no payoff at all.
 
-It's important to recall that in a biological situation, the payoff is measured in evolutionary fitness (and as always, we care about the relative fitness values, and not about the absolute numbers). If we assume that playing a strategy is genetically encoded, a higher payoff simply means that an allele causing the individual to play a certain strategy will on average leave more of its copies in the next generation - evolution by natural selection. Of course, behavior is generally a very complex mechanism, influenced by many genes and by the environment. Thus, while there is certainly no gene or allele "for" a complex behavior, we will continue to use this language metaphorically. As long as there is inheritance of whatever it is that causes individuals to play certain strategies, the logic of natural selection applies.
+It's important to recall that in a biological situation, the payoff is measured in evolutionary fitness (and as always, we care about the relative fitness values, and not about the absolute numbers). If we assume that playing a strategy is genetically encoded, a higher payoff simply means that an allele causing the individual to play a certain strategy will on average leave more of its copies in the next generation - and we'll get evolution by natural selection, as discussed in chapter 6. Of course, behavior is generally a very complex mechanism, influenced by many genes as well as by the environment. Thus, while there is certainly no one gene or allele "for" a complex behavior, we will continue to use this language metaphorically. As long as there is inheritance of whatever it is that causes individuals to play certain strategies, the logic of natural selection applies.
 
-Let's go ahead and implement this game in javascript. 
+Let's go ahead and implement this game in JavaScript. 
 
+## A Game in Code
 First, as always, we'll set up some key variables:
 
+~~~~~~~~
 var c = 1;
 var b = 4;
 
@@ -60,6 +62,7 @@ var mutation_rate = 0.001;
 
 var strategies = ["ALL_C","ALL_D"];
 var data = [];
+~~~~~~~~
 
 
 The variables c and b define the costs and benefits for our model. The array population is where we will store all the individuals in the population, and population_size defines how many individuals we will keep track of in the population. We'll be running a simulation for number_of_time_steps time steps, and we'll mutate strategies at the rate given by mutation_rate (more about that below). There are tow possible strategies for an individual to take: ALL_C (meaning the individual will always cooperate) or ALL_D (meaning the individual will always defect). We store these two strategies as string in the array strategies. Finally, we will store the frequency of the strategies in the data array for easy plotting.
