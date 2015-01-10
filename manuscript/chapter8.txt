@@ -23,13 +23,20 @@ The game that we would like to play here is as follows. Since we are interested 
 |:----------:|:------------:|:------------:|
 | Individual 1 Defecting  |||
 |:----------:|:------------:|:------------:|
-| Individual 2 Cooperating  |||
+| Individual 1 Cooperating  |||
 
 In order to define the game, we now have to come up with the fitness values for each individual in each of the four possible combinations. By doing so, we are generating a payoff matrix that defines a game.
 
-If we broadly think of cooperation as paying a cost, c, to help another player receive a benefit, b, we can fill in the payoff matrix generically as follows:
+If we broadly think of cooperation as paying a cost, *c*, to help another player receive a benefit, *b*, we can fill in the payoff matrix generically as follows:
 
-
+{width="wide"}
+|  |Individual 2 Defecting |Individual 2 Cooperating|
+|:----------:|:------------:|:------------:|
+| Individual 1 Defecting  |Payoff 1: 0|Payoff 1: 0|
+|                         |Payoff 2: 0|Payoff 1: 0|
+|:----------:|:------------:|:------------:|
+| Individual 1 Cooperating  |Payoff 1: 0|Payoff 1: 0|
+|                           |Payoff 2: 0|Payoff 1: 0|
 
 If the benefit is larger than the cost (i.e. b > c), this payoff matrix represents the so-called "Prisoner's dilemma" game, which is a classic game in evolutionary game theory. The game was originally developed in a non-biological context, but its logic can easily be applied to many biological situations. The gist of the game - and the reason why it is called a dilemma - is as follows. In essence, it would be best for a pair of players to cooperate - they would get a positive payoff of b-c, which is larger than 0. On the other hand, if they both defected, they would not receive any payoff (0). However, if one of them defects, and the other cooperates, the defector receives the benefit b, without having to pay the cost c, while the cooperator only pays the cost c, without receiving the benefit b.
 
