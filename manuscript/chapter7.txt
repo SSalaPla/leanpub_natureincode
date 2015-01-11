@@ -636,5 +636,5 @@ Let’s briefly summarize what we've learned in this chapter.
 * Small changes in the host contact structure can have dramatic effects on epidemics. Compared to a host structure with only local contacts, a small world host structure will generate dramatically larger epidemics
 * We’ve also introduced a few widely used shortcuts for arithmetic manipulations in JavaScript.
 
-Despite the deep fascination of parasites, and the infectious disease they cause, I would like to finish the book on a more cheery note. In a future chapter, we'll dig into game theory, and use our coding skills to show how cooperation among animals (including humans!) can evolve. This chapter will be added in the next few weeks. 
+Despite the deep fascination of parasites, and the infectious disease they cause, I would like to continue the book on a more cheery note. In the next chapter, we'll dig into game theory, and use our coding skills to show how cooperation among animals (including humans!) can evolve. 
 
