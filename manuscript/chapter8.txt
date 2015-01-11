@@ -249,7 +249,7 @@ What the function does is to pick a random individual for as long as it is neces
 
 There is a JavaScript gotcha here that I want you to be aware of. Until now, whenever we compared values and tested for equality, we were comparing so-called *primitive* types such as numbers (e.g. `1`, `2`), booleans (`true`, `false`), and strings (e.g. `"A1"`, `"A2"`). These values are called primitive types because they are not objects. When you are comparing primitive types, you are comparing their values. However, when you are comparing objects, you are not actually comparing their values - you are simply comparing their *references*. What does this mean?
 
-A reference is essentially an address in memory where your object lives. When you compare two objects with the equality operator `==`, you are not comparing the values of their properties; you are simply comparing the reference. 
+A reference is essentially an address in memory where your object lives. When you compare two objects with the equality operator `==`, you are not comparing the values of their properties; you are simply comparing the references. 
 
 Consider the following code:
 
@@ -297,7 +297,7 @@ in the console, because both variables have the value `5`. When `a` is overwritt
 
 as we would intuitively expect.
 
-We have never talked about this issue before because when you work with primitive types, things seem intuitively logical, as seen in the code example above. However, this changes with objects. Let's look at the following code with objects, which is the same code in spirit as the one above:
+However, things change when it comes to objects. Let's look at the following code with objects, which is the same code in spirit as the one above:
 
 ~~~~~~~~
 var a = {foo:1, bar:2};
@@ -321,7 +321,7 @@ Object {foo: 3, bar: 2} Object {foo: 3, bar: 2}
 
 You may have thought that you had only changed the value of the `foo` property in object `a`. *But you don't really have two distinct objects*: `b` is simply assigned a reference to `a`, and because you changed `a.foo`, you will see the change reflected in both `a` and `b`.
 
-If that seems a bit confusing a first, don't worry - you're in good company. We'll revisit this issue multiple times until it sinks in.
+We have never talked about this issue before because when you work with primitive types, things seem intuitively logical, as seen in the code example above. But we objects, we have to be more careful when we assign objects to variables, since we are really only assigning the reference to the variable. If that seems a bit confusing a first, don't worry - you're in good company. We'll revisit this issue multiple times until it sinks in.
 
 After this short detour about objects, let's bring our attention back to the cooperation model code. We were just talking about this function:
 
@@ -415,33 +415,35 @@ this.method_name = function() {};
 
 where you are then free to make the method do whatever it needs to do inside the curly brackets `{}`.
 
-This looks a little strange at first, because we have so far defined regular function like so:
+This looks a little strange at first, because we have so far defined regular functions like so:
 
 ~~~~~~~~
 function function_name() {
 }
 ~~~~~~~~
 
-Indeed, we could have written this instead as 
+Indeed, we could always have written this instead as 
 
 ~~~~~~~~
 var function_name = function() {};
 ~~~~~~~~
 
-which would have been equivalent. In JavaScript, functions are are in fact special objects, and just like you can assign an object to a variable, you can also assign a function to a variable. However, for stand-alone functions in my code, I generally prefer the slightly shorter notation 
+which would have had the same effect. In JavaScript, functions are are in fact special types of objects, and just like you can assign a regular object to a variable, you can also assign a function to a variable. However, for stand-alone functions in my code, I generally prefer the slightly shorter notation 
 
 ~~~~~~~~
 function function_name() {
 }
 ~~~~~~~~
 
-However, when you define methods as parts of your objects, you can't use this short notation anymore, an instead need to use the assignment notation, like we have done above:
+You can in principle use this latter version even within an object constructor function. However, you would then have to assign the function to a local variable in a separate step. I find it much more convenient to combine all this steps by using the former version, and simply write:
 
 ~~~~~~~~
 this.compute_move = function() {
     return this.strategy == "ALL_C" ? "C" : "D";
 };
 ~~~~~~~~
+
+This defines the function AND assigns it to `this.compute_move` at the same time, for latter usage in our code.
 
 After defining a method, you can then use it on any object as part of which it was defined - in our case, we can use it on any `Individual` object, as we do in the `games()` function:
 
@@ -504,7 +506,7 @@ Let's take a look at this line:
 temp_population[i] = other_individual;
 ~~~~~~~~
 
-As we have discussed just a few pages earlier, because we're dealing with objects, temp_population[i] will now simply contain a reference to the other_individual object, rather than a copy of the object. This is important - let's now look at the second `for` loop and see why. It reads:
+As we have discussed just a few pages earlier, because we're dealing with objects, `temp_population[i]` will now simply contain a reference to the `other_individual` object, rather than a copy of the object. This is important - let's now look at the second `for` loop and see why. It reads:
 
 ~~~~~~~~
 for (i = 0; i < population_size; i++) {
@@ -528,13 +530,13 @@ for (i = 0; i < population_size; i++) {
 
 This is very tempting: simply copy over the individual from the `temp_population` array, and then set its payoff back to `0` - simple, right? 
 
-The problem with this that the line
+The problem with this is that the line
 
 ~~~~~~~~
 current_individual = temp_population[i];
 ~~~~~~~~
 
-doesn't copy an object - it simply assigns a reference. Thus, `current_individual`, rather than being the same object as before (but simply with a new property values) would now actually reference another object somewhere in memory, which will lead to very confusing and completely wrong dynamics.
+*doesn't copy an object - it simply assigns a reference*. Thus, `current_individual`, rather than being the same object as before (but simply with new property values) would now actually reference another object somewhere in memory, which will lead to very confusing bugs and completely wrong dynamics.
 
 Because this concept can be a little trick to wrap your head around at first, I'm going to divert from our cooperation code, and will briefly introduce a completely independent code example that explains the concept in a simpler context. We'll get back to our cooperation code right after this. 
 
@@ -553,9 +555,9 @@ var individual2 = new Individual(1.1, "B");
 var individual3 = new Individual(1.2, "C");
 
 console.log("initial population:")
-console.log(individual1);
-console.log(individual2);
-console.log(individual3);
+console.log(individual1); // shows trait "A"
+console.log(individual2); // shows trait "B"
+console.log(individual3); // shows trait "C"
 
 // selection:
 individual1 = individual3;
@@ -590,7 +592,7 @@ individual2 = individual3;
 
 Spoiler alert: this is where things go wrong- but more about that in a second. In any case, if we now print the three `Individual` objects into the console, we see that they all have trait `"C"`, which is what we wanted.
 
-In the final step of this example, we assume that `individual3` mutates, and changes its trait to `"D"`. Note that we only change `individual3` - we don't touch `individual1` and `individual2`. However, if we now print the objects one more time into the console, we see that they all have trait `"D"`! How did that happen? We did not touch the traits of `individual1` or `individual2` anywhere in the code!
+In the final step of this example, we assume that `individual3` mutates, and changes its trait to `"D"`. Note that we only change `individual3` - we touch neither `individual1` nor `individual2`. However, if we now print the objects one more time into the console, we see that they all have trait `"D"`! How did that happen? We did not touch the traits of `individual1` or `individual2` anywhere in the code!
 
 As I mentioned above, the problem is in these lines:
 
@@ -602,14 +604,14 @@ individual2 = individual3;
 
 We might think we're copying the object `individual3`, with all its properties, into `individual1` and `individual2` - *but we're not*. Instead, we are copying the *reference* to `individual3`. After these two lines, both `individual1` and `individual2` are simply references to `individual3`. In a way, with these two lines, we have "lost" two objects - all we have left is object `individual3`, and two other variables (`individual1` and `individual2`) referencing `individual3`.
 
-When we print the three objects into the console after the selection step, it's very easy to think everything went fine, because all three objects now have trait `"C"` - but this is an illusion! It's simply that they are all referencing the same object, which happens to have trait `"C"`. And this illusion is exposed when we assign a new value to the trait of `individual3`: suddenly all individuals have trait `"D"`, because they are all pointing to `individual3`.
+When we print the three objects into the console after the selection step, it's very easy to think everything went fine, because all three objects now have trait `"C"` - but this is an illusion! It's simply that they are all referencing the same object (`individual3`), which happens to have trait `"C"`. And this illusion is exposed when we assign a new value to the trait of `individual3`: suddenly all individuals have trait `"D"`, because they are all pointing to `individual3`.
 
 Here is a visual representation of what's going on (I've color-coded the objects to reflect distinct trait values): 
 
 {width=90%}
 ![](images/ch_8_obj_example.png)
 
-I hope this clarifies the issue, and ensures that you'll be on the lookout whenever you assign objects to variables. But having identified the problem, what is the correct why of doing it? In this particular example, the correct way would be to do the following - rather than copying the objects (or the references, as you now know), copy the properties instead. In other words, instead of these two lines:
+I hope this clarifies the issue, and ensures that you'll be on the lookout whenever you assign objects to variables. But having identified the problem, what is the correct way of doing it? In this particular example, the correct way would be to do the following - rather than copying the objects (or the references, as you now know), copy the properties instead. In other words, instead of these two lines:
 
 ~~~~~~~~
 individual1 = individual3;
@@ -753,7 +755,7 @@ function get_number_with_strategy(strategy) {
 
 This function simply iterates over all individuals and increases a counter variable (called `count`) whenever the strategy of an individual is equal to a given strategy that was passed to the function as an argument.
 
-Excellent! Now all that is left to do is print the results from the `data` array into the console. Do that, add the following code after your call to `run_simulation()`:
+Excellent! Now all that is left to do is print the results from the `data` array into the console. To do that, add the following code after your call to `run_simulation()`:
 			
 ~~~~~~~~
 for (var i = 0; i < number_of_time_steps; i++) {
@@ -773,11 +775,11 @@ If everything went ok with your code, you shouldn't have to scroll too far down 
 {width=35%}
 ![](images/ch_8_log_regular_pd_later.png)
 
-(your specific numbers will vary of course - remember that this is a stochastic simulation). What you can see here is that the cooperators are completely driven to extinction by the defectors in just a few generations. Go ahead and reload the page - this happens every single simulation run, without an exception.
+(your specific numbers will vary of course - remember that this is a stochastic simulation). What you can see here is that the cooperators are driven to extinction by the defectors in just a few generations. Go ahead and reload the page - this happens every single simulation run, without an exception.
 
 And of course, we shouldn't be surprised - indeed, we have just implemented a stochastic simulation of the prisoner's dilemma, and as we've seen in the beginning of the chapter, the outcome of the prisoner's dilemma is that defectors will always win, because it is always better for an individual (in terms of its payoff) to defect, rather than to cooperate. That is, after all, why it is called a dilemma: even though the total population payoff would be much higher if everyone cooperated, individuals will be better of if they defect. Thus, if everyone acts in their own self-interest, cooperation will collapse and be outcompeted by defection.
 
-But we've shown repeatedly throughout this book that we can do better than print numbers into the the JavaScript console! In fact, the `draw_line_chart()` function that we've used so many times comes in quite hand here. If you simply add this line after your `run_simulation()` call:
+But we've shown repeatedly throughout this book that we can do better than print numbers into the JavaScript console! In fact, the `draw_line_chart()` function that we've used so many times comes in quite hand here. If you simply add this line after your `run_simulation()` call:
 
 ~~~~~~~~
 draw_line_chart(data,"time step", "frequency",[]);
