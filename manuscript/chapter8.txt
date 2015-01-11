@@ -221,8 +221,9 @@ function games() {
 }
 ~~~~~~~~
 
-This function loops through all individuals, picks another, random individual, and then makes the two individuals play the game. Let's first implement the function get_other_individual():
+This function loops through all individuals, picks another, random individual, and then makes the two individuals play the game. Let's first implement the function `get_other_individual()`:
 
+~~~~~~~~
 function get_other_individual(individual) {
     do {
         var random_index = get_random_int(0,population_size-1);
@@ -236,75 +237,95 @@ function get_other_individual(individual) {
 function get_random_int(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+~~~~~~~~
 
-As you can see, the reason why we pass an individual to this function is so that we can make sure that the other, random individual truly is another individual: otherwise, we would potentially play a game against ourselves. Playing the game against yourself would give you an unfair advantage because you would receive twice the payoff. We can easily ensure that the other individual is not equal to the individual we passed in as an argument by comparing whether they are equal, as we do in the line
+As you can see, the reason why we pass an `individual` to this function is so that we can make sure that the other, random individual truly is another individual: otherwise, we would occasionally play a game against ourselves. Playing the game against yourself would give you an unfair advantage because you would potentially receive twice the payoff. We can easily ensure that the other individual is not equal to the individual we passed in as an argument by comparing whether they are equal, as we do in the line
 
+~~~~~~~~
 while (other_individual == individual);
+~~~~~~~~
 
 What the function does is to pick a random individual for as long as it is necessary (i.e. for as long as the two individuals are in fact the same individual).
 
-There is a JavaScript gotcha here that I want you to be aware of. Until now, whenever we compared values and tested for equality, we were comparing so-called "primitive" types such as numbers (e.g. 1, 2), booleans (true, false), and strings (e.g. "A1", "A2"). These values are called primitive types because they are not objects. When you are comparing primitive types, you are comparing their values. However, when you are comparing objects, you are not actually comparing their values - you are simply comparing their references. What does this mean?
+There is a JavaScript gotcha here that I want you to be aware of. Until now, whenever we compared values and tested for equality, we were comparing so-called *primitive* types such as numbers (e.g. `1`, `2`), booleans (`true`, `false`), and strings (e.g. `"A1"`, `"A2"`). These values are called primitive types because they are not objects. When you are comparing primitive types, you are comparing their values. However, when you are comparing objects, you are not actually comparing their values - you are simply comparing their *references*. What does this mean?
 
-A reference is essentially an address in memory where your object lives. When you compare two objects with the equality operator ==, you are not comparing the values of their properties; you are simply comparing the reference. 
+A reference is essentially an address in memory where your object lives. When you compare two objects with the equality operator `==`, you are not comparing the values of their properties; you are simply comparing the reference. 
 
 Consider the following code:
 
+~~~~~~~~
 var obj1 = {foo:1, bar:2};
 var obj2 = {foo:1, bar:2};
 console.log(obj1 == obj2);
+~~~~~~~~
 
-This code would write false into the console. The reason is that even though the two objects have the exact same properties (identical names and values), they are different in that they live at two different addresses in memory. They literally are two different objects.
+This code would write `false` into the console. The reason is that even though the two objects have the exact same properties (identical names and values), they are different in that they live at two different addresses in memory. They literally are two different objects.
 
 You may ask yourself, can objects ever live at the same address? Yes, they can - consider the following code which is only slightly changed from the code above:
 
+~~~~~~~~
 var obj1 = {foo:1, bar:2};
 var obj2 = obj1;
 console.log(obj1 == obj2);
+~~~~~~~~
 
-This code would write true into the console. The main reason lies in the second line, when obj2 is assigned the value of obj1. Oops, I misspoke! In fact -  and that is the main message here - it is the reference, not the value of obj1, that is assigned to obj2.
+This code would write `true` into the console. The main reason lies in the second line, when `obj2` is assigned the value of `obj1`. **Oops, I misspoke!** In fact -  and that is the main message here - it is the *reference*, not the *value* of `obj1`, that is assigned to `obj2`.
 
-The official wording for this in computer science is that in JavaScript, objects are passed by reference, rather than by value. Primitive types, on the other hand, are passed by value.
+The official wording for this in computer science is that in JavaScript, objects are *passed by reference*, rather than by value. Primitive types, on the other hand, are passed by value.
 
 This has a number of very important implications. Consider this code:
 
+~~~~~~~~
 var a = 5;
 var b = a;
 console.log(a,b);
 a = 3;
 console.log(a,b);
+~~~~~~~~
 
 Can you guess what this code will do? At first, you would see
 
+~~~~~~~~
 5 5 
+~~~~~~~~
 
-in the console, because both variables have the value 5. When a is overwritten to be of value 3, b is not changed, and the output is 
+in the console, because both variables have the value `5`. When `a` is overwritten to be of value `3`, `b` is not changed, and the output is 
 
+~~~~~~~~
 3 5
+~~~~~~~~
 
 as we would intuitively expect.
 
 We have never talked about this issue before because when you work with primitive types, things seem intuitively logical, as seen in the code example above. However, this changes with objects. Let's look at the following code with objects, which is the same code in spirit as the one above:
 
+~~~~~~~~
 var a = {foo:1, bar:2};
 var b = a;
 console.log(a,b);
 a.foo = 3;
 console.log(a,b);
+~~~~~~~~
 
 At first, you will see the output 
 
+~~~~~~~~
 Object {foo: 1, bar: 2} Object {foo: 1, bar: 2} 
+~~~~~~~~
 
 (Your output might look slightly different depending on your browser.) But then, you might be surprised to see the second output, which reads:
 
+~~~~~~~~
 Object {foo: 3, bar: 2} Object {foo: 3, bar: 2}
+~~~~~~~~
 
-You may have thought that you had only changed the value of the foo property in object a. But you don't really have two distinct objects: b is simply assigned a reference to a, and because you changed a.foo, you will see the change reflected in both a and b.
+You may have thought that you had only changed the value of the `foo` property in object `a`. *But you don't really have two distinct objects*: `b` is simply assigned a reference to `a`, and because you changed `a.foo`, you will see the change reflected in both `a` and `b`.
 
-If that seems a bit confusing a first, don't worry - you're in good company. If it's any consolation, I am confused by it to this day. And I'm not saying this just to make you feel better - it's true. In fact, in developing one of the code examples for this chapter, I happened to make this exact mistake (forgetting that objects are passed by reference, not by value). What's more, I've made this mistake so many times that I now recognize it very quickly when I make it. I'll show you further below what your results would look like when you make the same mistake, so that you'll be able to recognize the mistake quickly.
+If that seems a bit confusing a first, don't worry - you're in good company. We'll revisit this issue multiple times until it sinks in.
 
 After this short detour about objects, let's bring our attention back to the cooperation model code. We were just talking about this function:
 
+~~~~~~~~
 function get_other_individual(individual) {
     do {
         var random_index = get_random_int(0,population_size-1);
@@ -313,17 +334,24 @@ function get_other_individual(individual) {
     while (other_individual == individual);
     return other_individual;
 }
+~~~~~~~~
 
-which returns an other_individual that is different from the individual. And we now understand that it is different in the sense that it is indeed a different object, even though it might have the exact same properties.
+which returns an `other_individual` that is different from the `individual`. And we now understand that it is different in the sense that it is indeed a different object, even though it might have the exact same properties.
 
-Now that we have a second, distinct individual, we pass both to the games() function, where they play a game together. Keep in mind that a game is defined by the payoff matrix that we developed above, which looks as follows:
+Now that we have a second, distinct individual, we pass both individuals as arguments to the `games()` function, where they play a game together. Keep in mind that a game is defined by the payoff matrix that we developed above, which looks as follows:
 
-
-
-
+{width="wide"}
+|  |Individual 2 Defecting |Individual 2 Cooperating|
+|:----------:|:------------:|:------------:|
+| Individual 1 Defecting  |Payoff Individual 1: 0|Payoff Individual 1: b|
+|                         |Payoff Individual 2: 0|Payoff Individual 2: -c|
+|:----------:|:------------:|:------------:|
+| Individual 1 Cooperating  |Payoff Individual 1: -c|Payoff Individual 1: b-c|
+|                           |Payoff Individual 2: b|Payoff Individual 2: b-c|
 
 How can we incorporate this in code? Here's how:
 
+~~~~~~~~
 function play_game(individual1, individual2) {
     var move_individual1 = individual1.compute_move();
     var move_individual2 = individual2.compute_move();
@@ -344,17 +372,21 @@ function play_game(individual1, individual2) {
         }
     }
 }
+~~~~~~~~
 
-This code is in principle pretty easy to understand. You first compute which of the two possible moves - cooperate ("C") or defect ("D") each individual is going to make. Then, depending on the combination of the two moves, you assign payoff values as outlined in the payoff matrix above.
+This code is in principle quite easy to understand. You first compute which of the two possible moves - cooperate (`"C"`) or defect (`"D"`) each individual is going to make. Then, depending on the combination of the two moves, you assign payoff values as outlined in the payoff matrix above.
 
-What is perhaps a little perplexing is that the functions that we are calling to do these things - compute_move() for computing an individual's move, add_to_payoff() for adding a value to the payoff of an individual - are not just stand-alone functions, as we have used them throughout the book. Instead, they are functions called directly on the objects, using the dot notation like so:
+What is perhaps a little perplexing is that the functions that we are calling to do these things - `compute_move()` for computing an individual's move, `add_to_payoff()` for adding a value to the payoff of an individual - are not just stand-alone functions, as we have used them throughout the book. Instead, they are functions called directly on the objects, using the dot notation like so:
 
+~~~~~~~~
 individual1.compute_move();
+~~~~~~~~
 
-When a function is used on a object like we are doing here, it is usually called a method. While we have not defined or own methods until now, we have used methods before - remember our good old friend Math.random()? Yep, random() is a method, defined in the Math object, and called using the dot notation, exactly as we do in individual1.compute_move()!
+When a function is used on an object, like we are doing here, it is usually called a *method*. While we have not defined or own methods until now, we have used methods before - remember our good old friend `Math.random()`? Yep, `random()` is a method, defined in the `Math` object, and called using the dot notation, exactly as we do in `individual1.compute_move()`!
 
-Thus, all that is left to do is to define these two methods. Since they are part of the Individual object, they will need to be defined there. After adding the two functions, our Individual object will read like this:
+Thus, all that is left to do is to define these two methods. Since they are part of the `Individual` object, they will need to be defined in the corresponding constructor function. After adding the two functions, our `Individual` constructor function will read like this:
 
+~~~~~~~~
 function Individual(strategy, payoff) {
     this.strategy = strategy;
     this.payoff = payoff;
@@ -365,63 +397,83 @@ function Individual(strategy, payoff) {
         this.payoff += game_payoff;
     };
 } 
+~~~~~~~~
 
 Let's take a detailed look at this, because this looks nothing like anything we have seen before. Let's first take a look at the following three lines:
 
+~~~~~~~~
 this.compute_move = function() {
     return this.strategy == "ALL_C" ? "C" : "D";
 };
+~~~~~~~~
 
-This defines the compute_move() method. It returns "C" if the individual's strategy is "ALL_C", and "D" otherwise, using the ternary operator. Defining a method in an object has the following notation:
+This defines the `compute_move()` method. It returns `"C"` if the individual's strategy is `"ALL_C"`, and `"D"` otherwise, using the ternary operator. Defining a method in an object has the following notation:
 
+~~~~~~~~
 this.method_name = function() {};
+~~~~~~~~
 
-where you are then free to make the method do whether it needs to do instead the curly brackets {}.
+where you are then free to make the method do whatever it needs to do inside the curly brackets `{}`.
 
 This looks a little strange at first, because we have so far defined regular function like so:
 
+~~~~~~~~
 function function_name() {
 }
+~~~~~~~~
 
 Indeed, we could have written this instead as 
 
+~~~~~~~~
 var function_name = function() {};
+~~~~~~~~
 
-which would have been equivalent. In JavaScript, functions are simply another type, and just like a can assign a primitive value (like a string or number) or an object to a variable, I can also assign a function. However, for stand-alone functions in my code, I generally prefer the slightly shorted notation 
+which would have been equivalent. In JavaScript, functions are are in fact special objects, and just like you can assign an object to a variable, you can also assign a function to a variable. However, for stand-alone functions in my code, I generally prefer the slightly shorter notation 
 
+~~~~~~~~
 function function_name() {
 }
+~~~~~~~~
 
 However, when you define methods as parts of your objects, you can't use this short notation anymore, an instead need to use the assignment notation, like we have done above:
 
+~~~~~~~~
 this.compute_move = function() {
     return this.strategy == "ALL_C" ? "C" : "D";
 };
+~~~~~~~~
 
-After defining a method, you can then use it on any object as part of which it was defined - in our case, we can use it on any Individual object, as we do in the games() function:
+After defining a method, you can then use it on any object as part of which it was defined - in our case, we can use it on any `Individual` object, as we do in the `games()` function:
 
+~~~~~~~~
 individual1.compute_move();
+~~~~~~~~
 
 The second method we have defined is the following:
 
+~~~~~~~~
 this.add_to_payoff = function(game_payoff) {
     this.payoff += game_payoff;
-    };
+};
+~~~~~~~~
 
-This should now make more sense. The method add_to_payoff() takes one parameter, game_payoff (which is the payoff from a single game), and adds it to the payoff property of the object like so:
+This should now make more sense. The method `add_to_payoff()` has one parameter, `game_payoff` (which is the payoff from a single game), which it adds to the `payoff` property of the object like so:
 
+~~~~~~~~
 this.payoff += game_payoff;
+~~~~~~~~
 
-As this line of code demonstrates, you still have access to the object in the method body, through the variable this. Because of that, methods allow you to read and write the values of all the properties of the object, which is to a large extent the purpose of object methods.
+As this line of code demonstrates, you still have access to the object in the method body, through the variable `this`. Because of that, methods allow you to read and write the values of all the properties of the object, which is to a large extent the purpose of object methods.
 
-Now that we are finished with the games() function, let's move on and define the selection() function.
+Now that we are finished with the `games()` function, let's move on and define the `selection()` function.
 
-As we mentioned at the beginning of the chapter, in evolutionary game theory, the payoff is not monetary, but rather evolutionary fitness: the higher your payoff, the higher your fitness. In chapter 6, where we discussed natural selection, we implemented selection by increasing the frequency of a genotype in a population in proportion to its fitness. In the model here, however, we are using a slightly modified version that is better suited for individual-based models. On average, it will roughly produced the same outcome: individuals with higher fitness will increase in frequency, and individuals with lower fitness will decrease in frequency.
+As we mentioned at the beginning of the chapter, in evolutionary game theory, the payoff is not monetary, but rather evolutionary fitness: the higher your payoff, the higher your fitness. In chapter 6, where we discussed natural selection, we implemented selection by increasing the frequency of a genotype in a population in proportion to its fitness. In the model here, however, we are using a slightly modified version that is better suited for individual-based models. On average, it will roughly produce the same outcome: individuals with higher fitness will increase in frequency, and individuals with lower fitness will decrease in frequency.
 
-Concretely, we are going to implement a very simple idea: for each individual, we'll pick another individual randomly, and then compare the fitnesses (i.e. payoffs) of the two individuals. If the randomly picked individual has a higher fitness than the focal individual, the focal individual will copy the random individual's strategy, otherwise it will keep its strategy.
+Concretely, we are going to implement a very simple idea: for each individual, we'll pick another individual randomly, and then compare the fitnesses (i.e. payoffs) of the two individuals. If the randomly picked individual has a higher fitness than the focal individual, the focal individual will copy the random individual's strategy, otherwise it will keep its current strategy.
 
 Here is how we will implement this idea:
 
+~~~~~~~~
 function selection() {
     var temp_population = [];
     for (var i = 0; i < population_size; i++) {
@@ -440,47 +492,57 @@ function selection() {
         current_individual.payoff = 0;
     }
 }
+~~~~~~~~
 
-As we have done a few times before, we'll make use of a temporary data structure - an array called temp_population in this case - to store the new values in order to ensure that all individuals get updated simultaneously (if you don't know why we're doing this, be sure to reread chapter 5). 
+As we have done a few times before, we'll make use of a temporary data structure - an array called `temp_population` in this case - to store the new values in order to ensure that all individuals get updated simultaneously (if you don't know why we're doing this, be sure to re-read chapter 5). 
 
-The function is divided into two for loops. The first for loop iterates over all individuals in the population, and for each individual, we pick a another, random individual, and compare the two fitness values. Then, depending on the values, we copy the properties of one of the two individuals into the temporary array.
+The function is divided into two `for` loops. The first `for` loop iterates over all individuals in the population, and for each individual, we pick a another, random individual, and compare the two fitness values. Then, depending on the values, we copy the properties of one of the two individuals into the temporary array.
 
-Let's take a look at the line where the copying happens:
+Let's take a look at this line:
 
+~~~~~~~~
 temp_population[i] = other_individual;
+~~~~~~~~
 
-As we have discussed just a few pages earlier, because we're dealing with objects, temp_population[i] will now simply contain a reference to the other_individual object, rather than a copy of the object. This is important - let's look at the second for loop and see why. It reads:
+As we have discussed just a few pages earlier, because we're dealing with objects, temp_population[i] will now simply contain a reference to the other_individual object, rather than a copy of the object. This is important - let's now look at the second `for` loop and see why. It reads:
 
+~~~~~~~~
 for (i = 0; i < population_size; i++) {
     current_individual = population[i];
     current_individual.strategy = temp_population[i].strategy;
     current_individual.payoff = 0;
 }
+~~~~~~~~
 
-As you can see, we are copying the strategy property from the individual that's referenced by temp_population[i], and we are resetting the payoff of the individual to 0 (because each new tilmestep should start with a 0 payoff before individuals participate in a new round of games).
+As you can see, we are copying the `strategy` property from the individual that's referenced by `temp_population[i]`, and we are resetting the `payoff` property of the individual to 0 (because at each new time step, individuals should start with a payoff of 0 before they participate in a new round of games).
 
-Let's take a look at what would be the wrong way to do this. The wrong way would be to implement this loop as follows:
+Let's take a look at what would be the *wrong* way to do this. The wrong way would be to implement this loop as follows:
 
+~~~~~~~~
 // the WRONG way!!
 for (i = 0; i < population_size; i++) {
     current_individual = temp_population[i];
     current_individual.payoff = 0;
 }
+~~~~~~~~
 
-This is very tempting: simply copy over the individual from the temp_population array, and then set its payoff back to 0 - simple, right? 
+This is very tempting: simply copy over the individual from the `temp_population` array, and then set its payoff back to `0` - simple, right? 
 
 The problem with this that the line
 
+~~~~~~~~
 current_individual = temp_population[i];
+~~~~~~~~
 
-doesn't copy an object - it simply assigns a reference. Thus, current_individual, rather than being the same object as before (but simply with new property values) would now actually reference another object somewhere in memory, which will lead to very confusing and completely wrong dynamics.
+doesn't copy an object - it simply assigns a reference. Thus, `current_individual`, rather than being the same object as before (but simply with a new property values) would now actually reference another object somewhere in memory, which will lead to very confusing and completely wrong dynamics.
 
 Because this concept can be a little trick to wrap your head around at first, I'm going to divert from our cooperation code, and will briefly introduce a completely independent code example that explains the concept in a simpler context. We'll get back to our cooperation code right after this. 
 
-Revisiting object assignments
+## Revisiting Object Assignments
 
 Take a look at the following code:
 
+~~~~~~~~
 function Individual(fitness, trait) {
     this.fitness = fitness;
     this.trait = trait;
@@ -512,30 +574,35 @@ console.log("population after mutation:")
 console.log(individual1); // oops - shows trait "D"!!
 console.log(individual2); // oops - shows trait "D"!!
 console.log(individual3); // shows trait "D"
+~~~~~~~~
 
-Let's walk through the code here. This is a very simplified version of a selection mutation process, with a population of three individuals.
+Let's walk through this code slowly. This is a very simplified version of a selection-mutation process, with a population of three individuals.
 
-On the first few lines, we defined the obecjt Individual, which has two properties: a fitness property, and a trait property. We then create three individuals with different values. The object individual1 has a fitness value of 1, and trait "A". The object individual2 has a fitness value of 1.2, and trait "B". The object individual3 has a fitness value of 1.2 and trait "B". We then print those objects to the console so that we can check that everything is working fine.
+On the first few lines, we defined the object `Individual`, which has two properties: a `fitness` property, and a `trait` property. We then create three individuals with different values. The object `individual1` has a `fitness` value of `1`, and `trait` value of `"A"`. The object `individual2` has a `fitness` value of `1.1`, and `trait` value of `"B"`. The object `individual3` has a `fitness` value of `1.2`, and `trait` value of `"C"`. We then print those objects to the console so that we can check that everything is working fine.
 
-Then, selection takes place, and we decided that both individual1 and individual2 should copy over the values of the fittest individual in the population, individual3:
+Then, selection takes place, and we want both `individual1` and `individual2` to copy over the values of the fittest individual in the population, `individual3`:
 
+~~~~~~~~
 // selection:
 individual1 = individual3;
 individual2 = individual3;
+~~~~~~~~
 
-Spoiler alert: this is where things go wrong- but more about that in a second. In any case, if we now print the three Individual objects into the console, we see that they all have property "C", which is what we wanted.
+Spoiler alert: this is where things go wrong- but more about that in a second. In any case, if we now print the three `Individual` objects into the console, we see that they all have trait `"C"`, which is what we wanted.
 
-In the final step of this example, we assume that individual3 mutates, and changes its trait to "D". Note that we only change individual3 - we don't touch individual1 and individual2. However, if we now print the objects one more time into the console, we see that they all have trait "D"! How did that happen? We did not touch the traits of individual1 or individual2 anywhere in the code!
+In the final step of this example, we assume that `individual3` mutates, and changes its trait to `"D"`. Note that we only change `individual3` - we don't touch `individual1` and `individual2`. However, if we now print the objects one more time into the console, we see that they all have trait `"D"`! How did that happen? We did not touch the traits of `individual1` or `individual2` anywhere in the code!
 
 As I mentioned above, the problem is in these lines:
 
+~~~~~~~~
 // selection:
 individual1 = individual3;
 individual2 = individual3;
+~~~~~~~~
 
-We might think we're copying the object individual3, with all its properties, into individual1 and individual2 - but we're not. Instead, we are copying the reference to individual3. After these two lines, both individual1 and individual2 are simply references to individual3. In a way, with these two lines, we have "lost" two objects - all we have left is object individual3, and two other variables (individual1 and individual2) referencing individual3.
+We might think we're copying the object `individual3`, with all its properties, into `individual1` and `individual2` - *but we're not*. Instead, we are copying the *reference* to `individual3`. After these two lines, both `individual1` and `individual2` are simply references to `individual3`. In a way, with these two lines, we have "lost" two objects - all we have left is object `individual3`, and two other variables (`individual1` and `individual2`) referencing `individual3`.
 
-When we print the three objects into the console after the selection step, it's very easy to think there everything went fine, because all three objects now have trait "C" - but this is an illusion! It's simply that they are all referencing the same object, which happens to have trait "C". And this illusion is exposed when we assign a new value to the trait of individual3: suddenly all individuals have trait "D", because they are all pointing to individual3.
+When we print the three objects into the console after the selection step, it's very easy to think everything went fine, because all three objects now have trait `"C"` - but this is an illusion! It's simply that they are all referencing the same object, which happens to have trait `"C"`. And this illusion is exposed when we assign a new value to the trait of `individual3`: suddenly all individuals have trait `"D"`, because they are all pointing to `individual3`.
 
 Here is a visual representation of what's going on (I've color-coded the objects to reflect distinct trait values): 
 
