@@ -763,14 +763,14 @@ for (var i = 0; i < number_of_time_steps; i++) {
 
 Let's go ahead and run the entire code now! If you run it by loading the document in the browser, and look at the JavaScript console, you'll see something like this:
 
-{width=40%}
+{width=35%}
 ![](images/ch_8_log_regular_pd_early.png)
 
 What this shows is that the population starts with 100% `ALL_C` individuals, i.e. the population is composed entirely of cooperators; then, after a few generation, the first `ALL_D` (defector) mutants show up. From that point on, you can follow the fate of the two strategies by looking at the numbers.
 
 If everything went ok with your code, you shouldn't have to scroll too far down in your JavaScript console to see something like this:
 
-{width=40%}
+{width=35%}
 ![](images/ch_8_log_regular_pd_later.png)
 
 (your specific numbers will vary of course - remember that this is a stochastic simulation). What you can see here is that the cooperators are completely driven to extinction by the defectors in just a few generations. Go ahead and reload the page - this happens every single simulation run, without an exception.
@@ -792,4 +792,4 @@ The blue line is the frequency of cooperators (recall that we start each simulat
 
 But hang on a second, I hear you say - didn't we start this chapter with the idea the cooperation would readily evolve? Glad you asked! Indeed, that's the promise with which I started the chapter. What we are going to do next is to introduce a small but realistic modification that will change the dynamics quite strongly. But first, I needed to convince you that pure cooperation, all by itself, does not stand a chance against pure defectors. And along the way, we developed an individual-based JavaScript simulation of a game-theoretical model (which is quite cool if you ask me - but of course I'm biased). This simulation will now form the basis of our exploration about the factors than can prevent the defectors from always winning.
 
->I This second part of the chapter is currently being written - as soon as its ready, I'll update the book. And as always, you can just get the updated version for free on the Leanpub website (you'll get notified by email when the update is ready).
+I> This second part of the chapter is currently being written - as soon as its ready, I'll update the book. And as always, you can just get the updated version for free on the Leanpub website (you'll get notified by email when the update is ready).
