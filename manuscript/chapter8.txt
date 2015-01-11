@@ -606,25 +606,30 @@ When we print the three objects into the console after the selection step, it's 
 
 Here is a visual representation of what's going on (I've color-coded the objects to reflect distinct trait values): 
 
-
-
+{width=90%}
+![](images/ch_8_obj_example.png)
 
 I hope this clarifies the issue, and ensures that you'll be on the lookout whenever you assign objects to variables. But having identified the problem, what is the correct why of doing it? In this particular example, the correct way would be to do the following - rather than copying the objects (or the references, as you now know), copy the properties instead. In other words, instead of these two lines:
 
+~~~~~~~~
 individual1 = individual3;
 individual2 = individual3;
+~~~~~~~~
 
 you would have these four lines (assuming you want to copy both properties):
 
+~~~~~~~~
 individual1.trait = individual3.trait;
 individual1.fitness = individual3.fitness;
 individual2.trait = individual3.trait;
 individual2.fitness = individual3.fitness;
+~~~~~~~~
 
-If you replace the two wrong lines with three correct lines and run this code again in your browser, you will see that after the mutation step, only individual3 will have the trait value "D" - both individual1 and individual2 will still have trait value "C", as they should have.
+If you replace the two wrong lines with three correct lines and run this code again in your browser, you will see that after the mutation step, only `individual3` will have the trait value `"D"` - both `individual1` and `individual2` will still have trait value `"C"`, as they should have.
 
-If you have very complex objects with many properties, it might be worthwhile writing a custom method for your object that copies the object's values. In our example, we could have decided to do this for our Individual object, which would look like this:
+If you have very complex objects with many properties, it might be worthwhile writing a custom method for your object that copies the object's values. In our example, we could have decided to do this for our `Individual` object, which would look like this:
 
+~~~~~~~~
 function Individual(fitness, trait) {
     this.fitness = fitness;
     this.trait = trait;
@@ -632,27 +637,33 @@ function Individual(fitness, trait) {
         return new Individual(this.fitness, this.trait);
     }
 }
+~~~~~~~~
 
 With that in place, we can replace the lines
 
+~~~~~~~~
 individual1.trait = individual3.trait;
 individual1.fitness = individual3.fitness;
 individual2.trait = individual3.trait;
 individual2.fitness = individual3.fitness;
+~~~~~~~~
 
 with 
 
+~~~~~~~~
 individual1 = individual3.copy();
 individual2 = individual3.copy();
+~~~~~~~~
 
 The benefit of this method is that you can adapt it easily when your object definition changes. 
 
-On final caveat before we return to the main thread of cooperation: if your objects get very complex, some of the object's properties may themselves be objects! Indeed, their properties could also be objects, etc. - as many hierarchical levels as you want. If that's indeed the case, be extra careful about what we just talked about; all objects behave the same, whether they are standalone, or deeply nested within other objects.
+On final caveat before we return to the main thread of cooperation: if your objects get very complex, some of the object's properties may themselves be objects! Indeed, their properties could also be objects, etc. - as many hierarchical levels as you want. If that's the case, be extra careful about what we just talked about; all objects behave the same, whether they are standalone, or deeply nested within other objects.
 
-When defection is better than cooperation
+## When Defection Outcompetes Cooperation
 
-Let's now return to our cooperation code. We have just finished implementing our selection() method. The final major method we need to implement is mutation(), which we will do as follows:
+Let's now return to our cooperation code. We have just finished implementing our `selection()` method. The final major method we need to implement is `mutation()`, which we will do as follows:
 
+~~~~~~~~
 function mutation() {
     for (var i = 0; i < population_size; i++) {
         if (Math.random() < mutation_rate) {
@@ -661,11 +672,13 @@ function mutation() {
         }
     }
 }
+~~~~~~~~
 
-This function simply goes through all individuals in the population, and calls the mutation() method - which we'll need to define - on some of the individuals.
+This function simply goes through all individuals in the population, and calls the `mutate()` method - which we'll need to define - on some of the individuals.
 
-The mutate() method can be implemented as follows in the Individual objects:
+The `mutate()` method can be implemented as follows in the `Individual` constructor function:
 
+~~~~~~~~
 this.mutate = function() {
     if (this.strategy == "ALL_C") {
         this.strategy = "ALL_D";
@@ -674,9 +687,11 @@ this.mutate = function() {
         this.strategy = "ALL_C";
     } 
 };
+~~~~~~~~
 
-Thus, your complete definition of the object Individual will look like this:
+Thus, your complete `Individual` constructor function will look like this:
 
+~~~~~~~~
 function Individual(strategy, payoff) {
     this.strategy = strategy;
     this.payoff = payoff;
@@ -695,19 +710,23 @@ function Individual(strategy, payoff) {
         }
     };
 }
+~~~~~~~~
 
-And that's it - almost! The simulation would be working right now, but there is now way for us to see what's going on. First, let's go ahead and add some code so that we can print the results of the simulation into the console.
+And that's it - almost! The simulation would be working right now, but there is no way for us to see what's going on. First, let's go ahead and add some code so that we can print the results of the simulation into the console.
 
-Of course, we'd like to see the frequencies of the strategies at each time step. So let's go ahead and modify our run_time_step() function which currently reads:
+Of course, we'd like to see the frequencies of the strategies at each time step. So let's go ahead and modify our `run_time_step()` function which currently reads:
 
+~~~~~~~~
 function run_time_step() {
     games();
     selection();
     mutation();
 }
+~~~~~~~~
 
 to
 
+~~~~~~~~
 function run_time_step() {
     games();
     selection();
@@ -716,9 +735,11 @@ function run_time_step() {
         data[i].push(get_number_with_strategy(strategies[i]) / population_size);
     }
 }
+~~~~~~~~
 			
-For each strategy, we need to know how many of the individuals have that strategy. We'll then divide that number by the population size, which gives us the frequency of the strategy in the population. The number will then be pushed in the corresponding array within data, for later usage. In order to get the number of individuals in the population with a given strategy, we'll define a helper function get_number_with_strategy():
+For each strategy, we need to know how many of the individuals have that specific strategy. We'll then divide that number by the population size, which gives us the frequency of the strategy in the population. The number will then be pushed in the corresponding array within `data`, for later usage. In order to get the number of individuals in the population with a given strategy, we'll define a helper function `get_number_with_strategy()`:
 
+~~~~~~~~
 function get_number_with_strategy(strategy) {
     var count = 0;
     for (var i = 0; i < population_size; i++) {
@@ -728,14 +749,17 @@ function get_number_with_strategy(strategy) {
     }
     return count;
 }
+~~~~~~~~
 
-This function simply iterates over all individuals and increases a counter variable whenever the strategy of an individual is equal to a given strategy that was passed to the function as an argument.
+This function simply iterates over all individuals and increases a counter variable (called `count`) whenever the strategy of an individual is equal to a given strategy that was passed to the function as an argument.
 
-Excellent! Now all that is left to do is print the results from the data array into the console. Do that, add the following code after your call to run_simulation():
+Excellent! Now all that is left to do is print the results from the `data` array into the console. Do that, add the following code after your call to `run_simulation()`:
 			
+~~~~~~~~
 for (var i = 0; i < number_of_time_steps; i++) {
     console.log(i,"ALL_C",data[0][i],"ALL_D",data[1][i]);
 }
+~~~~~~~~
 
 Let's go ahead and run the entire code now! If you run it by loading the document in the browser, and look at the JavaScript console, you'll see something like this:
 
