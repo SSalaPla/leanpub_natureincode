@@ -1,10 +1,10 @@
 # 8. Cooperation: Good Guys Can Finish First
 
-In this chapter, we are going to explore a simple question: Why is there cooperation? The narrative of evolution - "struggle for life", "survival of the fittest", "the selfish gene", etc - seems to suggest, superficially, that cooperation is a mystery. Evolution, this line of reasoning goes, is about cutthroat competitiveness, and raw self-interest: eat or be eaten. In such a world, why would individuals be cooperative or altruistic? This type of behavior should be wiped out by natural selection. But then why are these behaviors widespread in nature?
+In this chapter, we are going to explore a simple question: Why is there cooperation? The narrative of evolution - "struggle for life", "survival of the fittest", "the selfish gene", etc. - seems to suggest, superficially, that cooperation is a mystery. Evolution, this line of reasoning goes, is about cutthroat competitiveness, and raw self-interest: eat or be eaten. In such a world, why would individuals be cooperative or altruistic? This type of behavior should be wiped out by natural selection. But then why are these behaviors widespread in nature?
 
 It turns out that natural selection and cooperation can be perfectly compatible. This has been one of the most exciting findings in evolutionary biology in the past few decades. The evolution of cooperation is still a very active research area, and we will once again only be able to scratch the surface of this exciting field. However, my goal is to convince you that we should not be puzzled by - and indeed often expect - cooperative behavior among individuals under many circumstances. And as before, I don't want you to take my word for it: I want you to create a virtual world in code, where individuals are subject to ruthless natural selection. And we will find that in such a world, cooperation can readily evolve, given certain conditions.
 
-First, we will introduce a formal model than can be used to study the evolution of cooperation. Then, we'll see that in a very simple implementation of that model, cooperation doesn't stand a chance, confirming our original intuition that cooperation and evolution are not necessarily natural bedfellows. Following that, we'll show that a few simple but realistic modifications to the model will give rise to cooperative behavior. 
+First, we will introduce a formal model than can be used to study the evolution of cooperation. Then, we'll see that in a very simple implementation of that model, cooperation doesn't stand a chance, confirming our original intuition that cooperation and natural selection are not necessarily natural bedfellows. Following that, we'll show that a few simple but realistic modifications to the model will give rise to cooperative behavior. 
 
 In addition, this chapter introduces a brand new programming concept: *objects*. Objects are the heart and soul of JavaScript, but as I hope to have demonstrated throughout the book, you can do an awful lot in JavaScript without ever knowing about objects. Nevertheless, understanding what objects are, and how to use them, enables you to write both cleaner and more complex code. 
 
@@ -12,19 +12,19 @@ Let's get started!
 
 ## Game Theory
 
-The most common framework to study cooperation is that of *game theory*. Game theory is the study of strategic decision making. It was originally developed to study economic behavior, but was later adapted by evolutionary biologists to study behavior in non-human species as well.
+The most common framework for studying cooperation is that of *game theory*. Game theory is the study of strategic decision making. It was originally developed to study economic behavior, but was later adapted by evolutionary biologists to study behavior in non-human species as well.
 
-Game theory gets its name from games, which are played by players who can act in certain ways, given some information. The outcome of the game is a payoff. When applied to economic theory, the payoff is usually monetary. However, when applied to evolutionary biology, the payoff is evolutionary fitness.   
+Game theory gets its name from games, which are played by "players" who can act in certain ways, given some information. The outcome of the game is a payoff. When applied to economic theory, the payoff is usually monetary. However, when applied to evolutionary biology, the payoff is evolutionary fitness.   
 
 The game that we would like to play here is as follows. Since we are interested in cooperation, we are going to assume that an individual can either *cooperate*, or *defect* (i.e. not cooperate). These are the only two possible actions. Given these two actions, or strategies, there are four possible combinations of two players playing a game:
 
 {width="wide"}
 |  |Individual 2 Defecting |Individual 2 Cooperating|
 |:----------:|:------------:|:------------:|
-| Individual 1 Defecting  |Payoff Individual 1: ?|Payoff Individual 1: ?|
+| **Individual 1 Defecting**  |Payoff Individual 1: ?|Payoff Individual 1: ?|
 |                         |Payoff Individual 2: ?|Payoff Individual 2: ?|
 |:----------:|:------------:|:------------:|
-| Individual 1 Cooperating  |Payoff Individual 1: ?|Payoff Individual 1: ?|
+| **Individual 1 Cooperating**  |Payoff Individual 1: ?|Payoff Individual 1: ?|
 |                           |Payoff Individual 2: ?|Payoff Individual 2: ?|
 
 In order to define the game, we now have to come up with the fitness values for each individual in each of the four possible combinations. By doing so, we are generating a payoff matrix that defines a game.
@@ -792,4 +792,4 @@ The blue line is the frequency of cooperators (recall that we start each simulat
 
 But hang on a second, I hear you say - didn't we start this chapter with the idea the cooperation would readily evolve? Glad you asked! Indeed, that's the promise with which I started the chapter. What we are going to do next is to introduce a small but realistic modification that will change the dynamics quite strongly. But first, I needed to convince you that pure cooperation, all by itself, does not stand a chance against pure defectors. And along the way, we developed an individual-based JavaScript simulation of a game-theoretical model (which is quite cool if you ask me - but of course I'm biased). This simulation will now form the basis of our exploration about the factors than can prevent the defectors from always winning.
 
-I> This second part of the chapter is currently being written - as soon as its ready, I'll update the book. And as always, you can just get the updated version for free on the Leanpub website (you'll get notified by email when the update is ready).
+I> This second part of the chapter is currently being written - as soon as it's ready, I'll update the book. And as always, you can just get the updated version for free on the Leanpub website (you'll get notified by email when the update is ready).
