@@ -15,3 +15,14 @@ Having learned programming myself - and continuing to do so - I am perfectly awa
 To keep updated on anything related to the book, you can follow the Twitter account [@natureincode](https://twitter.com/natureincode). If you feel adventurous, you can also follow my personal account  [@marcelsalathe](https://twitter.com/marcelsalathe) where I post about anything under the sun, including topics related to biology and programming. 
 
 All set up? Let's get started.
+
+## Acknowledgements
+
+I'd like to thank everyone who has pointed out mistakes or passages the were unclear - these people have ultimately made the book much better than what I could have done. They are, in alphabetic order:
+
+* Todd Bodnar
+* Daryl Branford
+* Michael Collins
+* Melissa Hicks
+
+If you find a mistake, or something that is unclear, please get in touch - I will be very glad to add your name here.
