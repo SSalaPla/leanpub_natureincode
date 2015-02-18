@@ -283,23 +283,26 @@ some_method(argument1, argument2, argument3);
 
 Somewhere, a method must be defined before you can call it. JavaScript comes with a whole range of predefined methods (like `console.log`) that you will be able to use, and we’ll learn quite a few throughout this book. Oftentimes, however, you define your own methods. In any case, by its definition, the method is usually quite clear about how many arguments it normally expects. 
 
+I>
 I> ## Calling Functions
 I> The code within a function definition is not executed until you call the function. As an example, this code:
 I>
 I>~~~~~~~
 I>function say_hi() {
-I>	console.log("Hi");
+I>    console.log("Hi");
 I>}
 I>~~~~~~~
 I>wouldn't do anything, whereas this code:
 I>~~~~~~~
 I>function say_hi() {
-I>	console.log("Hi");
+I>    console.log("Hi");
 I>}
 I>// now calling the function:
 I>say_hi();
 I>~~~~~~~
 I>would print "Hi" into the console.
+I>
+
 
 
 Above, we used 
