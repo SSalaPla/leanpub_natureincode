@@ -292,7 +292,9 @@ I>function say_hi() {
 I>    console.log("Hi");
 I>}
 I>~~~~~~~
+I>
 I>wouldn't do anything, whereas this code:
+I>
 I>~~~~~~~
 I>function say_hi() {
 I>    console.log("Hi");
@@ -300,6 +302,7 @@ I>}
 I>// now calling the function:
 I>say_hi();
 I>~~~~~~~
+I>
 I>would print "Hi" into the console.
 I>
 
