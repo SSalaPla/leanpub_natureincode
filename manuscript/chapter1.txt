@@ -18,7 +18,7 @@ All set up? Let's get started.
 
 ## Acknowledgements
 
-I'd like to thank everyone who has pointed out mistakes or passages the were unclear - these people have ultimately made the book much better than what I could have done. They are, in alphabetic order:
+I'd like to thank everyone who has pointed out mistakes or passages that were unclear - they have ultimately made the book much better than what I could have done on my own. They are, in alphabetic order:
 
 * Todd Bodnar
 * Daryl Branford

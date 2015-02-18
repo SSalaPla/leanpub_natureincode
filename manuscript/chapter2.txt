@@ -232,7 +232,7 @@ var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
 ~~~~~~~~
 
-Let’s walk through this line by line. On the first line, we define a variable `a1a1`, and assign it the value `0.15`. Variables are declared using the `var` keyword (keywords are simply words predefined by the language, and since these words have very specific meanings, you shouldn’t use them for anything other than what they were intended for). Your variable name can be anything you like, but it needs to start with a letter, and be followed by other letters, numbers, or underscore. You’re not allowed to use any of these keywords for variable names: `break`, `case`, `class`, `catch`, `const`, `continue`, `debugger`, `default`, `delete`, `do`, `else`, `export`, `extends`, `finally`, `for`, `function`, `if`, `import`, `in`, `instanceof`, `let`, `new`, `return`, `super`, `switch`, `this`, `throw`, `try`, `typeof`, `var`, `void`, `while`, `with`, `yield`. 
+Let’s walk through this line by line. On the first line, we define a variable `a1a1`, and assign it the value `0.15`. Variables are declared using the `var` keyword (keywords are simply words predefined by the language, and since these words have very specific meanings, you shouldn’t use them for anything other than what they were intended for). Your variable name can be anything you like, but it needs to start with a letter or an underscore, and be followed by other letters, numbers, or underscore. You’re not allowed to use any of these keywords for variable names: `break`, `case`, `class`, `catch`, `const`, `continue`, `debugger`, `default`, `delete`, `do`, `else`, `export`, `extends`, `finally`, `for`, `function`, `if`, `import`, `in`, `instanceof`, `let`, `new`, `return`, `super`, `switch`, `this`, `throw`, `try`, `typeof`, `var`, `void`, `while`, `with`, `yield`. 
 
 The assignment itself is done using the `=` operator. Finally, the line ends with a semicolon, which terminates the statement. You would be forgiven for not using semicolons, and your code would still execute correctly, but it is dangerous practice that might introduce unexpected errors, so always use them. Line two does the same thing, except we declare another variable, `a2a2`, and assign it the value `0.35`. As you surely have guessed, these two variables denote the genotype frequencies of the two homozygotes A1A1 and A2A2 (I'll use this shortcut notation from now on, instead of writing A1/A1 and A2/A2). The genotype frequency for the heterozygotes is stored in the variable `a1a2`, and rather than assigning its value directly, we assign it by calculating it, using the previously defined variables `a1a1` and `a2a2`. These three lines of code shouldn’t look all that different from regular algebra.
 
@@ -282,6 +282,25 @@ some_method(argument1, argument2, argument3);
 ~~~~~~~
 
 Somewhere, a method must be defined before you can call it. JavaScript comes with a whole range of predefined methods (like `console.log`) that you will be able to use, and we’ll learn quite a few throughout this book. Oftentimes, however, you define your own methods. In any case, by its definition, the method is usually quite clear about how many arguments it normally expects. 
+
+I> ## Calling Functions
+I> The code within a function definition is not executed until you call the function. As an example, this code:
+I>
+I>~~~~~~~
+I>function say_hi() {
+I>	console.log("Hi");
+I>}
+I>~~~~~~~
+I>wouldn't do anything, whereas this code:
+I>~~~~~~~
+I>function say_hi() {
+I>	console.log("Hi");
+I>}
+I>// now calling the function:
+I>say_hi();
+I>~~~~~~~
+I>would print "Hi" into the console.
+
 
 Above, we used 
 
