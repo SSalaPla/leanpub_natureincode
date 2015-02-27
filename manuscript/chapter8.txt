@@ -921,7 +921,12 @@ this.compute_move = function() {
         return "C";
     }
     else if (this.strategy == "TFT") { 
-        return (this.last_move_by_opponent == "" ? "C" : this.last_move_by_opponent);
+        if (this.last_move_by_opponent == "") {
+            return "C";
+        }
+        else {
+            return this.last_move_by_opponent;
+        }
     }
 };
 ~~~~~~~~
@@ -939,9 +944,9 @@ And finally, we will need to adapt our `mutate()` method in the `Individual` obj
 ~~~~~~~
 this.mutate = function() {
     do {
-        var new_strategy = strategies[get_random_int(0, strategies.length - 1)];
-    } while (new_strategy == this.strategy);
-    this.strategy = new_strategy;
+        var new_s = strategies[get_random_int(0, strategies.length - 1)];
+    } while (new_s == this.strategy);
+    this.strategy = new_s;
 };
 ~~~~~~~
 
@@ -960,7 +965,12 @@ function Individual(strategy, payoff) {
             return "C";
         }
         else if (this.strategy == "TFT") { 
-            return (this.last_move_by_opponent == "" ? "C" : this.last_move_by_opponent);
+            if (this.last_move_by_opponent == "") {
+                return "C";
+            }
+            else {
+                return this.last_move_by_opponent;
+            }
         }
     };
     this.add_to_payoff = function(game_payoff) {
@@ -968,9 +978,9 @@ function Individual(strategy, payoff) {
     };
     this.mutate = function() {
         do {
-            var new_strategy = strategies[get_random_int(0, strategies.length - 1)];
-        } while (new_strategy == this.strategy);
-        this.strategy = new_strategy;
+            var new_s = strategies[get_random_int(0, strategies.length - 1)];
+        } while (new_s == this.strategy);
+        this.strategy = new_s;
     };
 }
 ~~~~~~~
