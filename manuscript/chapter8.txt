@@ -807,11 +807,11 @@ But hang on a second, I hear you say - didn't we start this chapter with the ide
 
 So far, we have assumed that all interactions are a one-off. Once you interact with an individual, you may never interact with that individual again (and if you do, there will be no memory of your past interaction). In reality, however, when we interact with others, we often do so repeatedly with the same people, fully aware that they will remember how we interacted with them before. 
 
-It turns out that repeated interactions change the dynamics of the prisoners dilemma quite a bit. In particular, when you play games repeatedly with the same players, you can come up with a rich set of possible strategies, such as having your next move depend on the previous move. Interestingly, the literature in this field was kicked off by a paper in 1981 by Robert Axelrod and Bill D. Hamilton, who used computer simulations to run a "tournament". They asked their colleagues to submit strategies - in code - and then let those strategies compete against each other in an simulation of an iterated prisoner's dilemma. One of the participants, Anatol Rapoport, submitted a strategy he called "Tit-for-Tat".
+It turns out that repeated interactions change the dynamics of the prisoners dilemma quite a bit. In particular, when you play games repeatedly with the same players, you can come up with a rich set of possible strategies, such as having your next move depend on the previous move. The literature in this field was kicked off by a paper in 1981 by Robert Axelrod and Bill D. Hamilton, who used computer simulations to run a "tournament". They asked their colleagues to submit strategies - in code - and then they let those strategies compete against each other in a simulation of an iterated prisoner's dilemma. The winning strategy was submitted by Anatol Rapoport. It was a strategy he called "Tit-for-Tat".
 
 "Tit-for-Tat", when played against the same player repeatedly, is very simple. It starts by cooperating in the first round, and then adopts whichever strategy the other player played in the *previous* round. Let's go ahead and implement this strategy in our code.
 
-The first thing to do is to expand our list of strategies by "TFT":
+The first thing to do is to expand our list of strategies by `"TFT"`:
 
 ~~~~~~~~
 var strategies = ["ALL_C","ALL_D","TFT"];
@@ -848,7 +848,7 @@ function play_game(individual1, individual2) {
 }
 ~~~~~~~~
 
-Since this code performs exactly one interaction, we can simply wrap it with a `for` loop that iterates this code many times:
+Since this code performs exactly one interaction, we can simply wrap it with a `for` loop that iterates this code as many times as necessary:
 
 ~~~~~~~~
 function play_game(individual1, individual2) {
@@ -858,13 +858,13 @@ function play_game(individual1, individual2) {
 }
 ~~~~~~~~
 
-There is something else we should take care of in this function. If an individual has the strategy `TFT`, then the individual's moves will depend of the *previous* moves of the opponent. Thus, we need to constantly keep track of the previous move of the opponent, so that our `compute_move()` method can tell us which move to perform during a given interaction. In order to keep track of the previous move of the opponent, we'll need to add a new property to our `Individual` object:
+There is something else we should take care of in this function. If an individual has the strategy `TFT`, then the individual's moves will depend on the *previous* moves of the opponent. Thus, we need to constantly keep track of the previous move of the opponent, so that our `compute_move()` method can tell us which move to perform during a given interaction. In order to keep track of the previous move of the opponent, we'll need to add a new property to our `Individual` object:
 
 ~~~~~~~~
 this.last_move_by_opponent = "";
 ~~~~~~~~
 
-We're going to initialize this value with an empty string, because initially, an individual won't have played any games, and thus there is no last move by an opponent.
+We're going to initialize this property with an empty string, because initially, an individual won't have played any games, and thus there is no last move by an opponent.
 
 Then, in the `play_game()` function, we can update this property once we know what the opponent will play:
 
@@ -931,9 +931,9 @@ this.compute_move = function() {
 };
 ~~~~~~~~
 
-The first couple of lines in the method are equivalent to what we had before - return `"C"` if the strategy is `ALL_C`, and `"D"` if the strategy is `ALL_D`. In addition, we now take care of the case where the strategy is `TFT`, in which case we return `"C"` if these two players haven't started interacting yet (i.e. if we're in the first round), and the last move of the opponent otherwise.
+The first couple of lines in the method are equivalent to what we had before - return `"C"` if the strategy is `ALL_C`, and `"D"` if the strategy is `ALL_D`. In addition, we now take care of the case where the strategy is `TFT`, in which case we return `"C"` if these two players haven't interacted previously (i.e. if we're in the first round), and the last move of the opponent otherwise.
 
-Now, we need to remind ourselves that `TFT` should cooperate at *every* first interaction with each player, not just at the first interaction of the entire simulation. Thus, we need to reset the `last_move_by_opponent` property to the empty string after all interactions with the same individual. We'll do this in the `selection()` function, where we already reset another property, `payoff`:
+Now, we need to remind ourselves that `TFT` should cooperate at *every* first interaction with each player, not just at the first interaction of the entire simulation. Thus, we need to reset the `last_move_by_opponent` property to the empty string after all interactions with the same individual. We'll do this in the `selection()` function (right after resetting  another property, `payoff`):
 
 ~~~~~~~
 current_individual.last_move_by_opponent = "";
@@ -991,7 +991,7 @@ And that's it! Save your code, and reload the document in the browser. You'll mo
 {width=90%}
 ![](images/ch_8_dynamics_tft_pd.png)
 
-The new green line represents the frequency of the `TFT` strategy - but what's that? It doesn't seem to stand a chance against defectors (in orange) either! That's true, but remember that we're still initiating the population with `ALL_C`s (the blue line), which will be very quickly invaded by `ALL_D`, as we've shown before. Let's go ahead and initialize the population with all `TFT`s instead. In your code, find the function `init_simulation()` and change this line:
+The new green line represents the frequency of the `TFT` strategy - but what's that? It doesn't seem to stand a chance against defectors (in orange) either! That's true, but remember that we're still initiating the population with `ALL_C`s (the blue line), which will very quickly be invaded by `ALL_D`, as we've shown before. Let's go ahead and initialize the population with all `TFT`s instead. In your code, find the function `init_simulation()` and change this line:
 
 ~~~~~~~
 population.push(new Individual("ALL_C",0));
@@ -1020,7 +1020,7 @@ The second graph is more interesting. Here, `ALL_C` starts to invade `TFT` by si
 
 And this is ultimately the big weakness of `TFT` - it can't prevent the naive `ALL_C` from drifting to dominance, which will then be immediately exploited by `ALL_D`. In fact, all simulations will eventually have the same fate - sometimes this happens within 1,000 time steps, and sometimes in happens much later. 
 
-Is this the end of the story? Does this mean that cooperation is only ever a transitory state of affairs? Not so fast! There is another strategy that can not only prevent the invasion of `ALL_D`, but also of the naive `ALL_C` who would then make the population vulnerable to invasion by `ALL_D`.
+Is this the end of the story? Does this mean that cooperation is only ever a transitory state of affairs? Not so fast! There is another strategy that is able to prevent the invasion of both  `ALL_D` *and* the naive `ALL_C`. This is important, because as we have just seen, an invasion by `ALL_C`, even though seemingly a positive development, immediately makes the population vulnerable to invasion by `ALL_D`.
 
 ## Win: stay, lose: shift
 
