@@ -428,7 +428,7 @@ Indeed, we could always have written this instead as
 var function_name = function() {};
 ~~~~~~~~
 
-which would have had the same effect. In JavaScript, functions are are in fact special types of objects, and just like you can assign a regular object to a variable, you can also assign a function to a variable. However, for stand-alone functions in my code, I generally prefer the slightly shorter notation 
+which would have had the same effect. In JavaScript, functions are in fact special types of objects, and just like you can assign a regular object to a variable, you can also assign a function to a variable. However, for stand-alone functions in my code, I generally prefer the slightly shorter notation 
 
 ~~~~~~~~
 function function_name() {
@@ -779,13 +779,22 @@ If everything went ok with your code, you shouldn't have to scroll too far down 
 
 And of course, we shouldn't be surprised - indeed, we have just implemented a stochastic simulation of the prisoner's dilemma, and as we've seen in the beginning of the chapter, the outcome of the prisoner's dilemma is that defectors will always win, because it is always better for an individual (in terms of its payoff) to defect, rather than to cooperate. That is, after all, why it is called a dilemma: even though the total population payoff would be much higher if everyone cooperated, individuals will be better of if they defect. Thus, if everyone acts in their own self-interest, cooperation will collapse and be outcompeted by defection.
 
-But we've shown repeatedly throughout this book that we can do better than print numbers into the JavaScript console! In fact, the `draw_line_chart()` function that we've used so many times comes in quite hand here. If you simply add this line after your `run_simulation()` call:
+But we've shown repeatedly throughout this book that we can do better than print numbers into the JavaScript console! In fact, the `draw_line_chart()` function that we've used so many times comes in quite handy here. Go ahead and replace this code:
+
+~~~~~~~~
+for (var i = 0; i < number_of_time_steps; i++) {
+    console.log(i,"ALL_C",data[0][i],"ALL_D",data[1][i]);
+}
+~~~~~~~~
+
+by this line
 
 ~~~~~~~~
 draw_line_chart(data,"time step", "frequency",[]);
 ~~~~~~~~
 
-You will see the following dynamic in your browser:
+and you will see the following dynamic in your browser upon reload:
+
 
 {width=90%}
 ![](images/ch_8_dynamics_regular_pd.png)
@@ -794,4 +803,215 @@ The blue line is the frequency of cooperators (recall that we start each simulat
 
 But hang on a second, I hear you say - didn't we start this chapter with the idea the cooperation would readily evolve? Glad you asked! Indeed, that's the promise with which I started the chapter. What we are going to do next is to introduce a small but realistic modification that will change the dynamics quite strongly. But first, I needed to convince you that pure cooperation, all by itself, does not stand a chance against pure defectors. And along the way, we developed an individual-based JavaScript simulation of a game-theoretical model (which is quite cool if you ask me - but of course I'm biased). This simulation will now form the basis of our exploration about the factors than can prevent the defectors from always winning.
 
-I> This second part of the chapter is currently being written - as soon as it's ready, I'll update the book. And as always, you can just get the updated version for free on the Leanpub website (you'll get notified by email when the update is ready).
+## Repeated games
+
+So far, we have assumed that all interactions are a one-off. Once you interact with an individual, you may never interact with that individual again (and if you do, there will be no memory of your past interaction). In reality, however, when we interact with others, we often do so repeatedly with the same people, fully aware that they will remember how we interacted with them before. 
+
+It turns out that repeated interactions change the dynamics of the prisoners dilemma quite a bit. In particular, when you play games repeatedly with the same players, you can come up with a rich set of possible strategies, such as having your next move depend on the previous move. Interestingly, the literature in this field was kicked off by a paper in 1981 by Robert Axelrod and Bill D. Hamilton, who used computer simulations to run a "tournament". They asked their colleagues to submit strategies - in code - and then let those strategies compete against each other in an simulation of an iterated prisoner's dilemma. One of the participants, Anatol Rapoport, submitted a strategy he called "Tit-for-Tat".
+
+"Tit-for-Tat", when played against the same player repeatedly, is very simple. It starts by cooperating in the first round, and then adopts whichever strategy the other player played in the *previous* round. Let's go ahead and implement this strategy in our code.
+
+The first thing to do is to expand our list of strategies by "TFT":
+
+~~~~~~~~
+var strategies = ["ALL_C","ALL_D","TFT"];
+~~~~~~~~
+
+Next, since we're implementing repeated interactions, we need to define how many repeated interactions there should be per round. We can define this in a new global variable called `number_of_game_repeats`:
+
+~~~~~~~~
+var number_of_game_repeats = 100;
+~~~~~~~~
+
+Now let's go ahead and make sure that our code actually performs multiple repeated interactions among players. Currently, the game is played in the function `play_game()` which looks as follows:
+
+~~~~~~~~
+function play_game(individual1, individual2) {
+    var move_individual1 = individual1.compute_move();
+    var move_individual2 = individual2.compute_move();
+    if (move_individual1 == "C") {
+        if (move_individual2 == "C") {
+            individual1.add_to_payoff(b - c);
+            individual2.add_to_payoff(b - c);
+        }
+        else {
+            individual1.add_to_payoff(-c);
+            individual2.add_to_payoff(b);
+        }
+    }
+    else {
+        if (move_individual2 == "C") {
+            individual1.add_to_payoff(b);
+            individual2.add_to_payoff(-c);
+        }
+    }
+}
+~~~~~~~~
+
+Since this code performs exactly one interaction, we can simply wrap it with a `for` loop that iterates this code many times:
+
+~~~~~~~~
+function play_game(individual1, individual2) {
+    for (var i = 0; i < number_of_game_repeats; i++) {
+        // previous code here
+    }
+}
+~~~~~~~~
+
+There is something else we should take care of in this function. If an individual has the strategy `TFT`, then the individual's moves will depend of the *previous* moves of the opponent. Thus, we need to constantly keep track of the previous move of the opponent, so that our `compute_move()` method can tell us which move to perform during a given interaction. In order to keep track of the previous move of the opponent, we'll need to add a new property to our `Individual` object:
+
+~~~~~~~~
+this.last_move_by_opponent = "";
+~~~~~~~~
+
+We're going to initialize this value with an empty string, because initially, an individual won't have played any games, and thus there is no last move by an opponent.
+
+Then, in the `play_game()` function, we can update this property once we know what the opponent will play:
+
+~~~~~~~~
+individual1.last_move_by_opponent = move_by_individual2;
+individual2.last_move_by_opponent = move_by_individual1;
+~~~~~~~~
+
+The full function `play_games()` is now:
+
+~~~~~~~~
+function play_game(individual1, individual2) {
+    for (var i = 0; i < number_of_game_repeats; i++) {
+        var move_individual1 = individual1.compute_move();
+        var move_individual2 = individual2.compute_move();
+        individual1.last_move_by_opponent = move_by_individual2;
+        individual2.last_move_by_opponent = move_by_individual1;
+        if (move_individual1 == "C") {
+            if (move_individual2 == "C") {
+                individual1.add_to_payoff(b - c);
+                individual2.add_to_payoff(b - c);
+            }
+            else {
+                individual1.add_to_payoff(-c);
+                individual2.add_to_payoff(b);
+            }
+        }
+        else {
+            if (move_individual2 == "C") {
+                individual1.add_to_payoff(b);
+                individual2.add_to_payoff(-c);
+            }
+        }
+    }
+}
+~~~~~~~~
+
+Since we now have three possible strategies, we also need to update the `compute_move()` method in the `Individual` object. At the moment, it reads:
+
+~~~~~~~~
+this.compute_move = function() {
+    return this.strategy == "ALL_C" ? "C" : "D";
+};
+~~~~~~~~
+
+With the new `TFT` strategy, we will have to modify this method to the following:
+
+~~~~~~~~
+this.compute_move = function() {
+    if (this.strategy == "ALL_D") {
+        return "D";
+    }
+    else if (this.strategy == "ALL_C") {
+        return "C";
+    }
+    else if (this.strategy == "TFT") { 
+        return (this.last_move_by_opponent == "" ? "C" : this.last_move_by_opponent);
+    }
+};
+~~~~~~~~
+
+The first couple of lines in the method are equivalent to what we had before - return `"C"` if the strategy is `ALL_C`, and `"D"` if the strategy is `ALL_D`. In addition, we now take care of the case where the strategy is `TFT`, in which case we return `"C"` if these two players haven't started interacting yet (i.e. if we're in the first round), and the last move of the opponent otherwise.
+
+Now, we need to remind ourselves that `TFT` should cooperate at *every* first interaction with each player, not just at the first interaction of the entire simulation. Thus, we need to reset the `last_move_by_opponent` property to the empty string after all interactions with the same individual. We'll do this in the `selection()` function, where we already reset another property, `payoff`:
+
+~~~~~~~
+current_individual.last_move_by_opponent = "";
+~~~~~~~
+
+And finally, we will need to adapt our `mutate()` method in the `Individual` object. At the moment, mutations will only generate `ALL_D` or `ALL_C` strategies. We'll now change this method into a more generic version:
+
+~~~~~~~
+this.mutate = function() {
+    do {
+        var new_strategy = strategies[get_random_int(0, strategies.length - 1)];
+    } while (new_strategy == this.strategy);
+    this.strategy = new_strategy;
+};
+~~~~~~~
+
+Your complete `Individual` object now reads as follows: 
+
+~~~~~~~
+function Individual(strategy, payoff) {
+    this.strategy = strategy;
+    this.payoff = payoff;
+    this.last_move_by_opponent = "";
+    this.compute_move = function() {
+        if (this.strategy == "ALL_D") {
+            return "D";
+        }
+        else if (this.strategy == "ALL_C") {
+            return "C";
+        }
+        else if (this.strategy == "TFT") { 
+            return (this.last_move_by_opponent == "" ? "C" : this.last_move_by_opponent);
+        }
+    };
+    this.add_to_payoff = function(game_payoff) {
+        this.payoff += game_payoff;
+    };
+    this.mutate = function() {
+        do {
+            var new_strategy = strategies[get_random_int(0, strategies.length - 1)];
+        } while (new_strategy == this.strategy);
+        this.strategy = new_strategy;
+    };
+}
+~~~~~~~
+
+And that's it! Save your code, and reload the document in the browser. You'll most likely see something like this:
+
+
+{width=90%}
+![](images/ch_8_dynamics_tft_pd.png)
+
+The new green line represents the frequency of the `TFT` strategy - but what's that? It doesn't seem to stand a chance against defectors (in orange) either! That's true, but remember that we're still initiating the population with `ALL_C`s (the blue line), which will be very quickly invaded by `ALL_D`, as we've shown before. Let's go ahead and initialize the population with all `TFT`s instead. In your code, find the function `init_simulation()` and change this line:
+
+~~~~~~~
+population.push(new Individual("ALL_C",0));
+~~~~~~~
+
+to
+
+~~~~~~~
+population.push(new Individual("TFT",0));
+~~~~~~~
+
+Save and reload. You will now see one of two typical outcomes, either
+
+{width=90%}
+![](images/ch_8_dynamics_tft_drift_pd.png)
+
+or 
+
+{width=90%}
+![](images/ch_8_dynamics_tft_invasion_pd.png)
+
+
+In the first picture, `TFT` remains the dominant strategy throughout almost the entire simulation. There are moments when `ALL_C` becomes more frequent, and occasionally even the most frequent strategy. The reason is that when `TFT` and `ALL_C` play together, they are performing the exact same moves - they always cooperate. Thus, `TFT` and `ALL_C` are *selectively neutral* with respect to each other.
+
+The second graph is more interesting. Here, `ALL_C` starts to invade `TFT` by simply drifting to dominance. However, `ALL_C`, as we've seen before, will almost immediately be invaded by `ALL_D`! And once `ALL_D` is the dominant strategy, it can't be invaded by either `ALL_C` or `TFT` (recall that `TFT` always starts out by cooperating, and so will always have a lower payoff when playing against `ALL_D`).
+
+And this is ultimately the big weakness of `TFT` - it can't prevent the naive `ALL_C` from drifting to dominance, which will then be immediately exploited by `ALL_D`. In fact, all simulations will eventually have the same fate - sometimes this happens within 1,000 time steps, and sometimes in happens much later. 
+
+Is this the end of the story? Does this mean that cooperation is only ever a transitory state of affairs? Not so fast! There is another strategy that can not only prevent the invasion of `ALL_D`, but also of the naive `ALL_C` who would then make the population vulnerable to invasion by `ALL_D`.
+
+## Win: stay, lose: shift
+
+I> This final part of the chapter is currently being written - as soon as it's ready, I'll update the book. And as always, you can just get the updated version for free on the Leanpub website (you'll get notified by email when the update is ready).

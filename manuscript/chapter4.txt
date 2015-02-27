@@ -55,7 +55,7 @@ function print_sequences(title) {
     for (var i = 0; i < number_of_sequences; i = i + 1) {
         print_sequence(sequences[i]);
     }
-    console.log('\n');
+    console.log('');
 }
 
 function print_sequence(sequence) {
