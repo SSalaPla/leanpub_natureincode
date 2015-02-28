@@ -1022,6 +1022,157 @@ And this is ultimately the big weakness of `TFT` - it can't prevent the naive `A
 
 Is this the end of the story? Does this mean that cooperation is only ever a transitory state of affairs? Not so fast! There is another strategy that is able to prevent the invasion of both  `ALL_D` *and* the naive `ALL_C`. This is important, because as we have just seen, an invasion by `ALL_C`, even though seemingly a positive development, immediately makes the population vulnerable to invasion by `ALL_D`.
 
-## Win: stay, lose: shift
+## Win-stay, lose-shift
 
-I> This final part of the chapter is currently being written - as soon as it's ready, I'll update the book. And as always, you can just get the updated version for free on the Leanpub website (you'll get notified by email when the update is ready).
+Win-stay, lose-shift (WSLS) is based on a simple idea: if a player does well, it will keep playing the previous move; it doesn't, it will switch. By playing this strategy, a player simply monitors its own payoff, given its current move. 
+
+Let's remind ourselves briefly of the payoff matrix of the prisoners dilemma:
+
+{width="wide"}
+|  |Individual 2 Defecting |Individual 2 Cooperating|
+|:----------:|:------------:|:------------:|
+| **Individual 1 Defecting**  |Payoff Individual 1: 0|Payoff Individual 1: b|
+|                         |Payoff Individual 2: 0|Payoff Individual 2: -c|
+|:----------:|:------------:|:------------:|
+| **Individual 1 Cooperating**  |Payoff Individual 1: -c|Payoff Individual 1: b-c|
+|                           |Payoff Individual 2: b|Payoff Individual 2: b-c|
+
+Let's take the perspective of Individual 1 in this table. If the individual is defecting, it "wins" whenever the other individual is cooperating (payoff b), and it "loses" whenever the other individual is defecting (payoff 0). If the individual is cooperating, it "wins" whenever the other individual is cooperating (payoff b-c), and it "loses" whenever the other individual is defecting (payoff -c). *Note that winning and losing here are simply assessed by comparing the payoff earned to the one that would have been earned if the opponent had made another move*.
+
+If you re-read the preceding paragraph, you'll note that the strategy can be simplified to the following simple rule: If my opponent cooperated in the previous interaction, I will continue doing what I was doing, otherwise I'll switch. In some sense, this is quite a strange strategy - the player is evaluating what would have happened if the *other* player had played differently, but then goes on to change *its own* strategy! For example, if a `WSLS` player defected against another defector, it will in the next round switch to cooperating, which is not how most of us would react.
+
+Let's go ahead an implement this strategy in our code and see how well it does.
+
+First, let's add the strategy to our `strategies` array:
+
+~~~~~~~~
+var strategies = ["ALL_C","ALL_D","TFT","WSLS"];
+~~~~~~~~
+
+We've just learned that the `WSLS` strategy depends on the previous move of the opponent - a player will switch if the opponent cooperated in the previous round. Ever since our implementation of `TFT`, we're keeping track of the opponent's previous move (via the property `last_move_by_opponent`) - what we're not currently keeping track of, however, is the previous move of the player itself (as opposed to that of the opponent). Let's fix that.
+
+First, add the property `last_move` to the `Individual` object:
+
+~~~~~~~~
+this.last_move = "";
+~~~~~~~~
+
+As with `last_move_by_opponent`, we initialize this property with an empty string.
+
+Then, in the function `play_game()`, let's update the last move for both players and add the following two lines (add the lines right after or before the lines that keep track of the `last_move_by_opponent`):
+
+~~~~~~~~
+individual1.last_move = move_individual1;
+individual2.last_move = move_individual2;
+~~~~~~~~
+
+The last modification with respect to this property is to make sure that we reset it to the empty string in the `selection()` function (again right after or before resetting `last_move_by_opponent`):
+
+~~~~~~~~
+current_individual.last_move = "";
+~~~~~~~~
+
+Great - now let's go ahead and implement the actual strategy. For this, we need to update the `compute_move()` method of the `Individual` object, by adding this bit at the end:
+
+~~~~~~~~
+else if (this.strategy == "WSLS") { 
+    if (this.last_move == "") {
+        return "C";
+    } 
+    else {
+        if (this.last_move_by_opponent == "D") {
+            return (this.last_move == "C" ? "D" : "C");	
+        } 
+        else {
+            return this.last_move;
+        }
+    }
+}
+~~~~~~~~
+
+`WSLS`, just like `TFT`, starts out being nice - by cooperating in the first round. Then, as outlined above, it will compute the next move based on whether the opponent defected or cooperated in the previous round. If the opponent defected, the player will switch (from cooperate to defect or vice versa). Otherwise, it will continue to play the way it played in the previous round.
+
+Now, as before, let's the newcomer a fighting chance by initiating the entire population with this new strategy. Modify the function `init_simulation()` to say:
+
+~~~~~~~~
+population.push(new Individual("WSLS",0));
+~~~~~~~~
+
+Then, save the document and reload the browser. The `WSLS` strategy will appear as the forth line, in red:
+
+
+
+Looking good! But it seems as if `WSWL` and `TFT` are selectively neutral. And that wouldn't bode well, since we know that `TFT` and `ALL_C` are also selectively neutral against each other, which would mean that `WSWL` would also be selectively neutral against `ALL_C`. And indeed, a common outcome you will find when you reload is this:
+
+
+
+
+Oh no! That was exactly what we wanted to avoid with `WSLS`! What is going on?
+
+Well, as you've seen above when we implemented the `WSLS` code, a `WSLS` individual will change its move only when the opponent previously defected. In other words, in a happy world where `TFT` and `ALL_C` cooperate, `WSLS` will cooperate as well, and the three strategies are effectively identical with respect to their behavior. As a consequence, `ALL_C` will be able to drift to dominance, which is never a good thing, as `ALL_D` won't wait for long to seize that opportunity and overtake the population.
+
+So, what's so special about `WSLS` then?
+
+`WSLS` starts to shine when we introduce a small but realistic modification to our model. We have so far assumed that in all repeated interactions, the strategies stick to their program without making a single mistake, ever. But of course, mistakes will sometimes occur even with the best of intentions. That is, a player who would normally cooperate will occasionally defect, and a player who would normally defect will occasionally cooperate, even if just by accident.
+
+Taking this issue into consideration is important. Consider what would happen if two `TFT` players played together. Normally, the sequence of moves would look like this:
+
+| TFT: | C C C C C C C C C C C C C C C C C C ... | 
+| TFT: | C C C C C C C C C C C C C C C C C C ... |
+
+However, imagine that one of the players makes a mistake and accidentally defects (the mistake is marked in bold):
+
+| TFT: | C C C C C C **D** C D C D C D C D C D C ... | 
+| TFT: | C C C C C C C D C D C D C D C D C D ... | 
+
+As you can see, one original mistake will lead to a series of alternating defections for the rest of the game.
+
+Thankfully, when TFT plays against ALL_C who makes a mistake, it is rather forgiving:
+
+ALL_C: 	CCCCCCDCCCCCCCCCCC....
+TFT: 		CCCCCCCDCCCCCCCCCC....
+
+Now, what happens when we add WSLS to the mix? Here are the three combinations:
+
+ALL_C:  	CCCCCCDCCCCCCCCCCC....
+WSLS:   	CCCCCCCDDDDDDDDDDD....			
+
+TFT:       	CCCCCCDCDDCDDCDDCD....
+WSLS:   	CCCCCCCDDCDDCDDCDD....
+
+WSLS:   	CCCCCCDDCCCCCCCCCC....
+WSLS:   	CCCCCCCDCCCCCCCCCC....
+
+The first of these combinations is the crucial combination. As you can see, a simple mistake by ALL_C will trigger a change in the strategy of WSLS, switching into defector mode. As a consequence, WSLS will have a much higher payoff than ALL_C. In the second combination, both players will have a mixed payoff. However, in the last pattern, we can see that WSLS can correct mistakes quickly when it plays against itself. After a single round of mutual defection, both players switch back to cooperating, ending up with a high overall payoff. Thus, WSLS is doing very well in a population of strategies that make occasional mistakes, and that consist mostly of WSLS. In short, it can resist invasion.
+
+Let's demonstrate that by implementing occasional mistakes in the compute_move() method. Let's add a new global variable error_rate that defines the probability at which errors will occur when individuals calculate their moves. Note that this rate is different from the mutation_rate, which defines the probability at which strategies mutate to other strategies. Go ahead and define it right after the mutation_rate:
+
+var error_rate = 0.002;
+
+Then, right at the beginning of the compute_move() method, add these lines:
+
+if (Math.random() < error_rate) {
+    return (Math.random() < 0.5) ? "C" : "D";
+}
+
+Thus, with a small probability of 0.002, we'll just flip a coin and return either "C" or "D", without even checking what strategy the individual has. 
+
+If you now save your document and reload the browser, you'll see something like this:
+
+
+
+As you can see, TFT and ALL_C cannot invade the WSLS population by neutral drift anymore. 
+
+We now have a population of individual that cooperates at all times (with the exception the occasional defection errors), and that cannot be invaded by unconditional defectors or unconditional cooperators (which would pave the way for the invasion of defectors). 
+
+We've come a long way! Let’s briefly summarize what we've learned in this chapter.
+
+	•	You learned about JavaScript objects, the building blocks JavaScript programs (indeed, both arrays and functions are objects too).
+	•	We built an individual-based simulation using JavaScript objects, and defined out own object methods.
+	•	We learned about a major gotcha in JavaScript: objects are passed by reference, not by value.
+	•	The prisoners dilemma is a famous game-theoretical model to study the evolution of cooperation.
+	•	Pure cooperators are immediately invaded by pure defectors.
+	•	Tit-for-tat can resist invasion of pure defectors, but not of pure cooperators. Once the population is dominated by pure cooperators, it will immediately be invaded by defectors.
+	•	The strategy win-stay, lose-shift can resist invasion by other strategies - notably by pure defectors and cooperators - if strategies make occasional mistakes.
+
+And with that, you have come to the end of the book. Congratulations!
