@@ -1127,52 +1127,56 @@ However, imagine that one of the players makes a mistake and accidentally defect
 
 As you can see, one original mistake will lead to a series of alternating defections for the rest of the game.
 
-Thankfully, when TFT plays against ALL_C who makes a mistake, it is rather forgiving:
+Thankfully, when `TFT` plays against `ALL_C` who makes a mistake, it is rather forgiving:
 
-ALL_C: 	CCCCCCDCCCCCCCCCCC....
-TFT: 		CCCCCCCDCCCCCCCCCC....
+| ALL_C: | C C C C C C **D** C C C C C C C C C C C ... | 
+| TFT: | C C C C C C C D C C C C C C C C C C ... | 
 
-Now, what happens when we add WSLS to the mix? Here are the three combinations:
+Now, what happens when we add `WSLS` to the mix? Here are the three combinations:
 
-ALL_C:  	CCCCCCDCCCCCCCCCCC....
-WSLS:   	CCCCCCCDDDDDDDDDDD....			
+| ALL_C: | 	C C C C C C **D** C C C C C C C C C C C ... |
+| WSLS: | C C C C C C C D D D D D D D D D D D ... |	
 
-TFT:       	CCCCCCDCDDCDDCDDCD....
-WSLS:   	CCCCCCCDDCDDCDDCDD....
+| TFT: | C C C C C C **D** C D D C D D C D D C D ... |
+| WSLS: | C C C C C C C D D C D D C D D C D D ... |
 
-WSLS:   	CCCCCCDDCCCCCCCCCC....
-WSLS:   	CCCCCCCDCCCCCCCCCC....
+| WSLS: | C C C C C C **D** D C C C C C C C C C C ... |
+| WSLS: | C C C C C C C D C C C C C C C C C C ... |
 
-The first of these combinations is the crucial combination. As you can see, a simple mistake by ALL_C will trigger a change in the strategy of WSLS, switching into defector mode. As a consequence, WSLS will have a much higher payoff than ALL_C. In the second combination, both players will have a mixed payoff. However, in the last pattern, we can see that WSLS can correct mistakes quickly when it plays against itself. After a single round of mutual defection, both players switch back to cooperating, ending up with a high overall payoff. Thus, WSLS is doing very well in a population of strategies that make occasional mistakes, and that consist mostly of WSLS. In short, it can resist invasion.
+The first of these combinations is the crucial combination. As you can see, a simple mistake by `ALL_C` will trigger a change in the strategy of `WSLS`, switching into defector mode. As a consequence, `WSLS` will have a much higher payoff than `ALL_C`. In the second combination, both players will have a mixed payoff. However, in the last pattern, we can see that `WSLS` can correct mistakes quickly when it plays against itself. After a single round of mutual defection, both players switch back to cooperating, ending up with a high overall payoff. Thus, `WSLS` is doing very well in a population of strategies that make occasional mistakes, and that consist mostly of `WSLS`. In other words, it can resist invasion.
 
-Let's demonstrate that by implementing occasional mistakes in the compute_move() method. Let's add a new global variable error_rate that defines the probability at which errors will occur when individuals calculate their moves. Note that this rate is different from the mutation_rate, which defines the probability at which strategies mutate to other strategies. Go ahead and define it right after the mutation_rate:
+Let's demonstrate that by implementing occasional mistakes in the `compute_move()` method. Let's add a new global variable `error_rate` that defines the probability at which errors will occur when individuals calculate their moves. Note that this rate is different from the `mutation_rate`, which defines the probability at which strategies mutate to other strategies. Go ahead and define it right after the `mutation_rate`:
 
+~~~~~~~~
 var error_rate = 0.002;
+~~~~~~~~
 
-Then, right at the beginning of the compute_move() method, add these lines:
+Then, right at the beginning of the `compute_move()` method, add these lines:
 
+~~~~~~~~
 if (Math.random() < error_rate) {
     return (Math.random() < 0.5) ? "C" : "D";
 }
+~~~~~~~~
 
-Thus, with a small probability of 0.002, we'll just flip a coin and return either "C" or "D", without even checking what strategy the individual has. 
+Thus, with a small probability of `0.002`, we'll just flip a coin and return either `"C"` or `"D"`, without even checking what strategy the individual has. 
 
 If you now save your document and reload the browser, you'll see something like this:
 
 
 
-As you can see, TFT and ALL_C cannot invade the WSLS population by neutral drift anymore. 
+As you can see, `TFT` and `ALL_C` cannot invade the `WSLS` population by neutral drift anymore. 
 
-We now have a population of individual that cooperates at all times (with the exception the occasional defection errors), and that cannot be invaded by unconditional defectors or unconditional cooperators (which would pave the way for the invasion of defectors). 
+We now have a population of individuals that cooperate at all times (with the exception the occasional defection errors), and that cannot be invaded by unconditional defectors or unconditional cooperators (which would pave the way for the invasion of defectors). 
 
 We've come a long way! Let’s briefly summarize what we've learned in this chapter.
 
-	•	You learned about JavaScript objects, the building blocks JavaScript programs (indeed, both arrays and functions are objects too).
-	•	We built an individual-based simulation using JavaScript objects, and defined out own object methods.
-	•	We learned about a major gotcha in JavaScript: objects are passed by reference, not by value.
-	•	The prisoners dilemma is a famous game-theoretical model to study the evolution of cooperation.
-	•	Pure cooperators are immediately invaded by pure defectors.
-	•	Tit-for-tat can resist invasion of pure defectors, but not of pure cooperators. Once the population is dominated by pure cooperators, it will immediately be invaded by defectors.
-	•	The strategy win-stay, lose-shift can resist invasion by other strategies - notably by pure defectors and cooperators - if strategies make occasional mistakes.
+* You learned about JavaScript objects, the building blocks JavaScript programs (indeed, both arrays and functions are objects too).
+* We built an individual-based simulation using JavaScript objects, and defined out own object methods.
+* We learned about a major gotcha in JavaScript: objects are passed by reference, not by value.
+* The prisoners dilemma is a famous game-theoretical model to study the evolution of cooperation.
+* Pure cooperators are immediately invaded by pure defectors.
+* Tit-for-tat can resist invasion of pure defectors, but not of pure cooperators. Once the population is dominated by pure cooperators, it will immediately be invaded by defectors.
+* The strategy win-stay, lose-shift can resist invasion by other strategies - notably by pure defectors and cooperators - if strategies make occasional mistakes.
 
 And with that, you have come to the end of the book. Congratulations!
