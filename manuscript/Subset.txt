@@ -1,1 +1,3 @@
 chapter8.txt
+backmatter.txt
+epilogue.txt
