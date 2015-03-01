@@ -1,3 +1,10 @@
 # Epilogue
 
-A journey of a thousand miles begins with a single step.
+"A journey of a thousand miles begins with a single step." What was true for the Chinese philosopher Laozi 2,500 years ago is true for anyone learning programming today. Whether you were an absolute beginner or someone with some previous experience in programming, expressing your ideas in code is a never ending journey - so keep on writing a code, keep on making mistakes, keep on asking, keep on learning.
+
+If you're like most people, then the thrill of programming doesn't come from those rare times when everything goes smoothly. Rather, it comes from those times when you just can't seem to find that bug in your code that prevents your program from running - and then, after hours of dissecting the code, finding it and fixing it. "IT FINALLY WORKS!!!" It's a feeling that is hard to describe to someone who has never felt it.
+
+Programming, after all, is like solving a puzzle, like constructing a building - a building of thoughts, of ideas. And as you are building, never forget that the world is increasingly made of millions and millions of such buildings, and there are millions of builders out there just like you, who get hung up on the same problems as you occasionally will. Consult websites such as [www.stackoverflow.com](http://www.stackoverflow.com), where you can join hundreds of thousands of people at various stages on their learning journey, asking and answering hundreds of thousands of questions. Build something that matters to you, and make it public so that others can learn from you, learn with you, improve your code, or build on top of what you have built. 
+
+Good luck!
+
