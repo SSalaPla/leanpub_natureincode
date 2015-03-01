@@ -807,7 +807,7 @@ But hang on a second, I hear you say - didn't we start this chapter with the ide
 
 So far, we have assumed that all interactions are a one-off. Once you interact with an individual, you may never interact with that individual again (and if you do, there will be no memory of your past interaction). In reality, however, when we interact with others, we often do so repeatedly with the same people, fully aware that they will remember how we interacted with them before. 
 
-It turns out that repeated interactions change the dynamics of the prisoners dilemma quite a bit. In particular, when you play games repeatedly with the same players, you can come up with a rich set of possible strategies, such as having your next move depend on the previous move. The literature in this field was kicked off by a paper in 1981 by Robert Axelrod and Bill D. Hamilton, who used computer simulations to run a "tournament". They asked their colleagues to submit strategies - in code - and then they let those strategies compete against each other in a simulation of an iterated prisoner's dilemma. The winning strategy was submitted by Anatol Rapoport. It was a strategy he called "Tit-for-Tat".
+It turns out that repeated interactions change the dynamics of the prisoner's dilemma quite a bit. In particular, when you play games repeatedly with the same players, you can come up with a rich set of possible strategies, such as having your next move depend on the previous move. The literature in this field was kicked off by a paper in 1981 by Robert Axelrod and Bill D. Hamilton, who used computer simulations to run a "tournament". They asked their colleagues to submit strategies - in code - and then they let those strategies compete against each other in a simulation of an iterated prisoner's dilemma. The winning strategy was submitted by Anatol Rapoport. It was a strategy he called "Tit-for-Tat".
 
 "Tit-for-Tat", when played against the same player repeatedly, is very simple. It starts by cooperating in the first round, and then adopts whichever strategy the other player played in the *previous* round. Let's go ahead and implement this strategy in our code.
 
@@ -1026,7 +1026,7 @@ Is this the end of the story? Does this mean that cooperation is only ever a tra
 
 Win-stay, lose-shift (WSLS) is based on a simple idea: if a player does well, it will keep playing the previous move; it doesn't, it will switch. By playing this strategy, a player simply monitors its own payoff, given its current move. 
 
-Let's remind ourselves briefly of the payoff matrix of the prisoners dilemma:
+Let's remind ourselves briefly of the payoff matrix of the prisoner's dilemma:
 
 {width="wide"}
 |  |Individual 2 Defecting |Individual 2 Cooperating|
@@ -1100,12 +1100,13 @@ population.push(new Individual("WSLS",0));
 
 Then, save the document and reload the browser. The `WSLS` strategy will appear as the forth line, in red:
 
-
+{width=90%}
+![](images/ch_8_dynamics_wsls_drift_pd.png)
 
 Looking good! But it seems as if `WSWL` and `TFT` are selectively neutral. And that wouldn't bode well, since we know that `TFT` and `ALL_C` are also selectively neutral against each other, which would mean that `WSWL` would also be selectively neutral against `ALL_C`. And indeed, a common outcome you will find when you reload is this:
 
-
-
+{width=90%}
+![](images/ch_8_dynamics_wsls_invasion_pd.png)
 
 Oh no! That was exactly what we wanted to avoid with `WSLS`! What is going on?
 
@@ -1163,18 +1164,19 @@ Thus, with a small probability of `0.002`, we'll just flip a coin and return eit
 
 If you now save your document and reload the browser, you'll see something like this:
 
-
+{width=90%}
+![](images/ch_8_dynamics_wsls_pd.png)
 
 As you can see, `TFT` and `ALL_C` cannot invade the `WSLS` population by neutral drift anymore. 
 
 We now have a population of individuals that cooperate at all times (with the exception the occasional defection errors), and that cannot be invaded by unconditional defectors or unconditional cooperators (which would pave the way for the invasion of defectors). 
 
-We've come a long way! Let’s briefly summarize what we've learned in this chapter.
+We've come a long way! Let's briefly summarize what we've learned in this chapter.
 
 * You learned about JavaScript objects, the building blocks JavaScript programs (indeed, both arrays and functions are objects too).
 * We built an individual-based simulation using JavaScript objects, and defined out own object methods.
 * We learned about a major gotcha in JavaScript: objects are passed by reference, not by value.
-* The prisoners dilemma is a famous game-theoretical model to study the evolution of cooperation.
+* The prisoner's dilemma is a famous game-theoretical model to study the evolution of cooperation.
 * Pure cooperators are immediately invaded by pure defectors.
 * Tit-for-tat can resist invasion of pure defectors, but not of pure cooperators. Once the population is dominated by pure cooperators, it will immediately be invaded by defectors.
 * The strategy win-stay, lose-shift can resist invasion by other strategies - notably by pure defectors and cooperators - if strategies make occasional mistakes.
