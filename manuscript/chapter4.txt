@@ -616,7 +616,7 @@ And that concludes this chapter on mutation. We learned a number of really inter
 * If a population is small, and / or has a low mutation rate, the genetic variation at equilibrium will be low. Conversely, if a population is large, and / or has a high mutation rate, the genetic variation at equilibrium will be high.
 * The chance that a new mutation will go to fixation is {$$}\frac{1}{2N}{/$$}, its frequency. If it does go to fixation, the process will take *4N* generations on average.
 * The replacement rate is given by the mutation rate, and does not depend on the population size.
-* We have also covered a few new JavaScript concepts: the `do while` loop, and logical operators.
+* We have also covered a few new JavaScript concepts and methods: the `do while` loop, `Math.floor()`, and logical operators.
 
 In this chapter, we have written quite a bit of code, and we have developed great intuitions about mutation and drift with simple algebra. However, we haven’t really had too much fun this time with visualizations. But you’ll be more than compensated for that in the next chapter, when we are going to create spatial, individual-based models. When I teach this material in a class, this is usually when students are most excited about the resulting animations. 
 
