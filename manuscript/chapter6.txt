@@ -620,7 +620,7 @@ for (var i = 0; i < generations; i = i + 1) {
     data[2].push(parasite_frequencies[0]);
     data[3].push(parasite_frequencies[1]);
 }
-draw_line_chart(data,"p","Generation",[]);
+draw_line_chart(data,"Generation","p",[]);
 ~~~~~~~~
 
 This loop runs over a given number of generations, and in each generation, calls the two methods `host_selection()` and `parasite_selection()`. These methods will calculate the new genotype frequencies, based on the current genotype frequencies and the fitness values. We’ll implement them right away. Once they have finished executing, we will store the new genotype frequencies in the corresponding array in `data`. And finally, after the generations have passed, we'll plot the results stored in `data` visually.
@@ -649,11 +649,11 @@ In code, this looks as follows:
 function host_selection() {
     var sum_host_frequencies = 0;
     for (var i = 0; i < host_frequencies.length; i = i + 1) {
-        var current_host_fitness = 0;
+        var host_fitness = 0;
         for (var ii = 0; ii < parasite_frequencies.length; ii = ii + 1) {
-            current_host_fitness = current_host_fitness + get_host_fitness(i, ii);
+            host_fitness = host_fitness + get_host_w_f(i, ii);
         }
-        host_frequencies[i] = host_frequencies[i] * current_host_fitness;
+        host_frequencies[i] = host_frequencies[i] * host_fitness;
         sum_host_frequencies = sum_host_frequencies + host_frequencies[i];
     }
     for (i = 0; i < host_frequencies.length; i = i + 1) {
@@ -661,7 +661,7 @@ function host_selection() {
     }
 }
 
-function get_host_fitness(i,ii){
+function get_host_w_f(i,ii){
     return (i == ii ? 1-sh : 1) * parasite_frequencies[ii]
 }
 ~~~~~~~~
@@ -671,9 +671,9 @@ Let’s walk through this line by line. At first, we initialized the variable `s
 Notice how the first four lines in that loop,
 
 ~~~~~~~~
-var current_host_fitness = 0;
+var host_fitness = 0;
 for (var ii = 0; ii < parasite_frequencies.length; ii = ii + 1) {
-    current_host_fitness = current_host_fitness + get_host_fitness(i, ii);
+    host_fitness = current_host_fitness + get_host_w_f(i, ii);
 }
 ~~~~~~~~
 
@@ -683,10 +683,10 @@ are the programmed equivalent of
 w_{H1} = w_{H1P1}f_{P1} + w_{H1P2}f_{P2}
 {/$$}
 
-The function `get_host_fitness(i, ii)` simply returns the product of the frequency and the fitness:
+The function `get_host_w_f(i, ii)` simply returns the product of the frequency and the fitness:
 
 ~~~~~~~
-function get_host_fitness(i,ii){
+function get_host_w_f(i,ii){
     return (i == ii ? 1-sh : 1) * parasite_frequencies[ii]
 }
 ~~~~~~~
@@ -719,7 +719,7 @@ Note that these two pieces of code do the exact same thing - they’re just diff
 Back to our function, where the next two lines read
 
 ~~~~~~~
-host_frequencies[i] = host_frequencies[i] * current_host_fitness;
+host_frequencies[i] = host_frequencies[i] * host_fitness;
 sum_host_frequencies = sum_host_frequencies + host_frequencies[i];
 ~~~~~~~
 
@@ -739,11 +739,11 @@ And that’s it. The function `parasite_selection()` follows the exact same logi
 function parasite_selection() {
     var sum_parasite_frequencies = 0;
     for (var i = 0; i < parasite_frequencies.length; i = i + 1) {
-        var current_parasite_fitness = 0;
+        var parasite_fitness = 0;
         for (var ii = 0; ii < host_frequencies.length; ii = ii + 1) {
-            current_parasite_fitness = current_parasite_fitness + get_parasite_fitness(i, ii);
+            parasite_fitness = parasite_fitness + get_parasite_w_f(i, ii);
         }
-        parasite_frequencies[i] = parasite_frequencies[i] * current_parasite_fitness;
+        parasite_frequencies[i] = parasite_frequencies[i] * parasite_fitness;
         sum_parasite_frequencies = sum_parasite_frequencies + parasite_frequencies[i];
     }
     for (i = 0; i < parasite_frequencies.length; i = i + 1) {
@@ -751,7 +751,7 @@ function parasite_selection() {
     }
 }
 
-function get_parasite_fitness(i,ii) {
+function get_parasite_w_f(i,ii) {
     return (i == ii ? 1 : 1-sp) * host_frequencies[ii]
 }
 ~~~~~~~
@@ -774,7 +774,7 @@ host_frequencies[i] = host_frequencies[i] + Math.random() * 0.01;
 right after this one
 
 ~~~~~~~
-host_frequencies[i] = host_frequencies[i] * current_host_fitness;
+host_frequencies[i] = host_frequencies[i] * host_fitness;
 ~~~~~~~
 
 What the new line does is to add a very small value - a random number between 0 and 0.01 - to the new host frequencies. At this stage, the host frequencies are not yet normalized, so the net effect of this addition is that the normalized host frequencies will just be slightly disturbed.
