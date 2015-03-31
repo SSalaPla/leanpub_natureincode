@@ -578,7 +578,7 @@ is true, the code to be iterated will be executed. How often is that? Well, if y
 i=i+1
 ~~~~~~~~
 
-What this means is that `i` is incremented by `1`, and thus, after then tenth iteration, `i` is `10`, at which point the condition `i < 10` is not true anymore, and the loop will stop.
+What this means is that `i` is incremented by `1`, and thus, after the tenth iteration, `i` is `10`, at which point the condition `i < 10` is not true anymore, and the loop will stop.
 
 Back to our code - taking a close look, we can see that the code 
 
@@ -672,7 +672,7 @@ function round_number(value, decimals) {
 }
 ~~~~~~~~
 
-What I’m doing here is simply to replace `100`, which was the number to shift the decimal point two positions to the right and to the left (because `10^2` = `100`), with the more generic version `10^decimals`, using the built in method `Math.pow`. The method `Math.pow(base, exponent)` calculates the `base` to the `exponent`th power. Thus, if you pass in `3` as an argument for decimals, the shifter will be `1000`, shifting the decimal point three positions to the right and to the left. 
+What I’m doing here is simply to replace `100`, which was the number to shift the decimal point two positions to the right and then to the left (because `10^2` = `100`), with the more generic version `10^decimals`, using the built in method `Math.pow`. The method `Math.pow(base, exponent)` calculates the `base` to the `exponent`th power. Thus, if you pass in `3` as an argument for decimals, the shifter will be `1000`, shifting the decimal point three positions to the right and then three to the left. 
 
 There is always a danger to make your method too generic, and to end up with super flexible functions that take a lot of arguments. Don’t be tempted - whenever you think you’ll keep reusing a function, but with slightly different values, making a function more generic is a great idea. But generality often makes your code needlessly complicated, and you’ll need to find a good balance. A general rule of thumb is that when you start copying parts of functions around, you should think about making the function more generic and reusable.
 
