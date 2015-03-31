@@ -6,7 +6,7 @@ Mutation is simply the random change in a genetic sequence. Most mutations occur
 
 In animals like ourselves, almost all mutations are so-called *somatic mutations*. That is, they occur in cells that are not passed on to future generations. These mutations are often contributing to cancer, but from an evolutionary perspective, they are a dead end. The mutations that do matter from an evolutionary perspective are the so-called *germ line mutations*. They occur in the germ line, i.e. the cells that will be passed on to future generations in the form of sperm or egg.
 
-The ultimate effect of mutation is to increase genetic variation. Let’s write a short JavaScript program to illustrate that. Rather than using the two alleles model from earlier chapters, we’ll just use a simple DNA model. As you know, DNA is made up of four base pairs (Adenine, Guanine, Cythosine, and Thymine) that are usually abbreviated by their first letters A, G, C, and T.
+The ultimate effect of mutation is to increase genetic variation. Let’s write a short JavaScript program to illustrate that. Rather than using the two alleles model from earlier chapters, we’ll just use a simple DNA model. As you know, DNA is made up of four base pairs (Adenine, Guanine, Cytosine, and Thymine) that are usually abbreviated by their first letters A, G, C, and T.
 
 First, let’s set up a few key parameters and data structures that we’ll be using:
 
