@@ -869,8 +869,8 @@ We're going to initialize this property with an empty string, because initially,
 Then, in the `play_game()` function, we can update this property once we know what the opponent will play:
 
 ~~~~~~~~
-individual1.last_move_by_opponent = move_by_individual2;
-individual2.last_move_by_opponent = move_by_individual1;
+individual1.last_move_by_opponent = move_individual2;
+individual2.last_move_by_opponent = move_individual1;
 ~~~~~~~~
 
 The full function `play_games()` is now:
@@ -880,8 +880,8 @@ function play_game(individual1, individual2) {
     for (var i = 0; i < number_of_game_repeats; i++) {
         var move_individual1 = individual1.compute_move();
         var move_individual2 = individual2.compute_move();
-        individual1.last_move_by_opponent = move_by_individual2;
-        individual2.last_move_by_opponent = move_by_individual1;
+        individual1.last_move_by_opponent = move_individual2;
+        individual2.last_move_by_opponent = move_individual1;
         if (move_individual1 == "C") {
             if (move_individual2 == "C") {
                 individual1.add_to_payoff(b - c);
