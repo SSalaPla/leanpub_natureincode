@@ -382,7 +382,7 @@ What is perhaps a little perplexing is that the functions that we are calling to
 individual1.compute_move();
 ~~~~~~~~
 
-When a function is used on an object, like we are doing here, it is usually called a *method*. While we have not defined or own methods until now, we have used methods before - remember our good old friend `Math.random()`? Yep, `random()` is a method, defined in the `Math` object, and called using the dot notation, exactly as we do in `individual1.compute_move()`!
+When a function is used on an object, like we are doing here, it is usually called a *method*. While we have not defined our own methods until now, we have used methods before - remember our good old friend `Math.random()`? Yep, `random()` is a method, defined in the `Math` object, and called using the dot notation, exactly as we do in `individual1.compute_move()`!
 
 Thus, all that is left to do is to define these two methods. Since they are part of the `Individual` object, they will need to be defined in the corresponding constructor function. After adding the two functions, our `Individual` constructor function will read like this:
 
@@ -733,7 +733,7 @@ function run_time_step() {
     games();
     selection();
     mutation();
-    for (i = 0; i < strategies.length; i++) {
+    for (var i = 0; i < strategies.length; i++) {
         data[i].push(get_number_with_strategy(strategies[i]) / population_size);
     }
 }

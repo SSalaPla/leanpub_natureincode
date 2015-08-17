@@ -8,7 +8,7 @@ The second goal is that you learn to use code to re-create these processes in yo
 
 I assume very little about what you should know in order to read this book, but I still want to spell it out to avoid disappointments. You should be able to think critically. You should be able to think logically. You should be willing to be inspired. And you should have a computer. By that, I mean anything that allows you to write emails on. Your smartphone, amazingly, has the computational power to run the programs in this book without running a sweat. But typing on smartphones is usually a hassle, and I would recommend something with a bigger screen and a decent keyboard for best results. An internet connection will be helpful most of the times. I also assume that your computer has a modern browser. 
 
-This book covers quite a bit of material, not at least because it's a book about two completely different topics (programming and biology). It is nevertheless a short book. It's short because it is dense, and correspondingly, you should give it your full attention, one page at a time. Don't rush it - this is not a book that you can read when you are already mentally exhausted from the day. I suggest you read it when you are at your most alert, take one page at a time, be sure you fully understand every single detail of what is said, and most importantly, **implement the code examples**. I cannot emphasize this enough. If you manage to implement all the code examples, you will have succeeded and understood the material, and you will have taken the most important step to learning programming.
+This book covers quite a bit of material, not least because it's a book about two completely different topics (programming and biology). It is nevertheless a short book. It's short because it is dense, and correspondingly, you should give it your full attention, one page at a time. Don't rush it - this is not a book that you can read when you are already mentally exhausted from the day. I suggest you read it when you are at your most alert, take one page at a time, be sure you fully understand every single detail of what is said, and most importantly, **implement the code examples**. I cannot emphasize this enough. If you manage to implement all the code examples, you will have succeeded and understood the material, and you will have taken the most important step to learning programming.
 
 Having learned programming myself - and continuing to do so - I am perfectly aware that things will not always go smoothly, and that there will be bumps in the road. To help you through these, all examples, with the full code, are available at the website [www.natureincode.com](http://www.natureincode.com). Go there if you just can't make your code work, and be inspired by - but don't copy - a working solution. 
 
@@ -20,6 +20,7 @@ All set up? Let's get started.
 
 I'd like to thank everyone who has pointed out mistakes or passages that were unclear - they have ultimately made the book much better than what I could have done on my own. They are, in alphabetic order:
 
+* Alessio Andronico
 * Todd Bodnar
 * Daryl Branford
 * Michael Collins
