@@ -632,7 +632,8 @@ As you can see, already after 100 generations, the *F* value is around `0.3`, wh
 
 And with that, we conclude this chapter. Just to remind you of your achievement here - you have just developed an individual-based, spatial, and stochastic simulation of population genetics that actually runs in a browser! We have truly come a long way. What we learned was:
 
-* Mating is not alway random - sexual selection or limited mating distances can substantially reduce the range of mates. 
+* How to implement a spatially explicit model.
+* Mating is not always random - sexual selection or limited mating distances can substantially reduce the range of mates. 
 * When offspring doesn’t disperse very far from the parental generation, there is a much higher chance of inbreeding.
 * The effect of inbreeding is a reduction in heterozygosity, which can be measured by the inbreeding coefficient *F*.
 * We have also learned about a new method, `setInterval()`, that allows you to execute a function repeatedly at certain time intervals, which can be very handy for visual simulations.
