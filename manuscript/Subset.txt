@@ -1,3 +1,1 @@
-chapter8.txt
-backmatter.txt
-epilogue.txt
+chapter3.txt
