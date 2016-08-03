@@ -473,7 +473,7 @@ Because this the drawing code uses the D3.js library, also be sure to include th
 <html>
     <head>
         <title>Nature, In Code</title>
-        <script src="http://d3js.org/d3.v3.js"></script>
+        <script src="http://d3js.org/d3.v4.js"></script>
     </head>
     <body>
         <script type="text/javascript">
