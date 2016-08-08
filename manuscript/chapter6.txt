@@ -8,7 +8,7 @@ Some of the most visually stunning examples of adaptation are those of animal mi
 
 ![](images/ch_6_mimicry.jpg)
 
-(Photo by [Geoff Gallice](http://bit.ly/1vU1Y0W)). Darwin’s insight was the following. In a world where natural resources are limited, there will be a struggle for survival and reproduction. Those individuals who are better adapted to survive, and to produce many offspring individuals, will contribute more offspring individuals to the next generation than those who are less well adapted. Because the offspring individuals inherit the traits that made their parents better adapted, those traits will increase in frequency over the generations. 
+(Photo by [Geoff Gallice](http://bit.ly/1vU1Y0W) via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Flickr_-_ggallice_-_Leaf_katydid_(1).jpg)). Darwin’s insight was the following. In a world where natural resources are limited, there will be a struggle for survival and reproduction. Those individuals who are better adapted to survive, and to produce many offspring individuals, will contribute more offspring individuals to the next generation than those who are less well adapted. Because the offspring individuals inherit the traits that made their parents better adapted, those traits will increase in frequency over the generations. 
 
 We have so far in this book avoided the issue of the struggle for survival and reproduction. In all of our models so far, we have assumed that in terms of the probabilities of making it to the next generation, all alleles, and all genotypes, are equal. *Natural selection occurs when that assumption is not true anymore.*
 
