@@ -111,7 +111,7 @@ If you save this code in a new file and load it in a browser, you should see the
 
 The console window in my browser (Chrome) is being nice here, and rather than printing the same output a hundred times, it is printing it once, and letting me know that it was asked to print the same output `100` times. If you reload, you should see the same thing, but with an other sequence. 
 
-The code seems to be working well. You now have a uniform population of `100` DNA strings, an no variation whatsoever. Now let’s introduce mutation. 
+The code seems to be working well. You now have a uniform population of `100` DNA strings, and no variation whatsoever. Now let’s introduce mutation. 
 
 I’m going to add one method:
 
@@ -343,7 +343,7 @@ which can be rewritten as
 
 Note that this equation is a sum of a negative term and a positive term. Indeed, this is quite a beautiful equation: the negative term, {$$}-(\frac{1}{2N})H{/$$}, denotes the loss of genetic variation due to drift, while the positive term, *2μ(1 - H)*, denotes the gain of genetic variation due to mutation.
 
-From this simple equation, which captures both processes elegantly, we can deduce another interesting observation. First, it confirms what we already know, which is that the loss of genetic variation depends on the population size *N*, in such a way the the loss is larger if *N* is smaller. But second, it also shows quite clearly that the gain of genetic variation depends on the mutation rate *μ*, such that the gain is higher if the mutation rate is higher, as we would expect.
+From this simple equation, which captures both processes elegantly, we can deduce another interesting observation. First, it confirms what we already know, which is that the loss of genetic variation depends on the population size *N*, in such a way that the loss is larger if *N* is smaller. But second, it also shows quite clearly that the gain of genetic variation depends on the mutation rate *μ*, such that the gain is higher if the mutation rate is higher, as we would expect.
 
 Now, there is going to be a point where in each generation, the increase through mutation will be exactly offset by the decrease through genetic drift, i.e. *ΔH* will be zero. This is an an interesting point, because it represents an equilibrium: the genetic variation will neither go up nor go down, but simply remain the same forever. What stable genetic variation can we expect?
 

@@ -128,7 +128,7 @@ Since we have a quadratic grid of length 100, our population size is *N = 10,000
  
 The numbers are close enough, so it looks like our code is working. The population is initialized on a grid, with 10,000 individuals at Hardy-Weinberg equilibrium. 
 
-After having initialized the the population, let’s run the generations. Right after the call to `init_grid()`, we’ll add the following code to run 100 generations:
+After having initialized the population, let’s run the generations. Right after the call to `init_grid()`, we’ll add the following code to run 100 generations:
 
 ~~~~~~~~
 for (var i = 0; i < 100; i = i + 1) {
@@ -520,7 +520,7 @@ function simulate_and_visualize() {
 setInterval(simulate_and_visualize, 100);
 ~~~~~~~~
 
-Go ahead and remove the old `for` loop running the generations, and place the code above right after your call to `draw_grid()`. The method `setInterval()` is provided out of the box by JavaScript and allows you to execute any function, specified by the the first parameter, at an interval of some number of milliseconds, defined by the second parameter. Thus,
+Go ahead and remove the old `for` loop running the generations, and place the code above right after your call to `draw_grid()`. The method `setInterval()` is provided out of the box by JavaScript and allows you to execute any function, specified by the first parameter, at an interval of some number of milliseconds, defined by the second parameter. Thus,
 
 ~~~~~~~~
 setInterval(simulate_and_visualize, 100);

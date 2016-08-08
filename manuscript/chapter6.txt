@@ -576,7 +576,7 @@ function initialize_frequencies() {
 initialize_frequencies();
 ~~~~~~~~
 
-The first line in this method sets the first element of the `host_frequencies` array (which holds the frequency of host genotype A1) to a random number between 0 and 1. The second line adds an array to the the `data` array, initialized with a single value - that of the host genotype A1 frequency which we have just set. 
+The first line in this method sets the first element of the `host_frequencies` array (which holds the frequency of host genotype A1) to a random number between 0 and 1. The second line adds an array to the `data` array, initialized with a single value - that of the host genotype A1 frequency which we have just set. 
 
 Keep in mind that our `data` array will end up being a two-dimensional array, which holds the four arrays storing the four genotype frequencies over the generations. Because the data array is initially empty, the line 
 

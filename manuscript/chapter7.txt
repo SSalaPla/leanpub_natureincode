@@ -192,7 +192,7 @@ for (var n_i = i-1; n_i <= i+1; n_i = n_i + 1) {
 }
 ~~~~~~~~
 
-As you can see, we are using local variables named `n_i` and `n_ii` as "neighbor" placeholders for the variables `i` and `ii`. Why do we do that? Well, the function has two arguments, `i` and `ii`, and as we’ve learned earlier in this book, arguments are local variables in the function scope. Therefore, `i` and `ii` are already taken as variable names within the function body, and we don’t want to override them - they represent the original coordinates of the infected cell. That's why we introduce the the new variables in the function body. 
+As you can see, we are using local variables named `n_i` and `n_ii` as "neighbor" placeholders for the variables `i` and `ii`. Why do we do that? Well, the function has two arguments, `i` and `ii`, and as we’ve learned earlier in this book, arguments are local variables in the function scope. Therefore, `i` and `ii` are already taken as variable names within the function body, and we don’t want to override them - they represent the original coordinates of the infected cell. That's why we introduce the new variables in the function body. 
 
 The nested loop iterates over all nine cells shown above. The outer loop starts at `i-1`, and stops after `i+1`. The inner loop starts at `ii-1`, and stops after `ii+1`. You’ve probably realized immediately that there is a slight problem with this: By looping through all nine cells, we are also visiting the original cell at coordinates `i`, `ii`. We don’t want to expose the cell to itself, of course, so once we’re at that cell, we simply need to instruct our loop to move on immediately. The key expression here is the `continue` statement:
 
@@ -205,7 +205,7 @@ try_infection(get_bounded_index(n_i),get_bounded_index(n_ii));
 
 We know that we have arrived at the focal cell when the value of `n_i` is equal to `i`, *and* when the value of `n_ii` is equal to `ii`. In this case, the code will hit the `continue` statement, and immediately jump to the next iteration, without executing the remaining code in the loop body. 
 
-For all other cells, we will call the function `try_infection(i,ii)`. Notice that when the the function receives the coordinates in the form of the two parameters `i` and `ii`, those coordinates now represent a neighboring cell, and we have already taken into account the grid bounding issues by passing them through the function `get_bounded_index(index)` which we developed in chapter 5. In the function `try_infection(i,ii)`, we first check to make sure that the exposed individual is actually susceptible. If so, we infect it with probability `beta`.
+For all other cells, we will call the function `try_infection(i,ii)`. Notice that when the function receives the coordinates in the form of the two parameters `i` and `ii`, those coordinates now represent a neighboring cell, and we have already taken into account the grid bounding issues by passing them through the function `get_bounded_index(index)` which we developed in chapter 5. In the function `try_infection(i,ii)`, we first check to make sure that the exposed individual is actually susceptible. If so, we infect it with probability `beta`.
 
 Now, with this code in place, let’s go ahead and reload the page. You should see an outbreak starting from a single patient 0, expanding rapidly outward:
 

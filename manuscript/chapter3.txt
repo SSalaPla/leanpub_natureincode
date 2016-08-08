@@ -6,7 +6,7 @@ It’s now time to relax some if these assumptions. The first assumption that we
 
 You get the idea: The more often you toss the coin, the closer you will get to the perfect equilibrium that you would expect. The implication of this is that *small population sizes will be more prone to random chance effects than large populations*. However, all finite population sizes are prone to chance effects, and over evolutionary timescales, even large population sizes where random chance effects are weak in the short term may eventually show signs of these effects. When allele frequencies change over time (i.e. when evolution occurs) due to these random effects, we call it *genetic drift*.
 
-This is an important chapter. It’s important because it introduces the concept of randomness, a key concept in all of biology. One could even argue that the main difference between the dynamics of living systems (biological systems), and the the dynamics of non-living systems (chemical and physical systems) is randomness. The science of evolutionary biology has been dominated for a long time by the perspective of natural selection. Nowadays, we understand that natural selection is not the only process affecting evolution. Which force is more important for evolution - natural selection or genetic drift - is one of the great debates in contemporary evolutionary biology. But even those favoring natural selection would agree that randomness, and genetic drift, is a major force. In this chapter, we will shed some light on this force, and on its consequences.
+This is an important chapter. It’s important because it introduces the concept of randomness, a key concept in all of biology. One could even argue that the main difference between the dynamics of living systems (biological systems), and the dynamics of non-living systems (chemical and physical systems) is randomness. The science of evolutionary biology has been dominated for a long time by the perspective of natural selection. Nowadays, we understand that natural selection is not the only process affecting evolution. Which force is more important for evolution - natural selection or genetic drift - is one of the great debates in contemporary evolutionary biology. But even those favoring natural selection would agree that randomness, and genetic drift, is a major force. In this chapter, we will shed some light on this force, and on its consequences.
 
 
 ##Randomness
@@ -283,7 +283,7 @@ Thus, 4.39% is indeed correct.
 
 ##The Randomness of Finite Populations
 
-So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same cycle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (they zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can be struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
+So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same cycle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (the zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can be struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
 
 Life is complicated, and if we would set out to simulate life in all its details, we would end up with a very complicated model. But just as we have done in the previous chapter, we can again reduce the complexity into a simple model that captures the essence of these random processes. Once again, the model is named after the two originators, Sewall Wright and Ronald Fisher: it's called the *Wright-Fisher model*.
 
@@ -662,7 +662,7 @@ In the function `next_generation()`, I’ve added this line at the end:
 data.push(p)
 ~~~~~~~~
 
-which simply adds `p` to the `data` array. Next, I’ve removed the line the prints the values of `p` and `q` to the JavaScript console, but you can leave it in there if you want to. Finally, I’ve added this line:
+which simply adds `p` to the `data` array. Next, I’ve removed the line that prints the values of `p` and `q` to the JavaScript console, but you can leave it in there if you want to. Finally, I’ve added this line:
 
 ~~~~~~~~
 draw_line_chart(data,"Generation","p",["Population Size:",N,"Generations:",generations]);

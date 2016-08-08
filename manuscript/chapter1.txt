@@ -24,6 +24,7 @@ I'd like to thank everyone who has pointed out mistakes or passages that were un
 * Todd Bodnar
 * Daryl Branford
 * Michael Collins
+* Boris Conforty
 * Melissa Hicks
 * Alex Mesoudi
 * Rahel Salathe
