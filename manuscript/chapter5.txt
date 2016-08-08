@@ -121,7 +121,7 @@ What we’re doing here is to iterate over the `grid` array, and add new empty a
 
 Finally, we also keep count of how many A1A1, A1A2, and A2A2 genotypes we’re generating - at this point, this is simply a sanity check, to make sure our code does what we want it to do.
 
-Since we have a quadratic grid of length 100, our population size is *N = 10,000*. With `p = 0.5`, we should get about 2,500 A1A1 genotypes, 5,000 A1A2 genotypes, and 2,500 A2A2 genotypes. Note that since we’re creating the genotypes stochastically, we do not expect these numbers to be matched exactly. But the final tally should be close enough. If you now run this code, you should see something like:
+Since we have a square grid of length 100, our population size is *N = 10,000*. With `p = 0.5`, we should get about 2,500 A1A1 genotypes, 5,000 A1A2 genotypes, and 2,500 A2A2 genotypes. Note that since we’re creating the genotypes stochastically, we do not expect these numbers to be matched exactly. But the final tally should be close enough. If you now run this code, you should see something like:
 
 {width=35%}
 ![](images/ch_5_initial_genotype_numbers.png)

@@ -717,7 +717,7 @@ var b = [4,"hello there",6,true,false];
 
 Now that you know what an array is, how to do you manage it? How do you add data to it, and how do you retrieve the data later on?
 
-There are two ways by which you can add data to an array. The first way is to do it when you initialize the array, as we’ve done with array `arr` above. The second way is to *push* data into an existing array, as we’ve done in the genetic drift code example above, like so:
+There are numerous ways by which you can add data to an array. One way is by initializing the array, as we’ve done with array `arr` above. Another way is to *push* data into an existing array, as we’ve done in the genetic drift code example above, like so:
 
 ~~~~~~~~
 arr.push(5);

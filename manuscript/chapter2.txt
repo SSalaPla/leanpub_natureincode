@@ -6,7 +6,7 @@ Evolution is the grand unifying process underlying all of biology. At its core, 
 
 Living organisms pass on their genes from generation to generation. Physical bodies don’t survive for long, but the genes that built them do. Genes are the hereditary material of all living organisms. But if all we would ever do is to pass on the same genes, generation after generation, there would be no evolution. For reasons we will talk about later, however, genes don’t just come in one version. For every gene, there are multiple versions, and these versions of a gene are called *alleles*. For various reasons, alleles might be rare in a population, or might be common. They might be common at one time point, and become rarer over time, and vice versa. 
 
-A well-known example is Lactose intolerance. Being lactose intolerant means not being able to fully digest lactose, a sugar that is found in milk and dairy products. If you are lactose intolerant, you don’t produce enough lactase, the molecule responsible for digesting lactose. This is not a disease by any definition - indeed, roughly two thirds of the human population is lactose intolerant as adults. When a child is born, her main source of nutrition is milk, and like other mammals, she produces enough lactase to digest the lactose in the milk. After weaning, typically around 2 to 3 years of age, the child loses the ability to digest lactose and becomes lactose intolerant, a process which is usually complete around age 10. 
+A well-known example is lactose intolerance. Being lactose intolerant means not being able to fully digest lactose, a sugar that is found in milk and dairy products. If you are lactose intolerant, you don’t produce enough lactase, the molecule responsible for digesting lactose. This is not a disease by any definition - indeed, roughly two thirds of the human population is lactose intolerant as adults. When a child is born, her main source of nutrition is milk, and like other mammals, she produces enough lactase to digest the lactose in the milk. After weaning, typically around 2 to 3 years of age, the child loses the ability to digest lactose and becomes lactose intolerant, a process which is usually complete around age 10. 
 
 Lactase is encoded by a single gene called LCT. This gene exists in many different versions, which means that there are many different alleles of the gene. One allele, LCT*P, allows lactase to persist after the weaning phase, making its bearer able to digest lactose. In some regions of the world, this allele is very common. In northern Europe for example, this allele is the most frequent allele of the LCT gene. In other regions of the world, it is practically absent. 
 
@@ -240,7 +240,7 @@ Having just set up the genotype frequencies, let’s calculate the allele freque
 
 ~~~~~~~~
 var p = a1a1 + (a1a2 / 2);
-var q = 1-p;
+var q = 1 - p;
 ~~~~~~~~
 
 The variable `p` denotes the frequency of A1 alleles, which is simply the frequency of the A1A1 genotype (since they only carry A1 alleles) plus half of the frequency of the A1A2 genotype (since half of their alleles are A1). We then calculate `q` by simply subtracting `p` from 1; `p` and `q` need to add up to one because there are only two alleles in the population.
@@ -257,8 +257,8 @@ Combine these five lines and copy them into your `script` tag in your HTML file,
     var a1a2 = 1 - (a1a1 + a2a2);
 
     var p = a1a1 + (a1a2 / 2);
-    var q = 1-p;
-</script>
+    var q = 1 - p;
+</script> 
 ~~~~~~~~
 
 Save the file, reload the page (be sure to have your console open), and you should see... nothing. That’s because we are not writing anything into the output yet! Your code is executed all right, but since we didn’t instruct JavaScript to write anything into the output, it won’t do it. So go ahead and add the following line:
@@ -374,7 +374,7 @@ var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
 
 var p = a1a1 + (a1a2 / 2);
-var q = 1-p;
+var q = 1 - p;
 
 console.log("generation 0:", a1a1, a1a2, a2a2);
 
@@ -410,7 +410,7 @@ var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
 
 var p = a1a1 + (a1a2 / 2);
-var q = 1-p;
+var q = 1 - p;
 
 console.log("generation 0:", a1a1, a1a2, a2a2);
 
@@ -516,7 +516,7 @@ var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
 
 var p = a1a1 + (a1a2 / 2);
-var q = 1-p;
+var q = 1 - p;
 
 function create_next_generation() {
     a1a1 = p * p;
@@ -553,7 +553,7 @@ for (initialization; condition; final_expression) {
 The `initialization` is executed once, in the beginning. Then, as long as the `condition` is met, the `code to be iterated` is executed. After each iteration, the `final_expression` is executed. In practice, the `for` loop often looks like this:
 
 ~~~~~~~~
-for (var i = 0; i < 10; i=i+1) {
+for (var i = 0; i < 10; i = i + 1) {
     code to be iterated
 }
 ~~~~~~~~
@@ -575,7 +575,7 @@ i < 10
 is true, the code to be iterated will be executed. How often is that? Well, if you wouldn’t touch `i` at all again, you would be stuck in an infinite loop - `i` would always be `0`, and hence the condition would always be true. (If you ever visit the original Apple campus in Silicon Valley, note the street address: 1 Infinite Loop). However, after every code iteration, the final-expression is executed, which is 
 
 ~~~~~~~~
-i=i+1
+i = i + 1
 ~~~~~~~~
 
 What this means is that `i` is incremented by `1`, and thus, after the tenth iteration, `i` is `10`, at which point the condition `i < 10` is not true anymore, and the loop will stop.
@@ -590,7 +590,7 @@ console.log("generation 1:", a1a1, a1a2, a2a2);
 is repeated 5 times. The only change in each iteration that we need to take care of is the generation count. So let’s first set up a `for` loop that executes this code 5 times, like so:
 
 ~~~~~~~~
-for (var i = 0; i < 5; i=i+1) {
+for (var i = 0; i < 5; i = i + 1) {
     create_next_generation();
     console.log("generation 1:", a1a1, a1a2, a2a2);
 }
@@ -599,7 +599,7 @@ for (var i = 0; i < 5; i=i+1) {
 This works, but will always print `generation 1`, which is not what we want. Thankfully, we have access to the counter `i` in the loop, and using string concatenation, we can write the iteration as follows:
 
 ~~~~~~~~
-for (var i = 0; i < 5; i=i+1) {
+for (var i = 0; i < 5; i = i + 1) {
     create_next_generation();
     console.log("generation "+(i+1)+":", a1a1, a1a2, a2a2);
 }
@@ -613,7 +613,7 @@ var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
 
 var p = a1a1 + (a1a2 / 2);
-var q = 1-p;
+var q = 1 - p;
 
 function create_next_generation() {
     a1a1 = p * p;
@@ -623,7 +623,7 @@ function create_next_generation() {
 
 console.log("generation 0:", a1a1, a1a2, a2a2);
 
-for (var i = 0; i < 5; i=i+1) {
+for (var i = 0; i < 5; i = i + 1) {
     create_next_generation();
     console.log("generation "+(i+1)+":", a1a1, a1a2, a2a2);
 }
@@ -636,7 +636,7 @@ You may now say, hang on a second. All you are showing here is that if your alle
 ~~~~~~~~
 function calculate_allele_frequencies() {
     p = a1a1 + (a1a2 / 2);
-    q = 1-p;
+    q = 1 - p;
 }
 ~~~~~~~~
 
@@ -690,11 +690,11 @@ var a2a2 = 0.35;
 var a1a2 = 1 - (a1a1 + a2a2);
 
 var p = a1a1 + (a1a2 / 2);
-var q = 1-p;
+var q = 1 - p;
 
 function calculate_allele_frequencies() {
     p = a1a1 + (a1a2 / 2);
-    q = 1-p;
+    q = 1 - p;
 }
 
 function create_next_generation() {
@@ -706,7 +706,7 @@ function create_next_generation() {
 
 console.log("generation 0:", a1a1, a1a2, a2a2);
 
-for (var i = 0; i < 5; i=i+1) {
+for (var i = 0; i < 5; i = i + 1) {
     create_next_generation();
     console.log("generation "+(i+1)+":", round_number(a1a1,2), round_number(a1a2,2), round_number(a2a2,2));
 }

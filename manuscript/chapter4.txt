@@ -2,7 +2,7 @@
 
 In the previous chapter, we’ve learned a number of highly interesting aspects about evolution by genetic drift. One of the rather depressing consequences of drift, we learned, is the total elimination of genetic variation in the long run. Clearly, something else must be going on, for the world is not void of genetic variation. That something else is *mutation*.
 
-Mutation is simply the random change in a genetic sequence. Most mutations occur when the genetic sequence (the DNA in all living species) is replicated. The replication process, even though highly accurate, is not quite 100% error-free. Now and then, an error will occur, and the new copy will not be identical base for base to the original. 
+Mutation is simply the random change in a genetic sequence. Most mutations occur when the genetic sequence (the DNA in nearly all living species) is replicated. The replication process, even though highly accurate, is not quite 100% error-free. Now and then, an error will occur, and the new copy will not be identical base for base to the original. 
 
 In animals like ourselves, almost all mutations are so-called *somatic mutations*. That is, they occur in cells that are not passed on to future generations. These mutations are often contributing to cancer, but from an evolutionary perspective, they are a dead end. The mutations that do matter from an evolutionary perspective are the so-called *germ line mutations*. They occur in the germ line, i.e. the cells that will be passed on to future generations in the form of sperm or egg.
 
