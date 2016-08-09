@@ -90,7 +90,13 @@ function simulate_and_visualize() {
 setInterval(simulate_and_visualize, 50);
 ~~~~~~~~
 
-As you can see, we are passing a second parameter - the array `["S","#dcdcdc","I","#c82605","R","#6fc041"]` - to the plotting functions. The values after "S", "I", and "R" are color-codes; but like before, let's not worry about the drawing functions, but rather about the simulation code. 
+As you can see, we are passing a second parameter, the array 
+
+~~~~~~~~
+["S","#dcdcdc","I","#c82605","R","#6fc041"]
+~~~~~~~~
+
+to the plotting functions. The values after "S", "I", and "R" are color-codes; but like before, let's not worry about the drawing functions, but rather about the simulation code. 
 
 I've changed one more thing, even if only slightly: in comparison to chapter 5, we reduced the interval duration from `100` milliseconds to `50` milliseconds, so that the simulations run a little faster. If you feel things are too fast, or that your computer can't quite keep up with the speed, simply change the milliseconds parameter to whatever is appropriate in your browser.
  
