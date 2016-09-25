@@ -218,7 +218,7 @@ ii - d \leq jj \leq ii + d
 
 For *d = 1*, the local neighborhood of a cell are thus the 8 cells surrounding the cell, and also the cell itself.
 
-Because we need to pick a random cell of the neighborhood, we will simple pick a random `j` and a random `jj` in the allowable range. For example, if *d = 1*, *i = 5* and *j = 10*, then the allowable range for `j` would be 4 to 6 (both inclusive), and the allowable range for `jj` would be 9 to 11 (both inclusive).
+Because we need to pick a random cell of the neighborhood, we will simply pick a random `j` and a random `jj` in the allowable range. For example, if *d = 1*, *i = 5* and *j = 10*, then the allowable range for `j` would be 4 to 6 (both inclusive), and the allowable range for `jj` would be 9 to 11 (both inclusive).
 
 The only out-of-the box method for random numbers in JavaScript is `Math.random()`, which returns a floating point number between 0 and 1 (recall that all numbers are floating point numbers in JavaScript). What we need is a method that returns a random integer in a given range. Here’s how we do that:
 

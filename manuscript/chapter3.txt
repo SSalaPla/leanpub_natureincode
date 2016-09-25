@@ -77,6 +77,9 @@ Try increasing your repeats by a factor of ten, for as long as your browser can 
 
 As you can see, the more repeats, the closer we get to 0.5. However, keep in mind that floating point numbers have a limited accuracy, as discussed in the previous chapter. Usually, you won’t ever notice this, because the inaccuracy occurs at insignificant digits, but if you keep adding numbers, for example, the inaccuracy can potentially add up too. The point of this exercise was not to lead you astray with floating point accuracy, which you will probably never encounter as a problem. The point was to introduce you to `Math.random()` - and to demonstrate how powerful our computers are nowadays. In just a few seconds, my laptop computer generated a billion numbers and added them up!
 
+T> ## A note on Math.random()
+T> Above, I introduced `Math.random()` as a method that produces a random number between 0 and 1. If you now think that this does neither include 0 nor 1, you could be forgiven, and indeed, for the purposes of this book, it wouldn't matter. But I want you to know that while it is correct that 1 is not included, 0 is technically included. In other words, it is in principle possible to get a perfect 0 by calling `Math.random()`, while it is entirely impossible to ever get a 1. 
+
 Now let’s go back to the previous coin tossing example. I mentioned that if I tossed a fair coin ten times, the probability of 80% heads and 20% tails is 4.39%. How can we verify this in JavaScript? By actually running the coin-tossing experiment in the computer! This is a so-called *simulation*, where you simulate a process from the real world in the virtual world of a computer. 
 
 First, let’s implement the coin tossing. Create a new HTML file and have it execute the following script:

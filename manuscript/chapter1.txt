@@ -30,6 +30,8 @@ I'd like to thank everyone who has pointed out mistakes or passages that were un
 * Boris Conforty
 * Melissa Hicks
 * Alex Mesoudi
+* Sharada Mohanty
+* Martin Mueller
 * Rahel Salathe
 
 If you find a mistake, or something that is unclear, please get in touch - I will be very glad to add your name here.

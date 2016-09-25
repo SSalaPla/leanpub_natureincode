@@ -276,7 +276,7 @@ Let’s go ahead an increase our recovery probability from `0.1` to `0.15`, by s
 var gamma = 0.15;
 ~~~~~~~~
 
-Now go head and run a few simulations. You’ll find that the size of the epidemic can vary considerably. An outbreak can stop quickly, and be rather small:
+Now go ahead and run a few simulations. You’ll find that the size of the epidemic can vary considerably. An outbreak can stop quickly, and be rather small:
 
 {width=75%}
 ![](images/ch_7_simulation_gamma_015_small.png)
