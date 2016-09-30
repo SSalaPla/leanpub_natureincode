@@ -2,18 +2,18 @@
 
 In the previous chapter, we have established that under Hardy-Weinberg assumptions - infinite population size, random mating, no mutation or selection, etc. - nothing ever changes. Allele frequencies stay the same forever, and if the genotype frequencies are not currently at Hardy-Weinberg frequencies, they will get there in a single generation, and then remain there forever.
 
-It’s now time to relax some if these assumptions. The first assumption that we are going to relax is that of the infinite population size. We are now going to assume that populations are finite. It turns out that this has enormous effects for evolution. When populations are finite, chance effects will start to play a role. These chance effects are stronger when populations are smaller. It is intuitively easy to understand this. Suppose you toss a coin - you know that on average, it will come up heads half of the time, and tails the other half of the time. However, if you only toss the coin a few times, you can get very non-even distributions of heads and tails. Say you toss in ten times. It may end up tossing 5 heads and 5 tails (5:5), but you will often find yourself tossing 6:4, or 7:3. Sometimes you’ll even get 8:2 or 9:1; and even a 10:0, although very rare, wouldn’t be totally unexpected. If you now increase your coin tossing efforts by one order of magnitude, and toss your coin 100 times, you would notice that it’s very rare to get beyond a 30:70 ratio, and you would hardly ever hit 20:80 or below. And in fact, getting tails or heads 100 times in a row is so unlikely, it's hard to come up with a comparison. The best I can come up with is that it's about as likely as winning the lottery four consecutive times. Increase your coin tossing efforts again by a order of magnitude (1000 tosses), and anything less equal than 450:550 becomes highly improbable.
+It’s now time to relax some if these assumptions. The first assumption that we are going to relax is that of the infinite population size. We are now going to assume that populations are finite. It turns out that this has enormous effects for evolution. When populations are finite, chance effects will start to play a role. These chance effects are stronger when populations are smaller. It is intuitively easy to understand this. Suppose you toss a coin - you know that on average, it will come up heads half of the time, and tails the other half of the time. However, if you only toss the coin a few times, you can get very non-even distributions of heads and tails. Say you toss it ten times. It may end up tossing 5 heads and 5 tails (5:5), but you will often find yourself tossing 6:4, or 7:3. Sometimes you’ll even get 8:2 or 9:1; and even a 10:0, although very rare, wouldn’t be totally unexpected. If you now increase your coin tossing efforts by one order of magnitude, and toss your coin 100 times, you would notice that it’s very rare to get beyond a 30:70 ratio, and you would hardly ever hit 20:80 or below. And in fact, getting tails or heads 100 times in a row is so unlikely, it's hard to come up with a comparison. The best I can come up with is that it's about as likely as winning the lottery four consecutive times. Increase your coin tossing efforts again by a order of magnitude (1000 tosses), and anything less equal than 450:550 becomes highly improbable.
 
 You get the idea: The more often you toss the coin, the closer you will get to the perfect equilibrium that you would expect. The implication of this is that *small population sizes will be more prone to random chance effects than large populations*. However, all finite population sizes are prone to chance effects, and over evolutionary timescales, even large population sizes where random chance effects are weak in the short term may eventually show signs of these effects. When allele frequencies change over time (i.e. when evolution occurs) due to these random effects, we call it *genetic drift*.
 
-This is an important chapter. It’s important because it introduces the concept of randomness, a key concept in all of biology. One could even argue that the main difference between the dynamics of living systems (biological systems), and the the dynamics of non-living systems (chemical and physical systems) is randomness. The science of evolutionary biology has been dominated for a long time by the perspective of natural selection. Nowadays, we understand that natural selection is not the only process affecting evolution. Which force is more important for evolution - natural selection or genetic drift - is one of the great debates in contemporary evolutionary biology. But even those favoring natural selection would agree that randomness, and genetic drift, is a major force. In this chapter, we will shed some light on this force, and on its consequences.
+This is an important chapter. It’s important because it introduces the concept of randomness, a key concept in all of biology. One could even argue that the main difference between the dynamics of living systems (biological systems), and the dynamics of non-living systems (chemical and physical systems) is randomness. The science of evolutionary biology has been dominated for a long time by the perspective of natural selection. Nowadays, we understand that natural selection is not the only process affecting evolution. Which force is more important for evolution - natural selection or genetic drift - is one of the great debates in contemporary evolutionary biology. But even those favoring natural selection would agree that randomness, and genetic drift, is a major force. In this chapter, we will shed some light on this force, and on its consequences.
 
 
 ##Randomness
 
 Randomness is the idea of events occurring at random, by chance. If they happen by chance, it’s impossible to predict them. The more sophisticated term for randomness is stochasticity - random events are said to be *stochastic*. 
 
-While random events cannot be predicted, we can still say something about their probability of occurring. This is the main idea behind the theory of probability. For example, a fair coin comes up heads half of the time, and tails the other half of the time. While we can’t predict the outcome of a single coin toss, we still know that the chance, or probability, that the coin comes up heads, is exactly 50% (in reality, no coin is exactly fair, and the probability of heads is probably slightly lower or higher than 50%, but in a fair coin, the probability is 50% by definition). Because we know that each coin toss comes up 50% heads and 50% tails, we can calculate the probability that ten coin tosses come up heads 80% of time, and tails 20% of the time, for example. For any ten coin tosses, it is completely impossible to predict exactly how many will come up heads; but because we can calculate the probability of any outcome, we can at least get a good sense of what to expect. For example, we can calculate that the probability of 80% heads 20% tails is 4.39% like so: {$$}\frac{\frac{10*9}{2}}{2^{10}} = 0.0439{/$$} (don’t worry about how to calculate this, but if you are interested, here is a good explanation: [http://gwydir.demon.co.uk/jo/probability/info.htm](http://gwydir.demon.co.uk/jo/probability/info.htm). An outcome like this isn’t unlikely, but you wouldn’t want to bet the farm on it either.
+While random events cannot be predicted, we can still say something about their probability of occurring. This is the main idea behind the theory of probability. For example, a fair coin comes up heads half of the time, and tails the other half of the time. While we can’t predict the outcome of a single coin toss, we still know that the chance, or probability, that the coin comes up heads, is exactly 50% (in reality, no coin is exactly fair, and the probability of heads is probably slightly lower or higher than 50%, but in a fair coin, the probability is 50% by definition). Because we know that each coin toss comes up 50% heads and 50% tails, we can calculate the probability that ten coin tosses come up heads 80% of time, and tails 20% of the time, for example. For any ten coin tosses, it is completely impossible to predict exactly how many will come up heads; but because we can calculate the probability of any outcome, we can at least get a good sense of what to expect. For example, we can calculate that the probability of 80% heads 20% tails is 4.39% like so: {$$}\frac{\frac{10*9}{2}}{2^{10}} = 0.0439{/$$} (don’t worry about how to calculate this, but if you are interested, here is a good explanation: [http://gwydir.demon.co.uk/jo/probability/info.htm](http://gwydir.demon.co.uk/jo/probability/info.htm)). An outcome like this isn’t unlikely, but you wouldn’t want to bet the farm on it either.
 
 Before we get to the biology of randomness, I want to jump straight to code. The great thing about having fast computers is that we can simulate randomness over and over again, in a very short amount of time. This allows us to run millions of coin tossing experiments in a computer in a split second.
 
@@ -33,7 +33,7 @@ var repeats = 100;
 for (var i=0; i<repeats; i=i+1) {
     sum = sum + Math.random();
 }
-average = sum / repeats;
+var average = sum / repeats;
 console.log("The average is", average);
 ~~~~~~~~
 
@@ -76,6 +76,9 @@ Try increasing your repeats by a factor of ten, for as long as your browser can 
 ~~~~~~~~
 
 As you can see, the more repeats, the closer we get to 0.5. However, keep in mind that floating point numbers have a limited accuracy, as discussed in the previous chapter. Usually, you won’t ever notice this, because the inaccuracy occurs at insignificant digits, but if you keep adding numbers, for example, the inaccuracy can potentially add up too. The point of this exercise was not to lead you astray with floating point accuracy, which you will probably never encounter as a problem. The point was to introduce you to `Math.random()` - and to demonstrate how powerful our computers are nowadays. In just a few seconds, my laptop computer generated a billion numbers and added them up!
+
+T> ## A note on Math.random()
+T> Above, I introduced `Math.random()` as a method that produces a random number between 0 and 1. If you now think that this does neither include 0 nor 1, you could be forgiven, and indeed, for the purposes of this book, it wouldn't matter. But I want you to know that while it is correct that 1 is not included, 0 is technically included. In other words, it is in principle possible to get a perfect 0 by calling `Math.random()`, while it is entirely impossible to ever get a 1. 
 
 Now let’s go back to the previous coin tossing example. I mentioned that if I tossed a fair coin ten times, the probability of 80% heads and 20% tails is 4.39%. How can we verify this in JavaScript? By actually running the coin-tossing experiment in the computer! This is a so-called *simulation*, where you simulate a process from the real world in the virtual world of a computer. 
 
@@ -283,7 +286,7 @@ Thus, 4.39% is indeed correct.
 
 ##The Randomness of Finite Populations
 
-So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same cycle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (they zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can be struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
+So how is life random, in the biological sense? Think about the circle of life in most animals - new life is conceived, a single fertilized egg (the zygote) multiplies and the animal grows to the reproductive age, reproduces, and eventually dies. Its offspring goes through the same cycle, and so does its offspring, and so on. Randomness can hit the animal at any stage from the fertilized egg (the zygote) to the moment it reproduces, and a new zygote is created. Which genes get passed on will be largely random. When a single cell grows into billions of cells forming an adult capable of reproduction, a lot can go wrong due to randomness. At any time, an animal can be struck by a deadly disease, be eaten by a predator, die of hunger and thirst, etc. 
 
 Life is complicated, and if we would set out to simulate life in all its details, we would end up with a very complicated model. But just as we have done in the previous chapter, we can again reduce the complexity into a simple model that captures the essence of these random processes. Once again, the model is named after the two originators, Sewall Wright and Ronald Fisher: it's called the *Wright-Fisher model*.
 
@@ -318,17 +321,17 @@ var generations = 1000;
 
 function next_generation() {
     var draws = 2 * N;
-    var A1 = 0;
-    var A2 = 0;
+    var a1 = 0;
+    var a2 = 0;
     for (var i = 0; i < draws; i = i + 1) {
         if (Math.random() <= p) {
-            A1 = A1 + 1;
+            a1 = a1 + 1;
         }
         else {
-            A2 = A2 + 1;
+            a2 = a2 + 1;
         }
     }
-    p = A1/draws;
+    p = a1/draws;
 }
 
 for (var i = 0; i < generations; i = i + 1) {
@@ -436,10 +439,13 @@ First, add this line to your code, at the beginning of your `<head>` element:
 
 {lang="html"} 
 ~~~~~~~~
-<script src="http://d3js.org/d3.v3.js"></script>
+<script src="http://d3js.org/d3.v4.js"></script>
 ~~~~~~~~
 
 This line loads an external JavaScript library called `D3.js`, which is the most advanced data plotting library available for the browser to date. Note that you need to be connected to the internet for this library to be loaded!
+
+T> ## A note on D3 versions
+T> D3 is an external library, which means things can change outside of our control. The current version is 4, as you can see in the URL above (d3.v4.js). However, many people still use version 3, and the "Nature, in Code" videos (see website [www.natureincode.com](http://www.natureincode.com)) also were created when version 3 was the latest version. But no need to worry - the plotting code below works in both versions.
 
 Next, you will need to add the plotting code to your document.
 
@@ -452,7 +458,7 @@ W><!DOCTYPE html>
 W><html>
 W>    <head>
 W>        <title>Nature, In Code</title>
-W>        <script src="http://d3js.org/d3.v3.js"></script>
+W>        <script src="http://d3js.org/d3.v4.js"></script>
 W>    </head>
 W>    <body>
 W>        <script type="text/javascript">
@@ -470,32 +476,33 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
         width = 700 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
-    var color = d3.scale.category10();
-				
+    var version = d3.scale ? 3 : 4;
+    var color = (version == 3 ? d3.scale.category10() : d3.scaleOrdinal(d3.schemeCategory10));
+                
     if (!x_max) {
         x_max = data[0].length > 0 ? data[0].length : data.length
     }
-				
+                
     var y_max = data[0].length > 0 ? d3.max(data, function(array) {
             return d3.max(array);
         }) : d3.max(data);
 
-    var x = d3.scale.linear()
+    var x = (version == 3 ? d3.scale.linear() : d3.scaleLinear())
         .domain([0,x_max])
         .range([0, width]);
 
-    var y = y_max_flex ? d3.scale.linear()
+    var y = y_max_flex ? (version == 3 ? d3.scale.linear() : d3.scaleLinear())
         .domain([0, 1.1 * y_max])
-        .range([height, 0]) : d3.scale.linear()
+        .range([height, 0]) : (version == 3 ? d3.scale.linear() : d3.scaleLinear())
         .range([height, 0]);
+        
+    var xAxis = (version == 3 ? d3.svg.axis().scale(x).orient("bottom") : 
+    	d3.axisBottom().scale(x));
 
-    var xAxis = d3.svg.axis()
-        .scale(x).orient("bottom");
+    var yAxis = (version == 3 ? d3.svg.axis().scale(y).orient("left") : 
+    	d3.axisLeft().scale(y));
 
-    var yAxis = d3.svg.axis()
-        .scale(y).orient("left");
-
-    var line = d3.svg.line()
+    var line = (version == 3 ? d3.svg.line() : d3.line())
         .x(function (d, i) {
             var dat = (data[0].length > 0 ? data[0] : data);
             return x((i/(dat.length-1)) * x_max);
@@ -503,7 +510,7 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
         .y(function (d) {
             return y(d);
         });
-		
+        
     var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -515,10 +522,11 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .append("text")
-        .attr("text-anchor", "middle")
+        .style("text-anchor", "middle")
         .attr("x", width / 2)
         .attr("y", 6)
         .attr("dy", "3em")
+        .style("fill", "#000")
         .text(x_label);
 
     svg.append("g")
@@ -528,8 +536,9 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
         .attr("transform", "rotate(-90)")
         .attr("x", -height / 2)
         .attr("dy", "-3.5em")
-        .style("text-anchor", "middle").
-        text(y_label);
+        .style("text-anchor", "middle")
+        .style("fill", "#000")
+        .text(y_label);
 
     if (legend_values.length > 0) {		
         var legend = svg.append("text")
@@ -549,42 +558,36 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
         svg.selectAll("line.horizontalGridY")
             .data(y.ticks(10)).enter()
             .append("line")
-            .attr(
-            {
-            "x1" : 1,
-            "x2" : width,
-            "y1" : function(d){ return y(d);},
-            "y2" : function(d){ return y(d);},
-            "fill" : "none",
-            "shape-rendering" : "crispEdges",
-            "stroke" : "#f5f5f5",
-            "stroke-width" : "1px"
-            });
+            .attr("x1", 1)
+            .attr("x2", width)
+            .attr("y1", function(d){ return y(d);})
+            .attr("y2", function(d){ return y(d);})
+            .style("fill", "none")
+            .style("shape-rendering", "crispEdges")
+            .style("stroke", "#f5f5f5")
+            .style("stroke-width", "1px");
 
         svg.selectAll("line.horizontalGridX")
             .data(x.ticks(10)).enter()
             .append("line")
-            .attr(
-            {
-            "x1" : function(d,i){ return x(d);},
-            "x2" : function(d,i){ return x(d);},
-            "y1" : 1,
-            "y2" : height,
-            "fill" : "none",
-            "shape-rendering" : "crispEdges",
-            "stroke" : "#f5f5f5",
-            "stroke-width" : "1px"
-            });
+            .attr("x1", function(d,i){ return x(d);})
+            .attr("x2", function(d,i){ return x(d);})
+            .attr("y1", 1)
+            .attr("y2", height)
+            .style("fill", "none")
+            .style("shape-rendering", "crispEdges")
+            .style("stroke", "#f5f5f5")
+            .style("stroke-width", "1px");
     }
 
     d3.select("body").style("font","10px sans-serif");
-    d3.selectAll(".axis path, .axis line")
-        .style({"fill":"none","stroke":"#000","shape-rendering":"crispEdges"});
+    d3.selectAll(".axis line").style("stroke","#000"); 
+    d3.selectAll(".y.axis path").style("display","none"); 
     d3.selectAll(".x.axis path").style("display","none");    
     d3.selectAll(".legend_title")
-        .style({"font-size":"12px","fill":"#555","font-weight":"400"});
+        .style("font-size","12px").style("fill","#555").style("font-weight","400");
     d3.selectAll(".legend_text")
-        .style({"font-size":"20px","fill":"#bbb","font-weight":"700"});
+        .style("font-size","20px").style("fill","#bbb").style("font-weight","700");
 
     if (data[0].length > 0) {
         var simulation = svg.selectAll(".simulation")
@@ -594,6 +597,7 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
 
         simulation.append("path")
             .attr("class", "line")
+            .attr("fill", "none")
             .attr("d", function(d) { return line(d); })
             .style("stroke", function(d,i) { return color(i); });
     } 
@@ -601,11 +605,11 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
         svg.append("path")
             .datum(data)
             .attr("class", "line")
+            .attr("fill", "none")
             .attr("d", line)
             .style("stroke","steelblue");
     }
-    d3.selectAll(".line").style({"fill":"none","stroke-width":"1.5px"});    
-
+    d3.selectAll(".line").style("fill", "none").style("stroke-width","1.5px");    
 }
 ~~~~~~~~
 
@@ -625,17 +629,17 @@ var data = [];
 
 function next_generation() {
     var draws = 2 * N;
-    var A1 = 0;
-    var A2 = 0;
+    var a1 = 0;
+    var a2 = 0;
     for (var i = 0; i < draws; i = i + 1) {
         if (Math.random() <= p) {
-            A1 = A1 + 1;
+            a1 = a1 + 1;
         }
         else {
-            A2 = A2 + 1;
+            a2 = a2 + 1;
         }
     }
-    p = A1/draws;
+    p = a1/draws;
     data.push(p)
 }
 
@@ -661,7 +665,7 @@ In the function `next_generation()`, I’ve added this line at the end:
 data.push(p)
 ~~~~~~~~
 
-which simply adds `p` to the `data` array. Next, I’ve removed the line the prints the values of `p` and `q` to the JavaScript console, but you can leave it in there if you want to. Finally, I’ve added this line:
+which simply adds `p` to the `data` array. Next, I’ve removed the line that prints the values of `p` and `q` to the JavaScript console, but you can leave it in there if you want to. Finally, I’ve added this line:
 
 ~~~~~~~~
 draw_line_chart(data,"Generation","p",["Population Size:",N,"Generations:",generations]);
@@ -716,7 +720,7 @@ var b = [4,"hello there",6,true,false];
 
 Now that you know what an array is, how to do you manage it? How do you add data to it, and how do you retrieve the data later on?
 
-There are two ways by which you can add data to an array. The first way is to do it when you initialize the array, as we’ve done with array `arr` above. The second way is to *push* data into an existing array, as we’ve done in the genetic drift code example above, like so:
+There are numerous ways by which you can add data to an array. One way is by initializing the array, as we’ve done with array `arr` above. Another way is to *push* data into an existing array, as we’ve done in the genetic drift code example above, like so:
 
 ~~~~~~~~
 arr.push(5);
@@ -778,17 +782,17 @@ var simulations = 10;
 
 function next_generation(simulation_data) {
     var draws = 2 * N;
-    var A1 = 0;
-    var A2 = 0;
+    var a1 = 0;
+    var a2 = 0;
     for (var i = 0; i < draws; i = i + 1) {
         if (Math.random() <= p) {
-            A1 = A1 + 1;
+            a1 = a1 + 1;
         }
         else {
-            A2 = A2 + 1;
+            a2 = a2 + 1;
         }
     }
-    p = A1/draws;
+    p = a1/draws;
     simulation_data.push(p);
 }
 
@@ -838,7 +842,7 @@ N=2000:
 {width=90%}
 ![](images/ch_3_drift_multi_population_N_2000.png)
 
-These figures are telling. They show that the smaller the population, to more pronounced the random evolutionary swings in each generation. Because of that, alleles will go to fixation in smaller populations much faster.
+These figures are telling. They show that the smaller the population, the more pronounced the random evolutionary swings in each generation. Because of that, alleles will go to fixation in smaller populations much faster.
 
 Now that we have a good intuition from the simulations, let’s see if we can develop a mathematical model that captures this process. Don’t worry, the math is going to be easy, and I will be explaining every step in great detail.
 
