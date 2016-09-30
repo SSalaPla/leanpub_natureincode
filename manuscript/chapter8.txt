@@ -321,7 +321,7 @@ Object {foo: 3, bar: 2} Object {foo: 3, bar: 2}
 
 You may have thought that you had only changed the value of the `foo` property in object `a`. *But you don't really have two distinct objects*: `b` is simply assigned a reference to `a`, and because you changed `a.foo`, you will see the change reflected in both `a` and `b`.
 
-We have never talked about this issue before because when you work with primitive types, things seem intuitively logical, as seen in the code example above. But we objects, we have to be more careful when we assign objects to variables, since we are really only assigning the reference to the variable. If that seems a bit confusing a first, don't worry - you're in good company. We'll revisit this issue multiple times until it sinks in.
+We have never talked about this issue before because when you work with primitive types, things seem intuitively logical, as seen in the code example above. But with objects, we have to be more careful when we assign objects to variables, since we are really only assigning the reference to the variable. If that seems a bit confusing a first, don't worry - you're in good company. We'll revisit this issue multiple times until it sinks in.
 
 After this short detour about objects, let's bring our attention back to the cooperation model code. We were just talking about this function:
 

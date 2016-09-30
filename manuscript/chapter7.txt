@@ -635,7 +635,7 @@ And that's where we wrap it up. One could write volumes of books on this fascina
 
 Let’s briefly summarize what we've learned in this chapter.
 
-* Infectious diseases can be modelled with SIR models, where individuals are either susceptible, infected, or have recovered.
+* Infectious diseases can be modeled with SIR models, where individuals are either susceptible, infected, or have recovered.
 * The dynamics of epidemics are shaped by how well the infection can be transmitted, and by how fast infected individuals recover.
 * Because of the stochastic nature of transmission, not every patient 0 will trigger an outbreak. An epidemic may fizzle out on its own in the early stages.
 * Even when an epidemic takes off, not everyone will get infected: the epidemic will eventually run out of susceptible individuals to infect.
