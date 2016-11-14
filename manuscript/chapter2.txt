@@ -14,7 +14,7 @@ Now here is the most interesting aspect of this story: there is strong evidence 
 
 This is evolution in action, precisely as we have defined it above: the change of allele frequencies in a population over time. What caused this change? There could be many different explanations, but all of them fall into four basic categories: natural selection, mutation, migration, and random drift. These are the four basic forces of evolution, and we will encounter them time and time again in this book. Of these forces, natural selection may be the most famous of them all. It’s the only force capable of producing adaptations. It’s the one described by Charles Darwin, although he, like any scientist in the mid-19th century, had a very different - and wrong - understanding of genetic heredity than we have today, which makes his insights all the more stunning. But evolution can occur even in the absence of natural selection; as long as allele frequencies change, for whatever reason, that is evolution. 
 
-##The Hardy Weinberg Principle
+##The Hardy-Weinberg Principle
 
 Consider these two conversations between two friends:
 
@@ -93,7 +93,7 @@ From these considerations follows an interesting insight, bringing us back full 
 
 We have just established that things are boring at Hardy-Weinberg equilibrium (maybe that was why biologists hadn’t figured this out earlier - nothing in nature is ever boring, so why bother about this seemingly boring stuff?). Things are boring in the sense that genotype frequencies stay the same, forever. But why is that boring? It’s boring because everything you see in the living world around you is an expression of a genotype. It would be a mistake to think that genes are all there is, and that everything is just genes, and nothing more. We know very well that the environment and other non-genetic factors play a big role in determining the development, shape, form, and behavior of an organism. But living organisms are ultimately built with the blueprint of a genotype, and different genotypes will generally result in different organisms. (The technical term here is phenotype: a phenotype is the organism that a genotype produces in its given environment.) Thus, the boundless diversity and beauty of nature, with its endless flow of forms, shapes and colors, can only come about if there is genetic diversity. In the Hardy-Weinberg world, nothing ever changes, everything stays predictably constant for eternity. If that doesn’t qualify as boring, I don’t know what would.
 
-But boring has it’s benefits too - it’s predictable, and easy to quantify, which is what we will do next. Let’s formalize the Hardy-Weinberg principle in mathematical terms, so that we can develop a short program that helps us understand what’s going on.
+But boring has its benefits too - it’s predictable, and easy to quantify, which is what we will do next. Let’s formalize the Hardy-Weinberg principle in mathematical terms, so that we can develop a short program that helps us understand what’s going on.
 
 We are going to denote the allele frequency of A1 as *p*, and the allele frequency of A2 as *q = 1-p*. The expected frequency of the genotypes is then as follows:
 
@@ -336,7 +336,7 @@ which would result in the string `"hello world`" (don’t forget the space chara
 "hello " + a1a1
 ~~~~~~~
 
-What happens is that you get the string `"hello 0.15"`. That’s because JavaScript coerces numeric values to string values if one the operands is a string. This is actually a pretty handy feature that let’s you do things like   
+What happens is that you get the string `"hello 0.15"`. That’s because JavaScript coerces numeric values to string values if one of the operands is a string. This is actually a pretty handy feature that let’s you do things like   
 
 ~~~~~~~
 "generation 0:\t" + a1a1 + "\t" + a1a2 + "\t" + a2a2

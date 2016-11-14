@@ -12,7 +12,7 @@ This book covers quite a bit of material, not least because it's a book about tw
 
 Having learned programming myself - and continuing to do so - I am perfectly aware that things will not always go smoothly, and that there will be bumps in the road. To help you through these, all examples, with the full code, are available at the website [www.natureincode.com](http://www.natureincode.com). Go there if you just can't make your code work, and be inspired by - but don't copy - a working solution.
 
-I've also created an free online course based on this material, a so called MOOC (massive open online course). You can join the course at any time on the [edX platform](https://www.edx.org/course/nature-code-biology-javascript-epflx-nic1-0x) - the course is self-paced, and you'll find lots of coding exercises that will help you assess your learning progress.
+I've also created a free online course based on this material, a so called MOOC (massive open online course). You can join the course at any time on the [edX platform](https://www.edx.org/course/nature-code-biology-javascript-epflx-nic1-0x) - the course is self-paced, and you'll find lots of coding exercises that will help you assess your learning progress.
 
 To keep updated on anything related to the book, you can follow the Twitter account [@natureincode](https://twitter.com/natureincode). If you feel adventurous, you can also follow my personal account [@marcelsalathe](https://twitter.com/marcelsalathe) where I post about anything under the sun, including topics related to biology and programming. 
 
@@ -29,6 +29,7 @@ I'd like to thank everyone who has pointed out mistakes or passages that were un
 * Michael Collins
 * Boris Conforty
 * Melissa Hicks
+* Bryan Link Hunt
 * Alex Mesoudi
 * Sharada Mohanty
 * Martin Mueller
