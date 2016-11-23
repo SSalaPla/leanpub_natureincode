@@ -280,7 +280,7 @@ First, our new fitness table is as follows:
 As you can see, we now need to work with only two values (*h* and *s*), rather than with three ({$$}w_{11}{/$$}, {$$}w_{12}{/$$} and {$$}w_{22}{/$$}). The first effect of that reduction in parameters is that it makes our equation for {$$}\Delta p{/$$} a little simpler:
 
 {$$}
-\Delta p = \frac{pqs ( ph + q (1-h))}{(1 - 2pqhs - q2s)}
+\Delta p = \frac{pqs ( ph + q (1-h))}{(1 - 2pqhs - q^{2}s)}
 {/$$}
 
 If we would plot the genotypes fitnesses visually, we would get one of the following graphs:
@@ -311,7 +311,7 @@ var x_max = 1;
 for (var i = 0; i <= x_max + 0.005; i = i + 0.01) {
     var p = i;
     var q = 1-p;
-    var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*2*s);
+    var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*q*s);
     data.push(delta_p);
 }
 
@@ -345,7 +345,7 @@ var generations = 400;
 
 for (var i = 0; i < generations; i = i + 1) {
     var q = 1-p;
-    var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*2*s);
+    var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*q*s);
     p = p + delta_p;
     data.push(p);
 }
@@ -410,7 +410,7 @@ function run_simulation(p) {
     var results = [];
     for (var i = 0; i < generations; i = i + 1) {
         var q = 1-p;
-        var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*2*s);
+        var delta_p = (p*q*s * ( p*h + q*(1-h))) / (1 - 2*p*q*h*s -q*q*s);
         p = p + delta_p;
         results.push(p);
     }
