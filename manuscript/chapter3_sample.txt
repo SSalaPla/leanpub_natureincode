@@ -760,7 +760,7 @@ If you want to access a specific element in one of the arrays, you would first h
 
 Multidimensional arrays sound complicated, but they are very simple, as you've just learned. They are also very handy when you deal with more complex datasets. For example, when we want to store the dynamics of multiple simulation runs, rather than just one, we can simply use a multidimensional array. The main array would then contain all the arrays for each simulation run, and those in turn would contain the allele frequencies for each generation.
 
-There’s one more thing I want to mention about arrays. If you want to know how many elements and array currently holds, you can just use the following syntax:
+There’s one more thing I want to mention about arrays. If you want to know how many elements an array currently holds, you can just use the following syntax:
 
 ~~~~~~~~
 data.length

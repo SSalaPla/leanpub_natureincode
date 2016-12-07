@@ -96,7 +96,7 @@ function init_grid() {
             var random_number = Math.random();
             if (random_number < p*p) {
 		grid[i][ii] = "A1A1";
-                a1a1 = a11a + 1;
+                a1a1 = a1a1 + 1;
             }
             else if (random_number > 1 - (1-p) * (1-p)) {
                 grid[i][ii] = "A2A2";
@@ -202,7 +202,7 @@ function run_generation() {
 
 There are a few changes that we’ve made. First, we set up a temporary grid, using the local array `temp_grid`. Then, we’re placing the new offspring on the corresponding cell on the temporary grid. Once the `temp_grid` is full, we iterate over the `grid` array once more, and copy all offspring individuals from `temp_grid` into `grid`. 
 
-Ok, let’s go ahead an start implementing the two functions that we’re calling from within `run_generation()`: `pick_mating_partner()`, and `get_offspring()`. Let’s start with `pick_mating_partner()`.
+Ok, let’s go ahead and start implementing the two functions that we’re calling from within `run_generation()`: `pick_mating_partner()`, and `get_offspring()`. Let’s start with `pick_mating_partner()`.
 
 We’ll be using the neighborhood model that I described above. In formal terms, given the maximum distance *d*, the neighborhood of an individual at position *i, ii* is *j, jj*, such that 
 
